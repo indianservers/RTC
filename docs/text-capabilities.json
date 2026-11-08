@@ -1,8 +1,8 @@
 {
   "canonical_intents": 60,
-  "mapped_backend_handlers": 41,
-  "unsupported_count": 19,
-  "note": "Mapping does not imply complete availability of operational data or calibrated NLP accuracy. Requirements are checked per enquiry.",
+  "mapped_backend_handlers": 56,
+  "unsupported_count": 4,
+  "note": "56 partial local handlers. Handler presence does not imply complete data or a live external feed. Existing DB taxonomy is adapted at read time; no automatic metadata refresh or migration is performed.",
   "intents": [
     {
       "code": "NEXT_BUS",
@@ -36,8 +36,8 @@
     },
     {
       "code": "BUS_AT_TIME",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "BUS_AT_TIME",
+      "capability": "PARTIAL"
     },
     {
       "code": "ARRIVAL_TIME",
@@ -56,13 +56,13 @@
     },
     {
       "code": "SERVICE_FREQUENCY",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "SERVICE_FREQUENCY",
+      "capability": "PARTIAL"
     },
     {
       "code": "SPECIAL_DAY_SCHEDULE",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "SPECIAL_DAY_SCHEDULE",
+      "capability": "PARTIAL"
     },
     {
       "code": "AVAILABLE_BUS_TYPES",
@@ -106,13 +106,13 @@
     },
     {
       "code": "ACCESSIBLE_BUS_AVAILABILITY",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "ACCESSIBLE_BUS_AVAILABILITY",
+      "capability": "PARTIAL"
     },
     {
       "code": "BUS_CAPACITY",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "BUS_CAPACITY",
+      "capability": "PARTIAL"
     },
     {
       "code": "DIRECT_BUS",
@@ -156,13 +156,13 @@
     },
     {
       "code": "ROUTE_DISTANCE",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "ROUTE_DISTANCE",
+      "capability": "PARTIAL"
     },
     {
       "code": "DESTINATION_REACHABILITY",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "DESTINATION_REACHABILITY",
+      "capability": "PARTIAL"
     },
     {
       "code": "GET_FARE",
@@ -196,8 +196,8 @@
     },
     {
       "code": "BOOKING_OPTIONS",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "BOOKING_OPTIONS",
+      "capability": "PARTIAL"
     },
     {
       "code": "BOOKING_STATUS",
@@ -246,18 +246,18 @@
     },
     {
       "code": "ESTIMATED_ARRIVAL",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "ESTIMATED_ARRIVAL",
+      "capability": "PARTIAL"
     },
     {
       "code": "BUS_DEPARTED_STATUS",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "BUS_DEPARTED_STATUS",
+      "capability": "PARTIAL"
     },
     {
       "code": "BUS_ARRIVED_STATUS",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "BUS_ARRIVED_STATUS",
+      "capability": "PARTIAL"
     },
     {
       "code": "SERVICE_DISRUPTION",
@@ -266,8 +266,8 @@
     },
     {
       "code": "PLATFORM_CHANGE",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "PLATFORM_CHANGE",
+      "capability": "PARTIAL"
     },
     {
       "code": "SERVICE_NUMBER_LOOKUP",
@@ -291,18 +291,18 @@
     },
     {
       "code": "OPERATOR_CONTACT",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "OPERATOR_CONTACT",
+      "capability": "PARTIAL"
     },
     {
       "code": "STATION_NAVIGATION",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "STATION_NAVIGATION",
+      "capability": "PARTIAL"
     },
     {
       "code": "COMPLAINT_GUIDANCE",
-      "backend_code": null,
-      "capability": "UNSUPPORTED"
+      "backend_code": "COMPLAINT_GUIDANCE",
+      "capability": "PARTIAL"
     }
   ]
 }

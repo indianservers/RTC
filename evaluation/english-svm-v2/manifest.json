@@ -1,0 +1,14 @@
+{
+  "version": "english-svm-v2",
+  "sha256": "73dd2c3f840e6a78b6aba51f29f63ecb430acd893631814837f184e7e5ab80e9",
+  "eligibility_sha256": "147561211ea7ebabea84918c17080d5307719d72360f74a2839fdfb0a057114b",
+  "protocol_sha256": "eecdcb00ef5aa4edbcc6dc69c6a3ec2b9e6c029564d3fd8d5a0fd81413e9ad61",
+  "total": 240,
+  "eligible": 240,
+  "kind_counts": {
+    "IN_SCOPE": 180,
+    "OUT_OF_SCOPE": 60
+  },
+  "training_manifest_sha256": "7b55c919a60e161dc61ee0e431d0c4dbdd3a0cf89fc543c84f9958ecb020ca88",
+  "notes": "Frozen before model fitting; no test-driven model or threshold updates. Prior evaluation never used as training/validation examples; overlap audit only."
+}

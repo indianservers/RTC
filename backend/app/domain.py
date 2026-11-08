@@ -5,6 +5,7 @@ from uuid import uuid4
 from zoneinfo import ZoneInfo
 
 from sqlalchemy import (
+    JSON,
     Boolean,
     CheckConstraint,
     Date,
@@ -73,6 +74,7 @@ class Category(Entity, Base):
 
 
 class Route(Entity, Base):
+    direction: Mapped[str | None]
     operator_id: Mapped[str | None] = mapped_column(
         ForeignKey("transport_operators.id")
     )
@@ -86,6 +88,8 @@ class Route(Entity, Base):
 
 
 class Stop(Entity, Base):
+    arrival_offset_minutes: Mapped[int | None]
+    departure_offset_minutes: Mapped[int | None]
     __tablename__ = "route_stops"
     route_id: Mapped[str] = mapped_column(ForeignKey("routes.id"), index=True)
     station_id: Mapped[str] = mapped_column(ForeignKey("bus_stations.id"), index=True)
@@ -101,6 +105,8 @@ class Stop(Entity, Base):
 
 
 class Service(Entity, Base):
+    depot_id: Mapped[str | None] = mapped_column(ForeignKey("depots.id"))
+    service_type: Mapped[str] = mapped_column(default="REGULAR")
     route_variant_id: Mapped[str | None] = mapped_column(
         ForeignKey("route_variants.id")
     )
@@ -127,6 +133,9 @@ class Service(Entity, Base):
 
 
 class ExceptionDay(Entity, Base):
+    exception_type: Mapped[str | None]
+    reason: Mapped[str | None]
+    details: Mapped[dict | None] = mapped_column(JSON)
     __tablename__ = "service_calendar_exceptions"
     service_id: Mapped[str] = mapped_column(ForeignKey("services.id"), index=True)
     service_date: Mapped[date] = mapped_column(Date)
@@ -190,7 +199,7 @@ class Repository:
         from .catalog import Calendar
         from .links import ServiceVehicle
         from .operations import Trip
-        from .records import FareOverride, TripStopTime
+        from .records import FareOverride, ServiceStopTime, TripStopTime
 
         if at.tzinfo is None:
             raise ValueError("Timezone-aware timestamp required")
@@ -204,10 +213,19 @@ class Repository:
         destinations = select(Stop.route_id).where(
             Stop.station_id == end.id, Stop.active.is_(True), Stop.alighting.is_(True)
         )
-        query = select(Service).where(
-            Service.active.is_(True),
-            Service.route_id.in_(origins),
-            Service.route_id.in_(destinations),
+        query = (
+            select(Service)
+            .join(Category, Category.id == Service.category_id)
+            .join(Operator, Operator.id == Service.operator_id)
+            .join(Route, Route.id == Service.route_id)
+            .where(
+                Service.active.is_(True),
+                Category.active.is_(True),
+                Operator.active.is_(True),
+                Route.active.is_(True),
+                Service.route_id.in_(origins),
+                Service.route_id.in_(destinations),
+            )
         )
         if category:
             query = query.where(Service.category_id == category)
@@ -235,6 +253,19 @@ class Repository:
             batch = TimetableBatch(self.session, services, local, days)
             self.schedule_services.update({s.id: s for s in services})
         for service in services:
+            schedule_offsets = (
+                batch.stop_times.get(service.id, {})
+                if batch
+                else {
+                    r.stop_id: (r.arrival_offset, r.departure_offset)
+                    for r in self.session.scalars(
+                        select(ServiceStopTime).where(
+                            ServiceStopTime.service_id == service.id,
+                            ServiceStopTime.active.is_(True),
+                        )
+                    )
+                }
+            )
             stops = (
                 batch.stops.get(service.route_id, [])
                 if batch
@@ -246,34 +277,20 @@ class Repository:
                     )
                 )
             )
-            if service.route_variant_id:
-                from .catalog import Variant
-                from .links import VariantStop
-
-                variant = (
-                    batch.variants.get(service.route_variant_id)
-                    if batch
-                    else self.session.get(Variant, service.route_variant_id)
+            schedule_offsets = {
+                stop.id: schedule_offsets.get(
+                    stop.id,
+                    (
+                        stop.arrival_offset_minutes
+                        if stop.arrival_offset_minutes is not None
+                        else stop.offset_minutes,
+                        stop.departure_offset_minutes
+                        if stop.departure_offset_minutes is not None
+                        else stop.offset_minutes,
+                    ),
                 )
-                if (
-                    not variant
-                    or not variant.active
-                    or variant.route_id != service.route_id
-                ):
-                    continue
-                memberships = (
-                    batch.variant_stops[variant.id]
-                    if batch
-                    else set(
-                        self.session.scalars(
-                            select(VariantStop.stop_id).where(
-                                VariantStop.variant_id == variant.id,
-                                VariantStop.active.is_(True),
-                            )
-                        )
-                    )
-                )
-                stops = [stop for stop in stops if stop.id in memberships]
+                for stop in stops
+            }
             for a in stops:
                 for b in stops:
                     if (
@@ -284,7 +301,18 @@ class Repository:
                         or not b.alighting
                     ):
                         continue
-                    lookback = max(s.offset_minutes for s in stops) // 1440 + 1
+                    lookback = (
+                        max(
+                            max(
+                                schedule_offsets.get(
+                                    s.id, (s.offset_minutes, s.offset_minutes)
+                                )
+                            )
+                            for s in stops
+                        )
+                        // 1440
+                        + 1
+                    )
                     for delta in range(-lookback, days + 1):
                         day = local.date() + timedelta(days=delta)
                         override = (
@@ -294,9 +322,41 @@ class Repository:
                                 select(ExceptionDay).where(
                                     ExceptionDay.service_id == service.id,
                                     ExceptionDay.service_date == day,
+                                    ExceptionDay.active.is_(True),
                                 )
                             )
                         )
+                        details = (override.details or {}) if override else {}
+                        if (
+                            a.id in details.get("cancelled_stop_ids", [])
+                            or b.id in details.get("cancelled_stop_ids", [])
+                            or a.id in details.get("boarding_restricted_stop_ids", [])
+                        ):
+                            continue
+                        variant_id = (
+                            details.get("variant_id") or service.route_variant_id
+                        )
+                        if variant_id:
+                            from .catalog import Variant
+                            from .links import VariantStop
+
+                            variant = self.session.get(Variant, variant_id)
+                            members = set(
+                                self.session.scalars(
+                                    select(VariantStop.stop_id).where(
+                                        VariantStop.variant_id == variant_id,
+                                        VariantStop.active.is_(True),
+                                    )
+                                )
+                            )
+                            if (
+                                not variant
+                                or not variant.active
+                                or variant.route_id != service.route_id
+                                or a.id not in members
+                                or b.id not in members
+                            ):
+                                continue
                         calendar = (
                             batch.calendar(service.id, day)
                             if batch
@@ -325,11 +385,18 @@ class Repository:
                         base = datetime.combine(
                             day, datetime.min.time(), zone
                         ) + timedelta(
-                            minutes=calendar.departure_minutes
-                            if calendar
-                            else service.departure_minutes
+                            minutes=details.get(
+                                "departure_minutes",
+                                calendar.departure_minutes
+                                if calendar
+                                else service.departure_minutes,
+                            )
                         )
-                        departure = base + timedelta(minutes=a.offset_minutes)
+                        departure = base + timedelta(
+                            minutes=schedule_offsets.get(
+                                a.id, (a.offset_minutes, a.offset_minutes)
+                            )[1]
+                        )
                         trip = (
                             batch.trips.get((service.id, day))
                             if batch
@@ -341,6 +408,12 @@ class Repository:
                                 )
                             )
                         )
+                        if trip and trip.planned_departure_at:
+                            shift = (
+                                utc(trip.planned_departure_at).astimezone(zone) - base
+                            )
+                            base += shift
+                            departure += shift
                         if trip and trip.status == "cancelled":
                             continue
                         scheduled_departure = departure
@@ -409,9 +482,28 @@ class Repository:
                             if fare_override
                             else (fare.amount if fare else None)
                         )
+                        from .fares import FareEngine
+
+                        quoted = FareEngine(self.session).calculate(
+                            service,
+                            day,
+                            amount,
+                            fare_override.dataset_source
+                            if fare_override
+                            else fare.dataset_source
+                            if fare
+                            else None,
+                            b.distance_km - a.distance_km,
+                            bool(fare_override),
+                        )
+                        amount = quoted["total"]
                         arrival = (
                             base
-                            + timedelta(minutes=b.offset_minutes)
+                            + timedelta(
+                                minutes=schedule_offsets.get(
+                                    b.id, (b.offset_minutes, b.offset_minutes)
+                                )[0]
+                            )
                             + (departure - scheduled_departure)
                         )
                         arrival_kind = (
@@ -466,11 +558,8 @@ class Repository:
                                 "departure_kind": departure_kind,
                                 "scheduled_departure": scheduled_departure,
                                 "fare": str(amount) if amount is not None else None,
-                                "fare_source": fare_override.dataset_source
-                                if fare_override
-                                else fare.dataset_source
-                                if fare
-                                else None,
+                                "fare_source": quoted.get("source"),
+                                "fare_breakdown": quoted,
                                 "seat_availability": "unknown",
                                 "dataset_source": service.dataset_source,
                             }

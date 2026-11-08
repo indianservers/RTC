@@ -322,11 +322,12 @@ def test_unknown_destination_never_reuses_previous(text_db):
         assert "Which destination station" in bad.answer
 
 
-def test_api_debug_is_opt_in(text_db, monkeypatch):
+def test_api_debug_requires_admin(text_db, monkeypatch):
     from app import main
     from fastapi.testclient import TestClient
 
     monkeypatch.setattr(main, "engine", text_db)
+    monkeypatch.setenv("RTC_ADMIN_TOKEN", "unit-test-admin-only")
     with TestClient(main.app) as client:
         payload = {
             "text": "Next bus to Guntur",
@@ -338,6 +339,12 @@ def test_api_debug_is_opt_in(text_db, monkeypatch):
         assert not response.json()["debug"]
         response = client.post(
             "/api/v1/conversation/message", json=dict(payload, debug=True)
+        )
+        assert response.status_code == 401
+        response = client.post(
+            "/api/v1/conversation/message",
+            json=dict(payload, debug=True),
+            headers={"Authorization": "Bearer unit-test-admin-only"},
         )
         assert response.status_code == 200
         assert (

@@ -32,6 +32,7 @@ class JourneyConstraints(BaseModel):
     origin: str = Field(min_length=1, max_length=250)
     destination: str = Field(min_length=1, max_length=250)
     earliest_departure: AwareDatetime
+    transfer_station: str | None = Field(default=None, min_length=1, max_length=250)
     latest_departure: AwareDatetime | None = None
     arrival_deadline: AwareDatetime | None = None
     horizon_hours: int = Field(default=48, ge=1, le=48)
@@ -494,6 +495,16 @@ class JourneyPlanner:
                 or i.total_duration_minutes <= f.max_duration_minutes
             )
         ]
+        if c.transfer_station:
+            resolved = self.engine.resolver.resolve(c.transfer_station)
+            if resolved["status"] != "KNOWN":
+                raise ValueError("Choose a unique transfer station code.")
+            transfer_id = resolved["candidates"][0]["id"]
+            items = [
+                i
+                for i in items
+                if any(t.station_id == transfer_id for t in i.transfers)
+            ]
         if c.pareto_only:
             if len(items) > 2000:
                 raise ValueError(

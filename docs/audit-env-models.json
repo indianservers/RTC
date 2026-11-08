@@ -1,0 +1,19 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "executable": "C:\\Indian Servers\\RTC\\.venv-models\\Scripts\\python.exe",
+  "packages": {
+    "torch": "2.15.0",
+    "tensorflow": null,
+    "keras": null,
+    "transformers": "5.22.2",
+    "scikit-learn": null,
+    "vosk": null,
+    "nemo_toolkit": null,
+    "numpy": "2.5.4",
+    "tokenizers": "0.23.3",
+    "triton": null,
+    "piper-tts": null,
+    "pyttsx3": null,
+    "hydra-core": null
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "version": "selective-60-v2",
+  "seed": 73129,
+  "training_sources": ["new agent-authored train-only intent and OOS banks", "SINGLE_INTENT records from training/datasets/splits/2c-v1/train.jsonl only"],
+  "forbidden_sources": ["all prior evaluation sets", "prior validation and synthetic-challenge splits", "simulation lab benchmarks"],
+  "validation": "Separate newly authored intent questions and OOS families. No random split of augmented questions.",
+  "model_grid": {"intent_C": [0.5, 2.0, 8.0], "domain_C": [1.0], "features": "word (1,2) plus char_wb (3,5) TF-IDF; fit on training only"},
+  "rejection_calibration": {"source": "validation only", "domain_thresholds": [-1.0, -0.5, 0.0, 0.25, 0.5, 0.75, 1.0], "top_margin_thresholds": [-1.0, -0.5, -0.25, 0.0, 0.25], "gap_thresholds": [0.0, 0.1, 0.2, 0.4], "max_oos_false_accept_rate": 0.05, "selection": "Maximize correctly accepted ID / all ID subject to validation OOS FAR <= 5%; tie break fewer wrong accepted ID, higher validation closed-set macro-F1, smaller C, stricter domain then gap threshold. If no nonzero-coverage feasible candidate, report calibration failed; no test-driven fallback."},
+  "leakage_audit": "Normalized exact overlap forbidden across train/validation/fresh test. Same authored family belongs to only one split. Character-ngram cosine >= 0.85 is quarantined or excluded from primary fresh-test scores. Prior evaluation questions never enter train or validation. Full audit saved before fitting.",
+  "test": "Freeze fresh test checksum before fitting; train command cannot read test questions. Separate evaluation command after artifact/threshold freeze. Score unchanged grouped-60-v1 and new candidate on identical eligible test ID/OOS records. No further model selection, threshold tuning or corpus editing after seeing fresh-test predictions.",
+  "metrics": ["closed-set 60-label accuracy/macro-F1", "ID acceptance coverage", "accepted-ID accuracy", "correctly accepted ID / all ID", "OOS false acceptance and rejection", "OOD gate precision/recall/F1", "per-class recall with rejection as error", "confusion matrices retaining abstention", "latency", "memory"],
+  "deployment": "CANDIDATE only. No automatic approval, activation or modification to existing registry entries. Synthetic labels are not human review. Preserve all speech files and do not load speech or TensorFlow components."
+}

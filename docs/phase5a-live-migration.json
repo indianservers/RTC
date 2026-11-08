@@ -1,0 +1,363 @@
+{
+  "head": "0014",
+  "integrity_check": "ok",
+  "foreign_key_errors": [],
+  "all_existing_values_preserved": true,
+  "tables": [
+    {
+      "table": "station_aliases",
+      "rows_preserved": 9,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "bus_service_categories",
+      "rows_preserved": 4,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "route_stops",
+      "rows_preserved": 200,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "service_calendar_exceptions",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "fare_stages",
+      "rows_preserved": 100,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "station_bays",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "platform_assignments",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "data_import_batches",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "nlp_entity_types",
+      "rows_preserved": 32,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "states",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "vehicle_seat_layouts",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "vehicle_types",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "districts",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "enquiry_execution_logs",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "fare_concessions",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "nlp_entity_aliases",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "nlp_response_templates",
+      "rows_preserved": 24,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "nlp_utterances",
+      "rows_preserved": 378,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "operator_divisions",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "route_variants",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "station_facilities",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "vehicle_seats",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "vehicles",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "bus_type_aliases",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "fare_concession_eligibility",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "vehicle_amenities",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "city_aliases",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "service_calendars",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "audit_logs",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "data_quality_issues",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "reservation_channels",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "route_aliases",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "fare_tables",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "route_distance_data",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "fare_rules",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "service_disruptions",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "service_stop_times",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "booking_references",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "extra_services",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "fare_history",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "operational_alerts",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "trip_delay_events",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "trip_fare_overrides",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "trip_inventory",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "trip_status_history",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "trip_stop_times",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "vehicle_locations",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "route_variant_stops",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "service_vehicles",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "station_geography",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "admin_roles",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "admin_users",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "amenities",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "admin_user_roles",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "operator_service_areas",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "operator_station_access",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "station_contact_points",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "nlp_entity_annotations",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "cities",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "bus_stations",
+      "rows_preserved": 21,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "transport_operators",
+      "rows_preserved": 1,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "conversation_sessions",
+      "rows_preserved": 10,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "data_sources",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "routes",
+      "rows_preserved": 100,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "conversation_messages",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "depots",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "conversation_context",
+      "rows_preserved": 10,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "services",
+      "rows_preserved": 100,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "trips",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "seat_availability_snapshots",
+      "rows_preserved": 0,
+      "old_column_values_unchanged": true
+    },
+    {
+      "table": "nlp_intents",
+      "rows_preserved": 123,
+      "old_column_values_unchanged": true
+    }
+  ]
+}

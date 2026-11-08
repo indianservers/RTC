@@ -71,6 +71,9 @@ class EnglishIntentModel:
                 self._cache[key] = loaded
             self.model = self._cache[key]
             self.version = row["version"]
+            if callable(getattr(self.model, "predict_selective", None)):
+                prediction = self.model.predict_selective([text])[0]
+                return {**prediction, "version": self.version}
             scores = self.model.decision_function([text])[0]
         # Multiclass SVM decision values are margins, not probabilities.
         if not hasattr(scores, "argmax"):

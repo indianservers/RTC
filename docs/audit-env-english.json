@@ -1,0 +1,24 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "executable": "C:\\Indian Servers\\RTC\\.venv-english\\Scripts\\python.exe",
+  "packages": {
+    "torch": null,
+    "tensorflow": "2.21.0",
+    "keras": "3.15.1",
+    "transformers": null,
+    "scikit-learn": "1.9.1",
+    "vosk": "0.3.45",
+    "nemo_toolkit": null,
+    "numpy": "2.4.5",
+    "tokenizers": null,
+    "triton": null,
+    "piper-tts": null,
+    "pyttsx3": "2.99",
+    "hydra-core": null,
+    "ruff": "0.17.4",
+    "mypy": "2.4.1",
+    "pytest": "9.2.0",
+    "fastapi": "0.162.2",
+    "sqlalchemy": "2.1.8"
+  }
+}

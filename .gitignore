@@ -26,3 +26,19 @@ models/english/
 node_modules/
 .env.*
 !.env.example
+
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+*.log
+
+*.tsbuildinfo
+
+# Local PostgreSQL verification binaries and private test cluster
+.tools/postgres/
+
+.tools/phase5a-backup/
+
+# Local request diagnostics and test-server runtime logs
+data/runtime/
+frontend/data/runtime/

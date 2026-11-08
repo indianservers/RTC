@@ -1,0 +1,110 @@
+[
+  {
+    "section": "01",
+    "requirement": "Passenger audit",
+    "status": "Verified",
+    "evidence": "docs/PHASE_4C_AUDIT.md"
+  },
+  {
+    "section": "02",
+    "requirement": "One-question enquiry",
+    "status": "Verified with seeded coverage",
+    "evidence": "frontend/tests/passenger.spec.ts: date/enquiry matrix"
+  },
+  {
+    "section": "03",
+    "requirement": "Supported contextual suggestions",
+    "status": "Verified",
+    "evidence": "frontend/src/enquiryActions.ts"
+  },
+  {
+    "section": "04",
+    "requirement": "Conversation continuity A/B/C",
+    "status": "Verified",
+    "evidence": "frontend/tests/passenger.spec.ts: conversations A/B/C"
+  },
+  {
+    "section": "05",
+    "requirement": "Pending clarification choices",
+    "status": "Verified",
+    "evidence": "backend/tests/test_passenger_stabilization.py; ambiguous destination browser test"
+  },
+  {
+    "section": "06",
+    "requirement": "Explicit no-result recovery",
+    "status": "Verified",
+    "evidence": "PlannerPage; category recovery browser test"
+  },
+  {
+    "section": "07",
+    "requirement": "Truthful rich results",
+    "status": "Verified",
+    "evidence": "BusCard; operational expiry and unknown fare browser tests"
+  },
+  {
+    "section": "08",
+    "requirement": "Current result selection",
+    "status": "Verified",
+    "evidence": "stale service and empty refresh regression tests"
+  },
+  {
+    "section": "09",
+    "requirement": "Planner",
+    "status": "Verified",
+    "evidence": "existing planner regressions plus reset and transfer-station constraints"
+  },
+  {
+    "section": "10",
+    "requirement": "Admin usability",
+    "status": "Verified within existing permissions",
+    "evidence": "unsaved form regression; existing CRUD/access tests"
+  },
+  {
+    "section": "11",
+    "requirement": "Data quality",
+    "status": "Verified with unavailable checks disclosed",
+    "evidence": "data_quality.py; quality tests; FareRule expiry/rejected-row history unavailable"
+  },
+  {
+    "section": "12",
+    "requirement": "Offline reliability",
+    "status": "Application-level verified",
+    "evidence": "external socket-blocked test server/browser; candidate offline model smoke"
+  },
+  {
+    "section": "13",
+    "requirement": "Performance measurement",
+    "status": "Measured",
+    "evidence": "docs/phase4c-performance.json"
+  },
+  {
+    "section": "14",
+    "requirement": "Accessibility and kiosk",
+    "status": "Interaction/viewport verified",
+    "evidence": "desktop/tablet/mobile/kiosk; keyboard tests; configurable expiry"
+  },
+  {
+    "section": "15",
+    "requirement": "100+ automated tests",
+    "status": "Executed",
+    "evidence": "docs/phase4c-playwright.json; 80 date-by-enquiry cases plus feature/acceptance/admin regressions"
+  },
+  {
+    "section": "16",
+    "requirement": "Local observability",
+    "status": "Verified",
+    "evidence": "diagnostics.py; correlation/privacy backend tests"
+  },
+  {
+    "section": "17",
+    "requirement": "Ten-step acceptance",
+    "status": "Verified on isolated DEMO database",
+    "evidence": "docs/phase4c-acceptance.json"
+  },
+  {
+    "section": "18",
+    "requirement": "Documentation and report",
+    "status": "Delivered",
+    "evidence": "docs/PHASE_4C_REPORT.md"
+  }
+]

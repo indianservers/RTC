@@ -1,0 +1,21 @@
+{
+  "torch": {
+    "version": "2.15.0+cpu",
+    "cuda_build": null,
+    "cuda_available": false
+  },
+  "tokenizer": "LOADED",
+  "tokenization": [
+    [
+      104,
+      22943,
+      2350,
+      2999,
+      73353,
+      138,
+      105
+    ]
+  ],
+  "model": "OSError('Error no file named model.safetensors, or pytorch_model.bin, found in directory C:\\\\Indian Servers\\\\RTC\\\\models\\\\muril-base.')",
+  "nemo": "ModuleNotFoundError(\"No module named 'nemo'\")"
+}

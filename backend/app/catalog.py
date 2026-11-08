@@ -1,11 +1,12 @@
 """Additional normalized reference domains; no passenger answers live here."""
 
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
 
 from sqlalchemy import JSON, CheckConstraint, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
+from .datetimes import UTCDateTime
 from .domain import Base, Entity
 
 
@@ -162,6 +163,22 @@ class Facility(Entity, Base):
 
 class ImportBatch(Entity, Base):
     __tablename__ = "data_import_batches"
+    operator_id: Mapped[str | None] = mapped_column(
+        ForeignKey("transport_operators.id"), index=True
+    )
+    source_id: Mapped[str | None] = mapped_column(ForeignKey("data_sources.id"))
+    workflow_state: Mapped[str] = mapped_column(default="PUBLISHED", index=True)
+    source_filename: Mapped[str | None]
+    source_checksum: Mapped[str | None]
+    uploaded_by: Mapped[str | None]
+    approved_by: Mapped[str | None]
+    published_by: Mapped[str | None]
+    created_at: Mapped[datetime | None] = mapped_column(UTCDateTime(timezone=True))
+    published_at: Mapped[datetime | None] = mapped_column(UTCDateTime(timezone=True))
+    payload: Mapped[dict | None] = mapped_column(JSON)
+    validation_report: Mapped[dict | None] = mapped_column(JSON)
+    validation_error_count: Mapped[int] = mapped_column(default=0)
+    revision: Mapped[int] = mapped_column(default=1)
     resource: Mapped[str]
     digest: Mapped[str] = mapped_column(unique=True)
     row_count: Mapped[int]

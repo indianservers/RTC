@@ -1,0 +1,20 @@
+BANKING|My bank card was charged twice; how can I dispute the payment?|What is the procedure for opening a savings account?|Can you check the balance in my personal bank account?
+INSURANCE|Which health insurance policy covers dental care?|How do I claim for damage to my private car?|Explain the premium for a family life insurance plan.
+MOBILE|My smartphone screen is cracked and I need a repair estimate.|How can I transfer contacts to a new mobile device?|Why does my mobile data connection keep dropping?
+GARDENING|What fertilizer should I use for tomato plants?|How often should I water a newly planted mango tree?|Which flowers grow well in a shaded garden?
+AIRPORT|Which terminal handles international arrivals at the airport?|How early must I check in for an overseas flight?|Where is the airline baggage claim counter?
+METRO|What is the fare for an underground metro journey?|Which subway line reaches the museum?|When does the last metro train leave this evening?
+COURIER|Where is my parcel according to the courier tracking number?|What is the postage rate for a two-kilogram package?|Can you arrange collection of a shipment from my house?
+FOOD_ORDER|Order two meals from the nearby restaurant.|Has my food delivery driver reached my apartment?|Which restaurant delivers breakfast before seven?
+BUSINESS_PROCUREMENT|Prepare a tender for hiring a fleet of fifty buses.|What purchase price should I negotiate for a used coach?|Compare engine specifications of commercial bus manufacturers.
+PERSONAL_CALENDAR|Remind me to call my brother at eight tonight.|Schedule a work meeting for Friday morning.|Add my dentist appointment to my personal calendar.
+ELECTION|Who is contesting the municipal election in this district?|What were the results of the latest parliamentary vote?|Where do I register to vote in the upcoming election?
+TOURISM|What monuments should I visit during a holiday in Jaipur?|Find a guide for a walking tour of the old city.|Which museum has the best collection of modern art?
+REAL_ESTATE|How much rent should I charge for my apartment?|Find a house for sale with three bedrooms.|What is the registration fee for buying land?
+PERSONAL_MESSAGES|Send a birthday message to my daughter.|Write an email asking my supervisor for leave.|Compose a wedding invitation for my cousin.
+SPACE|When will the next rocket launch take place?|Explain how astronauts live on the space station.|What is the distance from Earth to Jupiter?
+MOVIES|What time does the cinema show start tonight?|Reserve two seats for the new film at the multiplex.|Who directed the documentary about city transport?
+BUS_LITERATURE|Write a short fictional story about a talking school bus.|Make a funny poem about a coach driver.|Design a poster advertising a toy bus for children.
+SPORTS_FITNESS|How should I train for a half marathon?|What stretches help after a gym workout?|Which running shoes are suitable for beginners?
+COMPUTER_NETWORK|Why does my home Wi-Fi router keep disconnecting?|How do I set up a virtual private network on a laptop?|Explain the difference between TCP and UDP.
+TRAIN_RESERVATION|Check the waiting-list number on my railway ticket.|What are the cancellation charges for a train berth?|Can I board the express train with this rail reservation?

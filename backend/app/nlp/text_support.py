@@ -5,6 +5,14 @@ import re
 from datetime import datetime
 from pathlib import Path
 
+from ..local_intents import (
+    LOCAL_INTENTS,
+    OPERATOR_LOCAL,
+    STATION_LOCAL,
+    TRIP_LOCAL,
+    enrich_definition,
+)
+
 ROOT = Path(__file__).resolve().parents[3]
 
 
@@ -15,9 +23,12 @@ def registry(session=None):
         rows = IntentRegistry(session).list()
         if rows:
             return [r.model_dump() for r in rows]
-    return json.loads(
-        (ROOT / "training/config/intent_registry.yaml").read_text(encoding="utf-8")
-    )["intents"]
+    return [
+        enrich_definition(r)
+        for r in json.loads(
+            (ROOT / "training/config/intent_registry.yaml").read_text(encoding="utf-8")
+        )["intents"]
+    ]
 
 
 def classify_extra(text, existing, session=None):
@@ -29,8 +40,31 @@ def classify_extra(text, existing, session=None):
             *[x.lower().rstrip(".?!") for x in row["examples"]],
         ]:
             return [row.get("backend_code") or row["code"]]
+    local_patterns = {
+        "FIRST_BUS": r"which.*leaves earliest",
+        "CHEAPEST_BUS": r"cheaper category",
+        "BUS_VIA_LOCATION": r"(?:does|will).*stop at|pass through",
+        "BUS_AT_TIME": r"\b(?:bus|buses).*\b(?:at|around)\s+\d",
+        "SERVICE_FREQUENCY": r"how often|service frequency|how frequently",
+        "SPECIAL_DAY_SCHEDULE": r"festival.*schedule|special day schedule|holiday timetable",
+        "ACCESSIBLE_BUS_AVAILABILITY": r"wheelchair|accessible buses",
+        "BUS_CAPACITY": r"bus capacity|how many.*(?:seats|berths).*total",
+        "ROUTE_DISTANCE": r"route distance|how many kilo|how far",
+        "DESTINATION_REACHABILITY": r"is.*reachable|^can i reach",
+        "BOOKING_OPTIONS": r"where.*(?:book|buy).*ticket|booking options",
+        "ESTIMATED_ARRIVAL": r"estimated arrival|arrival estimate|current eta",
+        "BUS_DEPARTED_STATUS": r"has.*departed|already left",
+        "BUS_ARRIVED_STATUS": r"has.*arrived|already reached",
+        "PLATFORM_CHANGE": r"platform.*changed|changed.*platform|bay.*changed",
+        "OPERATOR_CONTACT": r"operator contact|operator website",
+        "STATION_NAVIGATION": r"station navigation|where.*bay|which floor",
+        "COMPLAINT_GUIDANCE": r"complaint|complain",
+    }
+    local = [i for i, p in local_patterns.items() if re.search(p, text)]
+    if local:
+        return local
     additions = {
-        "CONNECTING_BUSES": r"connecting buses|how can i (?:reach|get to)|how (?:do|can) i travel to",
+        "CONNECTING_BUSES": r"connecting buses|need to reach|how can i (?:reach|get to)|how (?:do|can) i travel to",
         "TICKET_FARE": r"how much|cost|ticket price",
         "NEXT_BUS": r"when is (?:the |a )?bus|bus timings?|what time.*bus",
         "ARRIVAL_TIME": r"reach(?:es)? .*first|when.*reach",
@@ -46,7 +80,11 @@ def classify_extra(text, existing, session=None):
     return result
 
 
-STATION_INTENTS = {"STATION_FACILITIES", "STATION_HELPDESK", "LOST_PROPERTY_CONTACT"}
+STATION_INTENTS = {
+    "STATION_FACILITIES",
+    "STATION_HELPDESK",
+    "LOST_PROPERTY_CONTACT",
+} | STATION_LOCAL
 SERVICE_INTENTS = {
     "ROUTE_STOPS",
     "BOARDING_POINT",
@@ -55,7 +93,12 @@ SERVICE_INTENTS = {
     "BUS_LIVE_STATUS",
     "BUS_CANCELLATION",
 }
-TRIP_INTENTS = {"SEAT_AVAILABILITY", "BUS_PLATFORM", "BUS_DELAY", "SERVICE_DISRUPTION"}
+TRIP_INTENTS = {
+    "SEAT_AVAILABILITY",
+    "BUS_PLATFORM",
+    "BUS_DELAY",
+    "SERVICE_DISRUPTION",
+} | TRIP_LOCAL
 SUPPORTED = {r["backend_code"] for r in registry() if r.get("backend_code")}
 
 
@@ -69,19 +112,29 @@ def missing(intents, slots):
         elif intent == "SERVICE_NUMBER_LOOKUP":
             if not slots.get("service_number"):
                 return "AWAITING_SERVICE"
-        elif intent == "CONCESSION_ELIGIBILITY":
+        elif intent == "CONCESSION_ELIGIBILITY" or intent in OPERATOR_LOCAL:
             if not slots.get("filters", {}).get("operator"):
                 return "AWAITING_OPERATOR"
         elif intent in SERVICE_INTENTS | TRIP_INTENTS:
             if not slots.get("service_id") and not slots.get("service_number"):
                 return "AWAITING_SERVICE"
-            if intent == "BUS_PLATFORM" and not slots.get("origin"):
+            if intent in {
+                "BUS_PLATFORM",
+                "PLATFORM_CHANGE",
+                "ESTIMATED_ARRIVAL",
+                "BUS_ARRIVED_STATUS",
+                "BUS_DEPARTED_STATUS",
+            } and not slots.get("origin"):
                 return "AWAITING_ORIGIN"
         else:
             if not slots.get("destination"):
                 return "AWAITING_DESTINATION"
             if not slots.get("origin"):
                 return "AWAITING_ORIGIN"
+            if intent == "BUS_AT_TIME" and not slots.get("requested_clock"):
+                return "AWAITING_TIME"
+            if intent == "ROUTE_DISTANCE" and not slots.get("service_id"):
+                return "AWAITING_SERVICE"
             if intent == "BUS_VIA_LOCATION" and not slots.get("via"):
                 return "AWAITING_VIA"
     return None
@@ -109,7 +162,13 @@ def render_result(result):
             "I could not complete that enquiry: " + "; ".join(result["warnings"]) + "."
         )
     if not rows:
+        if intent in LOCAL_INTENTS:
+            return "No supporting local records are available for this enquiry." + (
+                " " + " ".join(result.get("warnings", []))
+            )
         return "No matching information is available for that enquiry."
+    if intent in LOCAL_INTENTS:
+        return render_local(intent, rows, result.get("warnings", []))
     if intent == "SEAT_AVAILABILITY":
         r = rows[0]
         return (
@@ -253,3 +312,82 @@ def render(results):
     if demo(results):
         answer = "Demo schedule/data: " + answer
     return answer
+
+
+def render_local(intent, rows, warnings):
+    if intent == "BUS_CAPACITY":
+        r = rows[0]
+        return (
+            f"Recorded capacity: {r['capacity']}."
+            if "capacity" in r
+            else f"Recorded layout: {r['seating_capacity']} seats and {r['berth_capacity']} berths."
+        ) + " This is not seat availability."
+    if intent == "ROUTE_DISTANCE":
+        return f"The recorded route segment distance is {rows[0]['distance_km']} km."
+    if intent == "SERVICE_FREQUENCY":
+        r = rows[0]
+        return (
+            f"There are {r['count']} recorded departures on this date."
+            + (
+                " Gaps between distinct departures (minutes): "
+                + ", ".join(map(str, r["gap_minutes"]))
+                + "."
+                if r["gap_minutes"]
+                else " No headway can be calculated."
+            )
+            + " This is not a guaranteed frequency."
+        )
+    if intent == "BOOKING_OPTIONS":
+        return (
+            "Recorded booking options: "
+            + "; ".join(r["name"] + ": " + r["instructions"] for r in rows)
+            + "."
+        )
+    if intent == "OPERATOR_CONTACT":
+        return "Recorded operator website: " + rows[0]["website"] + "."
+    if intent == "COMPLAINT_GUIDANCE":
+        return (
+            "Recorded complaint contacts: "
+            + "; ".join(r["label"] + ": " + r["contact_value"] for r in rows)
+            + ". Contact availability has not been live-verified."
+        )
+    if intent == "STATION_NAVIGATION":
+        return (
+            "Recorded locations: "
+            + "; ".join(
+                (r.get("station_name", "") + ": " + r["address"])
+                if r.get("address")
+                else "Bay " + r["bay"] + ": " + r["zone"]
+                for r in rows
+            )
+            + ". No indoor route is inferred."
+        )
+    if intent == "PLATFORM_CHANGE":
+        r = rows[0]
+        return (
+            f"The recorded platform changed from {r['previous_bay']} to {r['current_bay']}."
+            if r["changed"]
+            else f"The two latest recorded assignments both name platform {r['current_bay']}."
+        )
+    if intent == "ESTIMATED_ARRIVAL":
+        return (
+            "The fresh verified arrival estimate is "
+            + clock_text(rows[0]["estimated_arrival"])
+            + "."
+        )
+    if intent in ("BUS_DEPARTED_STATUS", "BUS_ARRIVED_STATUS"):
+        field = (
+            "actual_departure" if intent == "BUS_DEPARTED_STATUS" else "actual_arrival"
+        )
+        return (
+            "The bus was recorded as "
+            + ("departed" if field == "actual_departure" else "arrived")
+            + " at "
+            + clock_text(rows[0][field])
+            + "."
+        )
+    # Existing timetable formatter handles the actual journey facts.
+    legacy = "CONNECTING_BUSES" if intent == "DESTINATION_REACHABILITY" else "NEXT_BUS"
+    return render_result(
+        {"intent": legacy, "query": {"intent": legacy}, "results": rows, "status": "KNOWN"}
+    ) + (" " + " ".join(warnings) if warnings else "")

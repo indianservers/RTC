@@ -13,12 +13,13 @@ from .catalog import Calendar, Variant
 from .domain import ExceptionDay, Fare, Stop
 from .links import VariantStop
 from .operations import Trip
-from .records import FareOverride, TripStopTime
+from .records import FareOverride, ServiceStopTime, TripStopTime
 
 
 class TimetableBatch:
     def __init__(self, session, services, local, days):
         self.stops = defaultdict(list)
+        self.stop_times = defaultdict(dict)
         self.calendars = defaultdict(list)
         self.fares = defaultdict(list)
         self.exceptions = {}
@@ -40,6 +41,15 @@ class TimetableBatch:
                 )
             return found
 
+        for entry in rows(
+            select(ServiceStopTime).where(
+                ServiceStopTime.service_id.in_(ids), ServiceStopTime.active.is_(True)
+            )
+        ):
+            self.stop_times[entry.service_id][entry.stop_id] = (
+                entry.arrival_offset,
+                entry.departure_offset,
+            )
         for stop in rows(
             select(Stop)
             .where(Stop.route_id.in_(routes), Stop.active.is_(True))
@@ -65,7 +75,13 @@ class TimetableBatch:
                 self.variant_stops[membership.variant_id].add(membership.stop_id)
         lookback = (
             max(
-                (s.offset_minutes for stops in self.stops.values() for s in stops),
+                [s.offset_minutes for stops in self.stops.values() for s in stops]
+                + [
+                    value
+                    for entries in self.stop_times.values()
+                    for offsets in entries.values()
+                    for value in offsets
+                ],
                 default=0,
             )
             // 1440

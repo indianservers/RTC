@@ -1,0 +1,19 @@
+{
+  "audit-api.json": "9e92c4ac9aca8e006191ce036bbc29ccfa32e7723694268257ace715f4b90e34",
+  "audit-db-enquiry.json": "30683bd8de62106707b2899dd24f564fb0778f975dcfbeaa3f30f2dbed166310",
+  "audit-english-inference.json": "ad3a8e414defe5dbb1f447a857230ecb892a1be8dee307130111ac647634bcdd",
+  "audit-env-english.json": "df1f124614219538a5262263a9b6e7ca75567a01e30345b88b32d5ebf2fdc410",
+  "audit-env-models.json": "da1630ecee872c28886d7a14b536d2a5a0cbe2c8640752374f53cae06512f079",
+  "audit-file-inventory.json": "659987c1f71515f182798de5b6624e1191e62ef455fb12093a41ab7c2ab880e4",
+  "audit-hardware.json": "ebb6312b89c5fde502b77b151630ee20994406b68fbb7346a540a1107f5ae7cb",
+  "audit-multilingual.json": "675cdec1276e1eaa1f637321a433e10c2546d53ebb06c5baaff3b9ee63790776",
+  "audit-mypy-configured.txt": "233ca251f4495071f8580bcc0f181b6680d429481f0a309ed35483affff57bbc",
+  "audit-mypy.txt": "bbfeeb8ace4120bacacf603e3cdca0974159aec3fca6a4bf144c4877b36281e9",
+  "audit-nemo-source-import.txt": "d5dd5b92e2828dafac29e37f79eac9ef88cef5d9bd7dfd87a66e9fc20f7828c0",
+  "audit-pytest.txt": "b0c9e13c1c81ad5a2b97675b68ccdcd8c3423174bae1c5b4e294e2cc0b3ef1bb",
+  "audit-ruff.txt": "a4443afdcfb6d7363adb285762515ccf7cf50473b1a05c20c1a50f6bed4d26b0",
+  "audit-training.json": "3b9443d0f8ad30ba69f3f1781e8cf595d34e0729c61c09866bbb592b27288cd2",
+  "audit-tts.json": "0218b3f1189979ea924e23b1c6995da876e66e4577055e6efa0daf34596623f5",
+  "audit-tts.wav": "0d50d3dc86779033babc1956bca71bf21df96c4c41df586370c51b8102936ccd",
+  "audit-workspace-artifacts.json": "7a3f5ac8db0e799a6f3f5e7557beba1f49be327ac5e0ab492d07698dbf08c852"
+}

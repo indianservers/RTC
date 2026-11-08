@@ -1,0 +1,170 @@
+[
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\pyvenv.cfg",
+    "Length": 358
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\pywin32.pth",
+    "Length": 185
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\h5py\\tests\\data_files\\vlen_string_dset_utc.h5",
+    "Length": 169904
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\h5py\\tests\\data_files\\vlen_string_dset.h5",
+    "Length": 6304
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\h5py\\tests\\data_files\\vlen_string_s390x.h5",
+    "Length": 9008
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-1234Hz-le-1ch-10S-20bit-extra.wav",
+    "Length": 74
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-44100Hz-2ch-32bit-float-be.wav",
+    "Length": 3586
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-44100Hz-2ch-32bit-float-le.wav",
+    "Length": 3586
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-44100Hz-be-1ch-4bytes.wav",
+    "Length": 17720
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-44100Hz-le-1ch-4bytes-early-eof-no-data.wav",
+    "Length": 72
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-44100Hz-le-1ch-4bytes-early-eof.wav",
+    "Length": 1024
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-44100Hz-le-1ch-4bytes-incomplete-chunk.wav",
+    "Length": 13
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-44100Hz-le-1ch-4bytes-rf64.wav",
+    "Length": 17756
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-44100Hz-le-1ch-4bytes.wav",
+    "Length": 17720
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-48000Hz-2ch-64bit-float-le-wavex.wav",
+    "Length": 7792
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-be-3ch-5S-24bit.wav",
+    "Length": 90
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-1ch-1byte-ulaw.wav",
+    "Length": 70
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-2ch-1byteu.wav",
+    "Length": 1644
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-3ch-5S-24bit-inconsistent.wav",
+    "Length": 90
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-3ch-5S-24bit-rf64.wav",
+    "Length": 126
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-3ch-5S-24bit.wav",
+    "Length": 90
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-3ch-5S-36bit.wav",
+    "Length": 120
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-3ch-5S-45bit.wav",
+    "Length": 134
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-3ch-5S-53bit.wav",
+    "Length": 150
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-3ch-5S-64bit.wav",
+    "Length": 164
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-4ch-9S-12bit.wav",
+    "Length": 116
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-english\\Lib\\site-packages\\scipy\\io\\tests\\data\\test-8000Hz-le-5ch-9S-5bit.wav",
+    "Length": 89
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-models\\pyvenv.cfg",
+    "Length": 335
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\.venv-models\\Lib\\site-packages\\distutils-precedence.pth",
+    "Length": 151
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\docs\\audit-tts.wav",
+    "Length": 138504
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\english\\tts-verification.wav",
+    "Length": 130698
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\grouped-60-v1\\svm.joblib",
+    "Length": 2778792
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\grouped-60-v1\\textcnn.keras",
+    "Length": 15598461
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\pilot-v1\\svm.joblib",
+    "Length": 403160
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\pilot-v1\\textcnn.keras",
+    "Length": 15580791
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\pilot-v2\\svm.joblib",
+    "Length": 393160
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\pilot-v2\\textcnn.keras",
+    "Length": 15580761
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\english\\samples\\vosk-official-test.wav",
+    "Length": 265914
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\indicconformer-telugu\\runtime\\NeMo\\tutorials\\tts\\audio_samples\\default_ipa.wav",
+    "Length": 96812
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\indicconformer-telugu\\runtime\\NeMo\\tutorials\\tts\\audio_samples\\new_dict_entry.wav",
+    "Length": 109100
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\models\\indicconformer-telugu\\runtime\\NeMo\\tutorials\\tts\\audio_samples\\phonemes_as_input.wav",
+    "Length": 109100
+  },
+  {
+    "FullName": "C:\\Indian Servers\\RTC\\rtc-simulation-lab\\.venv\\pyvenv.cfg",
+    "Length": 347
+  }
+]

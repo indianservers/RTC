@@ -1,0 +1,20 @@
+PET_CARE|What food is suitable for a young Labrador puppy?|My cat refuses to eat; what should I try?|How can I train a dog to walk on a leash?
+IMMIGRATION|How do I renew a passport that expires next month?|Which documents are required for a tourist visa to Japan?|Can you check whether my visa application was approved?
+AVIATION|What time does the airline's final flight to Pune take off?|Which boarding gate has been allocated to my plane?|How much is the airfare for a round trip next week?
+RAILWAY|What is the scheduled reaching time of my overnight train?|Is my railway berth still waitlisted or confirmed?|Which train has the lowest ticket price for this rail journey?
+MARINE|Has the evening ferry sailing been cancelled by the harbour operator?|What is the capacity of the passenger boat to the island?|Where is the cruise ship's boarding pier located?
+PRIVATE_CAR|What time will the hired taxi reach my pickup address?|What price will a ride-share car charge to the airport?|Can you reserve a private car with a driver for Saturday?
+BUS_MANUFACTURING|What engine horsepower does this newly manufactured coach model have?|Which company sells bus chassis with the best warranty?|Explain the electrical wiring needed to repair bus headlights.
+FINANCIAL_MARKET|How many shares of the transport company should I buy for my portfolio?|What dividend did the bus manufacturer announce this quarter?|Predict the stock market price of an electric vehicle maker.
+RESEARCH|Write a dissertation outline about urban transport economics.|Find academic papers discussing bus fleet emissions.|Explain the mathematical formula for traffic-flow simulation.
+DESIGN|Make a company logo for a bus repair workshop.|Draw a colourful cartoon of a double-decker bus.|Create a fictional advertisement for a toy coach.
+MUSIC|Suggest songs for learning to play an acoustic guitar.|Who composed the music for this television drama?|Show me the chord progression for a beginner's piano exercise.
+PARENTING|How can I help a toddler learn to read?|Which activities are suitable for a child's birthday party?|What is the recommended sleep routine for a five-year-old?
+HOBBIES|How do I start collecting old postage stamps?|Tell me how to solve a difficult sudoku puzzle.|What materials do I need to build a model aeroplane?
+UNIVERSITY|When will the university publish its entrance-exam results?|What fees does the college charge for an engineering degree?|Help me choose a university course in mechanical design.
+ELECTRICAL|Why does the fuse trip when I switch on the heater?|How do I replace a damaged power socket at home?|Which inverter can run a refrigerator during an outage?
+INTERNET_ACCOUNT|I forgot the password for my social media account.|How do I cancel a streaming subscription I no longer use?|Can you recover messages deleted from my email inbox?
+GOVERNMENT|Where do I apply for a new national identity card?|What is the procedure for renewing a driving licence?|How can I obtain a certified copy of a birth certificate?
+PERSONAL_FINANCE|How do I split a restaurant bill among six friends?|What monthly savings are needed to buy a house in ten years?|Calculate the total interest on a fixed deposit.
+SCHOOL_TRANSPORT_CONTRACT|What procurement terms should a school use when leasing a bus fleet?|How do I obtain a commercial permit to operate a private coach?|Tell me the annual insurance cost for owning a school bus.
+GENERAL_TRIVIA|How does a rainbow form after rainfall?|Which country has the longest coastline in the world?|Explain why the moon appears to change shape during a month.

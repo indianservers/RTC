@@ -1,3 +1,4 @@
+# ruff: noqa: B008
 from datetime import date, datetime
 from typing import Any
 
@@ -27,7 +28,11 @@ def reference(
         raise HTTPException(404, "Unknown resource")
     with Session(engine) as session:
         rows = session.scalars(
-            select(model).order_by(model.__table__.c.id).offset(offset).limit(limit)
+            select(model)
+            .where(model.active.is_(True))
+            .order_by(model.__table__.c.id)
+            .offset(offset)
+            .limit(limit)
         )
         return {
             "data": [
@@ -67,7 +72,6 @@ def next_bus(
 
 
 import os
-import secrets
 from typing import Annotated, cast
 
 from fastapi import Body, Depends, Header
@@ -168,14 +172,45 @@ def enquiry(
             raise HTTPException(422, str(exc)) from exc
 
 
+from .data_access import Principal, authenticate, read_scope
+
+
 def admin(authorization: Annotated[str | None, Header()] = None):
-    token = os.getenv("RTC_ADMIN_TOKEN")
-    if not token:
-        raise HTTPException(503, "Local administration is not configured")
-    supplied = (authorization or "").removeprefix("Bearer ")
-    if not secrets.compare_digest(supplied, token):
-        raise HTTPException(401, "Invalid local administrator credentials")
-    return "admin"
+    return authenticate(engine, authorization)
+
+
+def staged_write(
+    session,
+    resource,
+    values,
+    principal,
+    identifier=None,
+    operation="CREATE",
+    operator_id=None,
+    source_id=None,
+):
+    from .data_api import batch_data
+    from .publication import create_batch
+
+    batch = create_batch(
+        session,
+        [
+            {
+                "resource": resource,
+                "operation": operation,
+                "id": identifier,
+                "values": values,
+            }
+        ],
+        principal,
+        operator_id,
+        source_id,
+    )
+    return {
+        "data": batch_data(batch, True),
+        "publication_state": "DRAFT",
+        "message": "Draft stored. Validate, obtain independent approval, and publish before passenger use.",
+    }
 
 
 @app.post("/api/v1/admin/imports/{resource}", dependencies=[Depends(admin)])
@@ -183,21 +218,68 @@ def upload(
     resource: str,
     text: Annotated[str, Body(media_type="text/csv")],
     dry_run: bool = True,
+    principal: Principal = Depends(admin),
+    operator_id: str | None = Header(None, alias="X-Operator-ID"),
+    source_id: str | None = Header(None, alias="X-Data-Source"),
 ):
     with Session(engine) as session, session.begin():
         try:
+            if os.getenv("RTC_ALLOW_DEMO_DIRECT_WRITES") != "1" or not principal.root:
+                from .import_files import map_rows, parse_file
+
+                headers, rows, checksum = parse_file("upload.csv", text.encode("utf-8"))
+                from .data_api import batch_data
+                from .publication import create_batch, validate_batch
+
+                batch = create_batch(
+                    session,
+                    map_rows(resource, headers, rows),
+                    principal,
+                    operator_id,
+                    source_id,
+                    "upload.csv",
+                    checksum,
+                )
+                validate_batch(session, batch, principal)
+                return {
+                    "data": {
+                        "committed": False,
+                        "inserted": 0,
+                        "duplicates": 0,
+                        "errors": batch.validation_report["errors"],
+                        "dry_run": dry_run,
+                        "batch_id": batch.id,
+                        "publication_state": batch.workflow_state,
+                        "batch": batch_data(batch, True),
+                    }
+                }
             return {"data": import_csv(session, resource, text, dry_run)}
         except ValueError as exc:
             raise HTTPException(422, str(exc)) from exc
 
 
 @app.post("/api/v1/admin/{resource}", status_code=201, dependencies=[Depends(admin)])
-def create_master(resource: str, values: dict):
+def create_master(
+    resource: str,
+    values: dict,
+    principal: Principal = Depends(admin),
+    operator_id: str | None = Header(None, alias="X-Operator-ID"),
+    source_id: str | None = Header(None, alias="X-Data-Source"),
+):
     if resource not in RESOURCES:
         raise HTTPException(404, "Unknown resource")
     model, schema, _ = RESOURCES[resource]
     with Session(engine) as session, session.begin():
         try:
+            if os.getenv("RTC_ALLOW_DEMO_DIRECT_WRITES") != "1" or not principal.root:
+                return staged_write(
+                    session,
+                    resource,
+                    values,
+                    principal,
+                    operator_id=operator_id,
+                    source_id=source_id,
+                )
             data = schema.model_validate(values).model_dump()
             validate_relations(session, model, data)
             row = model(**data)
@@ -209,19 +291,43 @@ def create_master(resource: str, values: dict):
 
 
 @app.delete("/api/v1/admin/{resource}/{identifier}", dependencies=[Depends(admin)])
-def deactivate_master(resource: str, identifier: str):
+def deactivate_master(
+    resource: str,
+    identifier: str,
+    principal: Principal = Depends(admin),
+    operator_id: str | None = Header(None, alias="X-Operator-ID"),
+    source_id: str | None = Header(None, alias="X-Data-Source"),
+):
     if resource not in RESOURCES:
         raise HTTPException(404, "Unknown resource")
     with Session(engine) as session, session.begin():
         row = session.get(RESOURCES[resource][0], identifier)
         if not row:
             raise HTTPException(404, "Unknown record")
+        if os.getenv("RTC_ALLOW_DEMO_DIRECT_WRITES") != "1" or not principal.root:
+            return staged_write(
+                session,
+                resource,
+                {},
+                principal,
+                identifier,
+                "DEACTIVATE",
+                operator_id,
+                source_id,
+            )
         row.active = False
         return {"data": {"id": identifier, "active": False}}
 
 
 @app.put("/api/v1/admin/{resource}/{identifier}", dependencies=[Depends(admin)])
-def update_master(resource: str, identifier: str, values: dict):
+def update_master(
+    resource: str,
+    identifier: str,
+    values: dict,
+    principal: Principal = Depends(admin),
+    operator_id: str | None = Header(None, alias="X-Operator-ID"),
+    source_id: str | None = Header(None, alias="X-Data-Source"),
+):
     if resource not in RESOURCES:
         raise HTTPException(404, "Unknown resource")
     model, schema, _ = RESOURCES[resource]
@@ -230,6 +336,17 @@ def update_master(resource: str, identifier: str, values: dict):
         if row is None:
             raise HTTPException(404, "Unknown record")
         try:
+            if os.getenv("RTC_ALLOW_DEMO_DIRECT_WRITES") != "1" or not principal.root:
+                return staged_write(
+                    session,
+                    resource,
+                    values,
+                    principal,
+                    identifier,
+                    "UPDATE",
+                    operator_id,
+                    source_id,
+                )
             data = schema.model_validate(values).model_dump()
             validate_relations(session, model, data)
             for key, value in data.items():
@@ -244,17 +361,22 @@ def update_master(resource: str, identifier: str, values: dict):
 def search_stations(
     q: str = Query(min_length=1, max_length=100), limit: int = Query(20, ge=1, le=100)
 ):
+    from sqlalchemy import func
+
     from .domain import Alias
 
     with Session(engine) as session:
         aliases = select(Alias.station_id).where(
-            Alias.name.contains(q, autoescape=True), Alias.active.is_(True)
+            func.lower(Alias.name).contains(q.casefold(), autoescape=True),
+            Alias.active.is_(True),
         )
         rows = session.scalars(
             select(Station)
             .where(
                 Station.active.is_(True),
-                (Station.name.contains(q, autoescape=True)) | Station.id.in_(aliases),
+                (func.lower(Station.name).contains(q.casefold(), autoescape=True))
+                | (func.lower(Station.code).contains(q.casefold(), autoescape=True))
+                | Station.id.in_(aliases),
             )
             .order_by(Station.name)
             .limit(limit)
@@ -314,7 +436,11 @@ from .nlp.pipeline import NLPRequest, NLPResponse
 
 
 @app.post("/api/v1/nlp/interpret", response_model=NLPResponse)
-def interpret_text(request: NLPRequest):
+def interpret_text(
+    request: NLPRequest, authorization: Annotated[str | None, Header()] = None
+):
+    if request.debug:
+        admin(authorization)
     with Session(engine) as session:
         return EnglishInferenceService(session).interpret_query(
             request, datetime.now(UTC)
@@ -322,7 +448,11 @@ def interpret_text(request: NLPRequest):
 
 
 @app.post("/api/v1/conversation/message", response_model=NLPResponse)
-def conversation_message(request: NLPRequest):
+def conversation_message(
+    request: NLPRequest, authorization: Annotated[str | None, Header()] = None
+):
+    if request.debug:
+        admin(authorization)
     with Session(engine) as session, session.begin():
         return EnglishInferenceService(session).process_conversation(
             request, datetime.now(UTC)
@@ -382,16 +512,36 @@ async def database_error(request, exc):
 
 @app.get("/api/v1/admin/{resource}", dependencies=[Depends(admin)])
 def read_master(
-    resource: str, limit: int = Query(50, ge=1, le=100), offset: int = Query(0, ge=0)
+    resource: str,
+    limit: int = Query(50, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+    q: str = Query("", max_length=100),
+    sort_by: str = "id",
+    descending: bool = False,
+    active: bool | None = None,
+    operator_id: str | None = None,
+    principal: Principal = Depends(admin),
 ):
     if resource not in RESOURCES:
         raise HTTPException(404, "Unknown resource")
+    from .admin_listing import list_records
+
     model: Any = RESOURCES[resource][0]
     with Session(engine) as session:
-        rows = session.scalars(
-            select(model).order_by(model.__table__.c.id).offset(offset).limit(limit)
-        )
-        return {"data": jsonable_encoder(list(rows)), "limit": limit, "offset": offset}
+        try:
+            return list_records(
+                session,
+                model,
+                limit,
+                offset,
+                q,
+                sort_by,
+                descending,
+                active,
+                read_scope(resource, model, principal, operator_id),
+            )
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
 
 
 from .nlp.taxonomy import IntentRegistry
@@ -437,6 +587,8 @@ def nlp_health():
                 "database": "READY",
                 "deterministic_fallback": "READY",
                 "statistical_model": "NOT_APPROVED" if model is None else "ACTIVE",
+                "active_model_name": model.get("name") if model else None,
+                "active_model_version": model.get("version") if model else None,
                 "offline_certification": "OS_ISOLATION_UNVERIFIED",
             }
         }
@@ -511,3 +663,43 @@ def journey_missed_bus(request: RecoveryRequest):
             return JourneyPlanner(session).find_alternatives_after_missed_bus(request)
         except ValueError as exc:
             raise HTTPException(422, str(exc)) from exc
+
+
+from .data_api import management_router
+from .frontend_api import app_router
+
+app.include_router(management_router(lambda: engine, admin))
+app.include_router(app_router(lambda: engine, admin))
+
+# Serve compiled local assets in production; API errors must remain API errors.
+from fastapi.staticfiles import StaticFiles
+from starlette.exceptions import HTTPException as StarletteHTTPException
+
+
+class LocalAppFiles(StaticFiles):
+    async def get_response(self, path, scope):
+        path = path.replace("\\", "/")
+        if path == "api" or path.startswith("api/"):
+            raise HTTPException(404, "Unknown API endpoint")
+        try:
+            return await super().get_response(path, scope)
+        except StarletteHTTPException as exc:
+            if exc.status_code == 404 and "." not in path.rsplit("/", 1)[-1]:
+                return await super().get_response("index.html", scope)
+            raise
+
+
+_frontend_dist = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+if _frontend_dist.is_dir():
+    app.mount(
+        "/", LocalAppFiles(directory=str(_frontend_dist), html=True), name="local-app"
+    )
+
+
+from .frontend_security import install_ui_security
+
+install_ui_security(app)
+
+from .diagnostics import install_diagnostics
+
+install_diagnostics(app)

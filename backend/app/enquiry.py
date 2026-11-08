@@ -1,5 +1,6 @@
 from datetime import date, datetime, time, timedelta
 from decimal import Decimal
+from typing import Any
 from zoneinfo import ZoneInfo
 
 from pydantic import AwareDatetime, BaseModel, Field
@@ -105,15 +106,57 @@ class Enquiry:
             raise ValueError("Unknown service")
         return row
 
-    def get_route_stops(self, service_id: str):
+    def get_route_stops(self, service_id: str, day=None):
         service = self.get_service_details(service_id)
-        return list(
-            self.session.scalars(
-                select(Stop)
-                .where(Stop.route_id == service.route_id, Stop.active.is_(True))
-                .order_by(Stop.sequence)
-            )
+        query = select(Stop).where(
+            Stop.route_id == service.route_id, Stop.active.is_(True)
         )
+        details = {}
+        if day is not None:
+            from .domain import ExceptionDay
+
+            exception = self.session.scalar(
+                select(ExceptionDay).where(
+                    ExceptionDay.service_id == service_id,
+                    ExceptionDay.service_date == day,
+                    ExceptionDay.active.is_(True),
+                )
+            )
+            details = (exception.details or {}) if exception else {}
+        variant_id = details.get("variant_id") or service.route_variant_id
+        if variant_id:
+            from .catalog import Variant
+            from .links import VariantStop
+
+            variant = self.session.get(Variant, variant_id)
+            if (
+                not variant
+                or not variant.active
+                or variant.route_id != service.route_id
+            ):
+                return []
+            query = query.join(VariantStop, VariantStop.stop_id == Stop.id).where(
+                VariantStop.variant_id == variant.id, VariantStop.active.is_(True)
+            )
+        rows: list[Any] = list(self.session.scalars(query.order_by(Stop.sequence)))
+        if details:
+            from types import SimpleNamespace
+
+            rows = [
+                SimpleNamespace(
+                    **{
+                        **{
+                            c.name: getattr(row, c.name) for c in Stop.__table__.columns
+                        },
+                        "boarding": row.boarding
+                        and row.id
+                        not in details.get("boarding_restricted_stop_ids", []),
+                    }
+                )
+                for row in rows
+                if row.id not in details.get("cancelled_stop_ids", [])
+            ]
+        return rows
 
     def get_journey_duration(self, q: JourneyQuery):
         return [
@@ -244,7 +287,12 @@ class Enquiry:
         destination = self.repository.resolve_station(q.destination).id
         results = []
         for row in self._rows(q):
-            stops = self.get_route_stops(row["service_id"])
+            stops = self.get_route_stops(
+                row["service_id"],
+                date.fromisoformat(row["service_date"])
+                if isinstance(row["service_date"], str)
+                else row["service_date"],
+            )
             if any(
                 a.station_id == origin
                 and b.station_id == via_id

@@ -1,0 +1,17 @@
+{
+  "network": "ALL_SOCKET_CONNECTIONS_BLOCKED",
+  "candidate": "english-svm-grouped-60-v1",
+  "local_path": "models/english/nlp/grouped-60-v1/svm.joblib",
+  "sha256": "0621d903dc7332181f0dc7a3f41ae1ed785c495da32a9b132dab09e3e6cc0ff4",
+  "checksum_verified": true,
+  "load_ms": 1751.6892000021471,
+  "batch_inference_ms": 27.004799998394446,
+  "samples": 5,
+  "load_success": true,
+  "forward_success": true,
+  "predictions_are_accuracy_evidence": false,
+  "deployment_status": "CANDIDATE",
+  "approved": false,
+  "application_model_status": "NOT_READY",
+  "note": "Candidate-only technical load verification; runtime approval gates and registry remain unchanged."
+}

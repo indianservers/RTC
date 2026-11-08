@@ -1,0 +1,84 @@
+{
+  "recorded_at": "2026-11-08T11:01:27.082Z",
+  "dataset": "isolated seeded DEMO SQLite",
+  "runs": 5,
+  "network": "loopback only; external browser and backend sockets blocked",
+  "model": "actual local configured fallback; no approved model asserted",
+  "samples": [
+    {
+      "page_ready_ms": 96.4195999999938,
+      "chat_send_to_answer_visible_ms": 181.97060000000056,
+      "autocomplete_including_debounce_ms": 269.2801999999938,
+      "nlp_total_ms": 49.48489999878802,
+      "phase_timings_ms": {
+        "entity_extraction_ms": 2.945499996712897,
+        "context_update_ms": 3.0307999986689538,
+        "intent_inference_ms": 3.332399999635527,
+        "database_lookup_ms": 33.04479999860632
+      },
+      "planner_http_ms": 66.16599999999744,
+      "js_heap_used_bytes": 8853532,
+      "server_timing": "app;dur=62.338"
+    },
+    {
+      "page_ready_ms": 128.46330000000307,
+      "chat_send_to_answer_visible_ms": 193.42729999999574,
+      "autocomplete_including_debounce_ms": 276.51570000000356,
+      "nlp_total_ms": 65.70570000258158,
+      "phase_timings_ms": {
+        "entity_extraction_ms": 2.842699999746401,
+        "context_update_ms": 3.6328000023786444,
+        "intent_inference_ms": 4.340700001193909,
+        "database_lookup_ms": 48.8030999986222
+      },
+      "planner_http_ms": 77.58440000000701,
+      "js_heap_used_bytes": 12730544,
+      "server_timing": "app;dur=78.912"
+    },
+    {
+      "page_ready_ms": 138.3622999999934,
+      "chat_send_to_answer_visible_ms": 213.02270000000135,
+      "autocomplete_including_debounce_ms": 256.92050000000745,
+      "nlp_total_ms": 47.62269999991986,
+      "phase_timings_ms": {
+        "entity_extraction_ms": 2.002699999138713,
+        "context_update_ms": 2.6738000015029684,
+        "intent_inference_ms": 2.7785000020230655,
+        "database_lookup_ms": 33.30429999914486
+      },
+      "planner_http_ms": 55.36250000000291,
+      "js_heap_used_bytes": 17187420,
+      "server_timing": "app;dur=57.148"
+    },
+    {
+      "page_ready_ms": 147.24550000000454,
+      "chat_send_to_answer_visible_ms": 207.29820000000473,
+      "autocomplete_including_debounce_ms": 260.04460000000836,
+      "nlp_total_ms": 59.35529999987921,
+      "phase_timings_ms": {
+        "entity_extraction_ms": 2.6924000012513716,
+        "context_update_ms": 3.460899999481626,
+        "intent_inference_ms": 5.134499999257969,
+        "database_lookup_ms": 40.09109999969951
+      },
+      "planner_http_ms": 71.9944000000105,
+      "js_heap_used_bytes": 22777068,
+      "server_timing": "app;dur=71.284"
+    },
+    {
+      "page_ready_ms": 152.68559999999707,
+      "chat_send_to_answer_visible_ms": 224.72750000000815,
+      "autocomplete_including_debounce_ms": 271.9511000000057,
+      "nlp_total_ms": 63.028900000063004,
+      "phase_timings_ms": {
+        "entity_extraction_ms": 2.5454000024183188,
+        "context_update_ms": 3.591900000174064,
+        "intent_inference_ms": 4.562999998597661,
+        "database_lookup_ms": 43.907600000238745
+      },
+      "planner_http_ms": 69.82390000000305,
+      "js_heap_used_bytes": 19408640,
+      "server_timing": "app;dur=76.563"
+    }
+  ]
+}

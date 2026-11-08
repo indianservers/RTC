@@ -38,6 +38,14 @@ class EnglishInferenceService:
                 "decision_margin": prediction.get("decision_margin"),
                 "probability": None,
             }
+        if prediction["status"] == "OUT_OF_SCOPE":
+            return {
+                "status": "OUT_OF_SCOPE",
+                "intent": None,
+                "source": "APPROVED_LOCAL_SVM",
+                "domain_margin": prediction.get("domain_margin"),
+                "probability": None,
+            }
         if prediction["status"] == "CLARIFICATION_REQUIRED":
             return {
                 "status": "CLARIFICATION_REQUIRED",

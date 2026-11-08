@@ -8,6 +8,17 @@ from ..catalog import BusAlias
 from ..domain import Alias, Category, Station
 
 
+class AmbiguousStation(ValueError):
+    def __init__(self, term, choices):
+        self.term = term
+        self.choices = choices
+        super().__init__(
+            "Which station do you mean by '"
+            + term
+            + "'? Choose a station below or type its code."
+        )
+
+
 class RTCEntityExtractor:
     def __init__(self, session):
         self.session = session
@@ -31,13 +42,26 @@ class RTCEntityExtractor:
             ):
                 matches.append((match.start(), match.end(), identifier))
         matches = [m for m in matches if not re.search(r"\bnot\s*$", text[: m[0]])]
+        # A unique full station code must outrank a shorter shared name inside it.
+        matches = [
+            m
+            for m in matches
+            if not any(
+                other[0] <= m[0]
+                and other[1] >= m[1]
+                and (other[0], other[1]) != (m[0], m[1])
+                for other in matches
+            )
+        ]
         for begin, end, identifier in matches:
             if len({m[2] for m in matches if m[0] == begin and m[1] == end}) > 1:
-                raise ValueError(
-                    "Which station do you mean by '"
-                    + text[begin:end]
-                    + "'? Please use its station code."
-                )
+                ids = sorted({m[2] for m in matches if m[0] == begin and m[1] == end})
+                choices = [
+                    {"id": station.id, "code": station.code, "name": station.name}
+                    for identifier in ids
+                    if (station := self.session.get(Station, identifier))
+                ]
+                raise AmbiguousStation(text[begin:end], choices)
         matches.sort(key=lambda x: (x[0], -(x[1] - x[0])))
         selected = []
         for match in matches:
@@ -54,6 +78,13 @@ class RTCEntityExtractor:
                 and not re.search(r"\b(to|ki)\b", text)
                 else "destination"
             ] = places[0]
+        if (
+            places
+            and len(places) == 1
+            and re.search(r"(?:does|will).*stop at|pass through", text)
+        ):
+            values.pop("destination", None)
+            values["via"] = places[0]
         via = re.search(r"\bvia\s+", text)
         if via:
             after = [m for m in selected if m[0] >= via.end()]

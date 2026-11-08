@@ -220,3 +220,82 @@ PHASE 3B INCOMPLETE. Added bounded time-dependent direct/one-/two-transfer plann
 Actual benchmark:100-service median11.725ms (P95 13.411ms),1000-service median64.774ms,10000-service median687.925ms;14 DB queries per completed same-corridor SQLite fixture. The50000-service fixture was refused at the capacity bound. These are synthetic measurements, not national-network/concurrency certification. Final full suite: **1,381 passed** (one dependency deprecation warning); Ruff and Mypy passed. See [Phase3B report](docs/PHASE_3B_REPORT.md).
 
 Remaining work includes leg-scoped constraints/dialogue, explicit inter-stand transfer data, concession/surcharge evaluation, detailed disruption/stop-closure semantics and production-scale verification. PostgreSQL and OS-level offline isolation were not tested. See [journey usage](docs/JOURNEY_PLANNER.md), [algorithm](docs/ROUTING_ALGORITHMS.md) and [requirement matrix](docs/phase3b-gap-matrix.json). No voice or graphical UI was added.
+
+
+## Phase 4A — working passenger and admin app
+
+The application has been built, started and tested against the existing backend/database. Passenger chat, real bus cards, search, connecting-journey planning, service timelines, protected administration, supported CRUD/imports, diagnostics and system status are implemented. Domains without write APIs are explicitly read-only. Earlier backend/model limitations remain; this is not a claim of overall RTC or production completion.
+
+```powershell
+# From the repository root, with dependencies already installed:
+.\start-rtc.ps1
+# Compiled offline app, served directly by FastAPI:
+.\start-rtc.ps1 -Production
+```
+
+Development: http://127.0.0.1:5173. Production: http://127.0.0.1:8000. The launcher runs existing migrations, prints the local administrator token (or uses RTC_ADMIN_TOKEN), and performs no downloads. Ctrl+C stops its processes. Optional `-InitializeDemo` runs the existing demo seeds; the default preserves existing records. Choose the actual current stand: the standard Tirumala → Nellore DEMO enquiry and fare follow-up were verified against the existing database.
+
+One-time setup: `python -m pip install -r requirements.txt`, `npm ci --prefix frontend`, `npm run build --prefix frontend`. Production needs only Python and compiled frontend/dist; it does not require Node. Model artifacts are preserved and no speech/cloud model is introduced.
+
+Verification: **1388 backend tests passed;19 production Playwright tests passed**. Frontend lint/TypeScript/build, Ruff and Mypy passed; npm audit reports zero vulnerabilities. Browser tests block external requests and use actual API/SQLite fixtures. No OS firewall isolation or PostgreSQL execution claim is made. See [app setup](docs/APP_SETUP.md), [Phase4A report](docs/PHASE_4A_REPORT.md), [coverage](docs/phase4a-coverage.json), and browser screenshots in docs. Phase 4B supersedes the page-local sorting/filtering limitation with server-wide search and sorting; unsupported administration remains read-only.
+
+Frontend checks: `npm run lint --prefix frontend`; `npm run build --prefix frontend`; `cd frontend; npm test`. Browser setup once: `npx playwright install chromium`. Backend checks retain the commands above. Assets use local bundles/system fonts only; no CDN, remote analytics, payment or booking flow.
+
+## Local capability extension and frozen SVM evaluation
+
+The latest text-only extension adds 15 enquiries using existing tables: buses near a specified time; per-date departure counts/gaps; special-date schedules; wheelchair-accessible vehicles; recorded capacity; route-segment distances; bounded destination reachability; reservation channels; fresh verified arrival estimates and actual arrival/departure observations; platform reassignment history; operator websites; recorded station addresses/bay zones; and complaint contacts.
+
+There are now **56 PARTIAL local handlers and four UNSUPPORTED intents**. Booking status has no authorized status record; cancellation policy, refund policy and luggage rules have no applicable policy records. They remain unsupported. A partial handler returns UNKNOWN when its required local records are absent. Capacity is never vacant-seat inventory; a timetable is never proof that a bus has arrived or departed. Operator contact exposes only the recorded website, and station navigation provides recorded locations without inventing indoor directions.
+
+Existing database taxonomy entries are adapted at read time for these implemented handlers; new taxonomy seeds use the updated capability metadata. No automatic database refresh, migration, model promotion or training is performed. Existing speech artifacts are preserved.
+
+Run the additional checks and evaluation:
+
+```powershell
+python -m pytest -q backend/tests/test_local_intents.py backend/tests/test_svm_holdout_integrity.py
+.\.venv-english\Scripts\python.exe scripts/evaluate_svm_holdout.py
+```
+
+The newly authored frozen evaluation has 180 single-intent questions and 20 out-of-scope questions; one exact-overlap out-of-scope question is excluded by the preregistered lexical audit. Pilot-v2 SVM accuracy was **26.67%**; grouped-60-v1 SVM accuracy was **65.00%** on the same 180 eligible questions. Both raw forced-choice classifiers falsely accepted all 19 eligible out-of-scope questions. No candidate was activated or tuned. These are agent-authored held-out results, not human-reviewed field accuracy.
+
+See `docs/local-intents-report.md` and `evaluation/english-svm-v1/REPORT.md` for measured results, limitations and reproduction details. All questions and their predictions stay outside training datasets.
+
+## Improved text SVM and out-of-scope rejection
+
+The `selective-60-v2` candidate uses a 60-intent SVM plus a binary in-scope/out-of-scope SVM. Train-only TF-IDF features and separate validation data determine its parameters and rejection thresholds. Existing active-model approval gates remain unchanged, so the candidate is **not enabled in ordinary chat**.
+
+Inspect the candidate without changing deployment:
+
+```powershell
+.\.venv-english\Scripts\python.exe scripts/predict_selective_svm.py "Please explain whether this bus has an AC cabin"
+.\.venv-english\Scripts\python.exe scripts/predict_selective_svm.py "Help me choose a mutual fund investment"
+```
+
+This terminal-only command runs offline and displays KNOWN, OUT_OF_SCOPE or CLARIFICATION_REQUIRED with decision margins, not probabilities. It validates the saved candidate checksum and never queries or changes the RTC database.
+
+The snapshots contain 771 training and 240 validation records. Nine proposed training examples were excluded by leakage/duplicate checks. Fresh-test questions were frozen before fitting, and none of the earlier evaluation questions were used to train or tune the model. On the new 180-ID/60-OOS test, closed-set intent accuracy improved from **49.44% to 81.67%**. The candidate rejected **58/60 OOS** questions, accepted **171/180 ID** questions and had **80.70% accuracy among accepted ID questions**. These agent-authored results are not human-reviewed field accuracy. No test-driven retraining or threshold changes followed evaluation.
+
+See `docs/selective-svm-report.md`, `training/datasets/selective-60-v2/README.md` and `evaluation/english-svm-v2/REPORT.md` for data boundaries, measured results and remaining limits. All work is text-only; speech artifacts, existing models, prior evaluation sets and UI code are preserved.
+
+## Phase 4B — interactive passenger and admin improvements
+
+Implemented real conversational follow-ups and expiry-safe kiosk resets, fresh service cards, backend-validated journey comparison, accessible service tabs, server-wide admin search/sort, database Data Quality, actual NLP diagnostics and System Status. No schema replacement, cloud service or voice feature was introduced.
+
+Verification: **1,459 backend tests and 35 production browser tests passed**. Final Ruff, configured Mypy, frontend lint/TypeScript/build passed; npm audit snapshot has zero vulnerabilities. Existing SQLite fixtures and blocked external application requests were used. PostgreSQL and OS firewall isolation are not claimed. Fare-rule expiry/rejected-row history checks remain limited by existing schema, some admin domains are read-only, and reference choices are capped at 100. See [Phase 4B report](docs/PHASE_4B_REPORT.md), [gap audit](docs/PHASE_4B_AUDIT.md), and [app setup](docs/APP_SETUP.md).
+
+## Phase 4C — passenger conversation and reliability stabilization
+
+Added database-backed pending station clarification, current-list selection revalidation, destination-safe stop/transfer questions, explicit no-result recovery, planner reset, configurable activity-aware kiosk expiry, interrupted-request/draft recovery, unsaved admin edit guards, additional data-quality checks and bounded local request diagnostics. Existing migrations/APIs and model approval gates are preserved.
+
+Backend regression: **1,484 passed, 0 failed**. The production browser suite contains **132 real-local-backend tests** including the requested conversations and ten-step seeded acceptance flow. Ruff, configured Mypy, frontend lint/TypeScript/build pass. A local SVM candidate loads and infers with all socket connections blocked in the provisioned model environment; production continues with deterministic fallback because that candidate remains unapproved. Data/schema, model-readiness and deployment limits are explicit in the [Phase 4C report](docs/PHASE_4C_REPORT.md), [audit](docs/PHASE_4C_AUDIT.md), [coverage](docs/phase4c-coverage.json) and [performance report](docs/PHASE_4C_PERFORMANCE.md). This records the Phase 4C baseline; the Phase 5A implementation below supersedes its admin/database limitations.
+
+
+## Phase 5A — offline enterprise data management
+
+Implemented operator-scoped administration, named editor/independent approver access, staged CSV/XLSX imports with explicit mapping and row validation, schema-generated templates, transactional publication, audit/version snapshots and guarded rollback. Route/variant and timetable editors, dated Decimal fare rules/surcharges and preview, all eight service exception types, platform updates and actual quality metrics feed existing passenger enquiries after publication.
+
+Original migrations 0001–0010 remain intact; incremental migrations 0011–0014 extend existing tables. The actual SQLite upgrade preserved all original values in 71 tables/1,112 rows and passed integrity/foreign-key checks. No official operational dataset was invented. Existing DEMO records remain labelled DEMO.
+
+Verification: **1,566 full backend regression tests passed**, followed by **84 final SQLite/PostgreSQL data-management tests** (overlapping counts), **two maximum-size 10,000-row validation tests**, and **140 production browser tests**. Ruff, configured Mypy, ESLint, TypeScript and build passed. PostgreSQL cases actually ran on a local dedicated database. External application requests were blocked in the browser/backend integration servers. The running app also passed a real import → independent approval → passenger alias enquiry → rollback smoke.
+
+**PHASE 5A COMPLETE** within the documented local limits. No authoritative APSRTC timetable/fare/source files were supplied; onboarding them remains a deployment input. Legacy batches without snapshots cannot roll back; imports are synchronous and bounded at 10 MB/10,000 rows. Existing model approval gates remain unchanged. See [completion report](docs/PHASE_5A_REPORT.md), [requirement audit](docs/PHASE_5A_AUDIT.md), [data-management setup](docs/PHASE_5A_SETUP.md) and [live smoke evidence](docs/phase5a-live-smoke.json).

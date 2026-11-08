@@ -1,0 +1,1083 @@
+{
+  "isolation": "Python socket guard only; OFFLINE_NOT_FULLY_VERIFIED",
+  "models": [
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\grouped-60-v1\\svm.joblib",
+      "bytes": 2778792,
+      "sha256": "0621d903dc7332181f0dc7a3f41ae1ed785c495da32a9b132dab09e3e6cc0ff4",
+      "version": "grouped-60-v1",
+      "kind": "svm",
+      "labels": [
+        "ACCESSIBLE_BUS_AVAILABILITY",
+        "AC_BUS_AVAILABILITY",
+        "ALIGHTING_POINT",
+        "ALTERNATIVE_ROUTES",
+        "ARRIVAL_TIME",
+        "AVAILABLE_BUS_TYPES",
+        "BOARDING_POINT",
+        "BOOKING_OPTIONS",
+        "BOOKING_STATUS",
+        "BUSES_BETWEEN",
+        "BUSES_OPERATING_TODAY",
+        "BUS_AMENITIES",
+        "BUS_ARRIVED_STATUS",
+        "BUS_AT_TIME",
+        "BUS_CANCELLATION",
+        "BUS_CAPACITY",
+        "BUS_DELAY",
+        "BUS_DEPARTED_STATUS",
+        "BUS_PLATFORM",
+        "BUS_VIA_LOCATION",
+        "CANCELLATION_POLICY",
+        "CHEAPEST_BUS",
+        "COMPLAINT_GUIDANCE",
+        "CONCESSION_ENQUIRY",
+        "CONNECTING_BUSES",
+        "DEPARTURES_AFTER",
+        "DEPARTURES_BEFORE",
+        "DESTINATION_REACHABILITY",
+        "DIRECT_BUS",
+        "ELECTRIC_BUS_AVAILABILITY",
+        "ESTIMATED_ARRIVAL",
+        "FARE_COMPARISON",
+        "FASTEST_BUS",
+        "FIRST_BUS",
+        "GET_FARE",
+        "INTERMEDIATE_STOP",
+        "JOURNEY_DURATION",
+        "LAST_BUS",
+        "LIVE_BUS_STATUS",
+        "LOST_PROPERTY",
+        "LUGGAGE_RULES",
+        "NEXT_BUS",
+        "NON_AC_BUS_AVAILABILITY",
+        "OPERATOR_CONTACT",
+        "PLATFORM_CHANGE",
+        "REFUND_POLICY",
+        "RESERVATION_SUPPORTED",
+        "ROUTE_DISTANCE",
+        "ROUTE_STOPS",
+        "SEATER_AVAILABILITY",
+        "SEAT_AVAILABILITY",
+        "SERVICE_CATEGORY_COMPARISON",
+        "SERVICE_DISRUPTION",
+        "SERVICE_FREQUENCY",
+        "SERVICE_NUMBER_LOOKUP",
+        "SLEEPER_AVAILABILITY",
+        "SPECIAL_DAY_SCHEDULE",
+        "STATION_FACILITIES",
+        "STATION_HELPDESK",
+        "STATION_NAVIGATION"
+      ],
+      "predictions": [
+        {
+          "text": "When is the next bus to Tirupati?",
+          "expected": "NEXT_BUS",
+          "predicted": "NEXT_BUS",
+          "raw_score": 0.6421020999542404,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 40.20760000094015
+        },
+        {
+          "text": "What is the fare to Nellore?",
+          "expected": "GET_FARE",
+          "predicted": "GET_FARE",
+          "raw_score": -0.43961264916295084,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 12.65369999964605
+        },
+        {
+          "text": "What time is the last bus to Vizag?",
+          "expected": "LAST_BUS",
+          "predicted": "LAST_BUS",
+          "raw_score": 0.4820439471181738,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 3.3583999993425095
+        },
+        {
+          "text": "Are AC sleeper buses available tonight?",
+          "expected": "AC_BUS_AVAILABILITY + SLEEPER_AVAILABILITY + tonight constraint",
+          "predicted": "SLEEPER_AVAILABILITY",
+          "raw_score": 0.17761037884797082,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 3.0430999995587626
+        },
+        {
+          "text": "Does this bus stop at Ongole?",
+          "expected": "INTERMEDIATE_STOP",
+          "predicted": "INTERMEDIATE_STOP",
+          "raw_score": -0.24346603354628882,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.5081000003410736
+        },
+        {
+          "text": "Which is the cheapest bus to Hyderabad?",
+          "expected": "CHEAPEST_BUS",
+          "predicted": "CHEAPEST_BUS",
+          "raw_score": 0.3622873970296374,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 3.836300000330084
+        },
+        {
+          "text": "Is the bus delayed?",
+          "expected": "BUS_DELAY",
+          "predicted": "BUS_DELAY",
+          "raw_score": 0.001664649599944834,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.503799998521572
+        },
+        {
+          "text": "Which platform is the bus on?",
+          "expected": "BUS_PLATFORM",
+          "predicted": "BUS_PLATFORM",
+          "raw_score": 0.5521974977662856,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 3.2344999999622814
+        },
+        {
+          "text": "I want to change my destination to Tirumala.",
+          "expected": "destination correction dialogue act",
+          "predicted": "DIRECT_BUS",
+          "raw_score": -0.5010357341303691,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 15.089700000316952
+        },
+        {
+          "text": "What about tomorrow morning?",
+          "expected": "contextual date/time refinement; retain preceding intent",
+          "predicted": "FIRST_BUS",
+          "raw_score": 0.2065684834913687,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 4.30670000059763
+        }
+      ],
+      "load_seconds": 0.5310674000011204,
+      "structure": "Pipeline(steps=[('featureunion',\n                 FeatureUnion(transformer_list=[('word',\n                                                 TfidfVectorizer(ngram_range=(1,\n                                                                              2))),\n                                                ('char',\n                                                 TfidfVectorizer(analyzer='char_wb',\n                                                                 ngram_range=(3,\n                                                                              5)))])),\n                ('linearsvc',\n                 LinearSVC(class_weight='balanced', random_state=42))])",
+      "label_match": true
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\grouped-60-v1\\textcnn.keras",
+      "bytes": 15598461,
+      "sha256": "bd2459ced9f632d00e77d37516022d454ac205382006f5d6a0ef43fe0665b0c2",
+      "version": "grouped-60-v1",
+      "kind": "textcnn",
+      "labels": [
+        "ACCESSIBLE_BUS_AVAILABILITY",
+        "AC_BUS_AVAILABILITY",
+        "ALIGHTING_POINT",
+        "ALTERNATIVE_ROUTES",
+        "ARRIVAL_TIME",
+        "AVAILABLE_BUS_TYPES",
+        "BOARDING_POINT",
+        "BOOKING_OPTIONS",
+        "BOOKING_STATUS",
+        "BUSES_BETWEEN",
+        "BUSES_OPERATING_TODAY",
+        "BUS_AMENITIES",
+        "BUS_ARRIVED_STATUS",
+        "BUS_AT_TIME",
+        "BUS_CANCELLATION",
+        "BUS_CAPACITY",
+        "BUS_DELAY",
+        "BUS_DEPARTED_STATUS",
+        "BUS_PLATFORM",
+        "BUS_VIA_LOCATION",
+        "CANCELLATION_POLICY",
+        "CHEAPEST_BUS",
+        "COMPLAINT_GUIDANCE",
+        "CONCESSION_ENQUIRY",
+        "CONNECTING_BUSES",
+        "DEPARTURES_AFTER",
+        "DEPARTURES_BEFORE",
+        "DESTINATION_REACHABILITY",
+        "DIRECT_BUS",
+        "ELECTRIC_BUS_AVAILABILITY",
+        "ESTIMATED_ARRIVAL",
+        "FARE_COMPARISON",
+        "FASTEST_BUS",
+        "FIRST_BUS",
+        "GET_FARE",
+        "INTERMEDIATE_STOP",
+        "JOURNEY_DURATION",
+        "LAST_BUS",
+        "LIVE_BUS_STATUS",
+        "LOST_PROPERTY",
+        "LUGGAGE_RULES",
+        "NEXT_BUS",
+        "NON_AC_BUS_AVAILABILITY",
+        "OPERATOR_CONTACT",
+        "PLATFORM_CHANGE",
+        "REFUND_POLICY",
+        "RESERVATION_SUPPORTED",
+        "ROUTE_DISTANCE",
+        "ROUTE_STOPS",
+        "SEATER_AVAILABILITY",
+        "SEAT_AVAILABILITY",
+        "SERVICE_CATEGORY_COMPARISON",
+        "SERVICE_DISRUPTION",
+        "SERVICE_FREQUENCY",
+        "SERVICE_NUMBER_LOOKUP",
+        "SLEEPER_AVAILABILITY",
+        "SPECIAL_DAY_SCHEDULE",
+        "STATION_FACILITIES",
+        "STATION_HELPDESK",
+        "STATION_NAVIGATION"
+      ],
+      "predictions": [
+        {
+          "text": "When is the next bus to Tirupati?",
+          "expected": "NEXT_BUS",
+          "predicted": "NEXT_BUS",
+          "raw_score": 0.7798845171928406,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 416.6848000004393
+        },
+        {
+          "text": "What is the fare to Nellore?",
+          "expected": "GET_FARE",
+          "predicted": "CHEAPEST_BUS",
+          "raw_score": 0.20880135893821716,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 17.244800001208205
+        },
+        {
+          "text": "What time is the last bus to Vizag?",
+          "expected": "LAST_BUS",
+          "predicted": "LAST_BUS",
+          "raw_score": 0.3012009561061859,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 21.94019999842567
+        },
+        {
+          "text": "Are AC sleeper buses available tonight?",
+          "expected": "AC_BUS_AVAILABILITY + SLEEPER_AVAILABILITY + tonight constraint",
+          "predicted": "SLEEPER_AVAILABILITY",
+          "raw_score": 0.2414964735507965,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 19.03139999922132
+        },
+        {
+          "text": "Does this bus stop at Ongole?",
+          "expected": "INTERMEDIATE_STOP",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.08310703933238983,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 22.32910000020638
+        },
+        {
+          "text": "Which is the cheapest bus to Hyderabad?",
+          "expected": "CHEAPEST_BUS",
+          "predicted": "CHEAPEST_BUS",
+          "raw_score": 0.4551638662815094,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 32.77960000013991
+        },
+        {
+          "text": "Is the bus delayed?",
+          "expected": "BUS_DELAY",
+          "predicted": "BUS_DELAY",
+          "raw_score": 0.09783196449279785,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 49.05230000076699
+        },
+        {
+          "text": "Which platform is the bus on?",
+          "expected": "BUS_PLATFORM",
+          "predicted": "BUS_PLATFORM",
+          "raw_score": 0.6049456596374512,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 29.5538000009401
+        },
+        {
+          "text": "I want to change my destination to Tirumala.",
+          "expected": "destination correction dialogue act",
+          "predicted": "NON_AC_BUS_AVAILABILITY",
+          "raw_score": 0.13493172824382782,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 39.52250000111235
+        },
+        {
+          "text": "What about tomorrow morning?",
+          "expected": "contextual date/time refinement; retain preceding intent",
+          "predicted": "FIRST_BUS",
+          "raw_score": 0.14044822752475739,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 17.651699999987613
+        }
+      ],
+      "load_seconds": 0.5203525000015361,
+      "structure": [
+        {
+          "name": "input_layer",
+          "class": "InputLayer",
+          "output": "<KerasTensor shape=(None,), dtype=string, sparse=False, ragged=False, name=input_layer>"
+        },
+        {
+          "name": "text_vectorization",
+          "class": "TextVectorization",
+          "output": "<KerasTensor shape=(None, 64), dtype=int64, sparse=False, ragged=False, name=keras_tensor_1>"
+        },
+        {
+          "name": "embedding",
+          "class": "Embedding",
+          "output": "<KerasTensor shape=(None, 64, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_3>"
+        },
+        {
+          "name": "conv1d",
+          "class": "Conv1D",
+          "output": "<KerasTensor shape=(None, 62, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_5>"
+        },
+        {
+          "name": "global_max_pooling1d",
+          "class": "GlobalMaxPooling1D",
+          "output": "<KerasTensor shape=(None, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_7>"
+        },
+        {
+          "name": "dropout",
+          "class": "Dropout",
+          "output": "<KerasTensor shape=(None, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_9>"
+        },
+        {
+          "name": "dense",
+          "class": "Dense",
+          "output": "<KerasTensor shape=(None, 60), dtype=float32, sparse=False, ragged=False, name=keras_tensor_11>"
+        }
+      ],
+      "label_match": true,
+      "vocabulary_size": 399
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\pilot-v1\\svm.joblib",
+      "bytes": 403160,
+      "sha256": "4d96f61a624b63d79fd15c576e6de044563c2250e1203fdfe58023f77407cf37",
+      "version": "pilot-v1",
+      "kind": "svm",
+      "labels": [
+        "AC_BUS_AVAILABILITY",
+        "ALIGHTING_POINT",
+        "ALTERNATIVE_ROUTES",
+        "ARRIVALS_AT_STATION",
+        "ARRIVAL_TIME",
+        "AVAILABLE_BUS_TYPES",
+        "BOARDING_POINT",
+        "BUSES_BETWEEN",
+        "BUSES_OPERATING_TODAY",
+        "BUS_AMENITIES",
+        "BUS_CANCELLATION",
+        "BUS_DELAY",
+        "BUS_LIVE_STATUS",
+        "BUS_PLATFORM",
+        "BUS_VIA_LOCATION",
+        "CHEAPEST_BUS",
+        "CONCESSION_ELIGIBILITY",
+        "CONNECTING_BUSES",
+        "DEPARTURES_AFTER",
+        "DEPARTURES_BEFORE",
+        "DIRECT_BUS_AVAILABILITY",
+        "ELECTRIC_BUS_AVAILABILITY",
+        "FARE_COMPARISON",
+        "FASTEST_BUS",
+        "FIRST_BUS",
+        "INTERMEDIATE_STOP",
+        "JOURNEY_DURATION",
+        "LAST_BUS",
+        "LOST_PROPERTY_CONTACT",
+        "LUGGAGE_RULES",
+        "NEXT_BUS",
+        "NON_AC_AVAILABILITY",
+        "OPERATOR_CONTACT",
+        "RESERVATION_SUPPORTED",
+        "ROUTE_STOPS",
+        "SEATER_BUS_AVAILABILITY",
+        "SEAT_AVAILABILITY",
+        "SERVICE_CATEGORY_COMPARISON",
+        "SERVICE_DISRUPTION",
+        "SERVICE_NUMBER_LOOKUP",
+        "SLEEPER_BUS_AVAILABILITY",
+        "STATION_FACILITIES",
+        "STATION_HELPDESK",
+        "TICKET_FARE"
+      ],
+      "predictions": [
+        {
+          "text": "When is the next bus to Tirupati?",
+          "expected": "NEXT_BUS",
+          "predicted": "NEXT_BUS",
+          "raw_score": 0.5766506433965848,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 3.607999999076128
+        },
+        {
+          "text": "What is the fare to Nellore?",
+          "expected": "GET_FARE",
+          "predicted": "TICKET_FARE",
+          "raw_score": 0.44001485623271896,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.194999999119318
+        },
+        {
+          "text": "What time is the last bus to Vizag?",
+          "expected": "LAST_BUS",
+          "predicted": "LAST_BUS",
+          "raw_score": 0.5838195674612073,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 1.9944000014220364
+        },
+        {
+          "text": "Are AC sleeper buses available tonight?",
+          "expected": "AC_BUS_AVAILABILITY + SLEEPER_AVAILABILITY + tonight constraint",
+          "predicted": "SLEEPER_BUS_AVAILABILITY",
+          "raw_score": 0.009042196672184644,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.054399999906309
+        },
+        {
+          "text": "Does this bus stop at Ongole?",
+          "expected": "INTERMEDIATE_STOP",
+          "predicted": "INTERMEDIATE_STOP",
+          "raw_score": -0.46935724880041935,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.007800001592841
+        },
+        {
+          "text": "Which is the cheapest bus to Hyderabad?",
+          "expected": "CHEAPEST_BUS",
+          "predicted": "CHEAPEST_BUS",
+          "raw_score": 0.4161117674579782,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 1.894999999421998
+        },
+        {
+          "text": "Is the bus delayed?",
+          "expected": "BUS_DELAY",
+          "predicted": "BUS_DELAY",
+          "raw_score": -0.3864125046970716,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.0554000002448447
+        },
+        {
+          "text": "Which platform is the bus on?",
+          "expected": "BUS_PLATFORM",
+          "predicted": "BUS_PLATFORM",
+          "raw_score": 0.3923091076217341,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 1.8636000004335074
+        },
+        {
+          "text": "I want to change my destination to Tirumala.",
+          "expected": "destination correction dialogue act",
+          "predicted": "JOURNEY_DURATION",
+          "raw_score": -0.7889774838124826,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.047199999651639
+        },
+        {
+          "text": "What about tomorrow morning?",
+          "expected": "contextual date/time refinement; retain preceding intent",
+          "predicted": "FIRST_BUS",
+          "raw_score": -0.8197478808052341,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 1.9627000001491979
+        }
+      ],
+      "load_seconds": 0.007770300000629504,
+      "structure": "Pipeline(steps=[('featureunion',\n                 FeatureUnion(transformer_list=[('word',\n                                                 TfidfVectorizer(ngram_range=(1,\n                                                                              2))),\n                                                ('char',\n                                                 TfidfVectorizer(analyzer='char_wb',\n                                                                 ngram_range=(3,\n                                                                              5)))])),\n                ('linearsvc', LinearSVC(random_state=42))])",
+      "label_match": true
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\pilot-v1\\textcnn.keras",
+      "bytes": 15580791,
+      "sha256": "3ea21748ba4b0bbc67c3e5ba03be345e6b7168ba1fa14495a6435f186cea88c6",
+      "version": "pilot-v1",
+      "kind": "textcnn",
+      "labels": [
+        "AC_BUS_AVAILABILITY",
+        "ALIGHTING_POINT",
+        "ALTERNATIVE_ROUTES",
+        "ARRIVALS_AT_STATION",
+        "ARRIVAL_TIME",
+        "AVAILABLE_BUS_TYPES",
+        "BOARDING_POINT",
+        "BUSES_BETWEEN",
+        "BUSES_OPERATING_TODAY",
+        "BUS_AMENITIES",
+        "BUS_CANCELLATION",
+        "BUS_DELAY",
+        "BUS_LIVE_STATUS",
+        "BUS_PLATFORM",
+        "BUS_VIA_LOCATION",
+        "CHEAPEST_BUS",
+        "CONCESSION_ELIGIBILITY",
+        "CONNECTING_BUSES",
+        "DEPARTURES_AFTER",
+        "DEPARTURES_BEFORE",
+        "DIRECT_BUS_AVAILABILITY",
+        "ELECTRIC_BUS_AVAILABILITY",
+        "FARE_COMPARISON",
+        "FASTEST_BUS",
+        "FIRST_BUS",
+        "INTERMEDIATE_STOP",
+        "JOURNEY_DURATION",
+        "LAST_BUS",
+        "LOST_PROPERTY_CONTACT",
+        "LUGGAGE_RULES",
+        "NEXT_BUS",
+        "NON_AC_AVAILABILITY",
+        "OPERATOR_CONTACT",
+        "RESERVATION_SUPPORTED",
+        "ROUTE_STOPS",
+        "SEATER_BUS_AVAILABILITY",
+        "SEAT_AVAILABILITY",
+        "SERVICE_CATEGORY_COMPARISON",
+        "SERVICE_DISRUPTION",
+        "SERVICE_NUMBER_LOOKUP",
+        "SLEEPER_BUS_AVAILABILITY",
+        "STATION_FACILITIES",
+        "STATION_HELPDESK",
+        "TICKET_FARE"
+      ],
+      "predictions": [
+        {
+          "text": "When is the next bus to Tirupati?",
+          "expected": "NEXT_BUS",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.03308718651533127,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 28.301300000748597
+        },
+        {
+          "text": "What is the fare to Nellore?",
+          "expected": "GET_FARE",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.03343567997217178,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 11.933499999940977
+        },
+        {
+          "text": "What time is the last bus to Vizag?",
+          "expected": "LAST_BUS",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.033484913408756256,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 19.993900001281872
+        },
+        {
+          "text": "Are AC sleeper buses available tonight?",
+          "expected": "AC_BUS_AVAILABILITY + SLEEPER_AVAILABILITY + tonight constraint",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.033684663474559784,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 19.698899999639252
+        },
+        {
+          "text": "Does this bus stop at Ongole?",
+          "expected": "INTERMEDIATE_STOP",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.03261660411953926,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 27.889900000445778
+        },
+        {
+          "text": "Which is the cheapest bus to Hyderabad?",
+          "expected": "CHEAPEST_BUS",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.032921578735113144,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 26.917699999103206
+        },
+        {
+          "text": "Is the bus delayed?",
+          "expected": "BUS_DELAY",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.032622888684272766,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 11.714399999618763
+        },
+        {
+          "text": "Which platform is the bus on?",
+          "expected": "BUS_PLATFORM",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.03275325149297714,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 56.14579999928537
+        },
+        {
+          "text": "I want to change my destination to Tirumala.",
+          "expected": "destination correction dialogue act",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.033042747527360916,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 13.303100000484847
+        },
+        {
+          "text": "What about tomorrow morning?",
+          "expected": "contextual date/time refinement; retain preceding intent",
+          "predicted": "ALIGHTING_POINT",
+          "raw_score": 0.033042747527360916,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 27.53850000044622
+        }
+      ],
+      "load_seconds": 0.4050712999996904,
+      "structure": [
+        {
+          "name": "input_layer",
+          "class": "InputLayer",
+          "output": "<KerasTensor shape=(None,), dtype=string, sparse=False, ragged=False, name=input_layer>"
+        },
+        {
+          "name": "text_vectorization",
+          "class": "TextVectorization",
+          "output": "<KerasTensor shape=(None, 64), dtype=int64, sparse=False, ragged=False, name=keras_tensor_13>"
+        },
+        {
+          "name": "embedding",
+          "class": "Embedding",
+          "output": "<KerasTensor shape=(None, 64, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_15>"
+        },
+        {
+          "name": "conv1d",
+          "class": "Conv1D",
+          "output": "<KerasTensor shape=(None, 62, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_17>"
+        },
+        {
+          "name": "global_max_pooling1d",
+          "class": "GlobalMaxPooling1D",
+          "output": "<KerasTensor shape=(None, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_19>"
+        },
+        {
+          "name": "dropout",
+          "class": "Dropout",
+          "output": "<KerasTensor shape=(None, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_21>"
+        },
+        {
+          "name": "dense",
+          "class": "Dense",
+          "output": "<KerasTensor shape=(None, 44), dtype=float32, sparse=False, ragged=False, name=keras_tensor_23>"
+        }
+      ],
+      "label_match": true,
+      "vocabulary_size": 77
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\pilot-v2\\svm.joblib",
+      "bytes": 393160,
+      "sha256": "91e54534ecc7aa31f963f18d3103a23e952fcf2291c0fed6eaa2945007b8da40",
+      "version": "pilot-v2",
+      "kind": "svm",
+      "labels": [
+        "AC_BUS_AVAILABILITY",
+        "ALIGHTING_POINT",
+        "ALTERNATIVE_ROUTES",
+        "ARRIVALS_AT_STATION",
+        "ARRIVAL_TIME",
+        "AVAILABLE_BUS_TYPES",
+        "BOARDING_POINT",
+        "BUSES_BETWEEN",
+        "BUSES_OPERATING_TODAY",
+        "BUS_AMENITIES",
+        "BUS_CANCELLATION",
+        "BUS_DELAY",
+        "BUS_LIVE_STATUS",
+        "BUS_PLATFORM",
+        "BUS_VIA_LOCATION",
+        "CHEAPEST_BUS",
+        "CONCESSION_ELIGIBILITY",
+        "CONNECTING_BUSES",
+        "DEPARTURES_AFTER",
+        "DEPARTURES_BEFORE",
+        "DIRECT_BUS_AVAILABILITY",
+        "ELECTRIC_BUS_AVAILABILITY",
+        "FARE_COMPARISON",
+        "FASTEST_BUS",
+        "FIRST_BUS",
+        "INTERMEDIATE_STOP",
+        "JOURNEY_DURATION",
+        "LAST_BUS",
+        "LOST_PROPERTY_CONTACT",
+        "LUGGAGE_RULES",
+        "NEXT_BUS",
+        "NON_AC_AVAILABILITY",
+        "OPERATOR_CONTACT",
+        "RESERVATION_SUPPORTED",
+        "ROUTE_STOPS",
+        "SEATER_BUS_AVAILABILITY",
+        "SEAT_AVAILABILITY",
+        "SERVICE_CATEGORY_COMPARISON",
+        "SERVICE_DISRUPTION",
+        "SERVICE_NUMBER_LOOKUP",
+        "SLEEPER_BUS_AVAILABILITY",
+        "STATION_FACILITIES",
+        "STATION_HELPDESK",
+        "TICKET_FARE"
+      ],
+      "predictions": [
+        {
+          "text": "When is the next bus to Tirupati?",
+          "expected": "NEXT_BUS",
+          "predicted": "NEXT_BUS",
+          "raw_score": 0.5761972052199817,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 3.81790000028559
+        },
+        {
+          "text": "What is the fare to Nellore?",
+          "expected": "GET_FARE",
+          "predicted": "TICKET_FARE",
+          "raw_score": 0.4339758598864918,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.669799998329836
+        },
+        {
+          "text": "What time is the last bus to Vizag?",
+          "expected": "LAST_BUS",
+          "predicted": "LAST_BUS",
+          "raw_score": 0.5836805018385374,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.5907999988703523
+        },
+        {
+          "text": "Are AC sleeper buses available tonight?",
+          "expected": "AC_BUS_AVAILABILITY + SLEEPER_AVAILABILITY + tonight constraint",
+          "predicted": "SLEEPER_BUS_AVAILABILITY",
+          "raw_score": 0.008304464155380664,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 9.137800001553842
+        },
+        {
+          "text": "Does this bus stop at Ongole?",
+          "expected": "INTERMEDIATE_STOP",
+          "predicted": "INTERMEDIATE_STOP",
+          "raw_score": -0.46887709817333584,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 3.0090000000200234
+        },
+        {
+          "text": "Which is the cheapest bus to Hyderabad?",
+          "expected": "CHEAPEST_BUS",
+          "predicted": "CHEAPEST_BUS",
+          "raw_score": 0.4164105660158378,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.5132999999186723
+        },
+        {
+          "text": "Is the bus delayed?",
+          "expected": "BUS_DELAY",
+          "predicted": "BUS_DELAY",
+          "raw_score": -0.38526749288963413,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.728900000875001
+        },
+        {
+          "text": "Which platform is the bus on?",
+          "expected": "BUS_PLATFORM",
+          "predicted": "BUS_PLATFORM",
+          "raw_score": 0.3930556023924848,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 3.4503999995649792
+        },
+        {
+          "text": "I want to change my destination to Tirumala.",
+          "expected": "destination correction dialogue act",
+          "predicted": "JOURNEY_DURATION",
+          "raw_score": -0.7856537166023659,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.662400000190246
+        },
+        {
+          "text": "What about tomorrow morning?",
+          "expected": "contextual date/time refinement; retain preceding intent",
+          "predicted": "ROUTE_STOPS",
+          "raw_score": -0.814098663174643,
+          "score_type": "uncalibrated SVM margin",
+          "calibrated_confidence": null,
+          "milliseconds": 2.710000000661239
+        }
+      ],
+      "load_seconds": 0.00602200000139419,
+      "structure": "Pipeline(steps=[('featureunion',\n                 FeatureUnion(transformer_list=[('word',\n                                                 TfidfVectorizer(ngram_range=(1,\n                                                                              2))),\n                                                ('char',\n                                                 TfidfVectorizer(analyzer='char_wb',\n                                                                 ngram_range=(3,\n                                                                              5)))])),\n                ('linearsvc', LinearSVC(random_state=42))])",
+      "label_match": true
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\nlp\\pilot-v2\\textcnn.keras",
+      "bytes": 15580761,
+      "sha256": "ef951a037e9fa3856a6ae398a1bfa8755881a1202527a94dd715bd0df20a4961",
+      "version": "pilot-v2",
+      "kind": "textcnn",
+      "labels": [
+        "AC_BUS_AVAILABILITY",
+        "ALIGHTING_POINT",
+        "ALTERNATIVE_ROUTES",
+        "ARRIVALS_AT_STATION",
+        "ARRIVAL_TIME",
+        "AVAILABLE_BUS_TYPES",
+        "BOARDING_POINT",
+        "BUSES_BETWEEN",
+        "BUSES_OPERATING_TODAY",
+        "BUS_AMENITIES",
+        "BUS_CANCELLATION",
+        "BUS_DELAY",
+        "BUS_LIVE_STATUS",
+        "BUS_PLATFORM",
+        "BUS_VIA_LOCATION",
+        "CHEAPEST_BUS",
+        "CONCESSION_ELIGIBILITY",
+        "CONNECTING_BUSES",
+        "DEPARTURES_AFTER",
+        "DEPARTURES_BEFORE",
+        "DIRECT_BUS_AVAILABILITY",
+        "ELECTRIC_BUS_AVAILABILITY",
+        "FARE_COMPARISON",
+        "FASTEST_BUS",
+        "FIRST_BUS",
+        "INTERMEDIATE_STOP",
+        "JOURNEY_DURATION",
+        "LAST_BUS",
+        "LOST_PROPERTY_CONTACT",
+        "LUGGAGE_RULES",
+        "NEXT_BUS",
+        "NON_AC_AVAILABILITY",
+        "OPERATOR_CONTACT",
+        "RESERVATION_SUPPORTED",
+        "ROUTE_STOPS",
+        "SEATER_BUS_AVAILABILITY",
+        "SEAT_AVAILABILITY",
+        "SERVICE_CATEGORY_COMPARISON",
+        "SERVICE_DISRUPTION",
+        "SERVICE_NUMBER_LOOKUP",
+        "SLEEPER_BUS_AVAILABILITY",
+        "STATION_FACILITIES",
+        "STATION_HELPDESK",
+        "TICKET_FARE"
+      ],
+      "predictions": [
+        {
+          "text": "When is the next bus to Tirupati?",
+          "expected": "NEXT_BUS",
+          "predicted": "AVAILABLE_BUS_TYPES",
+          "raw_score": 0.027030622586607933,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 13.600599999335827
+        },
+        {
+          "text": "What is the fare to Nellore?",
+          "expected": "GET_FARE",
+          "predicted": "AVAILABLE_BUS_TYPES",
+          "raw_score": 0.025152135640382767,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 13.954800000647083
+        },
+        {
+          "text": "What time is the last bus to Vizag?",
+          "expected": "LAST_BUS",
+          "predicted": "FIRST_BUS",
+          "raw_score": 0.02780097909271717,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 11.799199999586563
+        },
+        {
+          "text": "Are AC sleeper buses available tonight?",
+          "expected": "AC_BUS_AVAILABILITY + SLEEPER_AVAILABILITY + tonight constraint",
+          "predicted": "FIRST_BUS",
+          "raw_score": 0.02584083378314972,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 12.99240000116697
+        },
+        {
+          "text": "Does this bus stop at Ongole?",
+          "expected": "INTERMEDIATE_STOP",
+          "predicted": "FIRST_BUS",
+          "raw_score": 0.02704686112701893,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 11.724300000423682
+        },
+        {
+          "text": "Which is the cheapest bus to Hyderabad?",
+          "expected": "CHEAPEST_BUS",
+          "predicted": "AVAILABLE_BUS_TYPES",
+          "raw_score": 0.026855075731873512,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 14.443100000789855
+        },
+        {
+          "text": "Is the bus delayed?",
+          "expected": "BUS_DELAY",
+          "predicted": "FIRST_BUS",
+          "raw_score": 0.026870237663388252,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 12.018499999612686
+        },
+        {
+          "text": "Which platform is the bus on?",
+          "expected": "BUS_PLATFORM",
+          "predicted": "FIRST_BUS",
+          "raw_score": 0.0270113255828619,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 18.50649999869347
+        },
+        {
+          "text": "I want to change my destination to Tirumala.",
+          "expected": "destination correction dialogue act",
+          "predicted": "LUGGAGE_RULES",
+          "raw_score": 0.02506781555712223,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 11.89909999993688
+        },
+        {
+          "text": "What about tomorrow morning?",
+          "expected": "contextual date/time refinement; retain preceding intent",
+          "predicted": "LUGGAGE_RULES",
+          "raw_score": 0.02506781555712223,
+          "score_type": "uncalibrated softmax",
+          "calibrated_confidence": null,
+          "milliseconds": 11.77829999869573
+        }
+      ],
+      "load_seconds": 0.27568260000043665,
+      "structure": [
+        {
+          "name": "input_layer",
+          "class": "InputLayer",
+          "output": "<KerasTensor shape=(None,), dtype=string, sparse=False, ragged=False, name=input_layer>"
+        },
+        {
+          "name": "text_vectorization",
+          "class": "TextVectorization",
+          "output": "<KerasTensor shape=(None, 64), dtype=int64, sparse=False, ragged=False, name=keras_tensor_25>"
+        },
+        {
+          "name": "embedding",
+          "class": "Embedding",
+          "output": "<KerasTensor shape=(None, 64, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_27>"
+        },
+        {
+          "name": "conv1d",
+          "class": "Conv1D",
+          "output": "<KerasTensor shape=(None, 62, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_29>"
+        },
+        {
+          "name": "global_max_pooling1d",
+          "class": "GlobalMaxPooling1D",
+          "output": "<KerasTensor shape=(None, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_31>"
+        },
+        {
+          "name": "dropout",
+          "class": "Dropout",
+          "output": "<KerasTensor shape=(None, 64), dtype=float32, sparse=False, ragged=False, name=keras_tensor_33>"
+        },
+        {
+          "name": "dense",
+          "class": "Dense",
+          "output": "<KerasTensor shape=(None, 44), dtype=float32, sparse=False, ragged=False, name=keras_tensor_35>"
+        }
+      ],
+      "label_match": true,
+      "vocabulary_size": 75
+    }
+  ],
+  "active_descriptor": null,
+  "active_prediction": {
+    "status": "NOT_READY",
+    "intents": []
+  },
+  "vosk": [
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\vosk-model-en-us-0.22-lgraph",
+      "load_seconds": 2.825511600000027,
+      "audio": {
+        "channels": 1,
+        "rate": 16000,
+        "frames": 132928,
+        "bytes_per_sample": 2
+      },
+      "transcript": "one zero zero zero one nine oh two one oh zero one eight zero three",
+      "inference_seconds": 9.152527700000064
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\vosk-model-en-us-0.22-lgraph.manifest.json",
+      "error": "Exception('Failed to create a model')"
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\vosk-model-en-us-0.22-lgraph.zip",
+      "error": "Exception('Failed to create a model')"
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\vosk-model-small-en-us-0.15",
+      "load_seconds": 1.0517615000007936,
+      "audio": {
+        "channels": 1,
+        "rate": 16000,
+        "frames": 132928,
+        "bytes_per_sample": 2
+      },
+      "transcript": "one zero zero zero one nah no to i know zero one eight zero three",
+      "inference_seconds": 1.944316400000389
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\vosk-model-small-en-us-0.15.manifest.json",
+      "error": "Exception('Failed to create a model')"
+    },
+    {
+      "path": "C:\\Indian Servers\\RTC\\models\\english\\vosk-model-small-en-us-0.15.zip",
+      "error": "Exception('Failed to create a model')"
+    }
+  ]
+}

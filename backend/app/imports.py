@@ -3,6 +3,7 @@
 import csv
 import hashlib
 import io
+import os
 from datetime import date
 from decimal import Decimal
 
@@ -159,9 +160,12 @@ def validate_relations(session, model, values):
     if values.get("valid_to", date.max) < values.get("valid_from", date.min):
         raise ValueError("valid_to precedes valid_from")
     if model is Station:
-        from zoneinfo import ZoneInfo
+        from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
-        ZoneInfo(values["timezone"])
+        try:
+            ZoneInfo(values["timezone"])
+        except (ZoneInfoNotFoundError, ValueError) as exc:
+            raise ValueError("Invalid station timezone") from exc
     if model is Service:
         if not values["weekdays"] or any(
             x not in "0123456" for x in values["weekdays"]
@@ -194,6 +198,8 @@ def validate_relations(session, model, values):
 
 
 def import_csv(session: Session, resource: str, text: str, dry_run: bool = True):
+    if not dry_run and os.getenv("RTC_ALLOW_DEMO_DIRECT_WRITES")!="1":
+        raise ValueError("Direct CSV commit is disabled; use staged validation, approval and publication")
     if resource not in RESOURCES:
         raise ValueError("Unsupported import resource")
     if len(text.encode("utf-8")) > 2_000_000:
@@ -259,3 +265,7 @@ def import_csv(session: Session, resource: str, text: str, dry_run: bool = True)
         "errors": errors,
         "dry_run": dry_run,
     }
+
+from .data_resources import extend
+
+extend(RESOURCES, Row)

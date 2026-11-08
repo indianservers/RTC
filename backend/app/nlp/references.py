@@ -4,6 +4,10 @@ import hashlib
 from decimal import Decimal
 
 
+class StaleResult(ValueError):
+    """A previously listed result is no longer eligible in the database."""
+
+
 def stable_results(rows):
     return [
         {

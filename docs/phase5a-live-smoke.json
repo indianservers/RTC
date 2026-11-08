@@ -1,0 +1,17 @@
+{
+  "application": "http://127.0.0.1:8000",
+  "alias": "DEMO Phase5A verification 58f2a7c79d",
+  "checks": {
+    "draft_hidden": true,
+    "validate": "VALIDATED",
+    "approve": "APPROVED",
+    "publish": "PUBLISHED",
+    "published_search": true,
+    "passenger_enquiry_resolves_imported_alias": true,
+    "rollback_archived": true,
+    "rolled_back_alias_hidden": true
+  },
+  "batch_id": "43efb83b-34a9-4251-afc2-1069fc9fb956",
+  "passenger_response_status": null,
+  "reviewer_revoked": true
+}

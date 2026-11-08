@@ -4,6 +4,7 @@ from pydantic import BaseModel, ConfigDict
 from sqlalchemy import select
 
 from ..catalog import EntityType, Intent
+from ..local_intents import enrich_definition
 
 
 class IntentDefinition(BaseModel):
@@ -33,7 +34,7 @@ class IntentRegistry:
     def get(self, code):
         row = self.resolve(code)
         return (
-            IntentDefinition.model_validate(row.taxonomy)
+            IntentDefinition.model_validate(enrich_definition(row.taxonomy))
             if row and row.taxonomy
             else None
         )
@@ -46,7 +47,11 @@ class IntentRegistry:
             .offset(offset)
             .limit(limit)
         )
-        return [IntentDefinition.model_validate(r.taxonomy) for r in rows if r.taxonomy]
+        return [
+            IntentDefinition.model_validate(enrich_definition(r.taxonomy))
+            for r in rows
+            if r.taxonomy
+        ]
 
     def entities(self):
         rows = self.session.scalars(

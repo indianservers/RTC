@@ -1,0 +1,25 @@
+{
+  "voices": [
+    {
+      "id": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_DAVID_11.0",
+      "name": "Microsoft David Desktop - English (United States)",
+      "languages": [
+        "en-US"
+      ]
+    },
+    {
+      "id": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_ZIRA_11.0",
+      "name": "Microsoft Zira Desktop - English (United States)",
+      "languages": [
+        "en-US"
+      ]
+    }
+  ],
+  "bytes": 138504,
+  "frames": 69229,
+  "rate": 22050,
+  "channels": 1,
+  "seconds": 3.1396371882086167,
+  "elapsed": 1.4955821000003198,
+  "playback_verified": false
+}

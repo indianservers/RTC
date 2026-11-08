@@ -147,6 +147,10 @@ class RTCEnquiryEngine:
                 else "Asia/Kolkata"
             ),
         )
+        from .local_intents import LOCAL_INTENTS, LocalEnquiries
+
+        if intent in LOCAL_INTENTS:
+            return LocalEnquiries(self).execute(r, matched, at)
         if intent in (
             "STATION_FACILITIES",
             "LOST_PROPERTY_CONTACT",
@@ -195,7 +199,7 @@ class RTCEnquiryEngine:
         ):
             if not r.service_id:
                 raise ValueError("Service ID required")
-            rows = e.get_route_stops(r.service_id)
+            rows = e.get_route_stops(r.service_id,r.travel_date)
             if intent == "BOARDING_POINT":
                 rows = [s for s in rows if s.boarding]
             if intent == "ALIGHTING_POINT":
@@ -361,7 +365,9 @@ class RTCEnquiryEngine:
                 else False
                 if intent == "SEATER_BUS_AVAILABILITY"
                 else f.sleeper,
-                "wheelchair": f.accessible,
+                "wheelchair": True
+                if intent == "ACCESSIBLE_BUS_AVAILABILITY"
+                else f.accessible,
             }
             if any(
                 want is not None and (kind is None or getattr(kind, name) != want)

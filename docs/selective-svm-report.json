@@ -1,0 +1,78 @@
+{
+  "version": "selective-60-v2",
+  "source_status": "Agent-authored synthetic, not human-reviewed or field-collected",
+  "training": {
+    "train": {
+      "IN_SCOPE": 653,
+      "OUT_OF_SCOPE": 118
+    },
+    "validation": {
+      "IN_SCOPE": 180,
+      "OUT_OF_SCOPE": 60
+    }
+  },
+  "selected_validation": {
+    "C": 0.5,
+    "thresholds": {
+      "domain": 0.5,
+      "margin": -1.0,
+      "gap": 0.0
+    },
+    "feasible": true,
+    "id_total": 180,
+    "id_accepted": 174,
+    "id_correct_accepted": 150,
+    "id_wrong_accepted": 24,
+    "oos_total": 60,
+    "oos_false_accepted": 3,
+    "closed_set_accuracy": 0.8611111111111112,
+    "closed_set_macro_f1": 0.8542460317460315
+  },
+  "fresh_test": {
+    "id_count": 180,
+    "out_of_scope_count": 60,
+    "closed_set_accuracy": 0.8166666666666667,
+    "closed_set_macro_f1": 0.8148412698412696,
+    "id_acceptance_coverage": 0.95,
+    "accepted_id_accuracy": 0.8070175438596491,
+    "correct_acceptance_coverage": 0.7666666666666667,
+    "selective_macro_f1": 0.7732936507936506,
+    "oos_false_accept_rate": 0.03333333333333333,
+    "oos_rejection_rate": 0.9666666666666667,
+    "overall_decision_accuracy": 0.8166666666666667,
+    "latency_median_ms": 1.7817500001910958,
+    "latency_p95_ms": 2.6056000006065005,
+    "process_memory_bytes": 159928320
+  },
+  "oos_rejection_as_positive_detection": {
+    "precision": 0.8656716417910447,
+    "recall": 0.9666666666666667,
+    "f1": 0.9133858267716535,
+    "note": "Rejected ID questions are false positives for OOS detection."
+  },
+  "baseline_closed_set_accuracy": 0.49444444444444446,
+  "paired_closed_set_comparison": {
+    "baseline_errors_fixed": 60,
+    "new_errors_introduced": 2
+  },
+  "tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "1477",
+    "time": "221.156",
+    "timestamp": "2026-11-08T14:33:40.797584+05:30",
+    "hostname": "DESKTOP-B3SR465"
+  },
+  "deployment_status": "CANDIDATE",
+  "active_registry_modified": false,
+  "limitations": [
+    "Small coauthored synthetic dataset",
+    "No human-reviewed accuracy claim",
+    "Fresh-test false accepts remain",
+    "9 of 180 valid questions rejected",
+    "Rules-first chat is not the same system as the standalone model evaluation",
+    "No deployment promotion; existing gates unchanged"
+  ]
+}

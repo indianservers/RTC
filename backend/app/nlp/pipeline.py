@@ -18,9 +18,9 @@ from . import text_support
 from .components import IntentClassifier, LanguageNormalizer, TemporalParser
 from .content import NLPContentRepository
 from .english_model import EnglishIntentModel
-from .entities import RTCEntityExtractor
+from .entities import AmbiguousStation, RTCEntityExtractor
 from .planner import ExecutionPlanner
-from .references import ReferentialResolver, stable_results
+from .references import ReferentialResolver, StaleResult, stable_results
 from .session_access import check_owner, public_context, token_hash
 from .state import ContextOperation, ContextUpdateEngine, ConversationState
 
@@ -144,6 +144,7 @@ class RTCQueryOrchestrator:
 
                 ranking = {
                     "CHEAPEST_BUS": "LOWEST_FARE",
+                    "FARE_COMPARISON": "LOWEST_FARE",
                     "FASTEST_BUS": "EARLIEST_ARRIVAL",
                 }.get(intent, slots.get("journey_ranking", "EARLIEST_ARRIVAL"))
                 constraints = JourneyConstraints(
@@ -153,6 +154,7 @@ class RTCQueryOrchestrator:
                     filters=query.filters,
                     passengers=query.passengers,
                     max_transfers=slots.get("journey_max_transfers", 2),
+                    transfer_station=slots.get("transfer_station"),
                     maximum_wait_minutes=slots.get("journey_max_wait", 180),
                     ranking=ranking,
                 )
@@ -182,6 +184,7 @@ class RTCQueryOrchestrator:
                     "query": query.model_dump(mode="json"),
                     "results": rows,
                     "warnings": journeys.warnings,
+                    "executor": "JourneyPlanner.search",
                     "pagination": journeys.pagination,
                 }
                 results.append(encoded)
@@ -227,8 +230,8 @@ class RTCQueryOrchestrator:
                     encoded["dataset_source"] = "DEMO"
             results.append(encoded)
             candidates = [r for r in encoded["results"] if r.get("service_id")]
-            if candidates and (
-                intent in planner.journey_intents or not slots.get("candidates")
+            if intent in planner.journey_intents or (
+                candidates and not slots.get("candidates")
             ):
                 slots["candidates"] = stable_results(candidates)
                 slots["result_revision"] = int(slots.get("revision", 0)) + 1
@@ -324,6 +327,21 @@ class RTCNLPEngine:
             else (None, None, {})
         )
         slots = deepcopy(loaded)
+        pending = slots.get("station_clarification")
+        if pending:
+            choice = next(
+                (
+                    c
+                    for c in pending["choices"]
+                    if text.casefold() in {c["code"].casefold(), c["id"].casefold()}
+                ),
+                None,
+            )
+            if choice:
+                text = pending["query"].replace(
+                    pending["term"], choice["code"].casefold()
+                )
+                slots.pop("station_clarification", None)
         operations = []
         previous = deepcopy(slots)
         slots.setdefault("slot_origins", deepcopy(slots.get("slot_sources", {})))
@@ -361,14 +379,29 @@ class RTCNLPEngine:
                     slots = ContextUpdateEngine().apply(slots, operation)
                     slots["journey_mode"] = True
                     operations.append(operation.model_dump())
-            if re.search(r"don.t change buses|no transfers|direct only", text):
+            if re.search(
+                r"don.t change buses|no transfers|direct only|show direct buses", text
+            ):
+                slots.pop("transfer_station", None)
                 operation = ContextOperation(
                     op="SET_SLOT", slot="journey_max_transfers", value=0
                 )
                 slots = ContextUpdateEngine().apply(slots, operation)
                 slots["journey_mode"] = True
                 operations.append(operation.model_dump())
+            if re.search(r"fewest transfers|fewer transfers", text):
+                slots["journey_mode"] = True
+                slots["journey_ranking"] = "FEWEST_TRANSFERS"
+                text = "connecting buses"
             entities = self.extractor.extract(text)
+            if re.search(r"chang(?:e|ing) at", text) and entities.get("destination"):
+                entities["transfer_station"] = entities.pop("destination")
+                slots["journey_mode"] = True
+                slots["journey_max_transfers"] = max(
+                    1, slots.get("journey_max_transfers", 2)
+                )
+                text = "connecting buses"
+
             same_service = bool(re.search(r"same (?:one|bus|service) tomorrow", text))
             if same_service:
                 if not slots.get("service_id"):
@@ -396,8 +429,14 @@ class RTCNLPEngine:
                 slots.setdefault("slot_sources", {})["origin"] = "SYSTEM_DEFAULT"
                 slots.setdefault("slot_origins", {})["origin"] = "SYSTEM_DEFAULT"
                 slots["current_station"] = slots["origin"]
-            if request.operator:
-                slots.setdefault("filters", {})["operator"] = request.operator
+            if request.operator or request.operator == "":
+                operation = ContextOperation(
+                    op="SET_SLOT" if request.operator else "CLEAR_SLOT",
+                    slot="operator",
+                    value=request.operator,
+                )
+                slots = ContextUpdateEngine().apply(slots, operation)
+                operations.append(operation.model_dump())
             if text in ("reset", "/reset", "new enquiry", "కొత్త ప్రశ్న"):
                 slots = (
                     {"_owner_hash": slots["_owner_hash"]}
@@ -422,6 +461,8 @@ class RTCNLPEngine:
                 )
                 extracted = entities.get("filters", {})
                 slots.setdefault("filters", {})
+                if re.search(r"cheaper category", text):
+                    slots["filters"].pop("category", None)
                 clear = bool(
                     re.search(r"any (?:bus )?type|clear filters|any category", text)
                 )
@@ -429,7 +470,7 @@ class RTCNLPEngine:
                     slots["filters"] = {
                         k: v
                         for k, v in slots.get("filters", {}).items()
-                        if k == "operator"
+                        if k in {"operator", "accessible"}
                     }
                 for key, value in {
                     **extracted,
@@ -549,7 +590,7 @@ class RTCNLPEngine:
                     refined = True
                 selection_handled = refined
                 selection = re.fullmatch(
-                    r"(?:the )?(first|second|third|fourth|fifth|\d+)(?: one| bus| service| option)?[.!?]*",
+                    r"(?:select )?(?:the )?(first|second|third|fourth|fifth|\d+)(?: one| bus| service| option)?[.!?]*",
                     text,
                 )
                 if selection and (
@@ -598,7 +639,7 @@ class RTCNLPEngine:
                             None,
                         )
                         if selected is None:
-                            raise ValueError(
+                            raise StaleResult(
                                 "That itinerary is no longer eligible. Please request updated journey options."
                             )
                         chosen = selected.model_dump(mode="json")
@@ -608,6 +649,41 @@ class RTCNLPEngine:
                             fare=chosen["total_fare"],
                             result_id=chosen["journey_id"],
                         )
+                        candidates[n - 1] = chosen
+                    if not chosen.get("journey_id"):
+                        departure = datetime.fromisoformat(chosen["departure"])
+                        refresh = self.orchestrator.engine.enquire(
+                            EnquiryRequest(
+                                intent="NEXT_BUS",
+                                origin=slots["origin"],
+                                destination=slots["destination"],
+                                at=max(now, departure - timedelta(seconds=1)),
+                                travel_date=date.fromisoformat(chosen["service_date"]),
+                                service_id=chosen["service_id"],
+                                filters=slots.get("filters", {}),
+                                limit=100,
+                            )
+                        )
+                        current = next(
+                            (
+                                r
+                                for r in refresh.results
+                                if r.get("service_id") == chosen["service_id"]
+                                and r.get("departure") == chosen["departure"]
+                            ),
+                            None,
+                        )
+                        if current is None:
+                            raise StaleResult(
+                                "This listed departure changed, departed or is no longer eligible. Request a fresh bus list."
+                            )
+                        # Keep stable reference metadata while refreshing all database facts.
+                        chosen = {
+                            **chosen,
+                            **refresh.model_dump(mode="json")["results"][
+                                refresh.results.index(current)
+                            ],
+                        }
                         candidates[n - 1] = chosen
                     operation = ContextOperation(op="SELECT_RESULT", value=n - 1)
                     slots = ContextUpdateEngine().apply(slots, operation)
@@ -632,6 +708,11 @@ class RTCNLPEngine:
                 intents = text_support.classify_extra(
                     text, self.classifier.classify(text), self.session
                 )
+                if re.search(
+                    r"don.t change buses|no transfers|direct only|show direct buses",
+                    text,
+                ):
+                    intents = ["CONNECTING_BUSES"]
                 if any(
                     i in intents
                     for i in (
@@ -660,6 +741,17 @@ class RTCNLPEngine:
                     not intents
                     and not selection_handled
                     and language == "en"
+                    and not (
+                        slots.get("last_intent")
+                        and len(text.split()) <= 5
+                        and (
+                            any(k != "filters" for k in entities)
+                            or extracted
+                            or date_change
+                            or period
+                            or clear
+                        )
+                    )
                     and not re.search(r"weather|cricket|politic|joke|recipe", text)
                 ):
                     try:
@@ -676,6 +768,41 @@ class RTCNLPEngine:
                             ]
                     except (ValueError, OSError, KeyError, ImportError):
                         prediction = {"status": "NOT_READY"}
+                if prediction["status"] in ("OUT_OF_SCOPE", "CLARIFICATION_REQUIRED"):
+                    raise ValueError(
+                        "I can help with RTC bus enquiries; that request appears outside this scope."
+                        if prediction["status"] == "OUT_OF_SCOPE"
+                        else "Please clarify which bus information you need."
+                    )
+                clock_match = re.search(
+                    r"\b(?:at|around)\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)?\b", text
+                )
+                if "BUS_AT_TIME" in intents and slots.get("requested_clock"):
+                    previous_clock = datetime.fromisoformat(slots["requested_clock"])
+                    clock_day = date.fromisoformat(slots["travel_date"])
+                    slots["requested_clock"] = previous_clock.replace(
+                        year=clock_day.year, month=clock_day.month, day=clock_day.day
+                    ).isoformat()
+                if "BUS_AT_TIME" in intents and clock_match:
+                    hour, minute = int(clock_match[1]), int(clock_match[2] or 0)
+                    if (
+                        minute > 59
+                        or hour > 23
+                        or clock_match[3]
+                        and not 1 <= hour <= 12
+                    ):
+                        raise ValueError("Which valid departure time do you mean?")
+                    if clock_match[3]:
+                        hour = hour % 12 + (12 if clock_match[3] == "pm" else 0)
+                    slots["requested_clock"] = (
+                        datetime.combine(
+                            date.fromisoformat(slots["travel_date"]),
+                            datetime.min.time(),
+                            local.tzinfo,
+                        )
+                        .replace(hour=hour, minute=minute)
+                        .isoformat()
+                    )
                 if slots["filters"].get("ac") is False:
                     intents = [
                         "NON_AC_AVAILABILITY" if i == "AC_BUS_AVAILABILITY" else i
@@ -714,6 +841,10 @@ class RTCNLPEngine:
                     answer = self.content.render("IDLE", language)
                 elif intents:
                     absent = text_support.missing(intents, slots)
+                    if absent == "AWAITING_TIME":
+                        raise ValueError(
+                            "What departure time should I search around? For example, at 8 PM."
+                        )
                     if absent:
                         slots["last_intent"] = intents[0]
                         state, clarify = absent, True
@@ -793,6 +924,7 @@ class RTCNLPEngine:
                             "LAST_BUS",
                             "CHEAPEST_BUS",
                             "FASTEST_BUS",
+                            "FARE_COMPARISON",
                             "BUSES_BETWEEN",
                             "CONNECTING_BUSES",
                             "AC_BUS_AVAILABILITY",
@@ -804,6 +936,16 @@ class RTCNLPEngine:
                             slots.pop("service_id", None)
                             slots.pop("trip_id", None)
                         tick = perf_counter()
+                        if "BUS_AT_TIME" in intents:
+                            clock_day = date.fromisoformat(slots["travel_date"])
+                            query_at = datetime.fromisoformat(
+                                slots["requested_clock"]
+                            ).replace(
+                                year=clock_day.year,
+                                month=clock_day.month,
+                                day=clock_day.day,
+                            )
+                            slots["requested_clock"] = query_at.isoformat()
                         results = self.orchestrator.execute(intents, slots, query_at)
                         timings["database_lookup_ms"] = (perf_counter() - tick) * 1000
                         if any(
@@ -820,11 +962,42 @@ class RTCNLPEngine:
                             if not any(r["results"] for r in results):
                                 state = "NO_RESULTS"
                         slots["last_intent"] = intents[0]
+        except AmbiguousStation as exc:
+            slots = deepcopy(previous)
+            slots["station_clarification"] = {
+                "query": text,
+                "term": exc.term,
+                "choices": exc.choices,
+            }
+            operations = []
+            state, clarify, answer = "AWAITING_STATION_CLARIFICATION", True, str(exc)
+        except StaleResult as exc:
+            slots = deepcopy(previous)
+            for field in (
+                "service_id",
+                "trip_id",
+                "selection_status",
+                "candidates",
+                "journey_candidates",
+                "selected_itinerary",
+                "selected_leg",
+            ):
+                slots.pop(field, None)
+            operations = []
+            state, clarify, answer = "CLARIFICATION_REQUIRED", True, str(exc)
         except ValueError as exc:
             if not re.search(r"not that bus|not that one", text):
                 slots = deepcopy(previous)
                 operations = []
-            state, clarify, answer = "CLARIFICATION_REQUIRED", True, str(exc)
+            state, clarify, answer = (
+                (
+                    "OUT_OF_SCOPE"
+                    if prediction["status"] == "OUT_OF_SCOPE"
+                    else "CLARIFICATION_REQUIRED"
+                ),
+                True,
+                str(exc),
+            )
         existing_changes = {op.get("slot") for op in operations}
         for name in (
             "travel_date",
@@ -897,7 +1070,13 @@ class RTCNLPEngine:
                 "extracted_entities": entities,
                 "previous_context": public_context(previous),
                 "applied_context": public_context(deepcopy(slots)),
-                "database_function": "RTCEnquiryEngine.enquire" if results else None,
+                "database_function": "; ".join(
+                    dict.fromkeys(
+                        r.get("executor", "RTCEnquiryEngine.enquire") for r in results
+                    )
+                )
+                if results
+                else None,
                 "queries": [r.get("query", {}) for r in results],
                 "matching_service_ids": list(
                     dict.fromkeys(

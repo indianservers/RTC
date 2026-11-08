@@ -1,0 +1,7 @@
+{
+  "version": "1.0",
+  "sha256": "f99c4582f9ae0690871a7c1cb4278f264ceb357ccc4645992b7b317c0f4df474",
+  "single_intent_count": 180,
+  "out_of_scope_count": 20,
+  "protocol": "New agent-authored questions, frozen before model predictions; no training, threshold tuning or edits in response to scores. Three questions per canonical label. Independently held out from model training but not human-reviewed or field-collected. Evaluate both pre-existing SVM artifacts without selecting/promoting a winner. Duplicate/near-duplicate audit against all local training datasets and NLP rules is required. No claim of statistical or human independent adjudication."
+}

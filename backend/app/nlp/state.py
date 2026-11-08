@@ -89,6 +89,7 @@ class ContextUpdateEngine:
             "platform",
             "candidates",
         },
+        "transfer_station": {"service_id", "trip_id", "candidates"},
         "travel_date": {"service_id", "trip_id", "fare", "platform", "candidates"},
         "category": {"service_id", "trip_id", "fare", "platform", "candidates"},
         "ac": {"service_id", "trip_id", "fare", "platform", "candidates"},

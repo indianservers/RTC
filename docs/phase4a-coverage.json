@@ -1,0 +1,110 @@
+[
+  {
+    "requirement": 1,
+    "domain": "Frontend stack",
+    "status": "IMPLEMENTED",
+    "evidence_and_limits": "React/TypeScript/Vite, local Tailwind/Radix-compatible components, Lucide, TanStack Query/Table, Router and Recharts. Resolved versions locked."
+  },
+  {
+    "requirement": 2,
+    "domain": "Design",
+    "status": "IMPLEMENTED",
+    "evidence_and_limits": "Navy navigation, white surfaces, restrained teal accents, local system fonts, responsive layouts and inspected screenshots."
+  },
+  {
+    "requirement": 3,
+    "domain": "Passenger chat",
+    "status": "IMPLEMENTED",
+    "evidence_and_limits": "Actual messages, timestamps, internal scrolling, disabled pending composer/context controls, retry, suggestions, rich results, owner-bound context and reset."
+  },
+  {
+    "requirement": 4,
+    "domain": "NLP backend",
+    "status": "IMPLEMENTED",
+    "evidence_and_limits": "Existing conversation/message and reset endpoints. Backend handles all intent/entity/context interpretation; no frontend NLP imitation."
+  },
+  {
+    "requirement": 5,
+    "domain": "Bus cards",
+    "status": "IMPLEMENTED WITH DATA LIMITS",
+    "evidence_and_limits": "Actual service/operator/category/segment/times/dates/fares; missing vehicle/seat/platform/freshness fields explicitly unknown. Selection and follow-up actions use backend messages."
+  },
+  {
+    "requirement": 6,
+    "domain": "Journey planner",
+    "status": "IMPLEMENTED WITH ENGINE LIMITS",
+    "evidence_and_limits": "Existing journeys/search, direct/transfer/operator/category/AC/sleeper/budget/time/deadline controls and ranking modes. Existing Phase3B bounds remain."
+  },
+  {
+    "requirement": 7,
+    "domain": "Search",
+    "status": "IMPLEMENTED",
+    "evidence_and_limits": "Direct-service mode, actual station/alias autocomplete, explicit unique station choice and hard constraints. Verified-seat requirement excludes unknown inventory."
+  },
+  {
+    "requirement": 8,
+    "domain": "Details",
+    "status": "IMPLEMENTED WITH DATA LIMITS",
+    "evidence_and_limits": "Actual ordered variant-aware stops, permissions, scheduled date/time, category, amenities, whole-route fare, cancellation/status/platform/source metadata. Not a live tracking screen."
+  },
+  {
+    "requirement": 9,
+    "domain": "Admin dashboard",
+    "status": "IMPLEMENTED",
+    "evidence_and_limits": "Server-authorized local token gate, real inventory overview and all requested sections. Domains without compatible writes are explicitly read-only."
+  },
+  {
+    "requirement": 10,
+    "domain": "Data management",
+    "status": "IMPLEMENTED WITH LIMITS",
+    "evidence_and_limits": "Existing CRUD/imports; schema-driven forms and local reference choices, sorting/filtering/column visibility/pagination. Table sort/filter applies to current25-row page; reference selects show up to100."
+  },
+  {
+    "requirement": 11,
+    "domain": "Diagnostics",
+    "status": "IMPLEMENTED",
+    "evidence_and_limits": "Protected stateless NLP adapter exposes actual debug payload. Public debug=true now requires admin credentials. Rule confidence is not presented as calibrated probability."
+  },
+  {
+    "requirement": 12,
+    "domain": "System status",
+    "status": "IMPLEMENTED WITH DATA LIMITS",
+    "evidence_and_limits": "Actual health, fallback/model distinction, DB counts and sources. Import recency unknown because existing batch model has no timestamp."
+  },
+  {
+    "requirement": 13,
+    "domain": "Offline",
+    "status": "VERIFIED AT APPLICATION LAYER",
+    "evidence_and_limits": "Production browser tests reject non-local requests; backend fixture rejects outbound external socket connections. No CDN/fonts/analytics/remote images. OS firewall isolation not executed."
+  },
+  {
+    "requirement": 14,
+    "domain": "Responsive",
+    "status": "IMPLEMENTED AND INSPECTED",
+    "evidence_and_limits": "Desktop1440x1000 and mobile390x844 inspected; browser tests check navigation and page overflow. Not an exhaustive device/accessibility certification."
+  },
+  {
+    "requirement": 15,
+    "domain": "Security",
+    "status": "IMPLEMENTED WITH LOCAL SCOPE",
+    "evidence_and_limits": "Backend admin/diagnostic authorization, random owner capabilities, safe React text, CSP, security headers, body/rate limits, no bundled secret. Single-process local token model; no enterprise identity directory."
+  },
+  {
+    "requirement": 16,
+    "domain": "Automated testing",
+    "status": "EXECUTED",
+    "evidence_and_limits": "19 actual production-browser tests and1388 backend tests passed, plus frontend lint/build, Ruff, Mypy and zero-vulnerability npm audit."
+  },
+  {
+    "requirement": 17,
+    "domain": "Launcher",
+    "status": "EXECUTED",
+    "evidence_and_limits": "start-rtc.ps1 dev and production modes both started successfully against existing DB; no runtime downloads. Production serves dist through FastAPI without Node."
+  },
+  {
+    "requirement": 18,
+    "domain": "Deliverables",
+    "status": "WORKING LOCAL APP DELIVERED",
+    "evidence_and_limits": "Passenger/admin pages, integration, tests, scripts and docs exist and were run. Broader backend capability and production verification remain incomplete."
+  }
+]

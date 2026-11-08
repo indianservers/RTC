@@ -12,6 +12,7 @@ class ExecutionPlanner:
             "CHEAPEST_BUS",
             "FASTEST_BUS",
             "BUSES_BETWEEN",
+            "FARE_COMPARISON",
         }
     )
     projections = frozenset({"TICKET_FARE", "GET_FARE", "ARRIVAL_TIME"})
@@ -47,4 +48,5 @@ class ExecutionPlanner:
             "results": deepcopy(rows),
             "warnings": ["Reused structured database results for the same journey."],
             "pagination": {},
+            "executor": "ExecutionPlanner.project",
         }

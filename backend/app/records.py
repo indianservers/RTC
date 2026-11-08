@@ -2,10 +2,10 @@ from .datetimes import UTCDateTime
 
 """Operational observations with explicit freshness and verification."""
 
-from datetime import datetime
+from datetime import date, datetime
 from decimal import Decimal
 
-from sqlalchemy import CheckConstraint, ForeignKey, UniqueConstraint
+from sqlalchemy import JSON, CheckConstraint, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .domain import Base, Entity
@@ -80,6 +80,17 @@ class QualityIssue(Entity, Base):
 
 class Audit(Entity, Base):
     __tablename__ = "audit_logs"
+    batch_id: Mapped[str | None] = mapped_column(
+        ForeignKey("data_import_batches.id"), index=True
+    )
+    operator_id: Mapped[str | None] = mapped_column(
+        ForeignKey("transport_operators.id"), index=True
+    )
+    version: Mapped[int | None]
+    previous_values: Mapped[dict | None] = mapped_column(JSON)
+    new_values: Mapped[dict | None] = mapped_column(JSON)
+    changed_fields: Mapped[list | None] = mapped_column(JSON)
+    reason: Mapped[str | None]
     actor: Mapped[str]
     entity_type: Mapped[str]
     entity_id: Mapped[str]
@@ -129,11 +140,21 @@ class FareTable(Entity, Base):
 
 
 class FareRule(Entity, Base):
+    valid_from: Mapped[date | None]
+    valid_to: Mapped[date | None]
+    flat_surcharge: Mapped[Decimal] = mapped_column(default=0)
+    percent_surcharge: Mapped[Decimal] = mapped_column(default=0)
     __tablename__ = "fare_rules"
     table_id: Mapped[str] = mapped_column(ForeignKey("fare_tables.id"))
     per_km: Mapped[Decimal]
     minimum: Mapped[Decimal]
-    __table_args__ = (CheckConstraint("per_km >= 0 AND minimum >= 0"),)
+    __table_args__ = (
+        CheckConstraint("per_km >= 0 AND minimum >= 0"),
+        CheckConstraint(
+            "flat_surcharge >= 0 AND percent_surcharge >= 0 AND (valid_from IS NULL OR valid_to IS NULL OR valid_to >= valid_from)",
+            name="ck_fare_rule_effective_components",
+        ),
+    )
 
 
 class FareOverride(Entity, Base):
