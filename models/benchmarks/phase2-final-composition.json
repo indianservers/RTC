@@ -1,0 +1,188 @@
+{
+  "scope": "SYNTHETIC_UNREVIEWED_COMPOSITION_ONLY_NOT_DATABASE_ANSWER_ACCURACY",
+  "records": 16,
+  "exact_match_accuracy": 0.5,
+  "cases": [
+    {
+      "example_id": "06ff0bb76f160f867b305483",
+      "expected": [
+        "ARRIVAL_TIME",
+        "JOURNEY_DURATION"
+      ],
+      "predicted": [
+        "ARRIVAL_TIME"
+      ],
+      "exact": false
+    },
+    {
+      "example_id": "17640eaf393c86fd28697ede",
+      "expected": [
+        "NEXT_BUS",
+        "GET_FARE"
+      ],
+      "predicted": [
+        "GET_FARE"
+      ],
+      "exact": false
+    },
+    {
+      "example_id": "21d6ff51c1c6364917e65c13",
+      "expected": [
+        "NEXT_BUS",
+        "GET_FARE"
+      ],
+      "predicted": [
+        "GET_FARE",
+        "NEXT_BUS"
+      ],
+      "exact": true
+    },
+    {
+      "example_id": "35ed677a9a12fbf43c3fc331",
+      "expected": [
+        "BUS_DELAY",
+        "BUS_PLATFORM"
+      ],
+      "predicted": [
+        "BUS_PLATFORM"
+      ],
+      "exact": false
+    },
+    {
+      "example_id": "4ba01b2897fdfd855892b8dd",
+      "expected": [
+        "BUS_DELAY",
+        "BUS_PLATFORM"
+      ],
+      "predicted": [
+        "BUS_DELAY",
+        "BUS_PLATFORM"
+      ],
+      "exact": true
+    },
+    {
+      "example_id": "4c35d7baea8d97b4131d702f",
+      "expected": [
+        "BUS_DELAY",
+        "BUS_PLATFORM"
+      ],
+      "predicted": [
+        "BUS_DELAY"
+      ],
+      "exact": false
+    },
+    {
+      "example_id": "5d1d5882bc683f0790d04d7b",
+      "expected": [
+        "BUS_DELAY",
+        "BUS_PLATFORM"
+      ],
+      "predicted": [],
+      "exact": false
+    },
+    {
+      "example_id": "6874bd577ad6866659a20c31",
+      "expected": [
+        "FASTEST_BUS",
+        "INTERMEDIATE_STOP"
+      ],
+      "predicted": [
+        "FASTEST_BUS"
+      ],
+      "exact": false
+    },
+    {
+      "example_id": "6b24a24e0ad82dd6c477ea5d",
+      "expected": [
+        "ARRIVAL_TIME",
+        "JOURNEY_DURATION"
+      ],
+      "predicted": [
+        "ARRIVAL_TIME",
+        "JOURNEY_DURATION"
+      ],
+      "exact": true
+    },
+    {
+      "example_id": "83cb6b5234b5509d86bc3b40",
+      "expected": [
+        "FASTEST_BUS",
+        "INTERMEDIATE_STOP"
+      ],
+      "predicted": [
+        "BUS_VIA_LOCATION",
+        "FASTEST_BUS"
+      ],
+      "exact": false
+    },
+    {
+      "example_id": "9016033cfdfc3a76e6d07220",
+      "expected": [
+        "ARRIVAL_TIME",
+        "JOURNEY_DURATION"
+      ],
+      "predicted": [
+        "ARRIVAL_TIME",
+        "JOURNEY_DURATION"
+      ],
+      "exact": true
+    },
+    {
+      "example_id": "953385ba20bffe36e04d0381",
+      "expected": [
+        "FASTEST_BUS",
+        "INTERMEDIATE_STOP"
+      ],
+      "predicted": [],
+      "exact": false
+    },
+    {
+      "example_id": "9ca3de834361d3e179009da9",
+      "expected": [
+        "ARRIVAL_TIME",
+        "JOURNEY_DURATION"
+      ],
+      "predicted": [
+        "ARRIVAL_TIME",
+        "JOURNEY_DURATION"
+      ],
+      "exact": true
+    },
+    {
+      "example_id": "be21da37415d0117e5ebc9c6",
+      "expected": [
+        "FASTEST_BUS",
+        "INTERMEDIATE_STOP"
+      ],
+      "predicted": [
+        "FASTEST_BUS",
+        "INTERMEDIATE_STOP"
+      ],
+      "exact": true
+    },
+    {
+      "example_id": "d7a812ae0cead38a58a3b244",
+      "expected": [
+        "NEXT_BUS",
+        "GET_FARE"
+      ],
+      "predicted": [
+        "GET_FARE",
+        "NEXT_BUS"
+      ],
+      "exact": true
+    },
+    {
+      "example_id": "d8badab70c001e08d5285c86",
+      "expected": [
+        "NEXT_BUS",
+        "GET_FARE"
+      ],
+      "predicted": [
+        "GET_FARE",
+        "NEXT_BUS"
+      ],
+      "exact": true
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794118615.252967   32168 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794118618.428631   32168 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794118621.195417   32168 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+{
+  "validation_macro_f1": {
+    "svm": 0.17753968253968253,
+    "textcnn": 0.014696969696969698,
+    "deterministic_rule_only": 0.16944444444444443
+  },
+  "synthetic_challenge_macro_f1": {
+    "svm": 0.2126190476190476,
+    "textcnn": 0.07166666666666667,
+    "deterministic_rule_only": 0.155
+  },
+  "development_winner": "svm",
+  "calibration": {
+    "type": "SVM_DECISION_MARGIN_NOT_PROBABILITY",
+    "high_confidence_candidate": null,
+    "policy": "At least ten accepted validation examples at >=0.95 validation precision; no independent safety claim",
+    "threshold_source": "validation",
+    "production_approved": false
+  },
+  "benchmark": {
+    "warm": {
+      "svm": {
+        "p50_ms": 1.3083000003462075,
+        "p95_ms": 1.6961000001174398,
+        "bytes": 2778792
+      },
+      "textcnn": {
+        "p50_ms": 7.054700000480807,
+        "p95_ms": 9.550100000524253,
+        "bytes": 15598461
+      }
+    },
+    "cold_load_seconds": {
+      "svm": 0.10649469999952998,
+      "textcnn": 0.2485725000005914
+    },
+    "peak_process_memory_bytes": 402743296
+  }
+}

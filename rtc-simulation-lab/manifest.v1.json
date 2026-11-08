@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "fixture_version": "1.0.0",
+  "source_label": "SYNTHETIC",
+  "random_seed": 73129,
+  "files": {
+    "benchmarks/english.evaluation.v1.jsonl": "198cdc33d11549fdd7328355af1f98f768171f38e19612a4dc26d0be496b8532",
+    "benchmarks/english_evaluation.v1.csv": "9dfa596568f144768668c490b5fb6bfdcf98e18958383af58065444c9890bc0f",
+    "fixtures/cities.v1.csv": "f9fe6d7812c2701bcdea4ed93e9a0481459f66623e217b65f13b715955bea1af",
+    "fixtures/events.v1.csv": "2b1b981b49e30d088d5ef9650ebd263814e59bf3aff378fc65682a463b99bd34",
+    "fixtures/events.v1.json": "60090621886267199897de780bc9a6c548632474ad097c2b401895d570a2ec40",
+    "fixtures/fares.v1.csv": "9020b2bdd4abf1264e2fec7c84c6e100a2b601f9b8ae58d767c8563b23c2ba77",
+    "fixtures/network.v1.json": "22c73c2200e3c2667fae2bd90d60ccaa0f3a1d6c4c7db98a21e1cfd21cb77951",
+    "fixtures/routes.v1.csv": "a4aa1a177545e8dd654c50cabe2adcc76fd551f49e8b5719ed23d4802ff57b8e",
+    "fixtures/stations.v1.csv": "39ae8b0492bf96949fc76a8ff8a324f3cb9113e671e9034e195d701e7a6e37f0",
+    "fixtures/trips.v1.csv": "c3abdbdde91aa938c3f504406ceaaec04642836a564a76a8b3fc69a487ed1fc9",
+    "scenarios/functional.v1.csv": "dc36ce39ca09b330f1bbec448b67122dbf330a509e18a5736bb7f782f0d6169e",
+    "scenarios/functional.v1.jsonl": "af93f2b1204b665d879cdfbf79a28cae48bbd7af55d07df7666260e32d7e6df2"
+  }
+}

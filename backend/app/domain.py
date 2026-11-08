@@ -1,0 +1,359 @@
+import os
+from datetime import date, datetime, timedelta
+from decimal import Decimal
+from uuid import uuid4
+from zoneinfo import ZoneInfo
+
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    Date,
+    ForeignKey,
+    Numeric,
+    String,
+    UniqueConstraint,
+    create_engine,
+    event,
+    select,
+)
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class Entity:
+    id: Mapped[str] = mapped_column(
+        String(36), primary_key=True, default=lambda: str(uuid4())
+    )
+    dataset_source: Mapped[str] = mapped_column(default="DEMO")
+    active: Mapped[bool] = mapped_column(Boolean, default=True)
+
+
+class Operator(Entity, Base):
+    short_name: Mapped[str | None]
+    headquarters_city_id: Mapped[str | None] = mapped_column(ForeignKey("cities.id"))
+    website: Mapped[str | None]
+    default_timezone: Mapped[str | None]
+    __tablename__ = "transport_operators"
+    code: Mapped[str] = mapped_column(unique=True)
+    name: Mapped[str]
+
+
+class Station(Entity, Base):
+    city_id: Mapped[str | None] = mapped_column(ForeignKey("cities.id"))
+    name_native: Mapped[str | None]
+    station_type: Mapped[str | None]
+    address: Mapped[str | None]
+    __tablename__ = "bus_stations"
+    code: Mapped[str] = mapped_column(unique=True)
+    name: Mapped[str]
+    timezone: Mapped[str] = mapped_column(default="Asia/Kolkata")
+
+
+class Alias(Entity, Base):
+    normalized_alias: Mapped[str | None] = mapped_column(index=True)
+    language_code: Mapped[str | None]
+    __tablename__ = "station_aliases"
+    station_id: Mapped[str] = mapped_column(ForeignKey("bus_stations.id"), index=True)
+    name: Mapped[str] = mapped_column(unique=True)
+
+
+class Category(Entity, Base):
+    code: Mapped[str | None]
+    name_native: Mapped[str | None]
+    description: Mapped[str | None]
+    service_tier: Mapped[str | None]
+    fare_class_code: Mapped[str | None]
+    __tablename__ = "bus_service_categories"
+    operator_id: Mapped[str] = mapped_column(ForeignKey("transport_operators.id"))
+    name: Mapped[str]
+    __table_args__ = (UniqueConstraint("operator_id", "name"),)
+
+
+class Route(Entity, Base):
+    operator_id: Mapped[str | None] = mapped_column(
+        ForeignKey("transport_operators.id")
+    )
+    origin_station_id: Mapped[str | None] = mapped_column(ForeignKey("bus_stations.id"))
+    destination_station_id: Mapped[str | None] = mapped_column(
+        ForeignKey("bus_stations.id")
+    )
+    route_name: Mapped[str | None]
+    __tablename__ = "routes"
+    code: Mapped[str] = mapped_column(unique=True)
+
+
+class Stop(Entity, Base):
+    __tablename__ = "route_stops"
+    route_id: Mapped[str] = mapped_column(ForeignKey("routes.id"), index=True)
+    station_id: Mapped[str] = mapped_column(ForeignKey("bus_stations.id"), index=True)
+    sequence: Mapped[int]
+    offset_minutes: Mapped[int]
+    distance_km: Mapped[Decimal] = mapped_column(Numeric(10, 2))
+    boarding: Mapped[bool] = mapped_column(default=True)
+    alighting: Mapped[bool] = mapped_column(default=True)
+    __table_args__ = (
+        UniqueConstraint("route_id", "sequence"),
+        CheckConstraint("sequence >= 0 AND offset_minutes >= 0 AND distance_km >= 0"),
+    )
+
+
+class Service(Entity, Base):
+    route_variant_id: Mapped[str | None] = mapped_column(
+        ForeignKey("route_variants.id")
+    )
+    reservation_supported: Mapped[bool | None]
+    __tablename__ = "services"
+    operator_id: Mapped[str] = mapped_column(
+        ForeignKey("transport_operators.id"), index=True
+    )
+    category_id: Mapped[str] = mapped_column(
+        ForeignKey("bus_service_categories.id"), index=True
+    )
+    route_id: Mapped[str] = mapped_column(ForeignKey("routes.id"), index=True)
+    number: Mapped[str]
+    departure_minutes: Mapped[int]
+    weekdays: Mapped[str] = mapped_column(default="0123456")
+    valid_from: Mapped[date] = mapped_column(Date)
+    valid_to: Mapped[date] = mapped_column(Date)
+    __table_args__ = (
+        UniqueConstraint("operator_id", "number"),
+        CheckConstraint(
+            "departure_minutes >= 0 AND departure_minutes < 1440 AND valid_to >= valid_from"
+        ),
+    )
+
+
+class ExceptionDay(Entity, Base):
+    __tablename__ = "service_calendar_exceptions"
+    service_id: Mapped[str] = mapped_column(ForeignKey("services.id"), index=True)
+    service_date: Mapped[date] = mapped_column(Date)
+    operates: Mapped[bool]
+    __table_args__ = (UniqueConstraint("service_id", "service_date"),)
+
+
+class Fare(Entity, Base):
+    __tablename__ = "fare_stages"
+    service_id: Mapped[str] = mapped_column(ForeignKey("services.id"), index=True)
+    origin_id: Mapped[str] = mapped_column(ForeignKey("bus_stations.id"))
+    destination_id: Mapped[str] = mapped_column(ForeignKey("bus_stations.id"))
+    amount: Mapped[Decimal] = mapped_column(Numeric(10, 2))
+    valid_from: Mapped[date] = mapped_column(Date)
+    valid_to: Mapped[date] = mapped_column(Date)
+    __table_args__ = (CheckConstraint("amount >= 0 AND valid_to >= valid_from"),)
+
+
+def database(url=None):
+    engine = create_engine(url or os.getenv("DATABASE_URL", "sqlite:///rtc.db"))
+    if engine.dialect.name == "sqlite":
+
+        @event.listens_for(engine, "connect")
+        def fk(connection, _):
+            connection.execute("PRAGMA foreign_keys=ON")
+
+    return engine
+
+
+class Repository:
+    def __init__(self, session: Session):
+        self.session = session
+
+    def resolve_station(self, value):
+        station = self.session.scalar(
+            select(Station).where(
+                (Station.id == value)
+                | (Station.code == value)
+                | (Station.name == value)
+            )
+        )
+        if station is None:
+            alias = self.session.scalar(select(Alias).where(Alias.name == value))
+            station = self.session.get(Station, alias.station_id) if alias else None
+        if not station or not station.active:
+            raise ValueError("Unknown or inactive station")
+        return station
+
+    def journeys(
+        self, origin, destination, at: datetime, days=1, category=None, amenity=None
+    ):
+        from .availability import utc
+        from .catalog import Calendar
+        from .links import ServiceVehicle
+        from .operations import Trip
+        from .records import FareOverride, TripStopTime
+
+        if at.tzinfo is None:
+            raise ValueError("Timezone-aware timestamp required")
+        start, end = self.resolve_station(origin), self.resolve_station(destination)
+        zone = ZoneInfo(start.timezone)
+        local = at.astimezone(zone)
+        results = []
+        origins = select(Stop.route_id).where(
+            Stop.station_id == start.id, Stop.active.is_(True), Stop.boarding.is_(True)
+        )
+        destinations = select(Stop.route_id).where(
+            Stop.station_id == end.id, Stop.active.is_(True), Stop.alighting.is_(True)
+        )
+        query = select(Service).where(
+            Service.active.is_(True),
+            Service.route_id.in_(origins),
+            Service.route_id.in_(destinations),
+        )
+        if category:
+            query = query.where(Service.category_id == category)
+        if amenity:
+            from .catalog import Amenity
+
+            query = (
+                query.join(ServiceVehicle, ServiceVehicle.service_id == Service.id)
+                .join(Amenity, Amenity.vehicle_id == ServiceVehicle.vehicle_id)
+                .where(
+                    Amenity.name == amenity,
+                    Amenity.available.is_(True),
+                    Amenity.active.is_(True),
+                )
+            )
+        for service in self.session.scalars(query):
+            stops = list(
+                self.session.scalars(
+                    select(Stop)
+                    .where(Stop.route_id == service.route_id, Stop.active.is_(True))
+                    .order_by(Stop.sequence)
+                )
+            )
+            for a in stops:
+                for b in stops:
+                    if (
+                        a.station_id != start.id
+                        or b.station_id != end.id
+                        or a.sequence >= b.sequence
+                        or not a.boarding
+                        or not b.alighting
+                    ):
+                        continue
+                    lookback = max(s.offset_minutes for s in stops) // 1440 + 1
+                    for delta in range(-lookback, days + 1):
+                        day = local.date() + timedelta(days=delta)
+                        override = self.session.scalar(
+                            select(ExceptionDay).where(
+                                ExceptionDay.service_id == service.id,
+                                ExceptionDay.service_date == day,
+                            )
+                        )
+                        calendar = self.session.scalar(
+                            select(Calendar)
+                            .where(
+                                Calendar.service_id == service.id,
+                                Calendar.active.is_(True),
+                                Calendar.valid_from <= day,
+                                Calendar.valid_to >= day,
+                            )
+                            .order_by(Calendar.valid_from.desc())
+                        )
+                        weekdays = calendar.weekdays if calendar else service.weekdays
+                        runs = (
+                            override.operates
+                            if override
+                            else str(day.weekday()) in weekdays
+                        )
+                        if (
+                            not runs
+                            or not service.valid_from <= day <= service.valid_to
+                        ):
+                            continue
+                        base = datetime.combine(
+                            day, datetime.min.time(), zone
+                        ) + timedelta(
+                            minutes=calendar.departure_minutes
+                            if calendar
+                            else service.departure_minutes
+                        )
+                        departure = base + timedelta(minutes=a.offset_minutes)
+                        trip = self.session.scalar(
+                            select(Trip).where(
+                                Trip.service_id == service.id,
+                                Trip.service_date == day,
+                                Trip.active.is_(True),
+                            )
+                        )
+                        if trip and trip.status == "cancelled":
+                            continue
+                        scheduled_departure = departure
+                        departure_kind = "scheduled"
+                        if trip:
+                            observation = self.session.scalar(
+                                select(TripStopTime)
+                                .where(
+                                    TripStopTime.trip_id == trip.id,
+                                    TripStopTime.stop_id == a.id,
+                                    TripStopTime.active.is_(True),
+                                    TripStopTime.verified.is_(True),
+                                )
+                                .order_by(TripStopTime.effective_at.desc())
+                            )
+                            if observation and utc(observation.effective_at) <= utc(
+                                at
+                            ) < utc(observation.expires_at):
+                                if observation.actual_departure is not None:
+                                    continue
+                                if observation.estimated_departure is not None:
+                                    departure = utc(
+                                        observation.estimated_departure
+                                    ).astimezone(zone)
+                                    departure_kind = "estimated"
+                        if not local <= departure < local + timedelta(days=days):
+                            continue
+                        fare = self.session.scalar(
+                            select(Fare)
+                            .where(
+                                Fare.active.is_(True),
+                                Fare.service_id == service.id,
+                                Fare.origin_id == start.id,
+                                Fare.destination_id == end.id,
+                                Fare.valid_from <= day,
+                                Fare.valid_to >= day,
+                            )
+                            .order_by(Fare.valid_from.desc())
+                        )
+                        fare_override = (
+                            self.session.scalar(
+                                select(FareOverride).where(
+                                    FareOverride.trip_id == trip.id,
+                                    FareOverride.origin_id == start.id,
+                                    FareOverride.destination_id == end.id,
+                                    FareOverride.active.is_(True),
+                                )
+                            )
+                            if trip
+                            else None
+                        )
+                        amount = (
+                            fare_override.amount
+                            if fare_override
+                            else (fare.amount if fare else None)
+                        )
+                        arrival = (
+                            base
+                            + timedelta(minutes=b.offset_minutes)
+                            + (departure - scheduled_departure)
+                        )
+                        results.append(
+                            {
+                                "service_id": service.id,
+                                "service_number": service.number,
+                                "service_date": day,
+                                "departure": departure,
+                                "arrival": arrival,
+                                "arrival_kind": "estimated"
+                                if departure_kind == "estimated"
+                                else "scheduled",
+                                "departure_kind": departure_kind,
+                                "scheduled_departure": scheduled_departure,
+                                "fare": str(amount) if amount is not None else None,
+                                "seat_availability": "unknown",
+                                "dataset_source": service.dataset_source,
+                            }
+                        )
+        return sorted(results, key=lambda row: row["departure"])

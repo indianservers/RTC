@@ -1,0 +1,11 @@
+# Adapter specification v1
+
+An importable module exposes `respond(payload: dict) -> dict`. It must not mutate the fixture. The runner supplies only fixture, frozen_now, scenario_id, enquiry (functional mode), question (NLP mode), and conversation_context. Gold expectations are not passed. Use the frozen clock rather than system time. All identifiers are local to the fixture. Inputs and outputs must be JSON serializable.
+
+Functional response shape is exactly `{"value": ..., "warnings": [...], "source_label": "SYNTHETIC"}`. Comparison is exact, including list order, monetary strings and warning order. Route results are arrays of service-ID arrays ordered by arrival, number of legs, then deterministic segment representation. Fares are two-decimal strings or null; seats and platform can be null. Preserve provenance and freshness warnings.
+
+NLP response is exactly `{"intent": ..., "entity_constraints": {...}, "database_query": {...}, "result": {...}}`. The expected query is a logical query plan, not SQL: operation, filters, frozen_now, fixture_ref. Resolve the question against provided context; do not access gold artifacts. Intent examples: journey, departure, arrival, amenities, seats, status, platform, fare, cheapest, gps, selection. Context may resolve references but is not an intent prediction. The logical plan intentionally avoids any current ORM/schema dependency.
+
+Integration procedure: create a separate test database, map the small fixture into the final schema, enforce synthetic provenance, install the adapter outside production, execute using frozen time, and translate results into this canonical contract. Do not insert generated CSV directly into a production database. CSV files require a reviewed mapping and nested JSON decoding. Preserve ordered stops, absolute dates, service-day exceptions, null values and decimal strings. Resolve stop IDs locally; never join symbolic gold IDs to the large network automatically.
+
+Adapters may run synchronously or call another system internally. The runner currently provides exception capture, not sandboxing or hard timeouts; an adapter must implement its own bounded I/O. Running adapters is trusted code execution. No adapter has yet been connected to the active RTC backend.

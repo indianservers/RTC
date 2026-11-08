@@ -1,0 +1,168 @@
+{
+  "FIRST_BUS": [
+    "first bus",
+    "first",
+    "modati",
+    "మొదటి"
+  ],
+  "LAST_BUS": [
+    "last bus",
+    "last",
+    "చివరి"
+  ],
+  "TICKET_FARE": [
+    "fare",
+    "price",
+    "entha",
+    "ధర",
+    "చార్జీ"
+  ],
+  "BUS_PLATFORM": [
+    "platform",
+    "ప్లాట్‌ఫామ్"
+  ],
+  "NEXT_BUS": [
+    "next bus",
+    "next",
+    "తదుపరి"
+  ],
+  "CONNECTING_BUSES": [
+    "connecting",
+    "connection"
+  ],
+  "CHEAPEST_BUS": [
+    "cheapest",
+    "cheap",
+    "తక్కువ ధర"
+  ],
+  "FASTEST_BUS": [
+    "fastest"
+  ],
+  "SEAT_AVAILABILITY": [
+    "seats",
+    "vacant",
+    "సీట్లు"
+  ],
+  "BUS_DELAY": [
+    "delay",
+    "late",
+    "ఆలస్యం"
+  ],
+  "BUS_CANCELLATION": [
+    "cancelled",
+    "cancellation",
+    "రద్దు"
+  ],
+  "STATION_FACILITIES": [
+    "facilities",
+    "సౌకర్యాలు"
+  ],
+  "ROUTE_STOPS": [
+    "stops",
+    "route"
+  ],
+  "ARRIVAL_TIME": [
+    "arrival",
+    "arrive"
+  ],
+  "JOURNEY_DURATION": [
+    "duration",
+    "how long"
+  ],
+  "AC_BUS_AVAILABILITY": [
+    "ac",
+    "ఏసీ"
+  ],
+  "SLEEPER_BUS_AVAILABILITY": [
+    "sleeper",
+    "స్లీపర్"
+  ],
+  "CONCESSION_ELIGIBILITY": [
+    "concession",
+    "discount"
+  ],
+  "LOST_PROPERTY_CONTACT": [
+    "lost property"
+  ],
+  "STATION_HELPDESK": [
+    "helpdesk"
+  ],
+  "BUSES_BETWEEN": [
+    "buses between"
+  ],
+  "DEPARTURES_AFTER": [
+    "departures after"
+  ],
+  "DEPARTURES_BEFORE": [
+    "departures before"
+  ],
+  "ARRIVALS_AT_STATION": [
+    "arrivals at"
+  ],
+  "BUSES_OPERATING_TODAY": [
+    "operating today"
+  ],
+  "AVAILABLE_BUS_TYPES": [
+    "bus types",
+    "types of bus"
+  ],
+  "NON_AC_AVAILABILITY": [
+    "non ac",
+    "non-ac"
+  ],
+  "SEATER_BUS_AVAILABILITY": [
+    "seater"
+  ],
+  "BUS_AMENITIES": [
+    "amenities",
+    "charging"
+  ],
+  "SERVICE_CATEGORY_COMPARISON": [
+    "compare categories"
+  ],
+  "ELECTRIC_BUS_AVAILABILITY": [
+    "electric"
+  ],
+  "DIRECT_BUS_AVAILABILITY": [
+    "direct bus"
+  ],
+  "BUS_VIA_LOCATION": [
+    "via"
+  ],
+  "INTERMEDIATE_STOP": [
+    "intermediate stop"
+  ],
+  "BOARDING_POINT": [
+    "boarding point"
+  ],
+  "ALIGHTING_POINT": [
+    "alighting point"
+  ],
+  "ALTERNATIVE_ROUTES": [
+    "alternative route"
+  ],
+  "RESERVATION_SUPPORTED": [
+    "reservation",
+    "booking"
+  ],
+  "FARE_COMPARISON": [
+    "compare fares"
+  ],
+  "LUGGAGE_RULES": [
+    "luggage",
+    "baggage"
+  ],
+  "BUS_LIVE_STATUS": [
+    "live status"
+  ],
+  "SERVICE_DISRUPTION": [
+    "disruption",
+    "diversion"
+  ],
+  "OPERATOR_CONTACT": [
+    "operator contact"
+  ],
+  "SERVICE_NUMBER_LOOKUP": [
+    "service number"
+  ]
+}

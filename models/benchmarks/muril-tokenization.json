@@ -1,0 +1,137 @@
+{
+  "status": "passed",
+  "elapsed_seconds": 0.07136309999987134,
+  "network_guard": "Python socket audit hook",
+  "forward_inference": "NOT_RUN_WEIGHTS_INCOMPLETE",
+  "samples": [
+    {
+      "text": "తిరుపతికి నెక్స్ట్ బస్సు ఎప్పుడు?",
+      "tokens": [
+        "తిరుపతి",
+        "##కి",
+        "న",
+        "##ెక్స్",
+        "##ట్",
+        "బస్సు",
+        "ఎప్పుడు",
+        "?"
+      ],
+      "token_ids": [
+        104,
+        22943,
+        2350,
+        873,
+        161759,
+        5035,
+        2999,
+        73353,
+        138,
+        105
+      ]
+    },
+    {
+      "text": "Nellore ki fare entha?",
+      "tokens": [
+        "Ne",
+        "##llo",
+        "##re",
+        "ki",
+        "fare",
+        "ent",
+        "##ha",
+        "?"
+      ],
+      "token_ids": [
+        104,
+        130183,
+        28528,
+        3235,
+        1396,
+        83844,
+        26699,
+        3113,
+        138,
+        105
+      ]
+    },
+    {
+      "text": "Vizag last bus eppudu?",
+      "tokens": [
+        "V",
+        "##iza",
+        "##g",
+        "last",
+        "bus",
+        "ep",
+        "##pu",
+        "##du",
+        "?"
+      ],
+      "token_ids": [
+        104,
+        161,
+        137955,
+        2003,
+        2588,
+        10745,
+        151730,
+        9588,
+        4906,
+        138,
+        105
+      ]
+    },
+    {
+      "text": "AC sleeper available aa?",
+      "tokens": [
+        "AC",
+        "sleep",
+        "##er",
+        "available",
+        "aa",
+        "?"
+      ],
+      "token_ids": [
+        104,
+        22459,
+        17661,
+        1327,
+        3849,
+        3116,
+        138,
+        105
+      ]
+    },
+    {
+      "text": "Guntur nunchi Tirumala ki bus unda?",
+      "tokens": [
+        "Guntur",
+        "nun",
+        "##chi",
+        "Ti",
+        "##rum",
+        "##ala",
+        "ki",
+        "bus",
+        "und",
+        "##a",
+        "?"
+      ],
+      "token_ids": [
+        104,
+        134197,
+        108815,
+        5308,
+        138136,
+        19900,
+        10729,
+        1396,
+        10745,
+        17102,
+        1192,
+        138,
+        105
+      ]
+    }
+  ]
+}

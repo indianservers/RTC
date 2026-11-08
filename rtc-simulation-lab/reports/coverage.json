@@ -1,0 +1,81 @@
+{
+  "source_label": "SYNTHETIC",
+  "counts": {
+    "cities": 60,
+    "stations": 120,
+    "routes": 600,
+    "trips": 2400,
+    "scenarios": 540,
+    "questions": 540
+  },
+  "coverage": {
+    "intent": {
+      "departure": 20,
+      "arrival": 10,
+      "amenities": 50,
+      "journey": 150,
+      "fare": 120,
+      "cheapest": 10,
+      "seats": 40,
+      "status": 50,
+      "platform": 30,
+      "gps": 20,
+      "selection": 40
+    },
+    "category": {
+      "A": 30,
+      "B": 50,
+      "C": 110,
+      "D": 130,
+      "E": 40,
+      "F": 40,
+      "G": 30,
+      "H": 30,
+      "I": 40,
+      "J": 40
+    },
+    "bus_category": {
+      "Pallevelugu": 108,
+      "Express": 108,
+      "Ultra Deluxe": 108,
+      "Super Luxury": 54,
+      "Indra AC": 54,
+      "Garuda": 54,
+      "Amaravathi AC": 54
+    },
+    "date_time_case": {
+      "daytime": 500,
+      "overnight": 10,
+      "calendar": 30
+    },
+    "error_unknown_case": {
+      "FARE_UNKNOWN": 10,
+      "FARE_EXPIRED": 20,
+      "SEATS_UNKNOWN": 10,
+      "SEATS_STALE": 10,
+      "PLATFORM_UNKNOWN": 10,
+      "SERVICE_UNKNOWN": 10,
+      "GPS_UNKNOWN": 10,
+      "GPS_STALE": 10,
+      "AMBIGUOUS_SELECTION": 20
+    }
+  },
+  "validation": {
+    "passed": true,
+    "errors": [],
+    "error_count": 0,
+    "source_label": "SYNTHETIC"
+  },
+  "scenario_validation_pass_rate": 1.0,
+  "benchmark_summary": {
+    "total": 540,
+    "passed": 540,
+    "failed": 0,
+    "elapsed_seconds": 0.004392300000290561
+  },
+  "missing_coverage": [
+    "Production integration and real classifier evaluation have not been run.",
+    "Bus-category labels measure fixture distribution, not category-specific production policy.",
+    "Synthetic coverage does not validate official tariffs, schedules or concessions."
+  ]
+}

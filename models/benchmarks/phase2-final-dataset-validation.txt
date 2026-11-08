@@ -1,0 +1,17 @@
+{
+  "records": 449,
+  "valid_records": 449,
+  "category_counts": {
+    "SINGLE_INTENT": 300,
+    "MULTI_INTENT": 16,
+    "CONTEXTUAL": 12,
+    "OUT_OF_SCOPE": 20,
+    "AMBIGUOUS": 11,
+    "NEGATION_CORRECTION": 13,
+    "ASR_STYLE": 77
+  },
+  "near_duplicate_pairs": 82,
+  "duplicate_normalized_text_pairs": 0,
+  "quantity_targets_met": false,
+  "schema_errors": []
+}

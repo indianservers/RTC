@@ -1,0 +1,63 @@
+{"text": "first bus", "intent": "FIRST_BUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "87a9a8ab15d9ae58"}
+{"text": "first", "intent": "FIRST_BUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "a7937b64b8caa58f"}
+{"text": "last bus", "intent": "LAST_BUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "f00fe89d29c915a7"}
+{"text": "last", "intent": "LAST_BUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "3547cb112ac4489a"}
+{"text": "fare", "intent": "TICKET_FARE", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "eaa8b6e89fcb020d"}
+{"text": "price", "intent": "TICKET_FARE", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "683b531f41ec88a2"}
+{"text": "platform", "intent": "BUS_PLATFORM", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "d294fcce0cc88587"}
+{"text": "next bus", "intent": "NEXT_BUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "16ed7cce1b4cb7a5"}
+{"text": "next", "intent": "NEXT_BUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "c6c1c9a9c8543f1e"}
+{"text": "connecting", "intent": "CONNECTING_BUSES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "3d6df245178e6076"}
+{"text": "connection", "intent": "CONNECTING_BUSES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "b38d9d168c3aedf1"}
+{"text": "cheapest", "intent": "CHEAPEST_BUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "a422b05a81b9fa6b"}
+{"text": "cheap", "intent": "CHEAPEST_BUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "c6f556046e0c0046"}
+{"text": "fastest", "intent": "FASTEST_BUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "ec0002c89581d55f"}
+{"text": "seats", "intent": "SEAT_AVAILABILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "2530aa222c31f46d"}
+{"text": "vacant", "intent": "SEAT_AVAILABILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "4c23c3188b938e59"}
+{"text": "delay", "intent": "BUS_DELAY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "6e16db102267e6e7"}
+{"text": "late", "intent": "BUS_DELAY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "089001a35679a33e"}
+{"text": "cancelled", "intent": "BUS_CANCELLATION", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "8b47045eb7b8ca42"}
+{"text": "cancellation", "intent": "BUS_CANCELLATION", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "80812d7992dd498c"}
+{"text": "facilities", "intent": "STATION_FACILITIES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "3c5ca5554a2fd48c"}
+{"text": "stops", "intent": "ROUTE_STOPS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "93dc77265fc67a13"}
+{"text": "route", "intent": "ROUTE_STOPS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "8a84e406c08ac959"}
+{"text": "arrival", "intent": "ARRIVAL_TIME", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "2ba137ba3df58ba7"}
+{"text": "arrive", "intent": "ARRIVAL_TIME", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "6dc09a300747b82d"}
+{"text": "duration", "intent": "JOURNEY_DURATION", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "caa79af4db67695c"}
+{"text": "how long", "intent": "JOURNEY_DURATION", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "d5b9424086ccce1c"}
+{"text": "ac", "intent": "AC_BUS_AVAILABILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "f45de51cdef30991"}
+{"text": "sleeper", "intent": "SLEEPER_BUS_AVAILABILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "467f6325e44a77a0"}
+{"text": "concession", "intent": "CONCESSION_ELIGIBILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "b9aca78e330a930b"}
+{"text": "discount", "intent": "CONCESSION_ELIGIBILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "221617318bcf5128"}
+{"text": "lost property", "intent": "LOST_PROPERTY_CONTACT", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "bc36690cb6a0d187"}
+{"text": "helpdesk", "intent": "STATION_HELPDESK", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "9f4d10730006eef4"}
+{"text": "buses between", "intent": "BUSES_BETWEEN", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "327e3030cce0f824"}
+{"text": "departures after", "intent": "DEPARTURES_AFTER", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "1e4b5e4398c07eaa"}
+{"text": "departures before", "intent": "DEPARTURES_BEFORE", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "55b9d9834825ab1e"}
+{"text": "arrivals at", "intent": "ARRIVALS_AT_STATION", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "43a2c6ada8c56d57"}
+{"text": "operating today", "intent": "BUSES_OPERATING_TODAY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "09ded1fddb20037d"}
+{"text": "bus types", "intent": "AVAILABLE_BUS_TYPES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "249c1c700a45b812"}
+{"text": "types of bus", "intent": "AVAILABLE_BUS_TYPES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "260d38977151414e"}
+{"text": "non ac", "intent": "NON_AC_AVAILABILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "b69a166d86ebe410"}
+{"text": "non-ac", "intent": "NON_AC_AVAILABILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "2d16188a05db43c8"}
+{"text": "seater", "intent": "SEATER_BUS_AVAILABILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "e06839736cad521b"}
+{"text": "amenities", "intent": "BUS_AMENITIES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "51436225a4e23324"}
+{"text": "charging", "intent": "BUS_AMENITIES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "36b3161dab7f0f1b"}
+{"text": "compare categories", "intent": "SERVICE_CATEGORY_COMPARISON", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "b5dced5d99b5946a"}
+{"text": "electric", "intent": "ELECTRIC_BUS_AVAILABILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "44b3c5003d93c5f1"}
+{"text": "direct bus", "intent": "DIRECT_BUS_AVAILABILITY", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "7bef38265e6693b2"}
+{"text": "via", "intent": "BUS_VIA_LOCATION", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "4d327af41f96c23c"}
+{"text": "intermediate stop", "intent": "INTERMEDIATE_STOP", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "5a85c83fcaac6454"}
+{"text": "boarding point", "intent": "BOARDING_POINT", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "4d7129938d9f4038"}
+{"text": "alighting point", "intent": "ALIGHTING_POINT", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "b81c7eaa8f79aa21"}
+{"text": "alternative route", "intent": "ALTERNATIVE_ROUTES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "191ea6b9377c0597"}
+{"text": "reservation", "intent": "RESERVATION_SUPPORTED", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "9efa077f044e7a77"}
+{"text": "booking", "intent": "RESERVATION_SUPPORTED", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "001d057c49888db9"}
+{"text": "compare fares", "intent": "FARE_COMPARISON", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "ba2e242853e9a08f"}
+{"text": "luggage", "intent": "LUGGAGE_RULES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "f59e7a4ed324acd6"}
+{"text": "baggage", "intent": "LUGGAGE_RULES", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "1d6f21ea90c6de24"}
+{"text": "live status", "intent": "BUS_LIVE_STATUS", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "c17ba4ff253bf94a"}
+{"text": "disruption", "intent": "SERVICE_DISRUPTION", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "2a3138bc213f1438"}
+{"text": "diversion", "intent": "SERVICE_DISRUPTION", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "cddf86d3bca49414"}
+{"text": "operator contact", "intent": "OPERATOR_CONTACT", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "67c39ce2e77419cd"}
+{"text": "service number", "intent": "SERVICE_NUMBER_LOOKUP", "language": "en", "source": "SYNTHETIC_RULE", "review_status": "PENDING", "human_reviewed": false, "split": "train", "family_id": "5a268538176cc44b"}

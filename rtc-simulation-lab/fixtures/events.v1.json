@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0",
+  "fixture_version": "1.0.0",
+  "source_label": "SYNTHETIC",
+  "random_seed": 73129,
+  "events": [
+    {
+      "schema_version": "1.0",
+      "fixture_version": "1.0.0",
+      "source_label": "SYNTHETIC",
+      "random_seed": 73129,
+      "id": "E000",
+      "at": "2026-11-08T08:00:00+05:30",
+      "kind": "delayed",
+      "payload": {
+        "minutes": 25
+      },
+      "service_id": "T00000"
+    },
+    {
+      "schema_version": "1.0",
+      "fixture_version": "1.0.0",
+      "source_label": "SYNTHETIC",
+      "random_seed": 73129,
+      "id": "E001",
+      "at": "2026-11-08T08:01:00+05:30",
+      "kind": "arrived",
+      "payload": {},
+      "service_id": "T00001"
+    },
+    {
+      "schema_version": "1.0",
+      "fixture_version": "1.0.0",
+      "source_label": "SYNTHETIC",
+      "random_seed": 73129,
+      "id": "E002",
+      "at": "2026-11-08T08:02:00+05:30",
+      "kind": "departed",
+      "payload": {},
+      "service_id": "T00002"
+    },
+    {
+      "schema_version": "1.0",
+      "fixture_version": "1.0.0",
+      "source_label": "SYNTHETIC",
+      "random_seed": 73129,
+      "id": "E003",
+      "at": "2026-11-08T08:03:00+05:30",
+      "kind": "cancelled",
+      "payload": {},
+      "service_id": "T00003"
+    },
+    {
+      "schema_version": "1.0",
+      "fixture_version": "1.0.0",
+      "source_label": "SYNTHETIC",
+      "random_seed": 73129,
+      "id": "E004",
+      "at": "2026-11-08T08:04:00+05:30",
+      "kind": "platform_changed",
+      "payload": {
+        "platform": "9"
+      },
+      "service_id": "T00004"
+    },
+    {
+      "schema_version": "1.0",
+      "fixture_version": "1.0.0",
+      "source_label": "SYNTHETIC",
+      "random_seed": 73129,
+      "id": "E005",
+      "at": "2026-11-08T08:05:00+05:30",
+      "kind": "gps_stale",
+      "payload": {},
+      "service_id": "T00005"
+    },
+    {
+      "schema_version": "1.0",
+      "fixture_version": "1.0.0",
+      "source_label": "SYNTHETIC",
+      "random_seed": 73129,
+      "id": "E006",
+      "at": "2026-11-08T08:06:00+05:30",
+      "kind": "seats_updated",
+      "payload": {
+        "available": 12
+      },
+      "service_id": "T00006"
+    },
+    {
+      "schema_version": "1.0",
+      "fixture_version": "1.0.0",
+      "source_label": "SYNTHETIC",
+      "random_seed": 73129,
+      "id": "E007",
+      "at": "2026-11-08T08:07:00+05:30",
+      "kind": "diversion",
+      "payload": {
+        "description": "DEMO bypass via alternate road"
+      },
+      "service_id": "T00007"
+    }
+  ]
+}

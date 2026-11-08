@@ -1,0 +1,30 @@
+{
+  "artifact": "models\\english\\nlp\\pilot-v2\\svm.joblib",
+  "sha256": "91e54534ecc7aa31f963f18d3103a23e952fcf2291c0fed6eaa2945007b8da40",
+  "deployment_status": "CANDIDATE, not runtime-approved",
+  "load_seconds": 1.3392100000000937,
+  "predictions": [
+    {
+      "input": "When is the next bus to Nellore?",
+      "prediction": "NEXT_BUS"
+    },
+    {
+      "input": "How much is the fare?",
+      "prediction": "TICKET_FARE"
+    },
+    {
+      "input": "Which platform is it?",
+      "prediction": "BUS_PLATFORM"
+    },
+    {
+      "input": "Are seats available?",
+      "prediction": "SEAT_AVAILABILITY"
+    }
+  ],
+  "samples": 100,
+  "median_ms": 1.0752499997579434,
+  "p95_ms": 1.6998999999486841,
+  "working_set_bytes": 124981248,
+  "network": "Python socket egress blocked",
+  "quality": "Inference verified, no independent accuracy claim; no training or threshold changes"
+}

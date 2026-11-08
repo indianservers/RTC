@@ -1,0 +1,308 @@
+{
+  "canonical_intents": 60,
+  "mapped_backend_handlers": 41,
+  "unsupported_count": 19,
+  "note": "Mapping does not imply complete availability of operational data or calibrated NLP accuracy. Requirements are checked per enquiry.",
+  "intents": [
+    {
+      "code": "NEXT_BUS",
+      "backend_code": "NEXT_BUS",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "FIRST_BUS",
+      "backend_code": "FIRST_BUS",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "LAST_BUS",
+      "backend_code": "LAST_BUS",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BUSES_BETWEEN",
+      "backend_code": "BUSES_BETWEEN",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "DEPARTURES_AFTER",
+      "backend_code": "DEPARTURES_AFTER",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "DEPARTURES_BEFORE",
+      "backend_code": "DEPARTURES_BEFORE",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BUS_AT_TIME",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "ARRIVAL_TIME",
+      "backend_code": "ARRIVAL_TIME",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "JOURNEY_DURATION",
+      "backend_code": "JOURNEY_DURATION",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BUSES_OPERATING_TODAY",
+      "backend_code": "BUSES_OPERATING_TODAY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "SERVICE_FREQUENCY",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "SPECIAL_DAY_SCHEDULE",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "AVAILABLE_BUS_TYPES",
+      "backend_code": "AVAILABLE_BUS_TYPES",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "AC_BUS_AVAILABILITY",
+      "backend_code": "AC_BUS_AVAILABILITY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "NON_AC_BUS_AVAILABILITY",
+      "backend_code": "NON_AC_AVAILABILITY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "SLEEPER_AVAILABILITY",
+      "backend_code": "SLEEPER_BUS_AVAILABILITY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "SEATER_AVAILABILITY",
+      "backend_code": "SEATER_BUS_AVAILABILITY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "ELECTRIC_BUS_AVAILABILITY",
+      "backend_code": "ELECTRIC_BUS_AVAILABILITY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BUS_AMENITIES",
+      "backend_code": "BUS_AMENITIES",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "SERVICE_CATEGORY_COMPARISON",
+      "backend_code": "SERVICE_CATEGORY_COMPARISON",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "ACCESSIBLE_BUS_AVAILABILITY",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "BUS_CAPACITY",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "DIRECT_BUS",
+      "backend_code": "DIRECT_BUS_AVAILABILITY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "ROUTE_STOPS",
+      "backend_code": "ROUTE_STOPS",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BUS_VIA_LOCATION",
+      "backend_code": "BUS_VIA_LOCATION",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "INTERMEDIATE_STOP",
+      "backend_code": "INTERMEDIATE_STOP",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BOARDING_POINT",
+      "backend_code": "BOARDING_POINT",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "ALIGHTING_POINT",
+      "backend_code": "ALIGHTING_POINT",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "CONNECTING_BUSES",
+      "backend_code": "CONNECTING_BUSES",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "ALTERNATIVE_ROUTES",
+      "backend_code": "ALTERNATIVE_ROUTES",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "ROUTE_DISTANCE",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "DESTINATION_REACHABILITY",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "GET_FARE",
+      "backend_code": "TICKET_FARE",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "CHEAPEST_BUS",
+      "backend_code": "CHEAPEST_BUS",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "FASTEST_BUS",
+      "backend_code": "FASTEST_BUS",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "FARE_COMPARISON",
+      "backend_code": "FARE_COMPARISON",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "SEAT_AVAILABILITY",
+      "backend_code": "SEAT_AVAILABILITY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "RESERVATION_SUPPORTED",
+      "backend_code": "RESERVATION_SUPPORTED",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BOOKING_OPTIONS",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "BOOKING_STATUS",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "CANCELLATION_POLICY",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "REFUND_POLICY",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "CONCESSION_ENQUIRY",
+      "backend_code": "CONCESSION_ELIGIBILITY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "LUGGAGE_RULES",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "LIVE_BUS_STATUS",
+      "backend_code": "BUS_LIVE_STATUS",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BUS_DELAY",
+      "backend_code": "BUS_DELAY",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BUS_CANCELLATION",
+      "backend_code": "BUS_CANCELLATION",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "BUS_PLATFORM",
+      "backend_code": "BUS_PLATFORM",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "ESTIMATED_ARRIVAL",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "BUS_DEPARTED_STATUS",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "BUS_ARRIVED_STATUS",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "SERVICE_DISRUPTION",
+      "backend_code": "SERVICE_DISRUPTION",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "PLATFORM_CHANGE",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "SERVICE_NUMBER_LOOKUP",
+      "backend_code": "SERVICE_NUMBER_LOOKUP",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "STATION_FACILITIES",
+      "backend_code": "STATION_FACILITIES",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "STATION_HELPDESK",
+      "backend_code": "STATION_HELPDESK",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "LOST_PROPERTY",
+      "backend_code": "LOST_PROPERTY_CONTACT",
+      "capability": "PARTIAL"
+    },
+    {
+      "code": "OPERATOR_CONTACT",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "STATION_NAVIGATION",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    },
+    {
+      "code": "COMPLAINT_GUIDANCE",
+      "backend_code": null,
+      "capability": "UNSUPPORTED"
+    }
+  ]
+}

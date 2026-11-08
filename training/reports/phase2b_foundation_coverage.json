@@ -1,0 +1,366 @@
+{
+  "source": "LOCAL_DATABASE_AND_PRESERVED_PHASE2A_FILES",
+  "previous_examples_preserved": 300,
+  "intents": [
+    {
+      "code": "NEXT_BUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 8,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "FIRST_BUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 9,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "LAST_BUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 8,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUSES_BETWEEN",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "DEPARTURES_AFTER",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "DEPARTURES_BEFORE",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUS_AT_TIME",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "ARRIVAL_TIME",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "JOURNEY_DURATION",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUSES_OPERATING_TODAY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "SERVICE_FREQUENCY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "SPECIAL_DAY_SCHEDULE",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "AVAILABLE_BUS_TYPES",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "AC_BUS_AVAILABILITY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "NON_AC_BUS_AVAILABILITY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "SLEEPER_AVAILABILITY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "SEATER_AVAILABILITY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "ELECTRIC_BUS_AVAILABILITY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUS_AMENITIES",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "SERVICE_CATEGORY_COMPARISON",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "ACCESSIBLE_BUS_AVAILABILITY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUS_CAPACITY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "DIRECT_BUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "ROUTE_STOPS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUS_VIA_LOCATION",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "INTERMEDIATE_STOP",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BOARDING_POINT",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "ALIGHTING_POINT",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "CONNECTING_BUSES",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "ALTERNATIVE_ROUTES",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "ROUTE_DISTANCE",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "DESTINATION_REACHABILITY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "GET_FARE",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "CHEAPEST_BUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 8,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "FASTEST_BUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "FARE_COMPARISON",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "SEAT_AVAILABILITY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 8,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "RESERVATION_SUPPORTED",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BOOKING_OPTIONS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BOOKING_STATUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "CANCELLATION_POLICY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "REFUND_POLICY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "CONCESSION_ENQUIRY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "LUGGAGE_RULES",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "LIVE_BUS_STATUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUS_DELAY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 8,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUS_CANCELLATION",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 8,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUS_PLATFORM",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "ESTIMATED_ARRIVAL",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUS_DEPARTED_STATUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "BUS_ARRIVED_STATUS",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "SERVICE_DISRUPTION",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "PLATFORM_CHANGE",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "SERVICE_NUMBER_LOOKUP",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "STATION_FACILITIES",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 7,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "STATION_HELPDESK",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "LOST_PROPERTY",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "OPERATOR_CONTACT",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 6,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "STATION_NAVIGATION",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    },
+    {
+      "code": "COMPLAINT_GUIDANCE",
+      "phase2a_examples": 5,
+      "existing_db_utterances": 5,
+      "additional_structurally_diverse_examples_needed": 195
+    }
+  ]
+}

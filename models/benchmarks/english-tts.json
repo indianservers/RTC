@@ -1,0 +1,19 @@
+{
+  "runtime": "Windows SAPI via pyttsx3",
+  "seconds": 0.6870045000000573,
+  "audio_seconds": 2.9626303854875284,
+  "voices": [
+    {
+      "id": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_DAVID_11.0",
+      "name": "Microsoft David Desktop - English (United States)"
+    },
+    {
+      "id": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Speech\\Voices\\Tokens\\TTS_MS_EN-US_ZIRA_11.0",
+      "name": "Microsoft Zira Desktop - English (United States)"
+    }
+  ],
+  "status": "SYNTHESIZED_LOCAL_WAV",
+  "playback_verified": false,
+  "license": "OS-provided voice; redistribution rights not verified; do not package the voice",
+  "network_guard": "Python socket audit hook"
+}

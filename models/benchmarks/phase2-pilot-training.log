@@ -1,0 +1,25 @@
+C:\Indian Servers\RTC\.venv-english\Lib\site-packages\sklearn\svm\_classes.py:323: UserWarning: The number of unique classes is greater than 50% of the number of samples. `y` could represent a regression problem, not a classification problem.
+  check_classification_targets(y)
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794116858.142202    8612 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794116861.169952    8612 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794116861.961546    8612 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+Epoch 1/8
+5/5 - 1s - 149ms/step - loss: 3.7837 - learning_rate: 0.0010
+Epoch 2/8
+5/5 - 0s - 17ms/step - loss: 3.7684 - learning_rate: 0.0010
+Epoch 3/8
+5/5 - 0s - 15ms/step - loss: 3.7573 - learning_rate: 0.0010
+Epoch 4/8
+5/5 - 0s - 15ms/step - loss: 3.7544 - learning_rate: 0.0010
+Epoch 5/8
+5/5 - 0s - 13ms/step - loss: 3.7343 - learning_rate: 0.0010
+Epoch 6/8
+5/5 - 0s - 13ms/step - loss: 3.7267 - learning_rate: 0.0010
+Epoch 7/8
+5/5 - 0s - 14ms/step - loss: 3.7129 - learning_rate: 0.0010
+Epoch 8/8
+5/5 - 0s - 14ms/step - loss: 3.7081 - learning_rate: 0.0010

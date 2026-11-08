@@ -1,0 +1,4285 @@
+{
+  "version": "2a-v1",
+  "intents": [
+    {
+      "code": "NEXT_BUS",
+      "intent_group": "TIMINGS",
+      "display_name": "Next Bus",
+      "definition": "Find the earliest eligible departures after the passenger's requested threshold, including later operating dates.",
+      "examples": [
+        "When is the next bus to Tirupati?",
+        "Any Nellore departure coming up?",
+        "Which Vijayawada service leaves next?",
+        "I need the soonest bus for Guntur.",
+        "What can I board now for Vizag?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "FIRST_BUS",
+          "this_meaning": "Next available after a threshold",
+          "other_meaning": "Earliest departure in the requested operating day"
+        }
+      ],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "NEXT_BUS",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "NEXT_BUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "FIRST_BUS",
+      "intent_group": "TIMINGS",
+      "display_name": "First Bus",
+      "definition": "Find the earliest departure within one explicitly selected operating day, independent of the current time.",
+      "examples": [
+        "What's the first bus tomorrow to Nellore?",
+        "When do Tirupati departures start in the morning?",
+        "Tell me the earliest Guntur service on Monday.",
+        "Which bus starts the day for Hyderabad?",
+        "What is the opening departure to Kavali?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "NEXT_BUS",
+          "this_meaning": "Earliest departure in the requested operating day",
+          "other_meaning": "Next available after a threshold"
+        }
+      ],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "FIRST_BUS",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "FIRST_BUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "LAST_BUS",
+      "intent_group": "TIMINGS",
+      "display_name": "Last Bus",
+      "definition": "Find the final eligible departure inside the chosen calendar or operator-defined operating-day bounds.",
+      "examples": [
+        "What time is the last bus to Vizag?",
+        "Can I still catch tonight's final Nellore service?",
+        "When do Guntur buses stop running today?",
+        "Which Tirupati departure closes the schedule?",
+        "I need the final Hyderabad bus for this operating day."
+      ],
+      "similar_intents": [
+        {
+          "intent": "DEPARTURES_BEFORE",
+          "this_meaning": "Final departure within operating-day bounds",
+          "other_meaning": "Any departure earlier than a time cutoff"
+        }
+      ],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "LAST_BUS",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "LAST_BUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUSES_BETWEEN",
+      "intent_group": "TIMINGS",
+      "display_name": "Buses Between",
+      "definition": "List scheduled services permitting boarding at the origin and later alighting at the destination.",
+      "examples": [
+        "Show buses from Guntur to Vijayawada.",
+        "List departures between Nellore and Tirupati.",
+        "What services connect Ongole with Kavali?",
+        "Give me today's Hyderabad route options from here.",
+        "Which buses travel from Kurnool to Kadapa?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "BUSES_BETWEEN",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "BUSES_BETWEEN:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "DEPARTURES_AFTER",
+      "intent_group": "TIMINGS",
+      "display_name": "Departures After",
+      "definition": "Find eligible departures following an explicitly supplied lower time bound.",
+      "examples": [
+        "Any buses to Hyderabad after 9 PM?",
+        "Show Nellore departures later than seven tonight.",
+        "I cannot leave before noon; what goes to Guntur?",
+        "Find Tirupati buses departing after breakfast at eight.",
+        "List services leaving Vijayawada past 18:30."
+      ],
+      "similar_intents": [
+        {
+          "intent": "BUS_AT_TIME",
+          "this_meaning": "All departures strictly following a lower bound",
+          "other_meaning": "Departure within an explicit proximity window"
+        }
+      ],
+      "required_slots": [
+        "destination",
+        "departure_after"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        },
+        {
+          "missing_slot": "departure_after",
+          "prompt": "What departure time should I use?"
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "DEPARTURES_AFTER",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "DEPARTURES_AFTER:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "DEPARTURES_BEFORE",
+      "intent_group": "TIMINGS",
+      "display_name": "Departures Before",
+      "definition": "Find eligible departures preceding an explicitly supplied upper time bound.",
+      "examples": [
+        "Is there a bus before 6 AM?",
+        "Which Nellore services leave earlier than noon?",
+        "I must depart by five; what can I board?",
+        "Show Guntur departures before 20:00.",
+        "Any Hyderabad bus that starts before sunrise at six?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "LAST_BUS",
+          "this_meaning": "Any departure earlier than a time cutoff",
+          "other_meaning": "Final departure within operating-day bounds"
+        }
+      ],
+      "required_slots": [
+        "destination",
+        "departure_before"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        },
+        {
+          "missing_slot": "departure_before",
+          "prompt": "What departure time should I use?"
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "DEPARTURES_BEFORE",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "DEPARTURES_BEFORE:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUS_AT_TIME",
+      "intent_group": "TIMINGS",
+      "display_name": "Bus At Time",
+      "definition": "Find departures within a documented tolerance window around a specified clock time.",
+      "examples": [
+        "Is there a Tirupati bus around 7 PM?",
+        "What goes to Nellore near half past eight?",
+        "Does a Guntur service depart at noon?",
+        "Find a Hyderabad departure close to 21:00.",
+        "Is anything scheduled for Kavali at six sharp?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "DEPARTURES_AFTER",
+          "this_meaning": "Departure within an explicit proximity window",
+          "other_meaning": "All departures strictly following a lower bound"
+        }
+      ],
+      "required_slots": [
+        "destination",
+        "target_time"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        },
+        {
+          "missing_slot": "target_time",
+          "prompt": "What departure time should I use?"
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "BUS_AT_TIME:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "ARRIVAL_TIME",
+      "intent_group": "TIMINGS",
+      "display_name": "Arrival Time",
+      "definition": "Retrieve the scheduled arrival time for the selected service and stop, labelling any operational override separately.",
+      "examples": [
+        "When will this bus reach Ongole?",
+        "What is the scheduled arrival at Nellore?",
+        "Tell me when service 3521 reaches Guntur.",
+        "At what time should this route finish in Vizag?",
+        "When does the overnight Hyderabad service reach its terminal?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "ESTIMATED_ARRIVAL",
+          "this_meaning": "Published or explicitly labelled arrival time",
+          "other_meaning": "Fresh verified operational ETA; scheduled time is insufficient"
+        }
+      ],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "ARRIVAL_TIME",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "ARRIVAL_TIME:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "JOURNEY_DURATION",
+      "intent_group": "TIMINGS",
+      "display_name": "Journey Duration",
+      "definition": "Calculate travel duration between the passenger's valid boarding and alighting stops.",
+      "examples": [
+        "How long does it take to reach Kurnool?",
+        "What is the travel time from Guntur to Nellore?",
+        "How many hours is this Tirupati journey?",
+        "Does the Hyderabad ride take the whole night?",
+        "Tell me the scheduled duration to Kavali."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "JOURNEY_DURATION",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "JOURNEY_DURATION:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUSES_OPERATING_TODAY",
+      "intent_group": "TIMINGS",
+      "display_name": "Buses Operating Today",
+      "definition": "Check which services operate on the station-local current date using calendars and exceptions.",
+      "examples": [
+        "Are Nellore buses running today?",
+        "Which Guntur services operate this date?",
+        "Is the Tirupati timetable active today?",
+        "Does this weekday-only bus run on Sunday?",
+        "Show today's operating Hyderabad services."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "BUSES_OPERATING_TODAY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "BUSES_OPERATING_TODAY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "SERVICE_FREQUENCY",
+      "intent_group": "TIMINGS",
+      "display_name": "Service Frequency",
+      "definition": "Describe scheduled departure counts or intervals on a segment within a specified period, without assuming regular headways.",
+      "examples": [
+        "How often do buses run to Guntur?",
+        "What is the gap between Nellore departures?",
+        "Are Hyderabad buses hourly?",
+        "How many Tirupati services run in a day?",
+        "Tell me the service interval on the Kavali route."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "SERVICE_FREQUENCY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "SPECIAL_DAY_SCHEDULE",
+      "intent_group": "TIMINGS",
+      "display_name": "Special Day Schedule",
+      "definition": "Retrieve date-specific extra or changed schedules for a specified holiday, festival or special operating date.",
+      "examples": [
+        "Are there additional buses for the festival?",
+        "Any Sankranti specials to Nellore?",
+        "Does Tirupati have a holiday timetable?",
+        "Show extra Hyderabad services this weekend.",
+        "What changes in the Guntur schedule on the festival date?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "SPECIAL_DAY_SCHEDULE:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "AVAILABLE_BUS_TYPES",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Available Bus Types",
+      "definition": "List the service classifications represented by eligible departures on the requested segment.",
+      "examples": [
+        "What types of buses go to Vizag?",
+        "Which classes are offered for Nellore?",
+        "Do you have multiple categories on the Tirupati route?",
+        "List the bus types serving Hyderabad.",
+        "What service choices are there between Guntur and Ongole?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "AVAILABLE_BUS_TYPES",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "AVAILABLE_BUS_TYPES:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "AC_BUS_AVAILABILITY",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Ac Bus Availability",
+      "definition": "Find services whose assigned vehicle or configuration explicitly supports air conditioning.",
+      "examples": [
+        "Is there an AC bus to Hyderabad?",
+        "Show air-conditioned departures for Nellore.",
+        "Can I travel to Tirupati with AC tonight?",
+        "Any cooled bus leaving Guntur tomorrow?",
+        "Find an air-conditioned service for Vizag."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "AC_BUS_AVAILABILITY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "AC_BUS_AVAILABILITY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "NON_AC_BUS_AVAILABILITY",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Non Ac Bus Availability",
+      "definition": "Find services explicitly known to be non-air-conditioned, excluding unknown configurations.",
+      "examples": [
+        "Show non-AC buses to Nellore.",
+        "I want a Hyderabad bus without air conditioning.",
+        "Are ordinary non-air-conditioned services running to Guntur?",
+        "Only non AC options for Tirupati please.",
+        "Which Vizag buses have no AC?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "NON_AC_AVAILABILITY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "NON_AC_BUS_AVAILABILITY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "SLEEPER_AVAILABILITY",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Sleeper Availability",
+      "definition": "Find services with verified sleeping berths, independently of branded category and seat inventory.",
+      "examples": [
+        "Is an AC sleeper available tonight?",
+        "Any sleeping berths on the Hyderabad route?",
+        "Find a sleeper bus for Nellore tomorrow.",
+        "Can I lie down on a Tirupati service?",
+        "Which Vizag departures have sleeper accommodation?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "SLEEPER_BUS_AVAILABILITY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "SLEEPER_AVAILABILITY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "SEATER_AVAILABILITY",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Seater Availability",
+      "definition": "Find services with verified seater accommodation rather than inferring layout from category branding.",
+      "examples": [
+        "Any seater buses to Tirupati?",
+        "I need a seated bus instead of a sleeper.",
+        "Show Hyderabad services with seats rather than berths.",
+        "Does Nellore have a seater departure tonight?",
+        "Find a Guntur bus where I can travel sitting."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "SEATER_BUS_AVAILABILITY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "SEATER_AVAILABILITY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "ELECTRIC_BUS_AVAILABILITY",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Electric Bus Availability",
+      "definition": "Find services with an explicitly assigned electric vehicle or configuration.",
+      "examples": [
+        "Are electric buses operating on this route?",
+        "Can I take a battery-powered bus to Guntur?",
+        "Show electric services from this station.",
+        "Is the Nellore departure an electric vehicle?",
+        "Which scheduled buses use electric propulsion?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "ELECTRIC_BUS_AVAILABILITY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "ELECTRIC_BUS_AVAILABILITY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUS_AMENITIES",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Bus Amenities",
+      "definition": "Report verified amenities of the selected assigned vehicle, retaining unknown feature states.",
+      "examples": [
+        "Does this bus have charging ports?",
+        "Is drinking water provided on the Hyderabad bus?",
+        "Can I charge my phone during this journey?",
+        "What facilities are fitted on this vehicle?",
+        "Are reclining seats verified for this service?"
+      ],
+      "similar_intents": [],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "BUS_AMENITIES",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "BUS_AMENITIES:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "SERVICE_CATEGORY_COMPARISON",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Service Category Comparison",
+      "definition": "Explain recorded differences between two or more service categories without guaranteeing vehicle amenities.",
+      "examples": [
+        "What's the difference between Express and Super Luxury?",
+        "Compare Ultra Deluxe with Express.",
+        "How do Indra and Amaravathi categories differ?",
+        "Which features distinguish Pallevelugu from Express?",
+        "Explain the category differences without assuming the assigned vehicle."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "categories"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "categories",
+          "prompt": "Please specify categories."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "SERVICE_CATEGORY_COMPARISON",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "SERVICE_CATEGORY_COMPARISON:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "ACCESSIBLE_BUS_AVAILABILITY",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Accessible Bus Availability",
+      "definition": "Find departures meeting explicitly recorded accessibility requirements.",
+      "examples": [
+        "Is there a wheelchair-accessible bus?",
+        "Which Nellore departure supports wheelchair boarding?",
+        "I need accessible seating for Hyderabad.",
+        "Are mobility-friendly vehicles assigned today?",
+        "Find a service with verified wheelchair support."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "ACCESSIBLE_BUS_AVAILABILITY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUS_CAPACITY",
+      "intent_group": "BUS_TYPES",
+      "display_name": "Bus Capacity",
+      "definition": "Report physical seat and berth capacity of the assigned configuration, not vacant inventory.",
+      "examples": [
+        "How many seats does this bus have?",
+        "What is the assigned vehicle's berth capacity?",
+        "Tell me the total seating layout for this service.",
+        "Is this a forty-seat bus or a larger one?",
+        "How many passengers can the vehicle accommodate, apart from availability?"
+      ],
+      "similar_intents": [],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "BUS_CAPACITY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "DIRECT_BUS",
+      "intent_group": "ROUTES",
+      "display_name": "Direct Bus",
+      "definition": "Find a single service allowing the requested journey without a vehicle change.",
+      "examples": [
+        "Is there a direct bus to Srisailam?",
+        "Can I go to Tirumala without changing buses?",
+        "Show nonstop-transfer options for Nellore.",
+        "Do I need a change to reach Hyderabad?",
+        "Which Vizag service takes me all the way on one bus?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "DESTINATION_REACHABILITY",
+          "this_meaning": "Single service with no transfer",
+          "other_meaning": "Any feasible path, potentially connecting"
+        }
+      ],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "DIRECT_BUS_AVAILABILITY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "DIRECT_BUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "ROUTE_STOPS",
+      "intent_group": "ROUTES",
+      "display_name": "Route Stops",
+      "definition": "Retrieve the ordered scheduled stopping pattern of the selected route variant or service.",
+      "examples": [
+        "What are the stops on this route?",
+        "List the stations in travel order for service 3521.",
+        "Where does the Nellore bus call along the way?",
+        "Show the complete stop list for this variant.",
+        "Which intermediate stations are scheduled on this journey?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "service_id"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "service_id",
+          "prompt": "Please specify service id."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "ROUTE_STOPS",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "ROUTE_STOPS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUS_VIA_LOCATION",
+      "intent_group": "ROUTES",
+      "display_name": "Bus Via Location",
+      "definition": "Check or search for a route passing through a requested via point without asserting a passenger halt.",
+      "examples": [
+        "Does this bus go via Ongole?",
+        "Find a Tirupati service travelling through Kavali.",
+        "Which Nellore route passes Guntur?",
+        "Can I choose a Hyderabad service routed via Kurnool?",
+        "Show Vizag options using Rajahmundry as a via point."
+      ],
+      "similar_intents": [
+        {
+          "intent": "INTERMEDIATE_STOP",
+          "this_meaning": "Path travels through the location",
+          "other_meaning": "Scheduled halt/boarding permissions must be established"
+        }
+      ],
+      "required_slots": [
+        "destination",
+        "via"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        },
+        {
+          "missing_slot": "via",
+          "prompt": "Which location should the route pass through?"
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "BUS_VIA_LOCATION",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "BUS_VIA_LOCATION:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "INTERMEDIATE_STOP",
+      "intent_group": "ROUTES",
+      "display_name": "Intermediate Stop",
+      "definition": "Confirm whether a selected service actually calls at a specific intermediate station and allows the relevant passenger action.",
+      "examples": [
+        "Will this bus stop at Kavali?",
+        "Is Ongole a scheduled halt rather than just on the road?",
+        "Does service 3521 actually call at Guntur?",
+        "Will I be allowed to get down at Nellore on this service?",
+        "Is this intermediate station served by the selected departure?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "BUS_VIA_LOCATION",
+          "this_meaning": "Scheduled halt/boarding permissions must be established",
+          "other_meaning": "Path travels through the location"
+        }
+      ],
+      "required_slots": [
+        "service_id",
+        "station"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "service_id",
+          "prompt": "Please specify service id."
+        },
+        {
+          "missing_slot": "station",
+          "prompt": "Which intermediate stop do you mean?"
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "INTERMEDIATE_STOP",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "INTERMEDIATE_STOP:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BOARDING_POINT",
+      "intent_group": "ROUTES",
+      "display_name": "Boarding Point",
+      "definition": "Identify locations at which passengers may board the selected service or destination-bound journey.",
+      "examples": [
+        "Where can I board the Tirupati bus?",
+        "Can I join this service at Guntur?",
+        "Which stops permit pickup for Hyderabad?",
+        "Where is the boarding location for the selected service?",
+        "May I get on at Kavali instead of the starting terminal?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "service_id"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "service_id",
+          "prompt": "Please specify service id."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "BOARDING_POINT",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "BOARDING_POINT:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "ALIGHTING_POINT",
+      "intent_group": "ROUTES",
+      "display_name": "Alighting Point",
+      "definition": "Identify permitted drop-off locations or validate a requested alighting station on a selected service.",
+      "examples": [
+        "Can I get down at Rajahmundry?",
+        "Which stations allow drop-off on this bus?",
+        "Is alighting permitted at Ongole?",
+        "Where may I leave the selected service before its terminal?",
+        "Does the Tirupati bus allow passengers off at Nellore?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "service_id"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "service_id",
+          "prompt": "Please specify service id."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "ALIGHTING_POINT",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "ALIGHTING_POINT:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "CONNECTING_BUSES",
+      "intent_group": "ROUTES",
+      "display_name": "Connecting Buses",
+      "definition": "Find feasible time-ordered multi-leg journeys respecting transfer windows and stop permissions.",
+      "examples": [
+        "Where should I change buses for Annavaram?",
+        "Find a connection from Guntur to Srisailam.",
+        "Can I transfer at Vijayawada for Nellore?",
+        "Which onward bus can I catch after arriving at Kurnool?",
+        "Plan a journey to Tirumala with at most two changes."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "origin",
+        "destination"
+      ],
+      "required_slot_alternatives": [
+        [
+          "travel_date"
+        ],
+        [
+          "next_available_policy"
+        ]
+      ],
+      "optional_slots": [
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "origin",
+          "prompt": "Please specify origin."
+        },
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        },
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "travel_date"
+            ],
+            [
+              "next_available_policy"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "CONNECTING_BUSES",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "CONNECTING_BUSES:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "ALTERNATIVE_ROUTES",
+      "intent_group": "ROUTES",
+      "display_name": "Alternative Routes",
+      "definition": "Find different feasible paths or transfer patterns for the same journey, relative to an optional selected route.",
+      "examples": [
+        "Is there another way to reach Vizag?",
+        "What route can I use if the direct Nellore bus is unavailable?",
+        "Show a different path to Hyderabad.",
+        "Are there alternative connections through another station?",
+        "Can I reach Tirupati by a route other than the usual one?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "ALTERNATIVE_ROUTES",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "ALTERNATIVE_ROUTES:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "ROUTE_DISTANCE",
+      "intent_group": "ROUTES",
+      "display_name": "Route Distance",
+      "definition": "Retrieve sourced cumulative or segment distance along the applicable route variant.",
+      "examples": [
+        "How many kilometres is it to Nellore?",
+        "What distance does this route cover?",
+        "Tell me the stop-to-stop distance from Guntur to Ongole.",
+        "How far is Hyderabad along this bus variant?",
+        "What is the cumulative route distance at Kavali?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "ROUTE_DISTANCE:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "DESTINATION_REACHABILITY",
+      "intent_group": "ROUTES",
+      "display_name": "Destination Reachability",
+      "definition": "Determine whether any feasible direct or connecting bus itinerary reaches the requested destination in the search period.",
+      "examples": [
+        "Can I reach Tirumala from here by bus?",
+        "Is there any bus journey to Srisailam, including connections?",
+        "Does the network serve Annavaram from this station?",
+        "Can you find a way to get to Hyderabad at all?",
+        "Is Nellore reachable today even if I must change?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "DIRECT_BUS",
+          "this_meaning": "Any feasible path, potentially connecting",
+          "other_meaning": "Single service with no transfer"
+        }
+      ],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "DESTINATION_REACHABILITY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "GET_FARE",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Get Fare",
+      "definition": "Retrieve an applicable date-effective fare for the actual boarding and alighting segment and selected service or category.",
+      "examples": [
+        "How much is the ticket to Nellore?",
+        "What will Guntur to Ongole cost on this service?",
+        "Tell me the adult fare for the selected Tirupati bus.",
+        "How much ticket to Hyderabad from here?",
+        "What price applies when boarding at Kavali?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "FARE_COMPARISON",
+          "this_meaning": "Applicable fare for a valid travel segment",
+          "other_meaning": "Compare fares on the same segment/date"
+        }
+      ],
+      "required_slots": [
+        "origin"
+      ],
+      "required_slot_alternatives": [
+        [
+          "destination"
+        ],
+        [
+          "selected_service_id",
+          "boarding_station",
+          "alighting_station"
+        ]
+      ],
+      "optional_slots": [
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "origin",
+          "prompt": "Please specify origin."
+        },
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "destination"
+            ],
+            [
+              "selected_service_id",
+              "boarding_station",
+              "alighting_station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "TICKET_FARE",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "GET_FARE:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "CHEAPEST_BUS",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Cheapest Bus",
+      "definition": "Rank eligible services by known applicable segment fare; missing prices are never zero.",
+      "examples": [
+        "What's the cheapest bus to Hyderabad?",
+        "Find the lowest known fare to Nellore.",
+        "Which Guntur departure costs the least?",
+        "I want the minimum ticket price among available Tirupati services.",
+        "Show the most economical bus for this same boarding segment."
+      ],
+      "similar_intents": [
+        {
+          "intent": "CONCESSION_ENQUIRY",
+          "this_meaning": "Rank known applicable fares",
+          "other_meaning": "Explain eligibility rules without assuming eligibility"
+        }
+      ],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "CHEAPEST_BUS",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "CHEAPEST_BUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "FASTEST_BUS",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Fastest Bus",
+      "definition": "Rank eligible services by elapsed journey duration for the same requested segment.",
+      "examples": [
+        "Which bus reaches Vizag fastest?",
+        "Find the shortest scheduled journey to Nellore.",
+        "What service gets me to Hyderabad in the least time?",
+        "Which Tirupati departure has the quickest ride?",
+        "Compare travel durations and show the fastest Guntur option."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "FASTEST_BUS",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "FASTEST_BUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "FARE_COMPARISON",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Fare Comparison",
+      "definition": "Compare applicable prices for multiple services or categories on the same boarding segment and travel date.",
+      "examples": [
+        "Compare Express and Super Luxury fares.",
+        "How much extra does the AC service cost for the same segment?",
+        "Show ticket prices side by side for these buses.",
+        "Is the sleeper more expensive than the seater to Hyderabad?",
+        "Compare Nellore fares for tomorrow's matching departures."
+      ],
+      "similar_intents": [
+        {
+          "intent": "GET_FARE",
+          "this_meaning": "Compare fares on the same segment/date",
+          "other_meaning": "Applicable fare for a valid travel segment"
+        }
+      ],
+      "required_slots": [
+        "origin"
+      ],
+      "required_slot_alternatives": [
+        [
+          "destination"
+        ],
+        [
+          "selected_service_id",
+          "boarding_station",
+          "alighting_station"
+        ]
+      ],
+      "optional_slots": [
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "origin",
+          "prompt": "Please specify origin."
+        },
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "destination"
+            ],
+            [
+              "selected_service_id",
+              "boarding_station",
+              "alighting_station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "FARE_COMPARISON",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "FARE_COMPARISON:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "SEAT_AVAILABILITY",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Seat Availability",
+      "definition": "Report fresh segment-specific inventory for a dated trip and requested seat count, distinguishing unknown and stale states.",
+      "examples": [
+        "Are two seats available tonight?",
+        "How many vacant seats are currently known on this trip?",
+        "Is there one sleeper berth free from Guntur to Nellore?",
+        "Can three people travel on the selected bus?",
+        "Is the latest local inventory fresh enough to confirm vacancies?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "BOOKING_STATUS",
+          "this_meaning": "Segment-specific fresh remaining inventory",
+          "other_meaning": "Authorized existing booking record"
+        }
+      ],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "SEAT_AVAILABILITY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "SEAT_AVAILABILITY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "RESERVATION_SUPPORTED",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Reservation Supported",
+      "definition": "Report whether reservations are supported for the selected service, separately from current seat availability.",
+      "examples": [
+        "Can I reserve a seat on this bus?",
+        "Is this service reservation-enabled?",
+        "Does the Nellore route accept advance reservations?",
+        "Can seats be reserved on Pallevelugu here?",
+        "Is booking supported for the selected trip category?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "service_id"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "service_id",
+          "prompt": "Please specify service id."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "RESERVATION_SUPPORTED",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "RESERVATION_SUPPORTED:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BOOKING_OPTIONS",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Booking Options",
+      "definition": "Describe locally recorded approved ticket booking channels and instructions without executing a purchase.",
+      "examples": [
+        "Where can I book a ticket?",
+        "Which local booking counter handles Hyderabad services?",
+        "What reservation channels does this operator provide?",
+        "How do I buy a ticket for the selected bus?",
+        "Is there an approved booking contact for this service?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "operator"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "operator",
+          "prompt": "Please specify operator."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "BOOKING_OPTIONS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BOOKING_STATUS",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Booking Status",
+      "definition": "Read status of an existing booking only when an authorized local record is available; otherwise report unsupported or unavailable.",
+      "examples": [
+        "Can you check whether my booking is confirmed?",
+        "Is reservation reference ABC123 available locally?",
+        "Does the authorized local record show my ticket as confirmed?",
+        "Can this kiosk look up my existing booking reference?",
+        "Is my reservation status known without contacting an external system?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "SEAT_AVAILABILITY",
+          "this_meaning": "Authorized existing booking record",
+          "other_meaning": "Segment-specific fresh remaining inventory"
+        }
+      ],
+      "required_slots": [
+        "reservation_reference"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "reservation_reference",
+          "prompt": "Which booking reference do you mean? Local status lookup is unavailable unless an authorized record exists."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "BOOKING_STATUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown",
+        "Authorization must come from the local server access controls, never from a user-supplied slot."
+      ]
+    },
+    {
+      "code": "CANCELLATION_POLICY",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Cancellation Policy",
+      "definition": "Explain locally stored passenger ticket cancellation terms, independently of operational trip cancellation.",
+      "examples": [
+        "What are the cancellation charges?",
+        "How late can I cancel this ticket under operator rules?",
+        "Which policy applies if a passenger cancels a booking?",
+        "Is there a penalty for cancelling a reserved seat?",
+        "Where can I read this service's ticket cancellation terms?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "operator"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "operator",
+          "prompt": "Please specify operator."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "CANCELLATION_POLICY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "REFUND_POLICY",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Refund Policy",
+      "definition": "Explain applicable recorded refund rules or a supported calculation; never infer a refund without required policy data.",
+      "examples": [
+        "How much refund will I receive?",
+        "What refund rules apply to this fare class?",
+        "Is the refundable amount known for a cancelled ticket?",
+        "Does the operator provide a refund policy locally?",
+        "What deductions apply before returning the ticket amount?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "operator"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "operator",
+          "prompt": "Please specify operator."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "REFUND_POLICY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "CONCESSION_ENQUIRY",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Concession Enquiry",
+      "definition": "Explain date-effective concession schemes and explicit eligibility requirements without assuming passenger qualification.",
+      "examples": [
+        "Is there a senior citizen concession?",
+        "What eligibility is required for a child fare?",
+        "Are any operator travel schemes applicable on this route?",
+        "Where can I check pass-holder discount conditions?",
+        "Does this concession require proof rather than being automatically granted?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "CHEAPEST_BUS",
+          "this_meaning": "Explain eligibility rules without assuming eligibility",
+          "other_meaning": "Rank known applicable fares"
+        }
+      ],
+      "required_slots": [
+        "operator"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "operator",
+          "prompt": "Please specify operator."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "CONCESSION_ELIGIBILITY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "CONCESSION_ENQUIRY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "LUGGAGE_RULES",
+      "intent_group": "FARES_AND_BOOKINGS",
+      "display_name": "Luggage Rules",
+      "definition": "Describe recorded baggage allowances, restrictions and applicable published luggage charges.",
+      "examples": [
+        "Is there an extra luggage charge?",
+        "How much baggage is allowed on this service?",
+        "What are the operator's luggage limits?",
+        "Can I carry a large suitcase on the Nellore bus?",
+        "Are additional parcels charged under a published local rule?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "operator"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "operator",
+          "prompt": "Please specify operator."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "LUGGAGE_RULES:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "LIVE_BUS_STATUS",
+      "intent_group": "OPERATIONS",
+      "display_name": "Live Bus Status",
+      "definition": "Report the freshest authoritative operational state or location, distinguishing scheduled-only, stale and unknown data.",
+      "examples": [
+        "Where is the Hyderabad bus right now?",
+        "Do you have a verified current location for this trip?",
+        "Show the freshest operational status of service 3521.",
+        "Is this bus actually running or only scheduled?",
+        "What live information is available for the selected vehicle?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "BUS_DELAY",
+          "this_meaning": "Current verified operational state/location",
+          "other_meaning": "Verified delay duration or reason"
+        }
+      ],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": true,
+      "capability": "PARTIAL",
+      "backend_code": "BUS_LIVE_STATUS",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "LIVE_BUS_STATUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUS_DELAY",
+      "intent_group": "OPERATIONS",
+      "display_name": "Bus Delay",
+      "definition": "Report a verified delay duration or recorded reason for the selected dated trip and affected stop.",
+      "examples": [
+        "Why is the Tirupati bus late?",
+        "How many minutes is this departure delayed?",
+        "Has a verified delay been recorded at Ongole?",
+        "Is there a reported reason for the late Nellore service?",
+        "What is the latest confirmed delay update?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "LIVE_BUS_STATUS",
+          "this_meaning": "Verified delay duration or reason",
+          "other_meaning": "Current verified operational state/location"
+        }
+      ],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": true,
+      "capability": "PARTIAL",
+      "backend_code": "BUS_DELAY",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "BUS_DELAY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUS_CANCELLATION",
+      "intent_group": "OPERATIONS",
+      "display_name": "Bus Cancellation",
+      "definition": "Confirm operational cancellation of a specific service occurrence, not a passenger's ticket cancellation request.",
+      "examples": [
+        "Has the 8 PM bus been cancelled?",
+        "Is today's selected Tirupati trip removed from operation?",
+        "Did the operator cancel the Hyderabad departure on this date?",
+        "Does a local record confirm this service is cancelled?",
+        "Which scheduled Nellore trip is not running because of cancellation?"
+      ],
+      "similar_intents": [],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": true,
+      "capability": "PARTIAL",
+      "backend_code": "BUS_CANCELLATION",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "BUS_CANCELLATION:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUS_PLATFORM",
+      "intent_group": "OPERATIONS",
+      "display_name": "Bus Platform",
+      "definition": "Report the currently valid confirmed station bay assignment for a specific dated trip.",
+      "examples": [
+        "Which platform is the Nellore bus on?",
+        "Where is the assigned bay for this trip?",
+        "Tell me the confirmed boarding platform at Vijayawada.",
+        "What platform should I stand at for service 3521?",
+        "Is the bay assignment known for this service and date?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "PLATFORM_CHANGE",
+          "this_meaning": "Current valid bay assignment",
+          "other_meaning": "Compare assignment history to confirm a reassignment"
+        }
+      ],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": true,
+      "capability": "PARTIAL",
+      "backend_code": "BUS_PLATFORM",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "BUS_PLATFORM:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "ESTIMATED_ARRIVAL",
+      "intent_group": "OPERATIONS",
+      "display_name": "Estimated Arrival",
+      "definition": "Report a fresh verified operational arrival estimate; a scheduled arrival alone does not satisfy this intent.",
+      "examples": [
+        "When is the bus expected to arrive here?",
+        "Is there a verified revised arrival estimate at Ongole?",
+        "What is the latest predicted arrival rather than the timetable time?",
+        "Has the arrival estimate for Nellore changed?",
+        "Can you show the fresh operational ETA for this trip?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "ARRIVAL_TIME",
+          "this_meaning": "Fresh verified operational ETA; scheduled time is insufficient",
+          "other_meaning": "Published or explicitly labelled arrival time"
+        }
+      ],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": true,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "ESTIMATED_ARRIVAL:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUS_DEPARTED_STATUS",
+      "intent_group": "OPERATIONS",
+      "display_name": "Bus Departed Status",
+      "definition": "Confirm departure only from an authoritative actual-departure event at the specified stop.",
+      "examples": [
+        "Has the Vizag bus already left?",
+        "Is there an actual departure event from this station?",
+        "Did service 3521 leave Ongole yet?",
+        "Can you confirm the bus departed rather than assume from its schedule?",
+        "Is the selected trip still waiting or recorded as departed?"
+      ],
+      "similar_intents": [],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": true,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "BUS_DEPARTED_STATUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "BUS_ARRIVED_STATUS",
+      "intent_group": "OPERATIONS",
+      "display_name": "Bus Arrived Status",
+      "definition": "Confirm arrival only from an authoritative actual-arrival event at the specified stop.",
+      "examples": [
+        "Has the Guntur bus arrived?",
+        "Is there an actual arrival event at this station?",
+        "Did the selected bus reach Nellore already?",
+        "Can you confirm arrival using a local operational record?",
+        "Does the latest verified event say the bus has arrived?"
+      ],
+      "similar_intents": [],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": true,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "BUS_ARRIVED_STATUS:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "SERVICE_DISRUPTION",
+      "intent_group": "OPERATIONS",
+      "display_name": "Service Disruption",
+      "definition": "Report verified diversions, suspensions or other incidents effective for the requested service or period.",
+      "examples": [
+        "Are services affected by road closures?",
+        "Has a diversion been announced for this route?",
+        "What operational alert affects today's Hyderabad journey?",
+        "Is the Nellore service disrupted by a local incident?",
+        "Are there verified temporary restrictions on this departure?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "destination"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "destination",
+          "prompt": "Please specify destination."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": true,
+      "capability": "PARTIAL",
+      "backend_code": "SERVICE_DISRUPTION",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "SERVICE_DISRUPTION:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "PLATFORM_CHANGE",
+      "intent_group": "OPERATIONS",
+      "display_name": "Platform Change",
+      "definition": "Confirm a platform reassignment by examining assignment history for the same trip and station.",
+      "examples": [
+        "Has the bus moved to another platform?",
+        "Was a new bay assigned after the earlier announcement?",
+        "Which platform replaced the original Nellore assignment?",
+        "Is there a confirmed platform reassignment for this trip?",
+        "Has service 3521 changed its boarding bay today?"
+      ],
+      "similar_intents": [
+        {
+          "intent": "BUS_PLATFORM",
+          "this_meaning": "Compare assignment history to confirm a reassignment",
+          "other_meaning": "Current valid bay assignment"
+        }
+      ],
+      "required_slots": [],
+      "required_slot_alternatives": [
+        [
+          "trip_id"
+        ],
+        [
+          "service_id",
+          "travel_date",
+          "station"
+        ]
+      ],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "alternative_slot_group",
+          "prompt": "Please identify the trip/service or the required travel segment.",
+          "alternatives": [
+            [
+              "trip_id"
+            ],
+            [
+              "service_id",
+              "travel_date",
+              "station"
+            ]
+          ]
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": true,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "PLATFORM_CHANGE:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "SERVICE_NUMBER_LOOKUP",
+      "intent_group": "OPERATIONS",
+      "display_name": "Service Number Lookup",
+      "definition": "Resolve a service identifier within operator and validity scope, requesting clarification if multiple records match.",
+      "examples": [
+        "Where is service number 3521 going?",
+        "Which operator runs service 8120?",
+        "Show the route for this service identifier.",
+        "Can you identify the bus using its service number?",
+        "Are there multiple local matches for service 1234?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "service_number"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "service_number",
+          "prompt": "Please specify service number."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "SERVICE_NUMBER_LOOKUP",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "SERVICE_NUMBER_LOOKUP:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "STATION_FACILITIES",
+      "intent_group": "STATION_ASSISTANCE",
+      "display_name": "Station Facilities",
+      "definition": "Report locally recorded passenger facilities and their verification or availability state at a station.",
+      "examples": [
+        "Where is the waiting hall?",
+        "Does this bus stand have drinking water?",
+        "Are toilets available at the station?",
+        "What passenger facilities are recorded here?",
+        "Is an accessible waiting area listed at this terminal?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "station"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "station",
+          "prompt": "Please specify station."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "STATION_FACILITIES",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "STATION_FACILITIES:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "STATION_HELPDESK",
+      "intent_group": "STATION_ASSISTANCE",
+      "display_name": "Station Helpdesk",
+      "definition": "Provide a recorded station enquiry/helpdesk contact, location or opening information.",
+      "examples": [
+        "Where is the enquiry counter?",
+        "How do I contact the station helpdesk?",
+        "Is the information desk open at this bus stand?",
+        "Which counter can help with a bus enquiry?",
+        "Give me the recorded station assistance contact."
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "station"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "station",
+          "prompt": "Please specify station."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "STATION_HELPDESK",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "STATION_HELPDESK:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "LOST_PROPERTY",
+      "intent_group": "STATION_ASSISTANCE",
+      "display_name": "Lost Property",
+      "definition": "Provide the locally recorded lost-property reporting contact or procedure without claiming an item was found.",
+      "examples": [
+        "I forgot my bag on the bus.",
+        "Where should I report a lost suitcase?",
+        "Is there a lost-property contact at this station?",
+        "Who handles items left on an RTC vehicle?",
+        "How can I ask about belongings found on the Nellore bus?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "station"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "station",
+          "prompt": "Please specify station."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "PARTIAL",
+      "backend_code": "LOST_PROPERTY_CONTACT",
+      "enquiry_function": "RTCEnquiryEngine.enquire",
+      "response_template_identifier": "LOST_PROPERTY:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "OPERATOR_CONTACT",
+      "intent_group": "STATION_ASSISTANCE",
+      "display_name": "Operator Contact",
+      "definition": "Provide published local operator or depot contact information relevant to the passenger's service.",
+      "examples": [
+        "What's the depot contact number?",
+        "How do I reach this transport operator?",
+        "Is a local operator enquiry contact recorded?",
+        "Give me the depot office contact for this service.",
+        "Where can I find the corporation's published telephone details?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "operator"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "operator",
+          "prompt": "Please specify operator."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "OPERATOR_CONTACT:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "STATION_NAVIGATION",
+      "intent_group": "STATION_ASSISTANCE",
+      "display_name": "Station Navigation",
+      "definition": "Provide recorded within-station directions or zone information without inventing an indoor route.",
+      "examples": [
+        "How do I get to platform 6?",
+        "Where is bay ten inside this station?",
+        "Which zone contains the boarding platform?",
+        "Is there a recorded accessible path to the waiting area?",
+        "How can I find the local bus bay from the enquiry counter?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "station"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "station",
+          "prompt": "Please specify station."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "STATION_NAVIGATION:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    },
+    {
+      "code": "COMPLAINT_GUIDANCE",
+      "intent_group": "STATION_ASSISTANCE",
+      "display_name": "Complaint Guidance",
+      "definition": "Explain the locally recorded complaint or grievance channel and reporting instructions.",
+      "examples": [
+        "Where can I report a conductor complaint?",
+        "What is the operator's complaint process?",
+        "Is there a recorded grievance contact?",
+        "How do I submit feedback about this bus service?",
+        "Which station counter handles passenger complaints?"
+      ],
+      "similar_intents": [],
+      "required_slots": [
+        "station"
+      ],
+      "required_slot_alternatives": [],
+      "optional_slots": [
+        "origin",
+        "travel_date",
+        "operator",
+        "category",
+        "ac",
+        "sleeper",
+        "after",
+        "before",
+        "via",
+        "maximum_transfers",
+        "minimum_transfer",
+        "fare_limit",
+        "passenger_count",
+        "concession_scheme",
+        "selected_service_id",
+        "selected_trip_id"
+      ],
+      "slot_resolution": "explicit input or validated conversation context; no inferred booking authorization",
+      "clarifications": [
+        {
+          "missing_slot": "station",
+          "prompt": "Please specify station."
+        }
+      ],
+      "result_statuses": [
+        "KNOWN",
+        "UNKNOWN",
+        "STALE",
+        "UNAVAILABLE",
+        "UNSUPPORTED",
+        "CLARIFICATION_REQUIRED"
+      ],
+      "live_data_required": false,
+      "capability": "UNSUPPORTED",
+      "backend_code": null,
+      "enquiry_function": null,
+      "response_template_identifier": "COMPLAINT_GUIDANCE:{status}:{language}",
+      "template_available": false,
+      "limitation": "Recognized taxonomy does not imply complete operational integration. Booking status requires authorized local records; no booking provider is integrated.",
+      "registry_version": "2a-v1",
+      "execution_preconditions": [
+        "Resolve required slots from explicit input or validated context",
+        "Unknown operational information stays unknown"
+      ]
+    }
+  ],
+  "legacy_aliases": {
+    "TICKET_FARE": "GET_FARE",
+    "NON_AC_AVAILABILITY": "NON_AC_BUS_AVAILABILITY",
+    "SLEEPER_BUS_AVAILABILITY": "SLEEPER_AVAILABILITY",
+    "SEATER_BUS_AVAILABILITY": "SEATER_AVAILABILITY",
+    "DIRECT_BUS_AVAILABILITY": "DIRECT_BUS",
+    "CONCESSION_ELIGIBILITY": "CONCESSION_ENQUIRY",
+    "BUS_LIVE_STATUS": "LIVE_BUS_STATUS",
+    "LOST_PROPERTY_CONTACT": "LOST_PROPERTY",
+    "GET_BUS_TYPES": "AVAILABLE_BUS_TYPES",
+    "GET_PLATFORM": "BUS_PLATFORM",
+    "GET_ROUTE": "ROUTE_STOPS",
+    "GET_STOPS": "ROUTE_STOPS",
+    "GET_ARRIVAL": "ARRIVAL_TIME",
+    "GET_DURATION": "JOURNEY_DURATION",
+    "GET_DELAY": "BUS_DELAY",
+    "GET_CANCELLATION": "BUS_CANCELLATION",
+    "GET_SEAT_AVAILABILITY": "SEAT_AVAILABILITY",
+    "GET_CHEAPEST_SERVICE": "CHEAPEST_BUS",
+    "GET_FASTEST_SERVICE": "FASTEST_BUS",
+    "GET_CONNECTING_BUSES": "CONNECTING_BUSES",
+    "GET_CONCESSIONS": "CONCESSION_ENQUIRY",
+    "GET_STATION_FACILITIES": "STATION_FACILITIES",
+    "GET_FACILITIES": "STATION_FACILITIES",
+    "GET_LUGGAGE_RULES": "LUGGAGE_RULES",
+    "GET_BOOKING_OPTIONS": "BOOKING_OPTIONS"
+  },
+  "ambiguity_matrix": [
+    {
+      "left": "NEXT_BUS",
+      "right": "FIRST_BUS",
+      "left_definition": "Next available after a threshold",
+      "right_definition": "Earliest departure in the requested operating day"
+    },
+    {
+      "left": "LAST_BUS",
+      "right": "DEPARTURES_BEFORE",
+      "left_definition": "Final departure within operating-day bounds",
+      "right_definition": "Any departure earlier than a time cutoff"
+    },
+    {
+      "left": "ARRIVAL_TIME",
+      "right": "ESTIMATED_ARRIVAL",
+      "left_definition": "Published or explicitly labelled arrival time",
+      "right_definition": "Fresh verified operational ETA; scheduled time is insufficient"
+    },
+    {
+      "left": "BUS_AT_TIME",
+      "right": "DEPARTURES_AFTER",
+      "left_definition": "Departure within an explicit proximity window",
+      "right_definition": "All departures strictly following a lower bound"
+    },
+    {
+      "left": "BUS_VIA_LOCATION",
+      "right": "INTERMEDIATE_STOP",
+      "left_definition": "Path travels through the location",
+      "right_definition": "Scheduled halt/boarding permissions must be established"
+    },
+    {
+      "left": "DIRECT_BUS",
+      "right": "DESTINATION_REACHABILITY",
+      "left_definition": "Single service with no transfer",
+      "right_definition": "Any feasible path, potentially connecting"
+    },
+    {
+      "left": "GET_FARE",
+      "right": "FARE_COMPARISON",
+      "left_definition": "Applicable fare for a valid travel segment",
+      "right_definition": "Compare fares on the same segment/date"
+    },
+    {
+      "left": "CHEAPEST_BUS",
+      "right": "CONCESSION_ENQUIRY",
+      "left_definition": "Rank known applicable fares",
+      "right_definition": "Explain eligibility rules without assuming eligibility"
+    },
+    {
+      "left": "BUS_DELAY",
+      "right": "LIVE_BUS_STATUS",
+      "left_definition": "Verified delay duration or reason",
+      "right_definition": "Current verified operational state/location"
+    },
+    {
+      "left": "BUS_PLATFORM",
+      "right": "PLATFORM_CHANGE",
+      "left_definition": "Current valid bay assignment",
+      "right_definition": "Compare assignment history to confirm a reassignment"
+    },
+    {
+      "left": "BOOKING_STATUS",
+      "right": "SEAT_AVAILABILITY",
+      "left_definition": "Authorized existing booking record",
+      "right_definition": "Segment-specific fresh remaining inventory"
+    }
+  ]
+}

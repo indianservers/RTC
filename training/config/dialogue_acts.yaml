@@ -1,0 +1,168 @@
+{
+  "version": "2a-v1",
+  "dialogue_acts": [
+    {
+      "code": "GREETING",
+      "examples": [
+        "Hello",
+        "Good morning"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "THANKS",
+      "examples": [
+        "Thank you",
+        "Thanks"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "AFFIRMATION",
+      "examples": [
+        "Yes",
+        "That is right"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "NEGATION",
+      "examples": [
+        "No",
+        "Not that one"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "CORRECTION",
+      "examples": [
+        "I meant Tirumala, not Tirupati"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "REPEAT_REQUEST",
+      "examples": [
+        "Say that again"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "CLARIFICATION_REPLY",
+      "examples": [
+        "The second bus"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "CHANGE_DESTINATION",
+      "examples": [
+        "Actually, make it Nellore"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "CHANGE_DATE",
+      "examples": [
+        "No, tomorrow morning"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "CHANGE_BUS_TYPE",
+      "examples": [
+        "Only AC sleeper"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "RESET_CONVERSATION",
+      "examples": [
+        "Start again"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "HELP",
+      "examples": [
+        "What can I ask?"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "OUT_OF_SCOPE",
+      "examples": [
+        "What is the cricket score?"
+      ],
+      "separate_from_enquiry_intents": true
+    },
+    {
+      "code": "UNINTELLIGIBLE",
+      "examples": [
+        "Unable to determine meaning"
+      ],
+      "separate_from_enquiry_intents": true
+    }
+  ],
+  "compositions": [
+    {
+      "intents": [
+        "NEXT_BUS",
+        "GET_FARE"
+      ],
+      "shared_slots": [
+        "origin",
+        "destination",
+        "travel_date"
+      ],
+      "dependencies": {
+        "GET_FARE": [
+          "NEXT_BUS"
+        ]
+      },
+      "reuse": [
+        "service_id",
+        "trip_id",
+        "segment"
+      ]
+    },
+    {
+      "intents": [
+        "BUS_DELAY",
+        "BUS_PLATFORM"
+      ],
+      "shared_slots": [
+        "trip_id",
+        "station"
+      ],
+      "dependencies": {}
+    },
+    {
+      "intents": [
+        "CHEAPEST_BUS"
+      ],
+      "constraints": {
+        "ac": true,
+        "sleeper": true
+      },
+      "shared_slots": [
+        "travel_date"
+      ]
+    },
+    {
+      "intents": [
+        "FASTEST_BUS",
+        "INTERMEDIATE_STOP"
+      ],
+      "dependencies": {
+        "INTERMEDIATE_STOP": [
+          "FASTEST_BUS"
+        ]
+      },
+      "shared_slots": [
+        "destination",
+        "via"
+      ]
+    }
+  ]
+}

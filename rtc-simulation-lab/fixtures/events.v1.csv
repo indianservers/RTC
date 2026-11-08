@@ -1,0 +1,9 @@
+schema_version,fixture_version,source_label,random_seed,id,at,kind,payload,service_id
+1.0,1.0.0,SYNTHETIC,73129,E000,2026-11-08T08:00:00+05:30,delayed,"{""minutes"": 25}",T00000
+1.0,1.0.0,SYNTHETIC,73129,E001,2026-11-08T08:01:00+05:30,arrived,{},T00001
+1.0,1.0.0,SYNTHETIC,73129,E002,2026-11-08T08:02:00+05:30,departed,{},T00002
+1.0,1.0.0,SYNTHETIC,73129,E003,2026-11-08T08:03:00+05:30,cancelled,{},T00003
+1.0,1.0.0,SYNTHETIC,73129,E004,2026-11-08T08:04:00+05:30,platform_changed,"{""platform"": ""9""}",T00004
+1.0,1.0.0,SYNTHETIC,73129,E005,2026-11-08T08:05:00+05:30,gps_stale,{},T00005
+1.0,1.0.0,SYNTHETIC,73129,E006,2026-11-08T08:06:00+05:30,seats_updated,"{""available"": 12}",T00006
+1.0,1.0.0,SYNTHETIC,73129,E007,2026-11-08T08:07:00+05:30,diversion,"{""description"": ""DEMO bypass via alternate road""}",T00007

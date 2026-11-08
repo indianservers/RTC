@@ -1,0 +1,67 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794118524.988556   30796 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794118527.235236   30796 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794118527.851347   30796 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+Epoch 1/30
+15/15 - 1s - 53ms/step - loss: 4.0980 - val_loss: 4.0966 - learning_rate: 0.0010
+Epoch 2/30
+15/15 - 0s - 10ms/step - loss: 4.0529 - val_loss: 4.0955 - learning_rate: 0.0010
+Epoch 3/30
+15/15 - 0s - 9ms/step - loss: 4.0202 - val_loss: 4.0939 - learning_rate: 0.0010
+Epoch 4/30
+15/15 - 0s - 8ms/step - loss: 3.9885 - val_loss: 4.0928 - learning_rate: 0.0010
+Epoch 5/30
+15/15 - 0s - 9ms/step - loss: 3.9550 - val_loss: 4.0915 - learning_rate: 0.0010
+Epoch 6/30
+15/15 - 0s - 9ms/step - loss: 3.9127 - val_loss: 4.0904 - learning_rate: 0.0010
+Epoch 7/30
+15/15 - 0s - 9ms/step - loss: 3.8596 - val_loss: 4.0881 - learning_rate: 0.0010
+Epoch 8/30
+15/15 - 0s - 9ms/step - loss: 3.8083 - val_loss: 4.0875 - learning_rate: 0.0010
+Epoch 9/30
+15/15 - 0s - 10ms/step - loss: 3.7441 - val_loss: 4.0856 - learning_rate: 0.0010
+Epoch 10/30
+15/15 - 0s - 10ms/step - loss: 3.6560 - val_loss: 4.0834 - learning_rate: 0.0010
+Epoch 11/30
+15/15 - 0s - 10ms/step - loss: 3.5568 - val_loss: 4.0814 - learning_rate: 0.0010
+Epoch 12/30
+15/15 - 0s - 10ms/step - loss: 3.4407 - val_loss: 4.0792 - learning_rate: 0.0010
+Epoch 13/30
+15/15 - 0s - 9ms/step - loss: 3.3063 - val_loss: 4.0785 - learning_rate: 0.0010
+Epoch 14/30
+15/15 - 0s - 9ms/step - loss: 3.1479 - val_loss: 4.0762 - learning_rate: 0.0010
+Epoch 15/30
+15/15 - 0s - 9ms/step - loss: 2.9807 - val_loss: 4.0741 - learning_rate: 0.0010
+Epoch 16/30
+15/15 - 0s - 9ms/step - loss: 2.7971 - val_loss: 4.0738 - learning_rate: 0.0010
+Epoch 17/30
+15/15 - 0s - 8ms/step - loss: 2.6003 - val_loss: 4.0727 - learning_rate: 0.0010
+Epoch 18/30
+15/15 - 0s - 9ms/step - loss: 2.3810 - val_loss: 4.0679 - learning_rate: 0.0010
+Epoch 19/30
+15/15 - 0s - 9ms/step - loss: 2.1749 - val_loss: 4.0633 - learning_rate: 0.0010
+Epoch 20/30
+15/15 - 0s - 9ms/step - loss: 1.9743 - val_loss: 4.0604 - learning_rate: 0.0010
+Epoch 21/30
+15/15 - 0s - 11ms/step - loss: 1.7720 - val_loss: 4.0558 - learning_rate: 0.0010
+Epoch 22/30
+15/15 - 0s - 10ms/step - loss: 1.5563 - val_loss: 4.0522 - learning_rate: 0.0010
+Epoch 23/30
+15/15 - 0s - 11ms/step - loss: 1.4114 - val_loss: 4.0459 - learning_rate: 0.0010
+Epoch 24/30
+15/15 - 0s - 10ms/step - loss: 1.1891 - val_loss: 4.0450 - learning_rate: 0.0010
+Epoch 25/30
+15/15 - 0s - 10ms/step - loss: 1.0993 - val_loss: 4.0408 - learning_rate: 0.0010
+Epoch 26/30
+15/15 - 0s - 11ms/step - loss: 0.9394 - val_loss: 4.0376 - learning_rate: 0.0010
+Epoch 27/30
+15/15 - 0s - 11ms/step - loss: 0.7975 - val_loss: 4.0322 - learning_rate: 0.0010
+Epoch 28/30
+15/15 - 0s - 11ms/step - loss: 0.7268 - val_loss: 4.0320 - learning_rate: 0.0010
+Epoch 29/30
+15/15 - 0s - 10ms/step - loss: 0.5892 - val_loss: 4.0445 - learning_rate: 0.0010
+Epoch 30/30
+15/15 - 0s - 10ms/step - loss: 0.5443 - val_loss: 4.0570 - learning_rate: 0.0010

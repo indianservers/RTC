@@ -1,0 +1,442 @@
+from datetime import date, datetime
+from typing import Any
+
+from fastapi import FastAPI, HTTPException, Query
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from .domain import Category, Operator, Service, Station, database
+from .nlp.inference import EnglishInferenceService
+
+app = FastAPI(title="RTC offline enquiry — Phase 1 foundation")
+engine = database()
+
+
+@app.get("/api/v1/{resource}")
+def reference(
+    resource: str, limit: int = Query(50, ge=1, le=100), offset: int = Query(0, ge=0)
+):
+    model = {
+        "operators": Operator,
+        "stations": Station,
+        "bus-types": Category,
+        "services": Service,
+        "routes": __import__("app.domain", fromlist=["Route"]).Route,
+    }.get(resource)
+    if model is None:
+        raise HTTPException(404, "Unknown resource")
+    with Session(engine) as session:
+        rows = session.scalars(
+            select(model).order_by(model.__table__.c.id).offset(offset).limit(limit)
+        )
+        return {
+            "data": [
+                {c.name: getattr(row, c.name) for c in model.__table__.columns}
+                for row in rows
+            ],
+            "limit": limit,
+            "offset": offset,
+        }
+
+
+@app.get("/api/v1/enquiry/next-bus")
+def next_bus(
+    origin: str,
+    destination: str,
+    at: datetime,
+    limit: int = Query(20, ge=1, le=100),
+    category: str | None = None,
+    amenity: str | None = None,
+):
+    with Session(engine) as session:
+        try:
+            return {
+                "data": Enquiry(session).get_next_buses(
+                    JourneyQuery(
+                        origin=origin,
+                        destination=destination,
+                        at=cast(datetime, at),
+                        category=category,
+                        amenity=amenity,
+                        limit=limit,
+                    )
+                )
+            }
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+
+import os
+import secrets
+from typing import Annotated, cast
+
+from fastapi import Body, Depends, Header
+from fastapi.encoders import jsonable_encoder
+from sqlalchemy.exc import IntegrityError
+
+from .enquiry import Enquiry, JourneyQuery
+from .imports import RESOURCES, import_csv, validate_relations
+
+
+@app.get("/api/v1/enquiry/{kind}")
+def enquiry(
+    kind: str,
+    origin: str = "",
+    destination: str = "",
+    at: datetime | None = None,
+    day: date | None = None,
+    service_id: str = "",
+    trip_id: str = "",
+    station: str = "",
+    operator: str | None = None,
+    category: str | None = None,
+    amenity: str | None = None,
+    via: str = "",
+    requested: int = Query(1, ge=1, le=100),
+    minimum_transfer: int = Query(15, ge=1, le=180),
+    limit: int = Query(20, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+):
+    with Session(engine) as session:
+        e = Enquiry(session)
+        try:
+            if (
+                kind in ("first-bus", "last-bus", "status", "concessions")
+                and day is None
+            ):
+                raise ValueError("Explicit operating day required")
+            if kind in ("platform", "availability") and (
+                at is None or at.tzinfo is None
+            ):
+                raise ValueError("Explicit aware timestamp required")
+            if kind == "service":
+                result = e.get_service_details(service_id)
+            elif kind == "route":
+                result = e.get_route_stops(service_id)
+            elif kind == "platform":
+                result = e.get_platform_assignment(trip_id, station, cast(datetime, at))
+            elif kind == "availability":
+                result = e.get_seat_availability(trip_id, cast(datetime, at), requested)
+            elif kind == "status":
+                result = e.get_service_status(service_id, cast(date, day))
+            elif kind == "facilities":
+                result = e.get_station_facilities(station)
+            elif kind == "concessions":
+                result = e.get_concessions(operator or "", cast(date, day))
+            elif kind == "operator-services":
+                result = e.get_operator_services(operator or "", limit, offset)
+            else:
+                if at is None and day is not None:
+                    from datetime import time
+                    from zoneinfo import ZoneInfo
+
+                    resolved = e.repository.resolve_station(origin)
+                    at = datetime.combine(day, time.min, ZoneInfo(resolved.timezone))
+                q = JourneyQuery(
+                    origin=origin,
+                    destination=destination,
+                    at=cast(datetime, at),
+                    category=category,
+                    amenity=amenity,
+                    operator=operator,
+                    limit=limit,
+                    offset=offset,
+                )
+                methods = {
+                    "fare": e.get_bus_fare,
+                    "bus-types": e.get_available_bus_types,
+                    "duration": e.get_journey_duration,
+                    "arrival": e.get_arrival_time,
+                    "cheapest": e.get_cheapest_services,
+                    "fastest": e.get_fastest_services,
+                    "direct": e.get_direct_services,
+                }
+                if kind == "first-bus":
+                    result = e.get_first_bus(q, cast(date, day))
+                elif kind == "last-bus":
+                    result = e.get_last_bus(q, cast(date, day))
+                elif kind == "connections":
+                    result = e.get_connecting_services(q, minimum_transfer)
+                elif kind == "via":
+                    result = e.get_services_via_stop(q, via)
+                elif kind in methods:
+                    result = methods[kind](q)
+                else:
+                    raise HTTPException(404, "Unknown enquiry")
+            return {"data": jsonable_encoder(result), "limit": limit, "offset": offset}
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+
+def admin(authorization: Annotated[str | None, Header()] = None):
+    token = os.getenv("RTC_ADMIN_TOKEN")
+    if not token:
+        raise HTTPException(503, "Local administration is not configured")
+    supplied = (authorization or "").removeprefix("Bearer ")
+    if not secrets.compare_digest(supplied, token):
+        raise HTTPException(401, "Invalid local administrator credentials")
+    return "admin"
+
+
+@app.post("/api/v1/admin/imports/{resource}", dependencies=[Depends(admin)])
+def upload(
+    resource: str,
+    text: Annotated[str, Body(media_type="text/csv")],
+    dry_run: bool = True,
+):
+    with Session(engine) as session, session.begin():
+        try:
+            return {"data": import_csv(session, resource, text, dry_run)}
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+
+@app.post("/api/v1/admin/{resource}", status_code=201, dependencies=[Depends(admin)])
+def create_master(resource: str, values: dict):
+    if resource not in RESOURCES:
+        raise HTTPException(404, "Unknown resource")
+    model, schema, _ = RESOURCES[resource]
+    with Session(engine) as session, session.begin():
+        try:
+            data = schema.model_validate(values).model_dump()
+            validate_relations(session, model, data)
+            row = model(**data)
+            session.add(row)
+            session.flush()
+            return {"data": jsonable_encoder(row)}
+        except (ValueError, IntegrityError) as exc:
+            raise HTTPException(422, "Invalid or conflicting master data") from exc
+
+
+@app.delete("/api/v1/admin/{resource}/{identifier}", dependencies=[Depends(admin)])
+def deactivate_master(resource: str, identifier: str):
+    if resource not in RESOURCES:
+        raise HTTPException(404, "Unknown resource")
+    with Session(engine) as session, session.begin():
+        row = session.get(RESOURCES[resource][0], identifier)
+        if not row:
+            raise HTTPException(404, "Unknown record")
+        row.active = False
+        return {"data": {"id": identifier, "active": False}}
+
+
+@app.put("/api/v1/admin/{resource}/{identifier}", dependencies=[Depends(admin)])
+def update_master(resource: str, identifier: str, values: dict):
+    if resource not in RESOURCES:
+        raise HTTPException(404, "Unknown resource")
+    model, schema, _ = RESOURCES[resource]
+    with Session(engine) as session, session.begin():
+        row = session.get(model, identifier)
+        if row is None:
+            raise HTTPException(404, "Unknown record")
+        try:
+            data = schema.model_validate(values).model_dump()
+            validate_relations(session, model, data)
+            for key, value in data.items():
+                setattr(row, key, value)
+            session.flush()
+            return {"data": jsonable_encoder(row)}
+        except (ValueError, IntegrityError) as exc:
+            raise HTTPException(422, "Invalid or conflicting master data") from exc
+
+
+@app.get("/api/v1/stations/search")
+def search_stations(
+    q: str = Query(min_length=1, max_length=100), limit: int = Query(20, ge=1, le=100)
+):
+    from .domain import Alias
+
+    with Session(engine) as session:
+        aliases = select(Alias.station_id).where(
+            Alias.name.contains(q, autoescape=True), Alias.active.is_(True)
+        )
+        rows = session.scalars(
+            select(Station)
+            .where(
+                Station.active.is_(True),
+                (Station.name.contains(q, autoescape=True)) | Station.id.in_(aliases),
+            )
+            .order_by(Station.name)
+            .limit(limit)
+        )
+        return {"data": jsonable_encoder(list(rows))}
+
+
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+
+
+@app.exception_handler(HTTPException)
+async def http_error(request, exc):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"error": {"code": str(exc.status_code), "message": str(exc.detail)}},
+    )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_error(request, exc):
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "Invalid request",
+                "details": jsonable_encoder(
+                    exc.errors(), custom_encoder={ValueError: str}
+                ),
+            }
+        },
+    )
+
+
+from .engine import EnquiryRequest, EnquiryResponse, RTCEnquiryEngine
+from .resolver import StationResolver
+
+
+@app.post("/api/v1/enquiry", response_model=EnquiryResponse)
+def unified_enquiry(request: EnquiryRequest):
+    with Session(engine) as session:
+        return RTCEnquiryEngine(session).enquire(request)
+
+
+@app.get("/api/v1/stations/resolve")
+def resolve_station(value: str = Query(min_length=1, max_length=250)):
+    with Session(engine) as session:
+        return {"data": StationResolver(session).resolve(value)}
+
+
+from datetime import UTC
+from pathlib import Path
+
+from .nlp.muril import MuRILIntentClassifier
+from .nlp.pipeline import NLPRequest, NLPResponse
+
+
+@app.post("/api/v1/nlp/interpret", response_model=NLPResponse)
+def interpret_text(request: NLPRequest):
+    with Session(engine) as session:
+        return EnglishInferenceService(session).interpret_query(
+            request, datetime.now(UTC)
+        )
+
+
+@app.post("/api/v1/conversation/message", response_model=NLPResponse)
+def conversation_message(request: NLPRequest):
+    with Session(engine) as session, session.begin():
+        return EnglishInferenceService(session).process_conversation(
+            request, datetime.now(UTC)
+        )
+
+
+@app.post("/api/v1/conversation/reset")
+def conversation_reset(request: NLPRequest):
+    with Session(engine) as session, session.begin():
+        return {
+            "data": EnglishInferenceService(session).reset_session(
+                request.session_id or ""
+            )
+        }
+
+
+@app.get("/api/v1/nlp/status")
+def nlp_status():
+    return {
+        "data": {
+            "baseline": "READY",
+            "muril": MuRILIntentClassifier(
+                Path(__file__).resolve().parents[2]
+            ).status(),
+        }
+    }
+
+
+@app.get("/api/v1/models/status")
+def models_status():
+    import json
+
+    registry = Path(__file__).resolve().parents[2] / "config/model_registry.yaml"
+    models = (
+        json.loads(registry.read_text(encoding="utf-8")).get("models", [])
+        if registry.exists()
+        else []
+    )
+    return {"data": {"nlp": nlp_status()["data"], "models": models}}
+
+
+from sqlalchemy.exc import SQLAlchemyError
+
+
+@app.exception_handler(SQLAlchemyError)
+async def database_error(request, exc):
+    return JSONResponse(
+        status_code=503,
+        content={
+            "error": {
+                "code": "DATABASE_UNAVAILABLE",
+                "message": "Local enquiry data is temporarily unavailable.",
+            }
+        },
+    )
+
+
+@app.get("/api/v1/admin/{resource}", dependencies=[Depends(admin)])
+def read_master(
+    resource: str, limit: int = Query(50, ge=1, le=100), offset: int = Query(0, ge=0)
+):
+    if resource not in RESOURCES:
+        raise HTTPException(404, "Unknown resource")
+    model: Any = RESOURCES[resource][0]
+    with Session(engine) as session:
+        rows = session.scalars(
+            select(model).order_by(model.__table__.c.id).offset(offset).limit(limit)
+        )
+        return {"data": jsonable_encoder(list(rows)), "limit": limit, "offset": offset}
+
+
+from .nlp.taxonomy import IntentRegistry
+
+
+@app.get("/api/v1/nlp/intents")
+def list_intents(limit: int = Query(60, ge=1, le=60), offset: int = Query(0, ge=0)):
+    with Session(engine) as session:
+        return {
+            "data": IntentRegistry(session).list(limit, offset),
+            "limit": limit,
+            "offset": offset,
+        }
+
+
+@app.get("/api/v1/nlp/intents/{code}")
+def intent_detail(code: str):
+    with Session(engine) as session:
+        definition = IntentRegistry(session).get(code)
+        if definition is None:
+            raise HTTPException(404, "Unknown enquiry intent")
+        return {"data": definition}
+
+
+@app.get("/api/v1/nlp/entities")
+def list_entity_types():
+    with Session(engine) as session:
+        return {"data": IntentRegistry(session).entities()}
+
+
+@app.get("/api/v1/nlp/health")
+def nlp_health():
+    from sqlalchemy import text
+
+    from .nlp.english_model import EnglishIntentModel
+
+    with Session(engine) as session:
+        session.execute(text("SELECT 1"))
+        model = EnglishIntentModel(Path(__file__).resolve().parents[2]).descriptor()
+        return {
+            "data": {
+                "status": "DEGRADED" if model is None else "READY",
+                "database": "READY",
+                "deterministic_fallback": "READY",
+                "statistical_model": "NOT_APPROVED" if model is None else "ACTIVE",
+                "offline_certification": "OS_ISOLATION_UNVERIFIED",
+            }
+        }

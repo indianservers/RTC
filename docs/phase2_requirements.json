@@ -1,0 +1,77 @@
+[
+  {
+    "requirement": "A audit",
+    "status": "TESTED",
+    "evidence": "Existing taxonomy, source records, aliases, dependencies, checkpoints and API code inspected."
+  },
+  {
+    "requirement": "B prepared data",
+    "status": "PARTIAL",
+    "evidence": "Checksummed group-safe synthetic snapshot exists; diversity and independent data absent."
+  },
+  {
+    "requirement": "C training",
+    "status": "TESTED",
+    "evidence": "Both 60-label candidates actually trained and reloaded; statistical multi-label training not justified by 16 examples."
+  },
+  {
+    "requirement": "D evaluation",
+    "status": "PARTIAL",
+    "evidence": "Identical suitable subsets evaluated with per-class reports and confusion matrices; independent assessment absent."
+  },
+  {
+    "requirement": "E calibration",
+    "status": "MISSING_PRODUCTION_THRESHOLD",
+    "evidence": "No validation threshold met the documented precision/support rule."
+  },
+  {
+    "requirement": "F entity extraction",
+    "status": "PARTIAL",
+    "evidence": "DB master extraction and constraints preserved; representative entity F1 not measured."
+  },
+  {
+    "requirement": "G conversations",
+    "status": "PARTIAL",
+    "evidence": "Added composed dataflow scenarios and fixed ordinal-selection behavior; natural-dialogue metrics missing."
+  },
+  {
+    "requirement": "H database responses",
+    "status": "TESTED_PARTIAL",
+    "evidence": "Existing grounded pipeline retained; operational handler coverage remains partial."
+  },
+  {
+    "requirement": "I registry",
+    "status": "PARTIAL",
+    "evidence": "Candidates, hashes, manifests, reports and prior models retained; no eligible promotion."
+  },
+  {
+    "requirement": "J inference",
+    "status": "PARTIAL",
+    "evidence": "Facade methods, shared model cache and health endpoint exist; no approved learned model active."
+  },
+  {
+    "requirement": "K realistic conversations",
+    "status": "PARTIAL",
+    "evidence": "At least 520 parameterized follow-up scenarios; not a reviewed real-world conversation corpus."
+  },
+  {
+    "requirement": "L performance",
+    "status": "TESTED_PARTIAL",
+    "evidence": "Actual model/text timings recorded; broad concurrency/accuracy targets not certified."
+  },
+  {
+    "requirement": "M OS isolation",
+    "status": "UNVERIFIED",
+    "evidence": "Python socket guard exercised; OS-level isolation unavailable."
+  },
+  {
+    "requirement": "N regression",
+    "status": "TESTED",
+    "evidence": "796 passed, one installed Starlette/HTTPX deprecation warning; Ruff and Mypy passed."
+  },
+  {
+    "requirement": "O documentation",
+    "status": "IMPLEMENTED",
+    "evidence": "Required reports and artifact links saved."
+  }
+]

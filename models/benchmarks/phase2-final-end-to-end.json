@@ -1,0 +1,15 @@
+{
+  "runs": 30,
+  "p50_end_to_end_ms": 32.41204999994807,
+  "p95_end_to_end_ms": 42.49699999945733,
+  "timing_breakdowns_first_run": {
+    "entity_extraction_ms": 8.821000000352797,
+    "intent_inference_ms": 6.334200000310375,
+    "database_lookup_ms": 41.624599999522616
+  },
+  "hardware": "Intel64 Family 6 Model 151 Stepping 5, GenuineIntel",
+  "clock": "2026-11-08T00:00:00+00:00",
+  "dataset": "local fictional 100-service DEMO database",
+  "network_guard": "Python audit hook; not OS isolation",
+  "statistical_model": "not approved; deterministic DB fallback active"
+}

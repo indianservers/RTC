@@ -1,0 +1,32 @@
+{
+  "svm": {
+    "load_seconds": 0.14839970000048197,
+    "median_ms": 1.2298999999984517,
+    "p95_ms": 1.7511999994894722,
+    "model_bytes": 393160,
+    "peak_process_memory_bytes": 310489088,
+    "predictions_first_four": [
+      "NEXT_BUS",
+      "AC_BUS_AVAILABILITY",
+      "TICKET_FARE",
+      "BUS_PLATFORM"
+    ],
+    "quality": "UNREVIEWED_PILOT_NOT_FOR_DEPLOYMENT",
+    "network_guard": "Python socket audit hook; OS isolation not verified"
+  },
+  "textcnn": {
+    "load_seconds": 0.20227359999989858,
+    "median_ms": 5.714150000130758,
+    "p95_ms": 7.0262999997794395,
+    "model_bytes": 15580761,
+    "peak_process_memory_bytes": 377376768,
+    "predictions_first_four": [
+      "AVAILABLE_BUS_TYPES",
+      "NEXT_BUS",
+      "AVAILABLE_BUS_TYPES",
+      "AVAILABLE_BUS_TYPES"
+    ],
+    "quality": "UNREVIEWED_PILOT_NOT_FOR_DEPLOYMENT",
+    "network_guard": "Python socket audit hook; OS isolation not verified"
+  }
+}

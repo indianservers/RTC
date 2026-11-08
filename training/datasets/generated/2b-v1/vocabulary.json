@@ -1,0 +1,177 @@
+{
+  "places": [
+    [
+      "Anantapur",
+      "26d29480-1eb7-45d6-a486-400b45d73860"
+    ],
+    [
+      "Annavaram",
+      "0805fa0d-6cc8-49ce-8879-dba615723c1c"
+    ],
+    [
+      "Bezawada",
+      "60d1d124-e384-4f43-ad89-2645c5e9801a"
+    ],
+    [
+      "Bhimavaram",
+      "48aa26c3-efbe-4331-8459-c496c6bac7ca"
+    ],
+    [
+      "Eluru",
+      "585602bc-3a99-4fcb-a064-483f767ae1eb"
+    ],
+    [
+      "Guntur",
+      "d86a8829-d760-456f-bfd1-0b0dceaeb2f6"
+    ],
+    [
+      "Hyderabad",
+      "3fcfc0ce-ab69-4c3b-9437-feca8f28121f"
+    ],
+    [
+      "Kadapa",
+      "b22eb47b-f5f5-4780-a86f-bf916666701c"
+    ],
+    [
+      "Kakinada",
+      "df90d625-17ca-4c63-94b9-f5b2318ad960"
+    ],
+    [
+      "Kavali",
+      "97a25be7-b37c-4806-a0b2-53e00512d3f5"
+    ],
+    [
+      "Kurnool",
+      "69033816-5bb1-448e-a648-6bfe7378d530"
+    ],
+    [
+      "Machilipatnam",
+      "07ad2f3d-8df7-4f5e-8a8c-47e6c44a7656"
+    ],
+    [
+      "Nellore",
+      "6e87fcdf-5106-4e0b-b638-a8d5acaae2b9"
+    ],
+    [
+      "Ongole",
+      "95684006-2c64-492f-854d-42a0f3726309"
+    ],
+    [
+      "Rajahmundry",
+      "24d3458f-daca-452a-a2bf-c7e258db95fa"
+    ],
+    [
+      "Srikakulam",
+      "cab8f518-bcc7-4080-8bb8-1cea34df6bf3"
+    ],
+    [
+      "Srisailam",
+      "ade530af-0406-4128-b30f-9cd3ee7cb478"
+    ],
+    [
+      "Tirumala",
+      "de5c0c15-77cb-4eeb-b90e-720a459b7236"
+    ],
+    [
+      "Tirupathi",
+      "1bf4c065-8d39-4906-8921-f587cc35a8e5"
+    ],
+    [
+      "Tirupati",
+      "1bf4c065-8d39-4906-8921-f587cc35a8e5"
+    ],
+    [
+      "Vijayawada",
+      "60d1d124-e384-4f43-ad89-2645c5e9801a"
+    ],
+    [
+      "Visakhapatnam",
+      "efd38252-309e-4a4f-a149-1e61fdcc4ade"
+    ],
+    [
+      "Vizag",
+      "efd38252-309e-4a4f-a149-1e61fdcc4ade"
+    ],
+    [
+      "Vizianagaram",
+      "3fcb52ab-abf9-4b36-9f20-7f3edd6ccad0"
+    ],
+    [
+      "తిరుపతి",
+      "1bf4c065-8d39-4906-8921-f587cc35a8e5"
+    ],
+    [
+      "తిరుమల",
+      "de5c0c15-77cb-4eeb-b90e-720a459b7236"
+    ],
+    [
+      "బెజవాడ",
+      "60d1d124-e384-4f43-ad89-2645c5e9801a"
+    ],
+    [
+      "విజయవాడ",
+      "60d1d124-e384-4f43-ad89-2645c5e9801a"
+    ],
+    [
+      "విశాఖపట్నం",
+      "efd38252-309e-4a4f-a149-1e61fdcc4ade"
+    ],
+    [
+      "వైజాగ్",
+      "efd38252-309e-4a4f-a149-1e61fdcc4ade"
+    ]
+  ],
+  "categories": [
+    [
+      "Demo electric",
+      "404c132b-65ec-435d-8bcd-03c82a976ee3"
+    ],
+    [
+      "Demo express",
+      "f9863609-1ae6-4867-83b7-72113086dc2b"
+    ],
+    [
+      "Demo seater",
+      "01fde15e-325d-42f8-813a-efa1269d4883"
+    ],
+    [
+      "Demo sleeper",
+      "5733ac09-d93a-4611-bea2-fdfb08c7d789"
+    ]
+  ],
+  "operators": [
+    [
+      "DEMO",
+      "fd27b6db-a121-47ff-ab73-7bc3ab694cb7",
+      "DEMO"
+    ]
+  ],
+  "journey": {
+    "origin": "60d1d124-e384-4f43-ad89-2645c5e9801a",
+    "destination": "d86a8829-d760-456f-bfd1-0b0dceaeb2f6",
+    "service_id": "a37af754-e20b-449c-86e9-a075a3175220"
+  },
+  "station_names": {
+    "60d1d124-e384-4f43-ad89-2645c5e9801a": "Vijayawada",
+    "d86a8829-d760-456f-bfd1-0b0dceaeb2f6": "Guntur",
+    "69033816-5bb1-448e-a648-6bfe7378d530": "Kurnool",
+    "b22eb47b-f5f5-4780-a86f-bf916666701c": "Kadapa",
+    "26d29480-1eb7-45d6-a486-400b45d73860": "Anantapur",
+    "585602bc-3a99-4fcb-a064-483f767ae1eb": "Eluru",
+    "cab8f518-bcc7-4080-8bb8-1cea34df6bf3": "Srikakulam",
+    "3fcb52ab-abf9-4b36-9f20-7f3edd6ccad0": "Vizianagaram",
+    "07ad2f3d-8df7-4f5e-8a8c-47e6c44a7656": "Machilipatnam",
+    "48aa26c3-efbe-4331-8459-c496c6bac7ca": "Bhimavaram",
+    "ade530af-0406-4128-b30f-9cd3ee7cb478": "Srisailam",
+    "0805fa0d-6cc8-49ce-8879-dba615723c1c": "Annavaram",
+    "1bf4c065-8d39-4906-8921-f587cc35a8e5": "Tirupati",
+    "3fcfc0ce-ab69-4c3b-9437-feca8f28121f": "Hyderabad",
+    "de5c0c15-77cb-4eeb-b90e-720a459b7236": "Tirumala",
+    "6e87fcdf-5106-4e0b-b638-a8d5acaae2b9": "Nellore",
+    "95684006-2c64-492f-854d-42a0f3726309": "Ongole",
+    "97a25be7-b37c-4806-a0b2-53e00512d3f5": "Kavali",
+    "24d3458f-daca-452a-a2bf-c7e258db95fa": "Rajahmundry",
+    "efd38252-309e-4a4f-a149-1e61fdcc4ade": "Visakhapatnam",
+    "df90d625-17ca-4c63-94b9-f5b2318ad960": "Kakinada"
+  }
+}

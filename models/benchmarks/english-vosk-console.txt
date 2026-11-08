@@ -1,0 +1,46 @@
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=10 max-active=3000 lattice-beam=2
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5:6:7:8:9:10
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from C:\Indian Servers\RTC\models\english\vosk-model-small-en-us-0.15/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:282) Loading HCL and G from C:\Indian Servers\RTC\models\english\vosk-model-small-en-us-0.15/graph/HCLr.fst C:\Indian Servers\RTC\models\english\vosk-model-small-en-us-0.15/graph/Gr.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo C:\Indian Servers\RTC\models\english\vosk-model-small-en-us-0.15/graph/phones/word_boundary.int
+LOG (VoskAPI:ReadDataFiles():model.cc:213) Decoding params beam=13 max-active=7000 lattice-beam=6
+LOG (VoskAPI:ReadDataFiles():model.cc:216) Silence phones 1:2:3:4:5:11:12:13:14:15
+LOG (VoskAPI:RemoveOrphanNodes():nnet-nnet.cc:948) Removed 0 orphan nodes.
+LOG (VoskAPI:RemoveOrphanComponents():nnet-nnet.cc:847) Removing 0 orphan components.
+LOG (VoskAPI:ReadDataFiles():model.cc:248) Loading i-vector extractor from C:\Indian Servers\RTC\models\english\vosk-model-en-us-0.22-lgraph/ivector/final.ie
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:183) Computing derived variables for iVector extractor
+LOG (VoskAPI:ComputeDerivedVars():ivector-extractor.cc:204) Done.
+LOG (VoskAPI:ReadDataFiles():model.cc:282) Loading HCL and G from C:\Indian Servers\RTC\models\english\vosk-model-en-us-0.22-lgraph/graph/HCLr.fst C:\Indian Servers\RTC\models\english\vosk-model-en-us-0.22-lgraph/graph/Gr.fst
+LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo C:\Indian Servers\RTC\models\english\vosk-model-en-us-0.22-lgraph/graph/phones/word_boundary.int
+[
+  {
+    "name": "vosk-model-small-en-us-0.15",
+    "status": "LOADED_AND_TRANSCRIBED",
+    "load_seconds": 0.28987499999993815,
+    "audio_seconds": 8.308,
+    "processing_seconds": 0.9215315999999802,
+    "real_time_factor": 0.11092099181511558,
+    "peak_memory_bytes": 188518400,
+    "transcript": "one zero zero zero one nah no to i know zero one eight zero three",
+    "wer": null,
+    "accuracy_limitation": "No independently reviewed reference transcript; no WER reported. Official Vosk example recording is not an RTC/Indian-English evaluation set.",
+    "network_guard": "Python audit hook, not OS-level isolation"
+  },
+  {
+    "name": "vosk-model-en-us-0.22-lgraph",
+    "status": "LOADED_AND_TRANSCRIBED",
+    "load_seconds": 0.7855976999999257,
+    "audio_seconds": 8.308,
+    "processing_seconds": 4.739911699999993,
+    "real_time_factor": 0.5705237963408755,
+    "peak_memory_bytes": 533901312,
+    "transcript": "one zero zero zero one nine oh two one oh zero one eight zero three",
+    "wer": null,
+    "accuracy_limitation": "No independently reviewed reference transcript; no WER reported. Official Vosk example recording is not an RTC/Indian-English evaluation set.",
+    "network_guard": "Python audit hook, not OS-level isolation"
+  }
+]

@@ -1,0 +1,423 @@
+{
+  "version": "2a-v1",
+  "entities": [
+    {
+      "code": "ORIGIN_CITY",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "DESTINATION_CITY",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "ORIGIN_STATION",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "DESTINATION_STATION",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "VIA_STATION",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "TRANSFER_STATION",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "BOARDING_STATION",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "ALIGHTING_STATION",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "BUS_CATEGORY",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "VEHICLE_TYPE",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "AC_PREFERENCE",
+      "value_type": "boolean",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "SLEEPER_PREFERENCE",
+      "value_type": "boolean",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "AMENITY",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "ACCESSIBILITY_REQUIREMENT",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "OPERATOR",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "SERVICE_NUMBER",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "ROUTE_NUMBER",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "VEHICLE_NUMBER",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "PLATFORM",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "TRAVEL_DATE",
+      "value_type": "date",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "LT",
+        "LTE",
+        "GT",
+        "GTE"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "DATE_RANGE",
+      "value_type": "structured_range",
+      "nullable": true,
+      "operators": [
+        "BETWEEN",
+        "NOT_BETWEEN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "timezone required when date/time is evaluated"
+    },
+    {
+      "code": "TIME",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "timezone required when date/time is evaluated"
+    },
+    {
+      "code": "TIME_RANGE",
+      "value_type": "structured_range",
+      "nullable": true,
+      "operators": [
+        "BETWEEN",
+        "NOT_BETWEEN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "timezone required when date/time is evaluated"
+    },
+    {
+      "code": "TIME_PERIOD",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "TIME_RELATION",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "PASSENGER_COUNT",
+      "value_type": "integer",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "LT",
+        "LTE",
+        "GT",
+        "GTE"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "positive integer"
+    },
+    {
+      "code": "SEAT_COUNT",
+      "value_type": "integer",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "LT",
+        "LTE",
+        "GT",
+        "GTE"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "positive integer"
+    },
+    {
+      "code": "FARE_AMOUNT",
+      "value_type": "decimal",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "LT",
+        "LTE",
+        "GT",
+        "GTE"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "FARE_LIMIT",
+      "value_type": "decimal",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "LT",
+        "LTE",
+        "GT",
+        "GTE"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "CURRENCY",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "CONCESSION_TYPE",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    },
+    {
+      "code": "RESERVATION_REFERENCE",
+      "value_type": "string",
+      "nullable": true,
+      "operators": [
+        "EQ",
+        "NE",
+        "IN",
+        "NOT_IN"
+      ],
+      "resolution": "database_master_or_explicit_input",
+      "validation": "never infer unknown data"
+    }
+  ]
+}
