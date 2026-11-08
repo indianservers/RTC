@@ -2,6 +2,8 @@
 
 import argparse
 import json
+import os
+import sys
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
@@ -23,6 +25,10 @@ def main():
     parser.add_argument("--session", help="Resume a conversation session ID")
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    owner_token = os.getenv("RTC_SESSION_TOKEN")
+    history = []
     db = database(args.database) if args.database else database()
     with Session(db) as session:
         operators = list(
@@ -66,21 +72,43 @@ def main():
                 break
             if text == "/help":
                 print(
-                    "/help /reset /context /debug /station [name or code] /exit\nAsk about timings, fares, stops, seats, platforms or facilities."
+                    "/help /reset /context /results /select N /history /debug /station [name or code] /exit\nAsk about timings, fares, stops, seats, platforms or facilities."
                 )
                 continue
             if text == "/debug":
                 debug = not debug
                 print("Debug " + ("enabled." if debug else "disabled."))
                 continue
-            if text == "/context":
+            if text == "/history":
+                for role, message in history[-50:]:
+                    print(role + ": " + message)
+                continue
+            if text.startswith("/select "):
+                number = text.removeprefix("/select ").strip()
+                if not number.isdigit() or int(number) < 1:
+                    print("Use /select followed by a positive result number.")
+                    continue
+                text = "the " + number + " one"
+            if text == "/context" or text == "/results":
                 if not sid:
                     print("No active conversation.")
                     continue
                 _, _, context = engine.conversations.load(
-                    sid, datetime.now(ZoneInfo("Asia/Kolkata"))
+                    sid, datetime.now(ZoneInfo("Asia/Kolkata")), owner_token
                 )
-                print(json.dumps(context, indent=2, ensure_ascii=False))
+                if text == "/results":
+                    for i, row in enumerate(context.get("candidates", []), 1):
+                        print(
+                            f"{i}. {row.get('service_number', 'unknown')} | {row.get('departure', 'unknown')} | fare {row.get('fare', 'unknown')} | {row.get('result_id', '')}"
+                        )
+                else:
+                    print(
+                        json.dumps(
+                            {k: v for k, v in context.items() if k != "_owner_hash"},
+                            indent=2,
+                            ensure_ascii=False,
+                        )
+                    )
                 session.rollback()
                 continue
             if text.startswith("/station"):
@@ -97,7 +125,12 @@ def main():
             if text == "/reset":
                 if sid:
                     engine.process(
-                        NLPRequest(session_id=sid, text="reset", language="en"),
+                        NLPRequest(
+                            session_id=sid,
+                            text="reset",
+                            language="en",
+                            owner_token=owner_token,
+                        ),
                         datetime.now(ZoneInfo("Asia/Kolkata")),
                     )
                     session.commit()
@@ -116,6 +149,7 @@ def main():
                         station_context=station,
                         operator=operator,
                         debug=debug,
+                        owner_token=owner_token,
                     ),
                     datetime.now(ZoneInfo("Asia/Kolkata")),
                 )
@@ -128,6 +162,8 @@ def main():
                     "The local enquiry could not be completed. Check the database setup or enable /debug."
                 )
                 continue
+            history.extend([("You", text), ("RTC", result.answer)])
+            history = history[-50:]
             sid = result.session_id
             print("RTC: " + result.answer)
             if debug:

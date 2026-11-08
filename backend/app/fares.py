@@ -48,6 +48,11 @@ class FareEngine:
             if stage
             else None
         )
+        return self.format_quote(amount, source)
+
+    @staticmethod
+    def format_quote(amount, source):
+        """Format a DB-resolved segment tariff; shared by batched timetable reads."""
         if amount is None:
             return {
                 "base_fare": None,

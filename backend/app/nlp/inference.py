@@ -89,10 +89,17 @@ class EnglishInferenceService:
     def process_conversation(self, request: NLPRequest, now: datetime):
         return self.engine.process(request, now, persist=True)
 
-    def reset_session(self, session_id: str):
+    def reset_session(self, session_id: str, owner_token=None):
         context = self.session.scalar(
             select(Context).where(Context.session_id == session_id)
         )
         if context:
-            context.values = {}
+            from .session_access import check_owner
+
+            check_owner(context.values, owner_token)
+            context.values = (
+                {"_owner_hash": context.values["_owner_hash"]}
+                if "_owner_hash" in context.values
+                else {}
+            )
         return {"reset": True}

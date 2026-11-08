@@ -1,0 +1,128 @@
+[
+  {
+    "requirement": 1,
+    "domain": "Audit",
+    "status": "DONE",
+    "evidence": "domain.py, route_search.py, enquiry.py, operations.py, records.py, fares.py, NLP state/orchestrator inspected. Existing migrations retained.",
+    "remaining": "Separate legacy one-transfer Enquiry method remains for API compatibility; new planner reuses Repository and RouteSearch."
+  },
+  {
+    "requirement": 2,
+    "domain": "Time-dependent graph",
+    "status": "IMPLEMENTED WITH LIMITS",
+    "evidence": "RouteSearch.timed_paths caches reachable outgoing timed segments and enumerates bounded path labels. Calendar/exception/trip/variant checks reuse Repository.",
+    "remaining": "48-hour public horizon, max two transfers, 100 outgoing station destinations, 1000 default /10000 maximum services per segment, 20000 row batch caps; partial expansion warnings. No national-scale guarantee."
+  },
+  {
+    "requirement": 3,
+    "domain": "Direct journeys",
+    "status": "IMPLEMENTED",
+    "evidence": "find_direct_journeys uses same timed search with max_transfers=0. Ordered stop IDs, boarding/alighting flags and dated recurring instances returned.",
+    "remaining": "Recurring instances without a local Trip record have trip_id null; service_id plus service_date identify scheduled occurrence."
+  },
+  {
+    "requirement": 4,
+    "domain": "Connecting journeys",
+    "status": "IMPLEMENTED WITH LIMITS",
+    "evidence": "One/two transfers, same-station continuity, minimum/maximum/total wait, deadlines, intermediate stops and multi-operator legs.",
+    "remaining": "No inter-stand transfer graph exists in DB, so different stands never connect implicitly. Platform walking/accessibility-specific transfer times absent."
+  },
+  {
+    "requirement": 5,
+    "domain": "Journey contract",
+    "status": "IMPLEMENTED",
+    "evidence": "Pydantic itinerary validates endpoints, leg duration, continuity, transfer count/waits and Decimal totals; deterministic SHA journey IDs.",
+    "remaining": "Endpoints are stable DB station IDs; no fabricated labels or actual trip IDs."
+  },
+  {
+    "requirement": 6,
+    "domain": "Ranking",
+    "status": "IMPLEMENTED WITH LIMITS",
+    "evidence": "Seven deterministic modes plus optional complete-itinerary Pareto filtering. Unknown totals excluded from LOWEST_FARE.",
+    "remaining": "Bounded enumeration can truncate; Pareto filtering is quadratic and rejects more than 2000 candidates. No dominance pruning during expansion."
+  },
+  {
+    "requirement": 7,
+    "domain": "Missed bus",
+    "status": "PARTIAL",
+    "evidence": "Explicit statement required; validates local service boarding segment/date; searches after missed departure/current supplied time; recommendation IDs identify next direct, connection, known fare and compatible option.",
+    "remaining": "Verified-actual-departure-only admission not implemented. Recommendations consider returned page of at most100; may miss alternatives beyond it. Cancelled/completed services may be unavailable to validation."
+  },
+  {
+    "requirement": 8,
+    "domain": "Disruption replanning",
+    "status": "PARTIAL",
+    "evidence": "Fresh verified stop arrival/departure estimates respected; cancellations excluded; stale estimates fall back to schedule; platform and GPS status metadata remain distinct. Active verified generic service disruptions conservatively excluded by default.",
+    "remaining": "No structured stop-closure/suspension taxonomy or targeted repair of a supplied old itinerary. Generic disruptions may include advisories; caller can disable conservative exclusion. Arrival estimates propagated from departure deltas in existing repository remain estimates."
+  },
+  {
+    "requirement": 9,
+    "domain": "Fares",
+    "status": "PARTIAL",
+    "evidence": "Existing FareEngine formatting reused with DB-resolved segment fares/dated overrides; batch output compared against FareEngine.quote in tests. Partial fare subtotal separate from unknown total.",
+    "remaining": "Concession eligibility, surcharge rule evaluation and through-ticket products are not implemented by existing FareEngine; no discount invented."
+  },
+  {
+    "requirement": 10,
+    "domain": "Passenger constraints",
+    "status": "PARTIAL",
+    "evidence": "Typed global hard vehicle/category/operator/time/budget/transfer/wait constraints; soft category ranking. Optional verified seat requirement matches exact passenger segment.",
+    "remaining": "No leg-scoped constraints or exact unsatisfiable-filter attribution. Unknown seat data allowed by default and remains unknown, not a booking guarantee."
+  },
+  {
+    "requirement": 11,
+    "domain": "Conversation integration",
+    "status": "PARTIAL",
+    "evidence": "Connecting/reach phrasing invokes planner, persists constraints/candidates/ranking/selection in Phase3A state. Selection revalidates itinerary against fresh DB reads. Date/destination changes invalidate results. Tested full selection, cheapest follow-up and tomorrow dialogue.",
+    "remaining": "Leg-scoped AC-until phrases return explicit clarification; selected-leg operations, general itinerary reference semantics and missed-bus natural-language invocation unfinished."
+  },
+  {
+    "requirement": 12,
+    "domain": "Comparison explanations",
+    "status": "IMPLEMENTED WITH LIMITS",
+    "evidence": "Known arrival/transfer and fare differences generated from computed results.",
+    "remaining": "Only first two eligible options compared; no unrestricted passenger-language generation."
+  },
+  {
+    "requirement": 13,
+    "domain": "REST API",
+    "status": "IMPLEMENTED",
+    "evidence": "POST /api/v1/journeys/search, compare, replan, missed-bus. Versioned typed request/response, validation422, bounded limits, structured provenance/warnings.",
+    "remaining": "Compare/replan recompute from search constraints rather than accepting trusted client itinerary facts; replan is fresh full search."
+  },
+  {
+    "requirement": 14,
+    "domain": "Performance",
+    "status": "PARTIAL",
+    "evidence": "Measured100,1000,10000-service successful synthetic corridor searches and50000-service capacity refusal; query count, RSS, CPU and empirical latency recorded. Timetable and metadata batching implemented.",
+    "remaining": "No branching national-network, high-volume observations or concurrent-load certification;50000-service search does not complete."
+  },
+  {
+    "requirement": 15,
+    "domain": "Tests",
+    "status": "IMPLEMENTED WITH LIMITS",
+    "evidence": "252 deterministic ranking/transfer/wait/date scenarios plus focused tests and40 deterministic Hypothesis examples. Offline socket egress guard; API tests permit Windows loopback socketpair only.",
+    "remaining": "Synthetic SQLite scenarios do not establish production completeness; PostgreSQL and OS firewall isolation unverified."
+  },
+  {
+    "requirement": 16,
+    "domain": "File structure",
+    "status": "DONE",
+    "evidence": "Extended existing Repository, RouteSearch, FareEngine, enquiry filter and NLP modules. One typed journey facade and request-scoped timetable batch helper added.",
+    "remaining": "No duplicate model tables, schema migration rewrites, cloud services, speech or GUI."
+  },
+  {
+    "requirement": 17,
+    "domain": "Acceptance",
+    "status": "INCOMPLETE",
+    "evidence": "Functional planner, APIs, dialogue integration and actual test/benchmark artifacts exist.",
+    "remaining": "Partial items above prevent claiming full Phase3B acceptance or production readiness."
+  },
+  {
+    "requirement": 18,
+    "domain": "Final deliverables",
+    "status": "PARTIAL",
+    "evidence": "Functional planner, ranking, recovery/replan endpoints, conversation integration, automated tests, algorithm documentation and measured benchmark artifacts delivered.",
+    "remaining": "PHASE 3B INCOMPLETE; detailed limitations are listed in PHASE_3B_REPORT.md. No speech or GUI introduced."
+  }
+]

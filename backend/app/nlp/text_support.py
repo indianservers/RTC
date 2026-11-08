@@ -30,6 +30,7 @@ def classify_extra(text, existing, session=None):
         ]:
             return [row.get("backend_code") or row["code"]]
     additions = {
+        "CONNECTING_BUSES": r"connecting buses|how can i (?:reach|get to)|how (?:do|can) i travel to",
         "TICKET_FARE": r"how much|cost|ticket price",
         "NEXT_BUS": r"when is (?:the |a )?bus|bus timings?|what time.*bus",
         "ARRIVAL_TIME": r"reach(?:es)? .*first|when.*reach",

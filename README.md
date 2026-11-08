@@ -202,3 +202,21 @@ Commands: python training/generation/generate.py; python training/validation/val
 PHASE 2 INCOMPLETE. Created a checksummed family/parent/near-duplicate grouped 449-record synthetic snapshot (234 train, 76 validation, 139 synthetic challenge; independent test 0). Actually trained and reloaded new 60-label SVM and TensorFlow TextCNN candidates. Validation macro-F1: SVM 0.177540, TextCNN 0.014697; synthetic-challenge macro-F1: 0.212619 and 0.071667. SVM is the development winner, but neither model is approved or active. No suitable validation confidence threshold was found. Runtime retains DB deterministic rules and safe clarification.
 
 Added shared thread-safe local model loading, inference facade, /api/v1/nlp/health, composed conversation regressions and fixes for ordinal selection and feature modifiers. Final tests: 796 passed; Ruff and Mypy passed. Local text benchmark median 32.4 ms, P95 42.5 ms. These are performance measurements on fictional demo data, not production accuracy. No human-reviewed independent corpus, production model selection, representative answer accuracy or OS-level isolation is established. See docs/PHASE_2_FINAL_REPORT.md and docs/MODEL_COMPARISON.md. No UI or Phase 3 audio orchestration was added.
+
+
+## Phase 3A advanced English dialogue
+
+PHASE 3A INCOMPLETE. Implemented typed conversation state, explicit context operations and dependency invalidation, stable result references, selected-service handling, bounded multi-intent fare/arrival reuse, additional temporal and correction handling, CLI result selection/history, and owner-token protected context inspection. Operational answers continue to use local database records. Existing tokenless message sessions remain supported for compatibility; universal ownership enforcement is unfinished.
+
+Verification: 1,109 tests passed (one dependency deprecation warning); Ruff passed; Mypy passed for 51 source files. Added 300 parameterized 2/5/10-turn scenarios plus focused regressions. These synthetic scenarios do not establish representative passenger-language accuracy. Reproducible 100-request SQLite demo benchmark: P50 22.166 ms, P95 29.305 ms, P99 50.391 ms. Concurrent-load performance and OS-level network isolation were not verified.
+
+Contextual category comparisons, general next-three pagination, some ambiguous references/date corrections, proactive cached-result invalidation and same-session conflict handling remain incomplete. See [Phase 3A report](docs/PHASE_3A_REPORT.md) for implemented behavior, measurement scope, commands and remaining requirements. No speech or graphical UI was introduced.
+
+
+## Phase 3B local journey planning
+
+PHASE 3B INCOMPLETE. Added bounded time-dependent direct/one-/two-transfer planning with intermediate and variant stops, calendars, cancellations, fresh verified stop observations, transfer/wait limits, typed validated itineraries, seven ranking modes, unknown-fare-safe totals, explicit missed-bus alternatives and fresh-search replanning. Four versioned journey APIs and English conversation selection/ranking/date integration reuse the existing database and enquiry modules. Existing TimetableEngine API and migrations are preserved.
+
+Actual benchmark:100-service median11.725ms (P95 13.411ms),1000-service median64.774ms,10000-service median687.925ms;14 DB queries per completed same-corridor SQLite fixture. The50000-service fixture was refused at the capacity bound. These are synthetic measurements, not national-network/concurrency certification. Final full suite: **1,381 passed** (one dependency deprecation warning); Ruff and Mypy passed. See [Phase3B report](docs/PHASE_3B_REPORT.md).
+
+Remaining work includes leg-scoped constraints/dialogue, explicit inter-stand transfer data, concession/surcharge evaluation, detailed disruption/stop-closure semantics and production-scale verification. PostgreSQL and OS-level offline isolation were not tested. See [journey usage](docs/JOURNEY_PLANNER.md), [algorithm](docs/ROUTING_ALGORITHMS.md) and [requirement matrix](docs/phase3b-gap-matrix.json). No voice or graphical UI was added.

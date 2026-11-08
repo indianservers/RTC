@@ -49,6 +49,10 @@ def seed_nlp(engine):
             s.add(dialogue)
             s.flush()
         texts = {
+            "RESULTS_UPDATED": (
+                "The current list now has {count} options. Choose a listed service.",
+                "ప్రస్తుత జాబితాలో {count} ఎంపికలు ఉన్నాయి.",
+            ),
             "DEMO_NOTICE": ("Demonstration data.", "ప్రదర్శన సమాచారం."),
             "NO_RESULTS": (
                 "No matching information is available.",

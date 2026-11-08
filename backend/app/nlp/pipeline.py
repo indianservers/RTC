@@ -19,6 +19,10 @@ from .components import IntentClassifier, LanguageNormalizer, TemporalParser
 from .content import NLPContentRepository
 from .english_model import EnglishIntentModel
 from .entities import RTCEntityExtractor
+from .planner import ExecutionPlanner
+from .references import ReferentialResolver, stable_results
+from .session_access import check_owner, public_context, token_hash
+from .state import ContextOperation, ContextUpdateEngine, ConversationState
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -30,6 +34,9 @@ class NLPRequest(BaseModel):
     station_context: str | None = None
     operator: str | None = None
     debug: bool = False
+    owner_token: str | None = Field(
+        default=None, min_length=32, max_length=256, repr=False
+    )
 
 
 class NLPResponse(BaseModel):
@@ -45,13 +52,14 @@ class NLPResponse(BaseModel):
     warnings: list[str] = Field(default_factory=list)
     duration_ms: float
     debug: dict = Field(default_factory=dict)
+    context_changes: list[dict] = Field(default_factory=list)
 
 
 class ConversationManager:
     def __init__(self, session):
         self.session = session
 
-    def load(self, identifier, now):
+    def load(self, identifier, now, owner_token=None):
         conversation = (
             self.session.get(Conversation, identifier) if identifier else None
         )
@@ -60,6 +68,8 @@ class ConversationManager:
             if conversation
             else None
         )
+        if context:
+            check_owner(context.values, owner_token)
         if (
             context
             and datetime.fromisoformat(
@@ -67,15 +77,26 @@ class ConversationManager:
             )
             > now
         ):
-            return conversation, context, dict(context.values)
+            values = dict(context.values)
+            if owner_token:
+                values.setdefault("_owner_hash", token_hash(owner_token))
+            return conversation, context, values
         conversation = Conversation(id=str(uuid4()), language="auto")
         self.session.add(conversation)
         self.session.flush()
         context = Context(session_id=conversation.id, values={})
         self.session.add(context)
-        return conversation, context, {}
+        return (
+            conversation,
+            context,
+            ({"_owner_hash": token_hash(owner_token)} if owner_token else {}),
+        )
 
     def save(self, context, values, now):
+        values["session_id"] = context.session_id
+        values["revision"] = int(context.values.get("revision", 0)) + 1
+        values["last_activity_at"] = now.isoformat()
+        ConversationState.model_validate(values)
         values["expires_at"] = (now + timedelta(minutes=15)).isoformat()
         context.values = dict(values)
         self.session.flush()
@@ -87,7 +108,9 @@ class RTCQueryOrchestrator:
 
     def execute(self, intents, slots, at):
         results = []
-        for intent in intents[:3]:
+        planner = ExecutionPlanner()
+        primary = None
+        for intent in planner.plan(intents):
             if intent not in text_support.SUPPORTED:
                 results.append(
                     {
@@ -113,8 +136,67 @@ class RTCQueryOrchestrator:
                 passengers=slots.get("passengers", 1),
                 service_number=slots.get("service_number"),
             )
-            result = self.engine.enquire(query)
-            encoded = result.model_dump(mode="json")
+            journey_mode = intent in {"CONNECTING_BUSES", "ALTERNATIVE_ROUTES"} or (
+                slots.get("journey_mode") and intent in planner.journey_intents
+            )
+            if journey_mode:
+                from ..journey import JourneyConstraints, JourneyPlanner
+
+                ranking = {
+                    "CHEAPEST_BUS": "LOWEST_FARE",
+                    "FASTEST_BUS": "EARLIEST_ARRIVAL",
+                }.get(intent, slots.get("journey_ranking", "EARLIEST_ARRIVAL"))
+                constraints = JourneyConstraints(
+                    origin=query.origin,
+                    destination=query.destination,
+                    earliest_departure=at,
+                    filters=query.filters,
+                    passengers=query.passengers,
+                    max_transfers=slots.get("journey_max_transfers", 2),
+                    maximum_wait_minutes=slots.get("journey_max_wait", 180),
+                    ranking=ranking,
+                )
+                journeys = JourneyPlanner(self.engine.session).search(constraints)
+                rows = []
+                for itinerary in journeys.itineraries:
+                    row = itinerary.model_dump(mode="json")
+                    row.update(
+                        departure=row["departure_at"],
+                        arrival=row["arrival_at"],
+                        fare=row["total_fare"],
+                        result_id=row["journey_id"],
+                        dataset_source="DEMO"
+                        if set(row["sources"]) <= {"DEMO", "SYNTHETIC"}
+                        else "LOCAL",
+                    )
+                    rows.append(row)
+                slots["journey_mode"] = True
+                slots["journey_constraints"] = constraints.model_dump(mode="json")
+                slots["journey_ranking"] = ranking
+                slots["journey_candidates"] = rows
+                slots["candidates"] = rows
+                slots.pop("selected_itinerary", None)
+                encoded = {
+                    "intent": intent,
+                    "status": "KNOWN" if rows else "NO_RESULTS",
+                    "query": query.model_dump(mode="json"),
+                    "results": rows,
+                    "warnings": journeys.warnings,
+                    "pagination": journeys.pagination,
+                }
+                results.append(encoded)
+                continue
+            projected = planner.project(intent, primary, query, slots.get("service_id"))
+            if projected is None:
+                result = self.engine.enquire(query)
+                encoded = result.model_dump(mode="json")
+            else:
+                from ..engine import EnquiryResponse
+
+                result = EnquiryResponse.model_validate(projected)
+                encoded = projected
+            if intent in planner.journey_intents:
+                primary = encoded
             for row in encoded["results"]:
                 if row.get("service_id"):
                     service = self.engine.session.get(Service, row["service_id"])
@@ -145,8 +227,11 @@ class RTCQueryOrchestrator:
                     encoded["dataset_source"] = "DEMO"
             results.append(encoded)
             candidates = [r for r in encoded["results"] if r.get("service_id")]
-            if candidates:
-                slots["candidates"] = candidates
+            if candidates and (
+                intent in planner.journey_intents or not slots.get("candidates")
+            ):
+                slots["candidates"] = stable_results(candidates)
+                slots["result_revision"] = int(slots.get("revision", 0)) + 1
             if (
                 result.results
                 and isinstance(result.results[0], dict)
@@ -164,7 +249,14 @@ class RTCQueryOrchestrator:
             ):
                 selected = result.results[0]
                 if selected.get("service_id"):
+                    if (
+                        slots.get("service_id") != selected["service_id"]
+                        or slots.get("selection_status") != "USER_CONFIRMED"
+                    ):
+                        slots["selection_status"] = "SYSTEM_QUERY_DEFAULT"
                     slots["service_id"] = selected["service_id"]
+                    service = self.engine.session.get(Service, selected["service_id"])
+                    slots["selected_route_id"] = service.route_id if service else None
                 if selected.get("trip_id"):
                     slots["trip_id"] = selected["trip_id"]
         return results
@@ -227,19 +319,73 @@ class RTCNLPEngine:
             else request.language
         )
         conversation, context, loaded = (
-            self.conversations.load(request.session_id, now)
+            self.conversations.load(request.session_id, now, request.owner_token)
             if persist
             else (None, None, {})
         )
         slots = deepcopy(loaded)
+        operations = []
         previous = deepcopy(slots)
+        slots.setdefault("slot_origins", deepcopy(slots.get("slot_sources", {})))
+        slots["slot_sources"] = {
+            key: "INHERITED" for key in slots.get("slot_sources", {})
+        }
         state, answer, clarify = "ANSWERING", "", False
         results, intents, entities, timings = [], [], {}, {}
         prediction = {"status": "RULES"}
+        temporal = {}
         try:
             tick = perf_counter()
+            if re.search(r"only ac until|only .* until", text):
+                raise ValueError(
+                    "Leg-specific category constraints are not supported yet. Please specify a requirement for the whole journey."
+                )
+            for pattern, slot, mapping in (
+                (
+                    r"(?:maximum|max) (one|two|zero|[0-2]) transfers?",
+                    "journey_max_transfers",
+                    {"one": 1, "two": 2, "zero": 0},
+                ),
+                (
+                    r"(?:maximum|max) (?:waiting|wait)(?: time)? (\d+) minutes?",
+                    "journey_max_wait",
+                    {},
+                ),
+            ):
+                match = re.search(pattern, text)
+                if match:
+                    value = mapping.get(
+                        match[1], int(match[1]) if match[1].isdigit() else 0
+                    )
+                    operation = ContextOperation(op="SET_SLOT", slot=slot, value=value)
+                    slots = ContextUpdateEngine().apply(slots, operation)
+                    slots["journey_mode"] = True
+                    operations.append(operation.model_dump())
+            if re.search(r"don.t change buses|no transfers|direct only", text):
+                operation = ContextOperation(
+                    op="SET_SLOT", slot="journey_max_transfers", value=0
+                )
+                slots = ContextUpdateEngine().apply(slots, operation)
+                slots["journey_mode"] = True
+                operations.append(operation.model_dump())
             entities = self.extractor.extract(text)
+            same_service = bool(re.search(r"same (?:one|bus|service) tomorrow", text))
+            if same_service:
+                if not slots.get("service_id"):
+                    raise ValueError(
+                        "Which recurring service should I check for tomorrow?"
+                    )
+                entities["service_id"] = slots["service_id"]
             timings["entity_extraction_ms"] = (perf_counter() - tick) * 1000
+            context_tick = perf_counter()
+            if re.search(
+                r"forget (?:the )?(?:price|fare) limit|remove (?:the )?(?:price|fare) limit",
+                text,
+            ):
+                operation = ContextOperation(op="CLEAR_SLOT", slot="max_fare")
+                slots = ContextUpdateEngine().apply(slots, operation)
+                operations.append(operation.model_dump())
+                text = "clear price limit"
             if request.station_context and not slots.get("origin"):
                 resolved = self.orchestrator.engine.resolver.resolve(
                     request.station_context
@@ -247,10 +393,17 @@ class RTCNLPEngine:
                 if resolved["status"] != "KNOWN":
                     raise ValueError("Which boarding station do you mean?")
                 slots["origin"] = resolved["candidates"][0]["id"]
+                slots.setdefault("slot_sources", {})["origin"] = "SYSTEM_DEFAULT"
+                slots.setdefault("slot_origins", {})["origin"] = "SYSTEM_DEFAULT"
+                slots["current_station"] = slots["origin"]
             if request.operator:
                 slots.setdefault("filters", {})["operator"] = request.operator
             if text in ("reset", "/reset", "new enquiry", "కొత్త ప్రశ్న"):
-                slots = {}
+                slots = (
+                    {"_owner_hash": slots["_owner_hash"]}
+                    if "_owner_hash" in slots
+                    else {}
+                )
                 answer = self.content.render("HELP", language)
             else:
                 station = (
@@ -268,6 +421,7 @@ class RTCNLPEngine:
                     deepcopy(slots.get("filters", {})),
                 )
                 extracted = entities.get("filters", {})
+                slots.setdefault("filters", {})
                 clear = bool(
                     re.search(r"any (?:bus )?type|clear filters|any category", text)
                 )
@@ -277,10 +431,24 @@ class RTCNLPEngine:
                         for k, v in slots.get("filters", {}).items()
                         if k == "operator"
                     }
-                slots["filters"] = {**slots.get("filters", {}), **extracted}
-                slots.update({k: v for k, v in entities.items() if k != "filters"})
-                temporal = self.temporal.parse(text, local)
-                date_change = bool(
+                for key, value in {
+                    **extracted,
+                    **{k: v for k, v in entities.items() if k != "filters"},
+                }.items():
+                    target = (
+                        slots.get("filters", {})
+                        if key in ContextUpdateEngine.filter_slots
+                        else slots
+                    )
+                    operation = ContextOperation(
+                        op="REPLACE_SLOT" if key in target else "SET_SLOT",
+                        slot=key,
+                        value=value,
+                    )
+                    slots = ContextUpdateEngine().apply(slots, operation)
+                    operations.append(operation.model_dump())
+                temporal = self.temporal.parse(text, local, slots.get("travel_date"))
+                date_change = temporal.get("explicit_relative", False) or bool(
                     re.search(
                         r"today|tomorrow|repu|రేపు|ellundi|ఎల్లుండి|\d{4}-\d{2}-\d{2}",
                         text,
@@ -298,9 +466,23 @@ class RTCNLPEngine:
                     (p for p in periods if p in text),
                     "morning" if temporal["morning"] else None,
                 )
+                if "same time tomorrow" in text:
+                    previous_bounds = {
+                        k: datetime.fromisoformat(v)
+                        for k, v in slots.get("filters", {}).items()
+                        if k in ("after", "before", "arrival_after", "arrival_before")
+                        and v
+                    }
+                    if previous_bounds:
+                        anchor = min(v.date() for v in previous_bounds.values())
+                        delta = date.fromisoformat(temporal["travel_date"]) - anchor
+                        temporal["filters"] = {
+                            k: (v + delta).isoformat()
+                            for k, v in previous_bounds.items()
+                        }
                 if date_change or period:
                     slots.pop("time_window", None)
-                    for key in ("after", "before"):
+                    for key in ("after", "before", "arrival_after", "arrival_before"):
                         slots["filters"].pop(key, None)
                 if period:
                     slots["time_window"] = period
@@ -325,9 +507,49 @@ class RTCNLPEngine:
                     raise ValueError(
                         "Which service would you like instead? Choose a result number or service number."
                     )
-                selection_handled = False
+                if re.fullmatch(
+                    r"(?:the )?(?:cheaper one|cheapest one|fastest one|previous one|this one)[.!?]*",
+                    text,
+                ):
+                    index = ReferentialResolver().resolve(text, slots)
+                    text = f"the {index + 1} one"
+                refined = False
+                if re.fullmatch(
+                    r"remove (?:the )?first (?:option|bus)|any other[?!.]*", text
+                ):
+                    rows = slots.get("candidates", [])
+                    if not rows:
+                        raise ValueError(
+                            "Request a current list before refining options."
+                        )
+                    remaining = (
+                        rows[1:]
+                        if text.startswith("remove")
+                        else [
+                            r
+                            for r in rows
+                            if r.get("service_id") != slots.get("service_id")
+                        ]
+                    )
+                    operation = ContextOperation(
+                        op="REFINE_RESULTS", slot="candidates", value=remaining
+                    )
+                    slots = ContextUpdateEngine().apply(slots, operation)
+                    operations.append(operation.model_dump())
+                    if not any(
+                        r.get("service_id") == slots.get("service_id")
+                        for r in remaining
+                    ):
+                        slots.pop("service_id", None)
+                        slots.pop("trip_id", None)
+                        slots.pop("selection_status", None)
+                    answer = self.content.render(
+                        "RESULTS_UPDATED", language, {"count": len(remaining)}
+                    )
+                    refined = True
+                selection_handled = refined
                 selection = re.fullmatch(
-                    r"(?:the )?(first|second|third|fourth|fifth|\d+)(?: one| bus| service)?[.!?]*",
+                    r"(?:the )?(first|second|third|fourth|fifth|\d+)(?: one| bus| service| option)?[.!?]*",
                     text,
                 )
                 if selection and (
@@ -350,13 +572,62 @@ class RTCNLPEngine:
                         )
                     selection_handled = True
                     chosen = candidates[n - 1]
-                    slots["service_id"] = chosen["service_id"]
+                    if chosen.get("journey_id"):
+                        from ..journey import JourneyConstraints, JourneyPlanner
+
+                        constraints = JourneyConstraints.model_validate(
+                            slots["journey_constraints"]
+                        )
+                        constraints = JourneyConstraints.model_validate(
+                            {
+                                **constraints.model_dump(),
+                                "earliest_departure": max(
+                                    constraints.earliest_departure, now
+                                ),
+                                "limit": 100,
+                                "offset": 0,
+                            }
+                        )
+                        fresh = JourneyPlanner(self.session).search(constraints)
+                        selected = next(
+                            (
+                                i
+                                for i in fresh.itineraries
+                                if i.journey_id == chosen["journey_id"]
+                            ),
+                            None,
+                        )
+                        if selected is None:
+                            raise ValueError(
+                                "That itinerary is no longer eligible. Please request updated journey options."
+                            )
+                        chosen = selected.model_dump(mode="json")
+                        chosen.update(
+                            departure=chosen["departure_at"],
+                            arrival=chosen["arrival_at"],
+                            fare=chosen["total_fare"],
+                            result_id=chosen["journey_id"],
+                        )
+                        candidates[n - 1] = chosen
+                    operation = ContextOperation(op="SELECT_RESULT", value=n - 1)
+                    slots = ContextUpdateEngine().apply(slots, operation)
+                    operations.append(operation.model_dump())
+                    if chosen.get("journey_id"):
+                        slots["selected_itinerary"] = chosen
+                        slots["selected_leg"] = None
+                        answer = f"Selected journey option {n}."
+                    else:
+                        slots["service_id"] = chosen["service_id"]
                     slots.pop("trip_id", None)
                     if chosen.get("trip_id"):
                         slots["trip_id"] = chosen["trip_id"]
-                    answer = (
-                        "Selected service " + chosen.get("service_number", str(n)) + "."
-                    )
+                    if not chosen.get("journey_id"):
+                        answer = (
+                            "Selected service "
+                            + chosen.get("service_number", str(n))
+                            + "."
+                        )
+                timings["context_update_ms"] = (perf_counter() - context_tick) * 1000
                 tick = perf_counter()
                 intents = text_support.classify_extra(
                     text, self.classifier.classify(text), self.session
@@ -381,6 +652,8 @@ class RTCNLPEngine:
                         "SEATER_BUS_AVAILABILITY",
                     }
                     intents = [i for i in intents if i not in modifiers]
+                if same_service:
+                    intents = ["NEXT_BUS"]
                 if selection_handled:
                     intents = []
                 if (
@@ -420,9 +693,11 @@ class RTCNLPEngine:
                     or extracted
                     or date_change
                     or period
+                    or temporal.get("filters")
                     or clear
+                    or operations
                 )
-                if not intents and updated:
+                if not intents and updated and not selection_handled:
                     intents = [
                         "NEXT_BUS" if clear else slots.get("last_intent", "NEXT_BUS")
                     ]
@@ -501,30 +776,17 @@ class RTCNLPEngine:
                             slots["filters"]["before"] = (
                                 window + timedelta(hours=hi)
                             ).isoformat()
-                        bound = re.search(
-                            r"\b(after|before)\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)?\b",
-                            text,
-                        )
-                        if bound:
-                            hour, minute = int(bound[2]), int(bound[3] or 0)
-                            if (
-                                not 0 <= hour <= 23
-                                or minute > 59
-                                or bound[4]
-                                and not 1 <= hour <= 12
-                            ):
-                                raise ValueError("What valid time do you mean?")
-                            if bound[4]:
-                                hour = hour % 12 + (12 if bound[4] == "pm" else 0)
-                            slots["filters"][bound[1]] = (
-                                datetime.combine(
-                                    date.fromisoformat(slots["travel_date"]),
-                                    datetime.min.time(),
-                                    local.tzinfo,
+                        if temporal.get("filters"):
+                            slots["filters"].update(temporal["filters"])
+                            slots["temporal_resolution"] = {
+                                **temporal,
+                                "original_text": request.text,
+                            }
+                            if slots["filters"].get("after"):
+                                query_at = max(
+                                    query_at,
+                                    datetime.fromisoformat(slots["filters"]["after"]),
                                 )
-                                .replace(hour=hour, minute=minute)
-                                .isoformat()
-                            )
                         searches = {
                             "NEXT_BUS",
                             "FIRST_BUS",
@@ -538,7 +800,7 @@ class RTCNLPEngine:
                             "SLEEPER_BUS_AVAILABILITY",
                             "SEATER_BUS_AVAILABILITY",
                         }
-                        if searches.intersection(intents):
+                        if searches.intersection(intents) and not same_service:
                             slots.pop("service_id", None)
                             slots.pop("trip_id", None)
                         tick = perf_counter()
@@ -561,7 +823,65 @@ class RTCNLPEngine:
         except ValueError as exc:
             if not re.search(r"not that bus|not that one", text):
                 slots = deepcopy(previous)
+                operations = []
             state, clarify, answer = "CLARIFICATION_REQUIRED", True, str(exc)
+        existing_changes = {op.get("slot") for op in operations}
+        for name in (
+            "travel_date",
+            "time_window",
+            "after",
+            "before",
+            "arrival_after",
+            "arrival_before",
+        ):
+            current = (
+                slots.get("filters", {})
+                if name in ContextUpdateEngine.filter_slots
+                else slots
+            )
+            old = (
+                previous.get("filters", {})
+                if name in ContextUpdateEngine.filter_slots
+                else previous
+            )
+            if current.get(name) != old.get(name) and name not in existing_changes:
+                source: Literal[
+                    "EXPLICIT", "INHERITED", "SYSTEM_DEFAULT", "CANDIDATE"
+                ] = "EXPLICIT"
+                if (
+                    name == "travel_date"
+                    and not temporal.get("explicit_relative")
+                    and not re.search(r"\d{4}-\d{2}-\d{2}", text)
+                ):
+                    source = (
+                        "INHERITED" if previous.get("travel_date") else "SYSTEM_DEFAULT"
+                    )
+                slots.setdefault("slot_sources", {})[name] = source
+                slots.setdefault("slot_origins", {})[name] = (
+                    source
+                    if source != "INHERITED"
+                    else previous.get("slot_origins", {}).get(name, "SYSTEM_DEFAULT")
+                )
+                operations.append(
+                    ContextOperation(
+                        op="CLEAR_SLOT"
+                        if name not in current
+                        else "REPLACE_SLOT"
+                        if name in old
+                        else "SET_SLOT",
+                        slot=name,
+                        value=current.get(name),
+                        source=source,
+                    ).model_dump()
+                )
+        slots["confirmed_slots"] = [
+            k
+            for k in slots.get("confirmed_slots", [])
+            if k in slots and slots[k] is not None
+        ]
+        slots["last_intents"] = intents
+        slots["pending_clarification"] = state if clarify else None
+        slots["last_system_question"] = answer if clarify else None
         if persist:
             self.conversations.save(context, slots, now)
         elapsed = (perf_counter() - start) * 1000
@@ -575,8 +895,8 @@ class RTCNLPEngine:
                 if intents and prediction["status"] == "RULES"
                 else None,
                 "extracted_entities": entities,
-                "previous_context": previous,
-                "applied_context": deepcopy(slots),
+                "previous_context": public_context(previous),
+                "applied_context": public_context(deepcopy(slots)),
                 "database_function": "RTCEnquiryEngine.enquire" if results else None,
                 "queries": [r.get("query", {}) for r in results],
                 "matching_service_ids": list(
@@ -609,7 +929,7 @@ class RTCNLPEngine:
             language=language,
             intents=intents,
             entities=entities,
-            context=slots,
+            context=public_context(slots),
             state=state,
             requires_clarification=clarify,
             answer=answer,
@@ -619,4 +939,5 @@ class RTCNLPEngine:
             ],
             duration_ms=elapsed,
             debug=debug,
+            context_changes=operations,
         )

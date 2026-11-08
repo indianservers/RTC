@@ -334,7 +334,7 @@ def conversation_reset(request: NLPRequest):
     with Session(engine) as session, session.begin():
         return {
             "data": EnglishInferenceService(session).reset_session(
-                request.session_id or ""
+                request.session_id or "", request.owner_token
             )
         }
 
@@ -440,3 +440,74 @@ def nlp_health():
                 "offline_certification": "OS_ISOLATION_UNVERIFIED",
             }
         }
+
+
+from .nlp.session_access import SessionAccessError, check_owner, public_context
+
+
+@app.exception_handler(SessionAccessError)
+async def session_access_error(request, exc):
+    return JSONResponse(
+        status_code=403,
+        content={
+            "error": {
+                "code": "SESSION_ACCESS_DENIED",
+                "message": "Session access denied.",
+            }
+        },
+    )
+
+
+@app.get("/api/v1/conversation/{session_id}/context")
+def get_conversation_context(
+    session_id: str, authorization: Annotated[str | None, Header()] = None
+):
+    from .catalog import Context
+
+    with Session(engine) as session:
+        row = session.scalar(select(Context).where(Context.session_id == session_id))
+        if not row or not row.values.get("_owner_hash"):
+            raise HTTPException(404, "Context unavailable")
+        token = (authorization or "").removeprefix("Bearer ")
+        check_owner(row.values, token)
+        expiry = row.values.get("expires_at")
+        if expiry and datetime.fromisoformat(expiry) <= datetime.now(UTC):
+            raise HTTPException(410, "Session expired")
+        return {"data": public_context(row.values)}
+
+
+# Journey planning shares the existing database, timetable repository and filters.
+from .journey import JourneyConstraints, JourneyPlanner, JourneyResults, RecoveryRequest
+
+
+@app.post("/api/v1/journeys/search", response_model=JourneyResults)
+def journey_search(request: JourneyConstraints):
+    with Session(engine) as session:
+        try:
+            return JourneyPlanner(session).search(request)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+
+@app.post("/api/v1/journeys/compare", response_model=JourneyResults)
+def journey_compare(request: JourneyConstraints):
+    # Recompute from local records rather than trusting submitted itinerary facts.
+    return journey_search(request)
+
+
+@app.post("/api/v1/journeys/replan", response_model=JourneyResults)
+def journey_replan(request: JourneyConstraints):
+    with Session(engine) as session:
+        try:
+            return JourneyPlanner(session).replan_journey(request)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+
+@app.post("/api/v1/journeys/missed-bus", response_model=JourneyResults)
+def journey_missed_bus(request: RecoveryRequest):
+    with Session(engine) as session:
+        try:
+            return JourneyPlanner(session).find_alternatives_after_missed_bus(request)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc

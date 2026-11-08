@@ -1,0 +1,35 @@
+{
+  "runs": 100,
+  "scenario": "same active enquiry with persisted in-transaction state, fictional 100-service fixture",
+  "hardware": "Intel64 Family 6 Model 151 Stepping 5, GenuineIntel",
+  "memory_rss_bytes": 84066304,
+  "cpu_percent_one_core": 99.81452847713213,
+  "network_guard": "Python socket audit only",
+  "metrics": {
+    "total_ms": {
+      "samples": 100,
+      "p50_ms": 22.166399999605346,
+      "p95_ms": 29.304700000466255,
+      "p99_ms": 50.39119999946706
+    },
+    "intent_inference_ms": {
+      "samples": 100,
+      "p50_ms": 1.8738000003395427,
+      "p95_ms": 3.22150000010879,
+      "p99_ms": 5.515400000149384
+    },
+    "context_update_ms": {
+      "samples": 100,
+      "p50_ms": 0.25994999987233314,
+      "p95_ms": 0.4306999999243999,
+      "p99_ms": 0.4488000004130299
+    },
+    "database_lookup_ms": {
+      "samples": 100,
+      "p50_ms": 14.81679999960761,
+      "p95_ms": 20.60220000021218,
+      "p99_ms": 23.512900000241643
+    }
+  },
+  "limitation": "Context stage includes station resolution; memory is process RSS, not model-specific peak. This is a happy-path microbenchmark, not passenger accuracy or concurrent-load certification."
+}

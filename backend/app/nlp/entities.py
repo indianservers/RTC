@@ -111,9 +111,32 @@ class RTCEntityExtractor:
         )
         if maximum:
             filters["max_fare"] = maximum[1]
-        passengers = re.search(r"\b(\d+)\s+(?:seats?|passengers?|people)\b", text)
-        if passengers:
-            values["passengers"] = int(passengers[1])
+        numbers = {
+            "one": 1,
+            "two": 2,
+            "three": 3,
+            "four": 4,
+            "five": 5,
+            "six": 6,
+            "seven": 7,
+            "eight": 8,
+            "nine": 9,
+            "ten": 10,
+        }
+        counts = []
+        for match in re.finditer(
+            r"\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\s+(?:seats?|passengers?|people)\b",
+            text,
+        ):
+            if re.search(r"\bnot\s*$", text[: match.start()]):
+                continue
+            counts.append(int(match[1]) if match[1].isdigit() else numbers[match[1]])
+        if counts:
+            if len(set(counts)) != 1 or not 1 <= counts[0] <= 100:
+                raise ValueError(
+                    "How many passengers, from 1 to 100, should I search for?"
+                )
+            values["passengers"] = counts[0]
         service = re.search(r"\bservice\s+(?:number\s+)?([a-z0-9-]+)", text)
         if service:
             values["service_number"] = service[1]

@@ -1,0 +1,341 @@
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 27%]
+........FFFFFFFFFFFFFFFFFFFF............................................ [ 36%]
+........................................................................ [ 45%]
+........................................................................ [ 54%]
+........................................................................ [ 63%]
+........................................................................ [ 72%]
+.............................................FFFFFFFFFFFFFFFFFFFF....... [ 81%]
+........................................................................ [ 90%]
+........................................................................ [ 99%]
+....                                                                     [100%]
+================================== FAILURES ===================================
+__________________ test_300_composed_conversations[plan3-0] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '74cbc592-87b...-6a398ddfcbd5' == '9353c344-798...-2782700d1ca0'
+E     
+E     - 9353c344-7981-42b5-ab91-2782700d1ca0
+E     + 74cbc592-87b5-4f98-8e88-6a398ddfcbd5
+__________________ test_300_composed_conversations[plan3-1] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '8bc62846-09d...-4e48b58ff967' == '805dd35b-350...-2e64a81587d4'
+E     
+E     - 805dd35b-350e-4900-9708-2e64a81587d4
+E     + 8bc62846-09dc-4912-aced-4e48b58ff967
+__________________ test_300_composed_conversations[plan3-2] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'e7ec3cab-6bd...-7ee4324af600' == 'ecfc533a-0d5...-b4c460049d33'
+E     
+E     - ecfc533a-0d5c-4296-923d-b4c460049d33
+E     + e7ec3cab-6bd9-4cc7-969d-7ee4324af600
+__________________ test_300_composed_conversations[plan3-3] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '259487d0-380...-2352733ab35c' == 'd35817e0-bd4...-4481eac4dbb2'
+E     
+E     - d35817e0-bd46-47ee-8db0-4481eac4dbb2
+E     + 259487d0-3801-4395-ae1d-2352733ab35c
+__________________ test_300_composed_conversations[plan3-4] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'a95ee0c5-fe8...-fa81b05e91a2' == 'e5e43157-a6f...-3d8f16bfbd5f'
+E     
+E     - e5e43157-a6f4-4c79-87df-3d8f16bfbd5f
+E     + a95ee0c5-fe8e-4299-bc49-fa81b05e91a2
+__________________ test_300_composed_conversations[plan3-5] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '32b1e29a-f87...-984067b9f4f4' == '6ba8b333-119...-a2f6a38a9caf'
+E     
+E     - 6ba8b333-119e-4152-b566-a2f6a38a9caf
+E     + 32b1e29a-f879-481f-a1ad-984067b9f4f4
+__________________ test_300_composed_conversations[plan3-6] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'efe65866-98c...-b8de11dcdff8' == '5817b4a0-53b...-def76a42bda5'
+E     
+E     - 5817b4a0-53b5-46c6-9d1e-def76a42bda5
+E     + efe65866-98c8-40ac-82d3-b8de11dcdff8
+__________________ test_300_composed_conversations[plan3-7] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'dc65da6c-af4...-3cc7f55ac48f' == '7687b468-469...-338c87c7fa2d'
+E     
+E     - 7687b468-469f-4dbf-99ba-338c87c7fa2d
+E     + dc65da6c-af49-46da-a0c6-3cc7f55ac48f
+__________________ test_300_composed_conversations[plan3-8] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '2ba49790-7f3...-ca04e1888766' == 'fb253bf7-2e1...-02ad17e4d89e'
+E     
+E     - fb253bf7-2e10-4373-a057-02ad17e4d89e
+E     + 2ba49790-7f38-49e5-9352-ca04e1888766
+__________________ test_300_composed_conversations[plan3-9] ___________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '56f28021-2d0...-5c37961a6d90' == '78a4d0cd-4c7...-e591544a3601'
+E     
+E     - 78a4d0cd-4c74-4ea2-89f9-e591544a3601
+E     + 56f28021-2d0b-44ba-b0cd-5c37961a6d90
+__________________ test_300_composed_conversations[plan3-10] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '4c636280-63c...-3649cfb66b7e' == '2f327d37-290...-c1ac75bf97de'
+E     
+E     - 2f327d37-290a-4b4b-bfc9-c1ac75bf97de
+E     + 4c636280-63c2-4868-8822-3649cfb66b7e
+__________________ test_300_composed_conversations[plan3-11] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '462b7910-dbf...-0fec3b454974' == '240efb95-d7a...-4a15b7b07788'
+E     
+E     - 240efb95-d7a0-413a-a257-4a15b7b07788
+E     + 462b7910-dbff-4092-9cb6-0fec3b454974
+__________________ test_300_composed_conversations[plan3-12] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'acaf9c28-799...-0d51c969d1f1' == 'd2630f3d-3a6...-38f656e64152'
+E     
+E     - d2630f3d-3a66-413f-bb17-38f656e64152
+E     + acaf9c28-799e-4901-8b59-0d51c969d1f1
+__________________ test_300_composed_conversations[plan3-13] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'b41243a4-9e0...-e265685d2871' == '0f526f7f-d2a...-d05d3a8b6c2e'
+E     
+E     - 0f526f7f-d2af-4e80-9549-d05d3a8b6c2e
+E     + b41243a4-9e0a-43e1-83e4-e265685d2871
+__________________ test_300_composed_conversations[plan3-14] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'ccf49ff3-f4f...-531cbb1ae95e' == 'c5788117-8b7...-4ec6f4744fb3'
+E     
+E     - c5788117-8b7f-4054-8286-4ec6f4744fb3
+E     + ccf49ff3-f4f1-45f5-9ad1-531cbb1ae95e
+__________________ test_300_composed_conversations[plan3-15] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'b3766210-f5b...-eb0181dde5cb' == '580e1f31-ab0...-96b73fea0bc8'
+E     
+E     - 580e1f31-ab03-45ab-96f1-96b73fea0bc8
+E     + b3766210-f5b9-4d95-b42c-eb0181dde5cb
+__________________ test_300_composed_conversations[plan3-16] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '9505eaf3-086...-0f3dd075e980' == '85fc1c82-5ad...-36684e28c794'
+E     
+E     - 85fc1c82-5adc-46d0-bfcb-36684e28c794
+E     + 9505eaf3-086a-4f39-a2eb-0f3dd075e980
+__________________ test_300_composed_conversations[plan3-17] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'ae6dd0ed-2f2...-70b8888eff92' == 'e039ac27-e1f...-53bf71700ed1'
+E     
+E     - e039ac27-e1f9-4abe-a8ac-53bf71700ed1
+E     + ae6dd0ed-2f2f-4dd2-8f98-70b8888eff92
+__________________ test_300_composed_conversations[plan3-18] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '7c8bec25-b6d...-1ccb5d33088c' == '65b3c6eb-694...-3ed52fd1a495'
+E     
+E     - 65b3c6eb-6940-4c10-89e7-3ed52fd1a495
+E     + 7c8bec25-b6df-4049-a327-1ccb5d33088c
+__________________ test_300_composed_conversations[plan3-19] __________________
+backend\tests\test_phase2_final.py:78: in test_300_composed_conversations
+    assert answer.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '0e0158e9-0c8...-9a03cd251f4a' == '218eb1c8-672...-7a8349f98cb2'
+E     
+E     - 218eb1c8-6728-476f-a175-7a8349f98cb2
+E     + 0e0158e9-0c8f-460b-8f94-9a03cd251f4a
+__________________ test_240_database_dialogues[selection-0] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'ea00c45c-ec7...-e8030cc43471' == '55f7f581-67a...-7877e08da692'
+E     
+E     - 55f7f581-67ac-42c8-8f52-7877e08da692
+E     + ea00c45c-ec74-4e6b-b906-e8030cc43471
+__________________ test_240_database_dialogues[selection-1] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '2fa95b73-7f5...-918e11a68538' == '79a382db-1f1...-bb37a8ecb0bf'
+E     
+E     - 79a382db-1f1d-473d-a65e-bb37a8ecb0bf
+E     + 2fa95b73-7f57-4097-828d-918e11a68538
+__________________ test_240_database_dialogues[selection-2] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '3d997807-8d0...-0a893cb4f804' == '70241c6d-49a...-f48a6f937a18'
+E     
+E     - 70241c6d-49a4-4c81-928a-f48a6f937a18
+E     + 3d997807-8d02-4e8b-8b31-0a893cb4f804
+__________________ test_240_database_dialogues[selection-3] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'e3982127-579...-a98e2d931bae' == '506c606e-350...-185658481fa5'
+E     
+E     - 506c606e-350b-483e-bd48-185658481fa5
+E     + e3982127-579d-4a05-984e-a98e2d931bae
+__________________ test_240_database_dialogues[selection-4] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '52396ec6-a8e...-a860a4580fda' == 'f3eaf00a-c8a...-331128a7c9d9'
+E     
+E     - f3eaf00a-c8a8-448e-a217-331128a7c9d9
+E     + 52396ec6-a8ed-4ecd-889f-a860a4580fda
+__________________ test_240_database_dialogues[selection-5] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'd6df38c9-ffd...-7c6c391f95d1' == '3f8c099f-ee5...-6cef2ada4bf1'
+E     
+E     - 3f8c099f-ee55-4473-a652-6cef2ada4bf1
+E     + d6df38c9-ffd7-4c62-9294-7c6c391f95d1
+__________________ test_240_database_dialogues[selection-6] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '159b455f-996...-2a5bf60a0972' == '8666c9eb-99f...-e9f4ac2352d0'
+E     
+E     - 8666c9eb-99f6-40bc-a4ad-e9f4ac2352d0
+E     + 159b455f-996b-4ebb-b7b8-2a5bf60a0972
+__________________ test_240_database_dialogues[selection-7] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '644cc442-090...-e691cbf8e756' == '7713c368-3f8...-199636f7874a'
+E     
+E     - 7713c368-3f88-452a-a53c-199636f7874a
+E     + 644cc442-0901-4c3e-916f-e691cbf8e756
+__________________ test_240_database_dialogues[selection-8] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '18bdd9af-042...-65249a18877b' == '306ff5e0-847...-acd4588da7d5'
+E     
+E     - 306ff5e0-847d-4344-81c8-acd4588da7d5
+E     + 18bdd9af-0428-4fe7-96f3-65249a18877b
+__________________ test_240_database_dialogues[selection-9] ___________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '3c64ca85-e81...-afb1674b90d9' == '81da803f-cd9...-e5cd180c2faf'
+E     
+E     - 81da803f-cd94-48e7-b78b-e5cd180c2faf
+E     + 3c64ca85-e81a-4ea1-a764-afb1674b90d9
+__________________ test_240_database_dialogues[selection-10] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '6564ee70-2be...-c23d0f443d31' == 'aa039326-7fe...-990b1b93d3c4'
+E     
+E     - aa039326-7fe9-4f65-b3f8-990b1b93d3c4
+E     + 6564ee70-2be2-40f7-83ea-c23d0f443d31
+__________________ test_240_database_dialogues[selection-11] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'c5f78354-688...-0ae010ab5fc6' == 'c275fdd2-cbb...-1b7fa62d1e90'
+E     
+E     - c275fdd2-cbba-4059-a6fe-1b7fa62d1e90
+E     + c5f78354-6885-43ac-8c65-0ae010ab5fc6
+__________________ test_240_database_dialogues[selection-12] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '166cdab5-d3b...-d81bde757280' == '3c3178b9-c39...-49dc5d28e630'
+E     
+E     - 3c3178b9-c39e-4a05-8a48-49dc5d28e630
+E     + 166cdab5-d3b8-4ca7-92e7-d81bde757280
+__________________ test_240_database_dialogues[selection-13] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'c6a2eea2-c5d...-b752935baa79' == '3ae7ec98-df0...-c5e795c9556f'
+E     
+E     - 3ae7ec98-df04-44c9-8c92-c5e795c9556f
+E     + c6a2eea2-c5dd-4075-9d46-b752935baa79
+__________________ test_240_database_dialogues[selection-14] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '651d4dd9-b75...-3d622cb793ec' == '11c233c4-7d5...-f6569f85c075'
+E     
+E     - 11c233c4-7d51-4014-90cf-f6569f85c075
+E     + 651d4dd9-b759-405f-a6ea-3d622cb793ec
+__________________ test_240_database_dialogues[selection-15] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'e50ed838-5dc...-8afa032c646b' == '4769e9f8-550...-69794ca527fb'
+E     
+E     - 4769e9f8-5506-47f3-bba6-69794ca527fb
+E     + e50ed838-5dca-46e5-beef-8afa032c646b
+__________________ test_240_database_dialogues[selection-16] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '9f65c982-80d...-9c794e163d75' == '2f444cef-294...-218b437e0816'
+E     
+E     - 2f444cef-2944-4f7d-bceb-218b437e0816
+E     + 9f65c982-80d5-4f45-9d94-9c794e163d75
+__________________ test_240_database_dialogues[selection-17] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'fe9f54eb-746...-2ed58559dcd7' == '8799aae2-7a1...-0740acb9b16d'
+E     
+E     - 8799aae2-7a1a-46d5-b477-0740acb9b16d
+E     + fe9f54eb-7461-4e5b-a09f-2ed58559dcd7
+__________________ test_240_database_dialogues[selection-18] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert '18830fa3-ff3...-36cf3aaa5edf' == '8f63aca2-b8c...-655bec55b212'
+E     
+E     - 8f63aca2-b8c5-4c1d-9883-655bec55b212
+E     + 18830fa3-ff39-4e1f-bc7e-36cf3aaa5edf
+__________________ test_240_database_dialogues[selection-19] __________________
+backend\tests\test_text_dialogue.py:156: in test_240_database_dialogues
+    assert r.context["service_id"] == chosen["service_id"]
+E   AssertionError: assert 'fc933d1a-d80...-24e6c985a943' == 'da8ff42a-adf...-ee097a713383'
+E     
+E     - da8ff42a-adf2-4dbb-80b3-ee097a713383
+E     + fc933d1a-d807-4086-b98e-24e6c985a943
+============================== warnings summary ===============================
+..\..\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-0]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-1]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-2]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-3]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-4]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-5]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-6]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-7]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-8]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-9]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-10]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-11]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-12]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-13]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-14]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-15]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-16]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-17]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-18]
+FAILED backend/tests/test_phase2_final.py::test_300_composed_conversations[plan3-19]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-0]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-1]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-2]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-3]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-4]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-5]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-6]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-7]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-8]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-9]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-10]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-11]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-12]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-13]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-14]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-15]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-16]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-17]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-18]
+FAILED backend/tests/test_text_dialogue.py::test_240_database_dialogues[selection-19]
+40 failed, 756 passed, 1 warning in 72.41s (0:01:12)

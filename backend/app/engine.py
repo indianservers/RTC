@@ -32,6 +32,8 @@ class SearchFilters(BaseModel):
     max_duration_minutes: int | None = Field(default=None, gt=0)
     after: AwareDatetime | None = None
     before: AwareDatetime | None = None
+    arrival_after: AwareDatetime | None = None
+    arrival_before: AwareDatetime | None = None
 
     @model_validator(mode="after")
     def consistent(self):
@@ -43,6 +45,12 @@ class SearchFilters(BaseModel):
             raise ValueError("Invalid fare window")
         if self.after and self.before and self.after >= self.before:
             raise ValueError("Invalid time window")
+        if (
+            self.arrival_after
+            and self.arrival_before
+            and self.arrival_after >= self.arrival_before
+        ):
+            raise ValueError("Invalid arrival time window")
         return self
 
 
@@ -82,6 +90,8 @@ class RTCEnquiryEngine:
         self.session = session
         self.enquiry = Enquiry(session)
         self.resolver = StationResolver(session)
+        self.vehicle_cache = None
+        self.vehicle_type_cache = None
 
     def enquire(self, request: EnquiryRequest | None = None, **values):
         request = request or EnquiryRequest.model_validate(values)
@@ -319,15 +329,27 @@ class RTCEnquiryEngine:
             service = self.session.get(Service, row["service_id"])
             if service.category_id in f.exclude_categories:
                 continue
-            vehicle = self.session.scalar(
-                select(Vehicle)
-                .join(ServiceVehicle, ServiceVehicle.vehicle_id == Vehicle.id)
-                .where(
-                    ServiceVehicle.service_id == service.id,
-                    ServiceVehicle.active.is_(True),
+            vehicle = (
+                self.vehicle_cache.get(service.id)
+                if self.vehicle_cache is not None
+                else self.session.scalar(
+                    select(Vehicle)
+                    .join(ServiceVehicle, ServiceVehicle.vehicle_id == Vehicle.id)
+                    .where(
+                        ServiceVehicle.service_id == service.id,
+                        ServiceVehicle.active.is_(True),
+                    )
                 )
             )
-            kind = self.session.get(VehicleType, vehicle.type_id) if vehicle else None
+            kind = (
+                (
+                    self.vehicle_type_cache.get(vehicle.type_id)
+                    if self.vehicle_type_cache is not None
+                    else self.session.get(VehicleType, vehicle.type_id)
+                )
+                if vehicle
+                else None
+            )
             desired = {
                 "ac": True
                 if intent == "AC_BUS_AVAILABILITY"
@@ -356,6 +378,14 @@ class RTCEnquiryEngine:
             if (
                 f.reservation is not None
                 and service.reservation_supported != f.reservation
+            ):
+                continue
+            if f.arrival_after and (
+                row.get("arrival") is None or row["arrival"] < f.arrival_after
+            ):
+                continue
+            if f.arrival_before and (
+                row.get("arrival") is None or row["arrival"] >= f.arrival_before
             ):
                 continue
             if f.after and row["departure"] < f.after:
