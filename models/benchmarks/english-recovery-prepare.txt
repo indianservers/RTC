@@ -1,0 +1,10 @@
+{
+  "counts": {
+    "train": 2209,
+    "validation": 240,
+    "synthetic_challenge": 240
+  },
+  "minimum_train_examples": 34,
+  "under_30": {},
+  "excluded": 2
+}

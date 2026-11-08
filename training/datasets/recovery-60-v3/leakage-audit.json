@@ -1,0 +1,19 @@
+{
+  "cutoff": 0.85,
+  "excluded_training": [
+    {
+      "id": "recovery-BUS_AMENITIES-23",
+      "intent": "BUS_AMENITIES",
+      "reason": "duplicate_training_text"
+    },
+    {
+      "id": "recovery-CONCESSION_ENQUIRY-5",
+      "intent": "CONCESSION_ENQUIRY",
+      "reason": "duplicate_training_text"
+    }
+  ],
+  "heldout_questions_not_used_as_training": true,
+  "family_policy": "Preserve prior families; newly authored sentence families and all placeholder variants remain train-only",
+  "semantic_independence": "Not established; synthetic sets share taxonomy concepts and authorship",
+  "validation_challenge_relation": "Inherited frozen split family/exact checks; no human independence claimed"
+}

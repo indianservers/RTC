@@ -1,0 +1,228 @@
+{
+  "correct": 11,
+  "count": 12,
+  "records": [
+    {
+      "text": "What is the ticket fare for Demo electric?",
+      "expected": "GET_FARE",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "GET_FARE",
+      "decision": {
+        "status": "OUT_OF_SCOPE",
+        "intents": [],
+        "decision_margin": 0.5409670324287277,
+        "domain_margin": 0.5975715095857517,
+        "top_two_gap": 0.10550770849926017,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "What onboard amenities does Demo electric provide?",
+      "expected": "BUS_AMENITIES",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "BUS_AMENITIES",
+      "decision": {
+        "status": "OUT_OF_SCOPE",
+        "intents": [],
+        "decision_margin": 0.46653202619247736,
+        "domain_margin": 0.8797869620221707,
+        "top_two_gap": 0.24154793108497274,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "How does Demo electric differ from another bus category?",
+      "expected": "SERVICE_CATEGORY_COMPARISON",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "ELECTRIC_BUS_AVAILABILITY",
+      "decision": {
+        "status": "CLARIFICATION_REQUIRED",
+        "intents": [],
+        "decision_margin": 0.2943995732788036,
+        "domain_margin": 1.1202126556415557,
+        "top_two_gap": 0.015684822617221927,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": false
+    },
+    {
+      "text": "What is the ticket fare for Demo express?",
+      "expected": "GET_FARE",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "GET_FARE",
+      "decision": {
+        "status": "OUT_OF_SCOPE",
+        "intents": [],
+        "decision_margin": 0.31998145421431645,
+        "domain_margin": 0.681168292467317,
+        "top_two_gap": 0.8383401553860881,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "What onboard amenities does Demo express provide?",
+      "expected": "BUS_AMENITIES",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "BUS_AMENITIES",
+      "decision": {
+        "status": "OUT_OF_SCOPE",
+        "intents": [],
+        "decision_margin": 0.4890337856636501,
+        "domain_margin": 0.9438890732498953,
+        "top_two_gap": 0.9493309097459169,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "How does Demo express differ from another bus category?",
+      "expected": "SERVICE_CATEGORY_COMPARISON",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "SERVICE_CATEGORY_COMPARISON",
+      "decision": {
+        "status": "KNOWN",
+        "intents": [
+          "SERVICE_CATEGORY_COMPARISON"
+        ],
+        "decision_margin": 0.5930256430614187,
+        "domain_margin": 1.1847717845971613,
+        "top_two_gap": 1.2066076477527679,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "What is the ticket fare for Demo seater?",
+      "expected": "GET_FARE",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "GET_FARE",
+      "decision": {
+        "status": "CLARIFICATION_REQUIRED",
+        "intents": [],
+        "decision_margin": 0.4829345884137264,
+        "domain_margin": 1.1409781492833178,
+        "top_two_gap": 0.30483922788517304,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "What onboard amenities does Demo seater provide?",
+      "expected": "BUS_AMENITIES",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "BUS_AMENITIES",
+      "decision": {
+        "status": "KNOWN",
+        "intents": [
+          "BUS_AMENITIES"
+        ],
+        "decision_margin": 0.5981222020229181,
+        "domain_margin": 1.1696817908820258,
+        "top_two_gap": 0.7640866039106889,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "How does Demo seater differ from another bus category?",
+      "expected": "SERVICE_CATEGORY_COMPARISON",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "SERVICE_CATEGORY_COMPARISON",
+      "decision": {
+        "status": "CLARIFICATION_REQUIRED",
+        "intents": [],
+        "decision_margin": 0.3448533747033802,
+        "domain_margin": 1.435672044585555,
+        "top_two_gap": 0.3504754984865788,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "What is the ticket fare for Demo sleeper?",
+      "expected": "GET_FARE",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "GET_FARE",
+      "decision": {
+        "status": "OUT_OF_SCOPE",
+        "intents": [],
+        "decision_margin": 0.4640249248396682,
+        "domain_margin": 0.9350331652907831,
+        "top_two_gap": 0.19453559423403866,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "What onboard amenities does Demo sleeper provide?",
+      "expected": "BUS_AMENITIES",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "BUS_AMENITIES",
+      "decision": {
+        "status": "CLARIFICATION_REQUIRED",
+        "intents": [],
+        "decision_margin": 0.5130369666093312,
+        "domain_margin": 1.0471706259072522,
+        "top_two_gap": 0.3727220358854073,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    },
+    {
+      "text": "How does Demo sleeper differ from another bus category?",
+      "expected": "SERVICE_CATEGORY_COMPARISON",
+      "source": "DATABASE_CATEGORY_SNAPSHOT",
+      "human_reviewed": false,
+      "role": "POST_TRAINING_PROBE_NOT_TRAINING_OR_TUNING",
+      "predicted": "SERVICE_CATEGORY_COMPARISON",
+      "decision": {
+        "status": "KNOWN",
+        "intents": [
+          "SERVICE_CATEGORY_COMPARISON"
+        ],
+        "decision_margin": 0.34694957906575197,
+        "domain_margin": 1.300739163864748,
+        "top_two_gap": 0.4587367665971721,
+        "threshold_source": "validation",
+        "probability": null
+      },
+      "correct": true
+    }
+  ]
+}

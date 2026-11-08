@@ -17933,6 +17933,131 @@
       "languages": [
         "en"
       ]
+    },
+    {
+      "version": "recovery-60-v3",
+      "model_type": "english_intent_svm",
+      "local_path": "models/english/nlp/recovery-60-v3/svm.joblib",
+      "sha256": "5dbce74eb3915d38be620455700a60fc0fd5d0d6004eed25d662d7a440d96f86",
+      "label_map_path": "models/english/nlp/recovery-60-v3/label_map.json",
+      "deployment_status": "CANDIDATE",
+      "approved": false,
+      "independent_evaluation": false,
+      "human_reviewed": false,
+      "preprocessing": "NFKC_CASEFOLD_COLLAPSE_WHITESPACE_REQUIRED",
+      "training_manifest_sha256": "4bcb265adac4db8fed46c8c67f9f74c914a57d393062f75d5abc61b49235e0b1",
+      "configuration": {
+        "C": 0.25,
+        "char_weight": 2,
+        "validation_macro_f1": 0.8992857142857141,
+        "validation_accuracy": 0.9
+      },
+      "threshold_source": "validation",
+      "decision_threshold": -1,
+      "selective_thresholds": {
+        "domain": 1,
+        "margin": -1,
+        "gap": 0.4
+      },
+      "calibration_feasible": true,
+      "training_seconds": 3.426636600001075,
+      "name": "English recovery svm v3",
+      "framework": "scikit-learn",
+      "languages": [
+        "en"
+      ],
+      "evaluation_report": "evaluation/english-recovery-v3/comparison.json",
+      "test_metrics": null,
+      "synthetic_challenge_metrics": {
+        "accuracy": 0.9277777777777778,
+        "accepted_id_count": 131,
+        "accepted_id_precision": 0.9770992366412213,
+        "id_rejection_rate": 0.2722222222222222,
+        "oos_false_acceptance_rate": 0.0,
+        "macro_f1": 0.9266269841269842
+      },
+      "promotion_eligible": false,
+      "download_status": "LOCAL_TRAINED",
+      "load_verification_status": "VERIFIED_LOCAL_SOCKET_DENIED",
+      "offline_readiness": "PYTHON_SOCKET_DNS_GUARD_VERIFIED_OS_ISOLATION_UNVERIFIED",
+      "validation_metrics": {
+        "accuracy": 0.9,
+        "macro_f1": 0.8992857142857141,
+        "count": 240,
+        "human_reviewed": false
+      },
+      "training_counts": {
+        "in_scope": 2091,
+        "out_of_scope": 118,
+        "minimum_per_intent": 34
+      },
+      "human_test_metrics": null
+    },
+    {
+      "version": "recovery-60-v3",
+      "model_type": "english_intent_textcnn",
+      "local_path": "models/english/nlp/recovery-60-v3/textcnn.keras",
+      "sha256": "3ed6dd57b93abf2a6528de8249acc9f6c9c598dcea07a50218dc3386f4bd389d",
+      "label_map_path": "models/english/nlp/recovery-60-v3/label_map.json",
+      "deployment_status": "CANDIDATE",
+      "approved": false,
+      "independent_evaluation": false,
+      "human_reviewed": false,
+      "preprocessing": "NFKC_CASEFOLD_COLLAPSE_WHITESPACE_REQUIRED",
+      "configuration": {
+        "embedding": 96,
+        "filters_per_kernel": 96,
+        "dropout": 0.4,
+        "sequence_length": 16,
+        "vocabulary_size": 1328,
+        "kernels": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "learning_rate": 0.001,
+        "class_weights": "None; actual per-intent counts differ by <=1"
+      },
+      "validation_macro_f1": 0.8954365079365079,
+      "training_seconds": 25.983241399997496,
+      "training_manifest_sha256": "4bcb265adac4db8fed46c8c67f9f74c914a57d393062f75d5abc61b49235e0b1",
+      "threshold_source": "validation",
+      "test_access": "No challenge questions opened during fitting/selection",
+      "name": "English recovery textcnn v3",
+      "framework": "TensorFlow",
+      "languages": [
+        "en"
+      ],
+      "evaluation_report": "evaluation/english-recovery-v3/comparison.json",
+      "test_metrics": null,
+      "synthetic_challenge_metrics": {
+        "accuracy": 0.85,
+        "accepted_id_count": 0,
+        "accepted_id_precision": null,
+        "id_rejection_rate": 1.0,
+        "oos_false_acceptance_rate": 0.0,
+        "macro_f1": 0.8478571428571428
+      },
+      "promotion_eligible": false,
+      "calibration_feasible": false,
+      "rejection_policy": "REJECT_ALL_CALIBRATION_FAILED",
+      "decision_threshold": null,
+      "download_status": "LOCAL_TRAINED",
+      "load_verification_status": "VERIFIED_LOCAL_SOCKET_DENIED",
+      "offline_readiness": "PYTHON_SOCKET_DNS_GUARD_VERIFIED_OS_ISOLATION_UNVERIFIED",
+      "validation_metrics": {
+        "accuracy": 0.9,
+        "macro_f1": 0.8954365079365079,
+        "count": 240,
+        "human_reviewed": false
+      },
+      "training_counts": {
+        "in_scope": 2091,
+        "out_of_scope": 0,
+        "minimum_per_intent": 34
+      },
+      "human_test_metrics": null
     }
   ]
 }

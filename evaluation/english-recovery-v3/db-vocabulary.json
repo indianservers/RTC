@@ -1,0 +1,42 @@
+{
+  "stations": [
+    "Anantapur",
+    "Annavaram",
+    "Bhimavaram",
+    "Eluru",
+    "Guntur",
+    "Hyderabad",
+    "Kadapa",
+    "Kakinada",
+    "Kavali",
+    "Kurnool",
+    "Machilipatnam",
+    "Nellore",
+    "Ongole",
+    "Rajahmundry",
+    "Srikakulam",
+    "Srisailam",
+    "Tirumala",
+    "Tirupati",
+    "Vijayawada",
+    "Visakhapatnam",
+    "Vizianagaram"
+  ],
+  "aliases": [
+    "Bezawada",
+    "Tirupathi",
+    "Vizag",
+    "తిరుపతి",
+    "తిరుమల",
+    "బెజవాడ",
+    "విజయవాడ",
+    "విశాఖపట్నం",
+    "వైజాగ్"
+  ],
+  "categories": [
+    "Demo electric",
+    "Demo express",
+    "Demo seater",
+    "Demo sleeper"
+  ]
+}

@@ -1,0 +1,12 @@
+B023 Function definition does not bind loop variable `owner`
+  --> scripts\verify_recovery_conversation.py:60:60
+   |
+58 |                     def ask(text):
+59 |                         nonlocal state
+60 |                         request={'text':text,'owner_token':owner,'language':'en','station_context':'Vijayawada'}
+   |                                                            ^^^^^
+61 |                         if state:request['session_id']=state['session_id']
+62 |                         response=client.post('/api/v1/conversation/message',json=request)
+   |
+
+Found 11 errors (10 fixed, 1 remaining).

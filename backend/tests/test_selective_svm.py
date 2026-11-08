@@ -156,9 +156,29 @@ def test_frozen_checkpoint_and_metrics_denominators():
         hashlib.sha256((folder / "svm.joblib").read_bytes()).hexdigest()
         == descriptor["sha256"]
     )
+    # New unapproved candidates may be appended without changing the frozen entries.
+    preservation = json.loads(
+        (ROOT / "evaluation/english-recovery-v3/registry-preservation.json").read_text(
+            encoding="utf-8"
+        )
+    )
     assert (
-        hashlib.sha256((ROOT / "config/model_registry.yaml").read_bytes()).hexdigest()
+        preservation["previous_registry_sha256"]
         == descriptor["registry_sha256_at_freeze"]
+    )
+    current = json.loads(
+        (ROOT / "config/model_registry.yaml").read_text(encoding="utf-8")
+    )["models"]
+    for entry in preservation["unchanged_original_entries"]:
+        encoded = json.dumps(
+            current[entry["index"]], sort_keys=True, separators=(",", ":")
+        ).encode()
+        assert hashlib.sha256(encoded).hexdigest() == entry["sha256"]
+    assert all(
+        m.get("deployment_status") == "CANDIDATE"
+        and not m.get("approved")
+        and not m.get("independent_evaluation")
+        for m in current[len(preservation["unchanged_original_entries"]) :]
     )
     report = json.loads(
         (ROOT / "evaluation/english-svm-v2/results.json").read_text(encoding="utf-8")

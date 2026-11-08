@@ -1,0 +1,200 @@
+{
+  "scope": "PRIVATE_DB_SOCKET_DENIED_SHADOW_INTEGRATION_NOT_PRODUCTION_APPROVAL",
+  "models": {
+    "deterministic_rules": {
+      "steps": [
+        {
+          "case": "database_departure_search",
+          "passed": true
+        },
+        {
+          "case": "Second one.",
+          "passed": true
+        },
+        {
+          "case": "How much?",
+          "passed": true,
+          "expected_recorded_fare": "205.00",
+          "actual_fare": "205.00"
+        },
+        {
+          "case": "Same bus.",
+          "passed": true
+        },
+        {
+          "case": "What about tomorrow?",
+          "passed": true
+        },
+        {
+          "case": "No, Tirumala.",
+          "passed": true
+        },
+        {
+          "case": "shadow_paraphrase_next_bus",
+          "passed": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "candidate_fallback_calls": 2,
+      "fallback_was_exercised": true,
+      "context_resolution": "Shared actual conversation manager, not a forced single-label follow-up classifier"
+    },
+    "grouped_svm": {
+      "steps": [
+        {
+          "case": "database_departure_search",
+          "passed": true
+        },
+        {
+          "case": "Second one.",
+          "passed": true
+        },
+        {
+          "case": "How much?",
+          "passed": true,
+          "expected_recorded_fare": "205.00",
+          "actual_fare": "205.00"
+        },
+        {
+          "case": "Same bus.",
+          "passed": false
+        },
+        {
+          "case": "What about tomorrow?",
+          "passed": true
+        },
+        {
+          "case": "No, Tirumala.",
+          "passed": true
+        },
+        {
+          "case": "shadow_paraphrase_next_bus",
+          "passed": false
+        }
+      ],
+      "passed": 5,
+      "total": 7,
+      "candidate_fallback_calls": 2,
+      "fallback_was_exercised": true,
+      "context_resolution": "Shared actual conversation manager, not a forced single-label follow-up classifier"
+    },
+    "new_svm": {
+      "steps": [
+        {
+          "case": "database_departure_search",
+          "passed": true
+        },
+        {
+          "case": "Second one.",
+          "passed": true
+        },
+        {
+          "case": "How much?",
+          "passed": true,
+          "expected_recorded_fare": "205.00",
+          "actual_fare": "205.00"
+        },
+        {
+          "case": "Same bus.",
+          "passed": true
+        },
+        {
+          "case": "What about tomorrow?",
+          "passed": true
+        },
+        {
+          "case": "No, Tirumala.",
+          "passed": true
+        },
+        {
+          "case": "shadow_paraphrase_next_bus",
+          "passed": true
+        }
+      ],
+      "passed": 7,
+      "total": 7,
+      "candidate_fallback_calls": 2,
+      "fallback_was_exercised": true,
+      "context_resolution": "Shared actual conversation manager, not a forced single-label follow-up classifier"
+    },
+    "old_textcnn": {
+      "steps": [
+        {
+          "case": "database_departure_search",
+          "passed": true
+        },
+        {
+          "case": "Second one.",
+          "passed": true
+        },
+        {
+          "case": "How much?",
+          "passed": true,
+          "expected_recorded_fare": "205.00",
+          "actual_fare": "205.00"
+        },
+        {
+          "case": "Same bus.",
+          "passed": false
+        },
+        {
+          "case": "What about tomorrow?",
+          "passed": true
+        },
+        {
+          "case": "No, Tirumala.",
+          "passed": true
+        },
+        {
+          "case": "shadow_paraphrase_next_bus",
+          "passed": true
+        }
+      ],
+      "passed": 6,
+      "total": 7,
+      "candidate_fallback_calls": 2,
+      "fallback_was_exercised": true,
+      "context_resolution": "Shared actual conversation manager, not a forced single-label follow-up classifier"
+    },
+    "new_textcnn": {
+      "steps": [
+        {
+          "case": "database_departure_search",
+          "passed": true
+        },
+        {
+          "case": "Second one.",
+          "passed": true
+        },
+        {
+          "case": "How much?",
+          "passed": true,
+          "expected_recorded_fare": "205.00",
+          "actual_fare": "205.00"
+        },
+        {
+          "case": "Same bus.",
+          "passed": true
+        },
+        {
+          "case": "What about tomorrow?",
+          "passed": true
+        },
+        {
+          "case": "No, Tirumala.",
+          "passed": true
+        },
+        {
+          "case": "shadow_paraphrase_next_bus",
+          "passed": false
+        }
+      ],
+      "passed": 6,
+      "total": 7,
+      "candidate_fallback_calls": 2,
+      "fallback_was_exercised": true,
+      "context_resolution": "Shared actual conversation manager, not a forced single-label follow-up classifier"
+    }
+  }
+}

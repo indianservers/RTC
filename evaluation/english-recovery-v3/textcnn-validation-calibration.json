@@ -1,0 +1,5 @@
+{
+  "selected": null,
+  "score_kind": "UNCALIBRATED_SOFTMAX; thresholds are empirical validation operating points, not calibrated probabilities",
+  "independent_evidence": false
+}

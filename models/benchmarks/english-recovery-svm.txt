@@ -1,0 +1,28 @@
+{
+  "version": "recovery-60-v3",
+  "model_type": "english_intent_svm",
+  "local_path": "models/english/nlp/recovery-60-v3/svm.joblib",
+  "sha256": "5dbce74eb3915d38be620455700a60fc0fd5d0d6004eed25d662d7a440d96f86",
+  "label_map_path": "models/english/nlp/recovery-60-v3/label_map.json",
+  "deployment_status": "CANDIDATE",
+  "approved": false,
+  "independent_evaluation": false,
+  "human_reviewed": false,
+  "preprocessing": "NFKC_CASEFOLD_COLLAPSE_WHITESPACE_REQUIRED",
+  "training_manifest_sha256": "4bcb265adac4db8fed46c8c67f9f74c914a57d393062f75d5abc61b49235e0b1",
+  "configuration": {
+    "C": 0.25,
+    "char_weight": 2,
+    "validation_macro_f1": 0.8992857142857141,
+    "validation_accuracy": 0.9
+  },
+  "threshold_source": "validation",
+  "decision_threshold": -1,
+  "selective_thresholds": {
+    "domain": 1,
+    "margin": -1,
+    "gap": 0.4
+  },
+  "calibration_feasible": true,
+  "training_seconds": 3.426636600001075
+}

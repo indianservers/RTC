@@ -1,0 +1,16 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "packages": {
+    "numpy": "2.4.5",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "joblib": "1.6.0",
+    "psutil": "7.2.2"
+  },
+  "model_environment": "TensorFlow/Keras versions recorded separately from .venv-english",
+  "preprocessing": {
+    "runtime_pipeline": "LanguageNormalizer NFKC/casefold/whitespace before classifier",
+    "training": "same canonical normalization persisted in normalized_text",
+    "direct_candidate_api": "caller must apply documented normalization"
+  }
+}

@@ -1,0 +1,737 @@
+{
+  "source": "ACTUAL_LOCAL_FILES_AND_DATABASE",
+  "human_reviewed_independent_test_count": 0,
+  "eligible_counts": {
+    "synthetic_challenge": 67,
+    "train": 234,
+    "validation": 76
+  },
+  "per_intent": {
+    "ACCESSIBLE_BUS_AVAILABILITY": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BUSES_OPERATING_TODAY": 1
+      },
+      "definition": "Find departures meeting explicitly recorded accessibility requirements."
+    },
+    "AC_BUS_AVAILABILITY": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "SLEEPER_AVAILABILITY": 1
+      },
+      "definition": "Find services whose assigned vehicle or configuration explicitly supports air conditioning."
+    },
+    "ALIGHTING_POINT": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "DEPARTURES_BEFORE": 1
+      },
+      "definition": "Identify permitted drop-off locations or validate a requested alighting station on a selected service."
+    },
+    "ALTERNATIVE_ROUTES": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "DESTINATION_REACHABILITY": 1
+      },
+      "definition": "Find different feasible paths or transfer patterns for the same journey, relative to an optional selected route."
+    },
+    "ARRIVAL_TIME": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "LAST_BUS": 1
+      },
+      "definition": "Retrieve the scheduled arrival time for the selected service and stop, labelling any operational override separately."
+    },
+    "AVAILABLE_BUS_TYPES": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "ROUTE_STOPS": 1
+      },
+      "definition": "List the service classifications represented by eligible departures on the requested segment."
+    },
+    "BOARDING_POINT": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "LIVE_BUS_STATUS": 1
+      },
+      "definition": "Identify locations at which passengers may board the selected service or destination-bound journey."
+    },
+    "BOOKING_OPTIONS": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "GET_FARE": 1
+      },
+      "definition": "Describe locally recorded approved ticket booking channels and instructions without executing a purchase."
+    },
+    "BOOKING_STATUS": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.4,
+      "confusions": {},
+      "definition": "Read status of an existing booking only when an authorized local record is available; otherwise report unsupported or unavailable."
+    },
+    "BUSES_BETWEEN": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "DESTINATION_REACHABILITY": 1
+      },
+      "definition": "List scheduled services permitting boarding at the origin and later alighting at the destination."
+    },
+    "BUSES_OPERATING_TODAY": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "SERVICE_FREQUENCY": 1
+      },
+      "definition": "Check which services operate on the station-local current date using calendars and exceptions."
+    },
+    "BUS_AMENITIES": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BUS_CAPACITY": 1
+      },
+      "definition": "Report verified amenities of the selected assigned vehicle, retaining unknown feature states."
+    },
+    "BUS_ARRIVED_STATUS": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BOOKING_STATUS": 1
+      },
+      "definition": "Confirm arrival only from an authoritative actual-arrival event at the specified stop."
+    },
+    "BUS_AT_TIME": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "CHEAPEST_BUS": 1
+      },
+      "definition": "Find departures within a documented tolerance window around a specified clock time."
+    },
+    "BUS_CANCELLATION": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BOOKING_STATUS": 1
+      },
+      "definition": "Confirm operational cancellation of a specific service occurrence, not a passenger's ticket cancellation request."
+    },
+    "BUS_CAPACITY": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "RESERVATION_SUPPORTED": 1
+      },
+      "definition": "Report physical seat and berth capacity of the assigned configuration, not vacant inventory."
+    },
+    "BUS_DELAY": {
+      "train_count": 4,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "GET_FARE": 2
+      },
+      "definition": "Report a verified delay duration or recorded reason for the selected dated trip and affected stop."
+    },
+    "BUS_DEPARTED_STATUS": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BOOKING_STATUS": 1
+      },
+      "definition": "Confirm departure only from an authoritative actual-departure event at the specified stop."
+    },
+    "BUS_PLATFORM": {
+      "train_count": 6,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "CONNECTING_BUSES": 2
+      },
+      "definition": "Report the currently valid confirmed station bay assignment for a specific dated trip."
+    },
+    "BUS_VIA_LOCATION": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 1.0,
+      "confusions": {},
+      "definition": "Check or search for a route passing through a requested via point without asserting a passenger halt."
+    },
+    "CANCELLATION_POLICY": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "RESERVATION_SUPPORTED": 1
+      },
+      "definition": "Explain locally stored passenger ticket cancellation terms, independently of operational trip cancellation."
+    },
+    "CHEAPEST_BUS": {
+      "train_count": 4,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "GET_FARE": 2
+      },
+      "definition": "Rank eligible services by known applicable segment fare; missing prices are never zero."
+    },
+    "COMPLAINT_GUIDANCE": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BUS_CAPACITY": 1
+      },
+      "definition": "Explain the locally recorded complaint or grievance channel and reporting instructions."
+    },
+    "CONCESSION_ENQUIRY": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BOARDING_POINT": 1
+      },
+      "definition": "Explain date-effective concession schemes and explicit eligibility requirements without assuming passenger qualification."
+    },
+    "CONNECTING_BUSES": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "LAST_BUS": 1
+      },
+      "definition": "Find feasible time-ordered multi-leg journeys respecting transfer windows and stop permissions."
+    },
+    "DEPARTURES_AFTER": {
+      "train_count": 4,
+      "validation_count": 2,
+      "validation_f1": 0.8,
+      "confusions": {},
+      "definition": "Find eligible departures following an explicitly supplied lower time bound."
+    },
+    "DEPARTURES_BEFORE": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "DEPARTURES_AFTER": 1
+      },
+      "definition": "Find eligible departures preceding an explicitly supplied upper time bound."
+    },
+    "DESTINATION_REACHABILITY": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "ALTERNATIVE_ROUTES": 1
+      },
+      "definition": "Determine whether any feasible direct or connecting bus itinerary reaches the requested destination in the search period."
+    },
+    "DIRECT_BUS": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "ALTERNATIVE_ROUTES": 1
+      },
+      "definition": "Find a single service allowing the requested journey without a vehicle change."
+    },
+    "ELECTRIC_BUS_AVAILABILITY": {
+      "train_count": 3,
+      "validation_count": 2,
+      "validation_f1": 1.0,
+      "confusions": {},
+      "definition": "Find services with an explicitly assigned electric vehicle or configuration."
+    },
+    "ESTIMATED_ARRIVAL": {
+      "train_count": 3,
+      "validation_count": 2,
+      "validation_f1": 1.0,
+      "confusions": {},
+      "definition": "Report a fresh verified operational arrival estimate; a scheduled arrival alone does not satisfy this intent."
+    },
+    "FARE_COMPARISON": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "SEATER_AVAILABILITY": 1
+      },
+      "definition": "Compare applicable prices for multiple services or categories on the same boarding segment and travel date."
+    },
+    "FASTEST_BUS": {
+      "train_count": 4,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BUS_DEPARTED_STATUS": 2
+      },
+      "definition": "Rank eligible services by elapsed journey duration for the same requested segment."
+    },
+    "FIRST_BUS": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BOARDING_POINT": 1
+      },
+      "definition": "Find the earliest departure within one explicitly selected operating day, independent of the current time."
+    },
+    "GET_FARE": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.2857142857142857,
+      "confusions": {},
+      "definition": "Retrieve an applicable date-effective fare for the actual boarding and alighting segment and selected service or category."
+    },
+    "INTERMEDIATE_STOP": {
+      "train_count": 3,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "ALIGHTING_POINT": 2
+      },
+      "definition": "Confirm whether a selected service actually calls at a specific intermediate station and allows the relevant passenger action."
+    },
+    "JOURNEY_DURATION": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "LIVE_BUS_STATUS": 1
+      },
+      "definition": "Calculate travel duration between the passenger's valid boarding and alighting stops."
+    },
+    "LAST_BUS": {
+      "train_count": 4,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "NEXT_BUS": 2
+      },
+      "definition": "Find the final eligible departure inside the chosen calendar or operator-defined operating-day bounds."
+    },
+    "LIVE_BUS_STATUS": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "INTERMEDIATE_STOP": 1
+      },
+      "definition": "Report the freshest authoritative operational state or location, distinguishing scheduled-only, stale and unknown data."
+    },
+    "LOST_PROPERTY": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BOOKING_OPTIONS": 1
+      },
+      "definition": "Provide the locally recorded lost-property reporting contact or procedure without claiming an item was found."
+    },
+    "LUGGAGE_RULES": {
+      "train_count": 3,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "LOST_PROPERTY": 2
+      },
+      "definition": "Describe recorded baggage allowances, restrictions and applicable published luggage charges."
+    },
+    "NEXT_BUS": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "ACCESSIBLE_BUS_AVAILABILITY": 1
+      },
+      "definition": "Find the earliest eligible departures after the passenger's requested threshold, including later operating dates."
+    },
+    "NON_AC_BUS_AVAILABILITY": {
+      "train_count": 4,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "DIRECT_BUS": 2
+      },
+      "definition": "Find services explicitly known to be non-air-conditioned, excluding unknown configurations."
+    },
+    "OPERATOR_CONTACT": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 1.0,
+      "confusions": {},
+      "definition": "Provide published local operator or depot contact information relevant to the passenger's service."
+    },
+    "PLATFORM_CHANGE": {
+      "train_count": 6,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BUS_PLATFORM": 2
+      },
+      "definition": "Confirm a platform reassignment by examining assignment history for the same trip and station."
+    },
+    "REFUND_POLICY": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 1.0,
+      "confusions": {},
+      "definition": "Explain applicable recorded refund rules or a supported calculation; never infer a refund without required policy data."
+    },
+    "RESERVATION_SUPPORTED": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.5,
+      "confusions": {},
+      "definition": "Report whether reservations are supported for the selected service, separately from current seat availability."
+    },
+    "ROUTE_DISTANCE": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "ROUTE_STOPS": 1
+      },
+      "definition": "Retrieve sourced cumulative or segment distance along the applicable route variant."
+    },
+    "ROUTE_STOPS": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.5,
+      "confusions": {},
+      "definition": "Retrieve the ordered scheduled stopping pattern of the selected route variant or service."
+    },
+    "SEATER_AVAILABILITY": {
+      "train_count": 4,
+      "validation_count": 2,
+      "validation_f1": 0.6666666666666666,
+      "confusions": {},
+      "definition": "Find services with verified seater accommodation rather than inferring layout from category branding."
+    },
+    "SEAT_AVAILABILITY": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BUS_ARRIVED_STATUS": 1
+      },
+      "definition": "Report fresh segment-specific inventory for a dated trip and requested seat count, distinguishing unknown and stale states."
+    },
+    "SERVICE_CATEGORY_COMPARISON": {
+      "train_count": 4,
+      "validation_count": 1,
+      "validation_f1": 1.0,
+      "confusions": {},
+      "definition": "Explain recorded differences between two or more service categories without guaranteeing vehicle amenities."
+    },
+    "SERVICE_DISRUPTION": {
+      "train_count": 3,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "SERVICE_NUMBER_LOOKUP": 2
+      },
+      "definition": "Report verified diversions, suspensions or other incidents effective for the requested service or period."
+    },
+    "SERVICE_FREQUENCY": {
+      "train_count": 4,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "BUSES_OPERATING_TODAY": 2
+      },
+      "definition": "Describe scheduled departure counts or intervals on a segment within a specified period, without assuming regular headways."
+    },
+    "SERVICE_NUMBER_LOOKUP": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.5,
+      "confusions": {},
+      "definition": "Resolve a service identifier within operator and validity scope, requesting clarification if multiple records match."
+    },
+    "SLEEPER_AVAILABILITY": {
+      "train_count": 4,
+      "validation_count": 2,
+      "validation_f1": 0.0,
+      "confusions": {
+        "ALIGHTING_POINT": 2
+      },
+      "definition": "Find services with verified sleeping berths, independently of branded category and seat inventory."
+    },
+    "SPECIAL_DAY_SCHEDULE": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "SEATER_AVAILABILITY": 1
+      },
+      "definition": "Retrieve date-specific extra or changed schedules for a specified holiday, festival or special operating date."
+    },
+    "STATION_FACILITIES": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "CANCELLATION_POLICY": 1
+      },
+      "definition": "Report locally recorded passenger facilities and their verification or availability state at a station."
+    },
+    "STATION_HELPDESK": {
+      "train_count": 3,
+      "validation_count": 1,
+      "validation_f1": 1.0,
+      "confusions": {},
+      "definition": "Provide a recorded station enquiry/helpdesk contact, location or opening information."
+    },
+    "STATION_NAVIGATION": {
+      "train_count": 5,
+      "validation_count": 1,
+      "validation_f1": 0.0,
+      "confusions": {
+        "STATION_FACILITIES": 1
+      },
+      "definition": "Provide recorded within-station directions or zone information without inventing an indoor route."
+    }
+  },
+  "validation_unseen_token_fraction": 0.2012779552715655,
+  "unseen_validation_tokens": [
+    [
+      "only",
+      4
+    ],
+    [
+      "its",
+      3
+    ],
+    [
+      "confirm",
+      3
+    ],
+    [
+      "schedule",
+      3
+    ],
+    [
+      "day",
+      3
+    ],
+    [
+      "be",
+      3
+    ],
+    [
+      "ride",
+      3
+    ],
+    [
+      "give",
+      2
+    ],
+    [
+      "or",
+      2
+    ],
+    [
+      "minimum",
+      2
+    ],
+    [
+      "price",
+      2
+    ],
+    [
+      "among",
+      2
+    ],
+    [
+      "changed",
+      2
+    ],
+    [
+      "closes",
+      2
+    ],
+    [
+      "pallevelugu",
+      2
+    ],
+    [
+      "facilities",
+      2
+    ],
+    [
+      "reported",
+      2
+    ],
+    [
+      "reason",
+      2
+    ],
+    [
+      "variant",
+      2
+    ],
+    [
+      "using",
+      2
+    ],
+    [
+      "disrupted",
+      2
+    ],
+    [
+      "incident",
+      2
+    ],
+    [
+      "please",
+      2
+    ],
+    [
+      "carry",
+      2
+    ],
+    [
+      "large",
+      2
+    ],
+    [
+      "lie",
+      2
+    ],
+    [
+      "quickest",
+      2
+    ],
+    [
+      "reserved",
+      2
+    ],
+    [
+      "departing",
+      2
+    ],
+    [
+      "breakfast",
+      2
+    ],
+    [
+      "reassignment",
+      2
+    ],
+    [
+      "submit",
+      1
+    ],
+    [
+      "feedback",
+      1
+    ],
+    [
+      "about",
+      1
+    ],
+    [
+      "may",
+      1
+    ],
+    [
+      "terminal",
+      1
+    ],
+    [
+      "office",
+      1
+    ],
+    [
+      "serving",
+      1
+    ],
+    [
+      "mobility",
+      1
+    ],
+    [
+      "friendly",
+      1
+    ],
+    [
+      "vehicles",
+      1
+    ],
+    [
+      "forty",
+      1
+    ],
+    [
+      "larger",
+      1
+    ],
+    [
+      "close",
+      1
+    ],
+    [
+      "more",
+      1
+    ],
+    [
+      "expensive",
+      1
+    ],
+    [
+      "features",
+      1
+    ],
+    [
+      "distinguish",
+      1
+    ],
+    [
+      "alternative",
+      1
+    ],
+    [
+      "departed",
+      1
+    ]
+  ],
+  "context_label_flags": [],
+  "missing_training_classes": [],
+  "findings": [
+    "Sparse support per class, not missing 60-class output coverage",
+    "Old TextCNN trained with 234 texts and 60 outputs; vocabulary/sequence configuration far exceeds effective supervision",
+    "Original trainer records nfkc-casefold preprocessing metadata but passes raw strings to estimators; normalize explicitly in recovery corpus",
+    "Standalone SVM forces OOS into a transport label; use validation-only rejection calibration",
+    "Boarding versus platform, arrival schedule versus live ETA, facilities versus navigation, policy versus action, direct versus reachability require contrastive boundaries",
+    "Existing generated record count is not semantic family diversity; preserve grouping and count eligible classifier rows",
+    "No independent human-reviewed test set; no promotion conclusion from synthetic metrics"
+  ]
+}

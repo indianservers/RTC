@@ -1,0 +1,51 @@
+{
+  "previous_registry_sha256": "dd4fa0e8c5f07c13a65ee4254f92760e426cf1e2ce74386ed5ecd2f13c402852",
+  "unchanged_original_entries": [
+    {
+      "index": 0,
+      "name": "MuRIL Base Cased",
+      "sha256": "7c7754b65df81a955f7feccd1cb8047dcd6261a19d5b3d547c1a3e34075b7ceb"
+    },
+    {
+      "index": 1,
+      "name": "IndicConformer Telugu",
+      "sha256": "d7185fe0d776ab22d4352b36b7adfe9e71ddebda6b25ade7cbb83595e649cfee"
+    },
+    {
+      "index": 2,
+      "name": "vosk-model-small-en-us-0.15",
+      "sha256": "64c3576a9fd7f64238685aa2b458543d6ad6bf2694c2dda5af73b8a13cf52b2b"
+    },
+    {
+      "index": 3,
+      "name": "vosk-model-en-us-0.22-lgraph",
+      "sha256": "aeec5a43693ce750a00f5f0e19b005cc2fcd8b3265557d1103fa1668aed66dd7"
+    },
+    {
+      "index": 4,
+      "name": "English SVM",
+      "sha256": "d508073eb6319ea4ce37af4f89499bf5d69804212d8e5c912bd0635f59d8eb45"
+    },
+    {
+      "index": 5,
+      "name": "English TextCNN",
+      "sha256": "7364eea1845035e99ebe136538186c60423fa9fe646855222643c6e00d09fa83"
+    },
+    {
+      "index": 6,
+      "name": "English local TTS",
+      "sha256": "e01dcb711d4b5cbbceb019b51f507fb933301e1e2a45dbe3a9e24b127e9e1dd6"
+    },
+    {
+      "index": 7,
+      "name": "english-svm-grouped-60-v1",
+      "sha256": "99b39dea0e6707a62aa245d2868194a2fc5ae743b8af34430d8a29c97b203aeb"
+    },
+    {
+      "index": 8,
+      "name": "english-textcnn-grouped-60-v1",
+      "sha256": "1c72f8f33ebbad5559d0264187a52bef79f9656701856ceca86ebacd7fcaebd9"
+    }
+  ],
+  "new_entries": "Two CANDIDATE records only; approved=False, independent_evaluation=False"
+}

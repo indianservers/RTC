@@ -1,0 +1,126 @@
+{
+  "original_textcnn": {
+    "loss": {
+      "first": 4.098040580749512,
+      "last": 0.5443275570869446,
+      "minimum": 0.5443275570869446,
+      "epochs": 30
+    },
+    "val_loss": {
+      "first": 4.0966105461120605,
+      "last": 4.056972503662109,
+      "minimum": 4.032038688659668,
+      "epochs": 30
+    },
+    "learning_rate": {
+      "first": 0.0010000000474974513,
+      "last": 0.0010000000474974513,
+      "minimum": 0.0010000000474974513,
+      "epochs": 30
+    }
+  },
+  "new_textcnn_trials": [
+    {
+      "configuration": {
+        "embedding": 64,
+        "filters_per_kernel": 64,
+        "dropout": 0.3,
+        "sequence_length": 16,
+        "vocabulary_size": 1328,
+        "kernels": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "learning_rate": 0.001,
+        "class_weights": "None; actual per-intent counts differ by <=1"
+      },
+      "validation_macro_f1": 0.846706349206349,
+      "history": {
+        "accuracy": {
+          "first": 0.026303203776478767,
+          "last": 1.0,
+          "minimum": 0.026303203776478767,
+          "epochs": 45
+        },
+        "loss": {
+          "first": 4.086594104766846,
+          "last": 0.017033612355589867,
+          "minimum": 0.017033612355589867,
+          "epochs": 45
+        },
+        "val_accuracy": {
+          "first": 0.10000000149011612,
+          "last": 0.8444444537162781,
+          "minimum": 0.10000000149011612,
+          "epochs": 45
+        },
+        "val_loss": {
+          "first": 4.058384418487549,
+          "last": 0.4449015259742737,
+          "minimum": 0.4446772336959839,
+          "epochs": 45
+        },
+        "learning_rate": {
+          "first": 0.0010000000474974513,
+          "last": 6.25000029685907e-05,
+          "minimum": 6.25000029685907e-05,
+          "epochs": 45
+        }
+      }
+    },
+    {
+      "configuration": {
+        "embedding": 96,
+        "filters_per_kernel": 96,
+        "dropout": 0.4,
+        "sequence_length": 16,
+        "vocabulary_size": 1328,
+        "kernels": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "learning_rate": 0.001,
+        "class_weights": "None; actual per-intent counts differ by <=1"
+      },
+      "validation_macro_f1": 0.8954365079365079,
+      "history": {
+        "accuracy": {
+          "first": 0.030129125341773033,
+          "last": 1.0,
+          "minimum": 0.030129125341773033,
+          "epochs": 42
+        },
+        "loss": {
+          "first": 4.083043098449707,
+          "last": 0.013710342347621918,
+          "minimum": 0.013710342347621918,
+          "epochs": 42
+        },
+        "val_accuracy": {
+          "first": 0.16111111640930176,
+          "last": 0.8999999761581421,
+          "minimum": 0.16111111640930176,
+          "epochs": 42
+        },
+        "val_loss": {
+          "first": 4.038908004760742,
+          "last": 0.34102219343185425,
+          "minimum": 0.33998313546180725,
+          "epochs": 42
+        },
+        "learning_rate": {
+          "first": 0.0010000000474974513,
+          "last": 0.0001250000059371814,
+          "minimum": 0.0001250000059371814,
+          "epochs": 42
+        }
+      }
+    }
+  ],
+  "seed_policy": "SVM 73421; CNN trial 0 seed 73421, trial 1 seed 73422; tf.data shuffle seed 73421",
+  "interpretation": "Original training loss fell while validation stayed near log(60), consistent with poor generalization; new loss histories retain both successful and weaker trials."
+}

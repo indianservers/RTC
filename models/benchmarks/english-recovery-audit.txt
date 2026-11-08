@@ -1,0 +1,1 @@
+{"eligible_counts": {"synthetic_challenge": 67, "train": 234, "validation": 76}, "missing_training_classes": [], "validation_unseen_token_fraction": 0.2012779552715655, "human_reviewed_independent_test_count": 0}
