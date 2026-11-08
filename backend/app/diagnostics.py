@@ -16,10 +16,15 @@ from fastapi.responses import JSONResponse
 def install_diagnostics(app: FastAPI) -> None:
     logger = logging.getLogger("rtc.local.requests")
     if not logger.handlers:
-        path = Path(os.getenv("RTC_REQUEST_LOG", "data/runtime/requests.jsonl"))
+        path = Path(
+            os.getenv("RTC_REQUEST_LOG", f"data/runtime/requests-{os.getpid()}.jsonl")
+        )
         path.parent.mkdir(parents=True, exist_ok=True)
         handler = RotatingFileHandler(
-            path, maxBytes=2_000_000, backupCount=3, encoding="utf-8"
+            path,
+            maxBytes=int(os.getenv("RTC_LOG_MAX_BYTES", "2000000")),
+            backupCount=int(os.getenv("RTC_LOG_BACKUPS", "3")),
+            encoding="utf-8",
         )
         logger.addHandler(handler)
         logger.setLevel(logging.INFO)
@@ -45,6 +50,9 @@ def install_diagnostics(app: FastAPI) -> None:
                 },
             )
         elapsed = round((perf_counter() - started) * 1000, 3)
+        from .runtime import observe
+
+        observe(elapsed, response.status_code)
         response.headers["X-Request-ID"] = correlation
         response.headers["Server-Timing"] = f"app;dur={elapsed}"
         if request.url.path.startswith("/api/"):
@@ -56,6 +64,16 @@ def install_diagnostics(app: FastAPI) -> None:
                 json.dumps(
                     {
                         "timestamp": datetime.now(UTC).isoformat(),
+                        "component": "http",
+                        "model_version": __import__(
+                            "app.runtime", fromlist=["STATE"]
+                        ).STATE.get("model_version"),
+                        "dataset_version": __import__(
+                            "app.runtime", fromlist=["STATE"]
+                        ).STATE.get("dataset_version"),
+                        "data_source": __import__(
+                            "app.runtime", fromlist=["STATE"]
+                        ).STATE.get("data_source"),
                         "correlation_id": correlation,
                         "endpoint": endpoint,
                         "method": request.method,

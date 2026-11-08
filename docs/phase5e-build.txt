@@ -1,0 +1,16 @@
+
+> rtc-local-app@0.1.0 build
+> tsc -b && vite build
+
+vite v8.3.6 building client environment for production...
+transforming...
+✓ 2206 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                             0.64 kB │ gzip:   0.40 kB
+dist/assets/index-BdNL3ebY.css             45.59 kB │ gzip:  10.80 kB
+dist/assets/OperationsCenter-BcdbtNVl.js   19.76 kB │ gzip:   5.51 kB
+dist/assets/AdminPage-DY69i-Ap.js         123.77 kB │ gzip:  32.81 kB
+dist/assets/index-t_-rkF1f.js             441.37 kB │ gzip: 139.17 kB
+
+✓ built in 522ms

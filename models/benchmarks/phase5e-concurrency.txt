@@ -1,0 +1,81 @@
+[
+  {
+    "concurrent_kiosks": 1,
+    "requests": 6,
+    "elapsed_seconds": 1.021446399994602,
+    "p50_ms": 84.13930000097025,
+    "p95_ms": 195.35940000059782,
+    "p99_ms": 195.35940000059782,
+    "requests_per_second": 5.8740233457494275,
+    "error_count": 0,
+    "error_statuses": [],
+    "error_rate": 0.0,
+    "process_cpu_percent": 53.53927528677864,
+    "peak_sampled_rss_bytes": 108089344
+  },
+  {
+    "concurrent_kiosks": 5,
+    "requests": 30,
+    "elapsed_seconds": 2.2969548999972176,
+    "p50_ms": 58.57819999800995,
+    "p95_ms": 1173.7259000001359,
+    "p99_ms": 1602.7083000008133,
+    "requests_per_second": 13.06077015270798,
+    "error_count": 0,
+    "error_statuses": [],
+    "error_rate": 0.0,
+    "process_cpu_percent": 70.74583832716822,
+    "peak_sampled_rss_bytes": 115007488
+  },
+  {
+    "concurrent_kiosks": 10,
+    "requests": 60,
+    "elapsed_seconds": 5.305015600002662,
+    "p50_ms": 94.38940000109142,
+    "p95_ms": 2415.34110000066,
+    "p99_ms": 4277.65619999991,
+    "requests_per_second": 11.31005156704344,
+    "error_count": 0,
+    "error_statuses": [],
+    "error_rate": 0.0,
+    "process_cpu_percent": 82.46912600969175,
+    "peak_sampled_rss_bytes": 120283136
+  },
+  {
+    "concurrent_kiosks": 25,
+    "requests": 150,
+    "elapsed_seconds": 13.84757399999944,
+    "p50_ms": 561.4158000025782,
+    "p95_ms": 8786.648699999205,
+    "p99_ms": 10428.750700004457,
+    "requests_per_second": 10.832222308399006,
+    "error_count": 0,
+    "error_statuses": [],
+    "error_rate": 0.0,
+    "process_cpu_percent": 82.14435250535914,
+    "peak_sampled_rss_bytes": 125378560
+  },
+  {
+    "concurrent_kiosks": 50,
+    "requests": 300,
+    "elapsed_seconds": 28.982697400002507,
+    "p50_ms": 2851.421499995922,
+    "p95_ms": 11976.222800003598,
+    "p99_ms": 19019.00839999871,
+    "requests_per_second": 10.351003423165645,
+    "error_count": 8,
+    "error_statuses": [
+      503,
+      503,
+      503,
+      503,
+      503,
+      503,
+      503,
+      503
+    ],
+    "error_rate": 0.02666666666666667,
+    "process_cpu_percent": 79.5733388155859,
+    "peak_sampled_rss_bytes": 134569984
+  }
+]

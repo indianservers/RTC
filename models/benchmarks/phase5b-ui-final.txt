@@ -1,0 +1,20 @@
+
+Running 4 tests using 1 worker
+
+
+(node:21512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/4] tests\operations.spec.ts:65:1 › disruption request is published only by an independent station supervisor
+[2/4] tests\operations.spec.ts:129:1 › dispatcher delay platform and actual departure reach passenger enquiries with full audit
+
+[WebServer] Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)
+[WebServer] handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+[WebServer] Traceback (most recent call last):
+[WebServer]   File "C:\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+[WebServer]     self._context.run(self._callback, *self._args)
+[WebServer]   File "C:\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 165, in _call_connection_lost
+[WebServer]     self._sock.shutdown(socket.SHUT_RDWR)
+[WebServer] ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+[3/4] tests\operations.spec.ts:208:1 › passenger board refreshes over WebSocket and reconnect refetches authoritative state
+[4/4] tests\operations.spec.ts:273:1 › viewer cannot mutate and cancellations appear separately on the public board
+  4 passed (30.0s)

@@ -1,0 +1,11 @@
+[Unit]
+Description=Verified local RTC backup
+After=postgresql.service
+[Service]
+Type=oneshot
+User=rtc
+WorkingDirectory=/opt/rtc
+EnvironmentFile=/etc/rtc/runtime.env
+ExecStart=/opt/rtc/.venv/bin/python scripts/rtc_storage.py backup --directory data/backups
+ExecStart=/opt/rtc/.venv/bin/python scripts/rtc_storage.py prune --directory data/backups --retain 14
+UMask=0077

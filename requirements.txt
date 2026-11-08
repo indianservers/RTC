@@ -11,3 +11,9 @@ ruff
 mypy
 
 openpyxl>=3.1,<4
+websockets==17.4
+
+# Local SVM training/inference; match the existing English model environment.
+scikit-learn==1.9.1
+joblib==1.6.0
+psutil>=6,<8

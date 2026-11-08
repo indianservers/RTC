@@ -20,6 +20,7 @@ class Principal:
     role: str
     operators: tuple[str, ...] = ()
     global_scope: bool = False
+    station_grants: tuple[tuple[str | None, str | None], ...] = ()
 
     @property
     def root(self):
@@ -52,7 +53,11 @@ def authenticate(engine, authorization):
         if user:
             grants = list(
                 session.execute(
-                    select(AdminRole.role_code, AdminUserRole.operator_id)
+                    select(
+                        AdminRole.role_code,
+                        AdminUserRole.operator_id,
+                        AdminUserRole.station_id,
+                    )
                     .join(AdminUserRole, AdminUserRole.role_id == AdminRole.id)
                     .where(
                         AdminUserRole.user_id == user.id,
@@ -62,13 +67,21 @@ def authenticate(engine, authorization):
                 )
             )
             roles = {r[0] for r in grants}
-            if len(roles) == 1 and roles <= {"EDITOR", "APPROVER"}:
+            if len(roles) == 1 and roles <= {
+                "EDITOR",
+                "APPROVER",
+                "OPERATIONS_VIEWER",
+                "DISPATCHER",
+                "STATION_SUPERVISOR",
+                "OPERATOR_ADMIN",
+            }:
                 return Principal(
                     user.username,
                     next(iter(roles)),
                     tuple(r[1] for r in grants if r[1]),
                     any(r[1] is None for r in grants)
                     and next(iter(roles)) == "APPROVER",
+                    tuple((r[1], r[2]) for r in grants),
                 )
     raise HTTPException(401, "Invalid local administrator credentials")
 

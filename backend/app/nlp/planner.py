@@ -3,7 +3,7 @@
 from copy import deepcopy
 
 
-class ExecutionPlanner:
+class ConversationQueryPlanner:
     journey_intents = frozenset(
         {
             "NEXT_BUS",
@@ -50,3 +50,7 @@ class ExecutionPlanner:
             "pagination": {},
             "executor": "ExecutionPlanner.project",
         }
+
+
+# Compatibility for existing imports; one planner implementation.
+ExecutionPlanner = ConversationQueryPlanner

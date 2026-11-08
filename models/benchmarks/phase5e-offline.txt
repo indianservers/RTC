@@ -1,0 +1,118 @@
+C:\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+{
+  "dataset": "DEMO",
+  "application": "http://127.0.0.1:8000",
+  "checks": {
+    "delay_and_revised_departure": true,
+    "latest_platform": true,
+    "nlp_latest_platform": true,
+    "no_false_actual_departure": true,
+    "nlp_delay": true,
+    "actual_departure_visible": true,
+    "nlp_departure": true,
+    "every_event_has_actor_timestamp_source": true
+  },
+  "service_number": "DEMO-5B-283843",
+  "service_id": "c6607985-4401-4e00-8d83-51c3c88276d4",
+  "station": "Vijayawada",
+  "station_id": "60d1d124-e384-4f43-ad89-2645c5e9801a",
+  "source_id": "36f1ae27-8afd-43dc-b944-ee46f56d9a06",
+  "master_batch_id": "be476b26-00d7-4b27-bd69-485d9e347338",
+  "trip_id": "15c89930-8f13-4892-9450-3b90454f259d",
+  "delay_nlp": {
+    "intents": [
+      "BUS_DELAY"
+    ],
+    "answer": "The recorded delay is 15 minutes. Revised departure: 2026-11-08T16:52:00+00:00. Dispatcher-confirmed platform: DEMO-5B-2-4d80c1c3."
+  },
+  "departure_nlp": {
+    "intents": [
+      "BUS_DEPARTED_STATUS"
+    ],
+    "answer": "The bus was recorded as departed at 08 Nov 2026 at 9:07 PM."
+  },
+  "events": [
+    {
+      "id": "590591a4-edda-4e71-b576-74a57a77984f",
+      "operation": "PUBLISH_ANNOUNCEMENT",
+      "version": 7,
+      "actor": "demo-5b-station_supervisor-4d80c1c3",
+      "source_id": "36f1ae27-8afd-43dc-b944-ee46f56d9a06",
+      "occurred_at": "2026-11-08T15:37:28.540689+00:00",
+      "recorded_at": "2026-11-08T15:37:28.545685+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "4cf0e6bc-87fe-48be-9dc0-d7eaf363aeae",
+      "operation": "ANNOUNCEMENT_REQUEST",
+      "version": 6,
+      "actor": "demo-5b-dispatcher-4d80c1c3",
+      "source_id": "36f1ae27-8afd-43dc-b944-ee46f56d9a06",
+      "occurred_at": "2026-11-08T15:37:28.531686+00:00",
+      "recorded_at": "2026-11-08T15:37:28.535686+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "c4fc6e34-a87e-4909-adaf-0677cfc7aa00",
+      "operation": "DEPARTED_FROM_STOP",
+      "version": 5,
+      "actor": "demo-5b-dispatcher-4d80c1c3",
+      "source_id": "36f1ae27-8afd-43dc-b944-ee46f56d9a06",
+      "occurred_at": "2026-11-08T15:37:28.478687+00:00",
+      "recorded_at": "2026-11-08T15:37:28.481687+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "25da31e9-5240-487d-a18e-29e0176a5551",
+      "operation": "BOARDING",
+      "version": 4,
+      "actor": "demo-5b-dispatcher-4d80c1c3",
+      "source_id": "36f1ae27-8afd-43dc-b944-ee46f56d9a06",
+      "occurred_at": "2026-11-08T15:37:28.467685+00:00",
+      "recorded_at": "2026-11-08T15:37:28.471685+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "53fa2602-f7c7-4197-a79c-6c3324bdffc1",
+      "operation": "PLATFORM",
+      "version": 3,
+      "actor": "demo-5b-dispatcher-4d80c1c3",
+      "source_id": "36f1ae27-8afd-43dc-b944-ee46f56d9a06",
+      "occurred_at": "2026-11-08T15:37:28.340020+00:00",
+      "recorded_at": "2026-11-08T15:37:28.345018+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "88119f7b-9ab2-4133-9450-40ce197f79ff",
+      "operation": "PLATFORM",
+      "version": 2,
+      "actor": "demo-5b-dispatcher-4d80c1c3",
+      "source_id": "36f1ae27-8afd-43dc-b944-ee46f56d9a06",
+      "occurred_at": "2026-11-08T15:37:28.325020+00:00",
+      "recorded_at": "2026-11-08T15:37:28.331019+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "2f58febe-540f-4b4d-aca3-cffa918626a3",
+      "operation": "DELAYED",
+      "version": 1,
+      "actor": "demo-5b-dispatcher-4d80c1c3",
+      "source_id": "36f1ae27-8afd-43dc-b944-ee46f56d9a06",
+      "occurred_at": "2026-11-08T15:37:28.309388+00:00",
+      "recorded_at": "2026-11-08T15:37:28.315387+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "6ceb177f-16cc-4520-ba19-9e3ac350bf82",
+      "operation": "OPEN_TRIP",
+      "version": null,
+      "actor": "demo-5b-dispatcher-4d80c1c3",
+      "source_id": "36f1ae27-8afd-43dc-b944-ee46f56d9a06",
+      "occurred_at": "2026-11-08T15:37:28.305386+00:00",
+      "recorded_at": "2026-11-08T15:37:28.305386+00:00",
+      "dataset_source": "DEMO"
+    }
+  ],
+  "temporary_capabilities_revoked": true
+}

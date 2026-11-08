@@ -13,6 +13,15 @@ export function AccessManagement({
   const [username, setUsername] = useState("");
   const [kind, setKind] = useState("EDITOR");
   const [global, setGlobal] = useState(false);
+  const [stationIds, setStationIds] = useState<string[]>([]);
+  const stationOptions = useQuery({
+    queryKey: ["access-stations", token],
+    queryFn: () =>
+      api("/admin/stations?limit=100", {
+        headers: { Authorization: `Bearer ${token}` },
+      }),
+    enabled: role === "ADMIN",
+  });
   const [issued, setIssued] = useState<Row>();
   const [revoke, setRevoke] = useState<Row>();
   const [offset, setOffset] = useState(0);
@@ -39,6 +48,7 @@ export function AccessManagement({
           role: kind,
           operator_ids: global ? [] : [operator],
           global_scope: global && kind === "APPROVER",
+          station_ids: stationIds,
         },
         token,
       );
@@ -101,9 +111,46 @@ export function AccessManagement({
             >
               <option value="EDITOR">Data editor</option>
               <option value="APPROVER">Independent approver</option>
+              <option value="OPERATIONS_VIEWER">Operations viewer</option>
+              <option value="DISPATCHER">Dispatcher</option>
+              <option value="STATION_SUPERVISOR">Station supervisor</option>
+              <option value="OPERATOR_ADMIN">Operator administrator</option>
             </select>
           </label>
         </div>
+        {[
+          "OPERATIONS_VIEWER",
+          "DISPATCHER",
+          "STATION_SUPERVISOR",
+          "OPERATOR_ADMIN",
+        ].includes(kind) && (
+          <label className="field">
+            Authorized operations stations
+            <select
+              multiple
+              value={stationIds}
+              onChange={(event) =>
+                setStationIds(
+                  Array.from(
+                    event.target.selectedOptions,
+                    (option) => option.value,
+                  ),
+                )
+              }
+            >
+              {stationOptions.data?.data.map((station: Row) => (
+                <option value={station.id} key={station.id}>
+                  {station.name} ({station.code})
+                </option>
+              ))}
+            </select>
+            <small>
+              Choose explicit stations. An operator administrator with no
+              station selection is explicitly authorized across that operator's
+              stations.
+            </small>
+          </label>
+        )}
         {kind === "APPROVER" && (
           <label>
             <input

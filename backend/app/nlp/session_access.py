@@ -19,4 +19,16 @@ def check_owner(values, token):
 
 
 def public_context(values):
-    return {k: v for k, v in values.items() if k != "_owner_hash"}
+    result = {k: v for k, v in values.items() if not k.startswith("_")}
+    result.update(
+        current_station_id=values.get("current_station_id", values.get("origin")),
+        operator_id=values.get(
+            "operator_id", values.get("filters", {}).get("operator")
+        ),
+        origin_id=values.get("origin"),
+        destination_id=values.get("destination"),
+        current_result_set=values.get("candidates", []),
+        current_ranking=values.get("journey_ranking", values.get("last_intent")),
+        state_version=values.get("revision", 0),
+    )
+    return result

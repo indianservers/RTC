@@ -1,0 +1,152 @@
+{
+  "status": "PHASE_5C_IMPLEMENTED_AND_VERIFIED",
+  "backend": {
+    "passed": 2048,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 393.566,
+    "postgresql_cases_actually_executed": 70
+  },
+  "phase5c_scenarios": {
+    "passed": 307,
+    "multiturn_matrix": 300,
+    "families": 15,
+    "date_variants": 20,
+    "evidence": "phase5c-conversation.xml",
+    "interpretation": "Authored real-API regression outcomes, not general-language or classifier accuracy"
+  },
+  "browser": {
+    "startTime": "2026-11-08T13:34:08.243Z",
+    "duration": 158301.848,
+    "expected": 153,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "final_focused_browser": {
+    "passed": 4,
+    "evidence": "models/benchmarks/phase5c-browser-focused.txt"
+  },
+  "offline": {
+    "network": "ALL_SOCKET_EGRESS_AND_DNS_BLOCKED_BEFORE_BACKEND_IMPORT",
+    "database": "PRIVATE_SQLITE_SNAPSHOT",
+    "startup_and_migrations_ms": 1652.0114000013564,
+    "turns": [
+      {
+        "question": "Next bus to Nellore tomorrow?",
+        "duration_ms": 69.24839999919641,
+        "state": "ANSWERING",
+        "selected_service": "a9f5e740-2f94-4a8c-bf41-efc65980b35c",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "Second one.",
+        "duration_ms": 29.680600000574486,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "How much?",
+        "duration_ms": 27.68339999965974,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "Does it have AC?",
+        "duration_ms": 31.115800000407035,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "When will it arrive?",
+        "duration_ms": 33.70379999978468,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "Compare with the first one.",
+        "duration_ms": 81.4126999975997,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "What about tomorrow?",
+        "duration_ms": 38.02939999877708,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "Only Super Luxury.",
+        "duration_ms": 23.241099999722792,
+        "state": "AWAITING_CATEGORY",
+        "selected_service": null,
+        "data_source": []
+      },
+      {
+        "question": "No, I meant Tirupati.",
+        "duration_ms": 18.41010000134702,
+        "state": "AWAITING_CATEGORY",
+        "selected_service": null,
+        "data_source": []
+      },
+      {
+        "question": "Summarize my journey.",
+        "duration_ms": 13.05819999834057,
+        "state": "ANSWERING",
+        "selected_service": null,
+        "data_source": []
+      }
+    ],
+    "passed": true
+  },
+  "live": {
+    "passed": true,
+    "turns": 10,
+    "transport_master_data_mutated": false,
+    "evidence": "phase5c-live.json",
+    "category_limitation": "Super Luxury is absent in the live DB; pending category and focused choices are correct acceptance behavior"
+  },
+  "median_latency_ms": {
+    "page_ready_ms": 115.31,
+    "chat_send_to_answer_visible_ms": 166.31,
+    "nlp_total_ms": 44.76,
+    "planner_http_ms": 66.67
+  },
+  "seeded_benchmark_samples": 5,
+  "integrity": {
+    "sqlite": "ok",
+    "foreign_key_errors": 0,
+    "alembic_revision": "0016"
+  },
+  "checks": {
+    "ruff": "PASS",
+    "mypy": "PASS (55 files)",
+    "eslint": "PASS",
+    "typescript_and_vite": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "warnings": [
+    "Existing Starlette TestClient/httpx deprecation warning"
+  ],
+  "new_model_or_cloud_runtime": false
+}

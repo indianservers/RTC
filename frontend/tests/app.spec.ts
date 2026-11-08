@@ -552,12 +552,11 @@ test("contextual stop action invokes actual backend route enquiry", async ({
   page,
 }) => {
   await send(page, "Next bus to Nellore?");
+  await send(page, "1");
   const done = page.waitForResponse((r) =>
     r.url().endsWith("/conversation/message"),
   );
-  await page
-    .getByRole("button", { name: "View intermediate stops", exact: true })
-    .click();
+  await page.getByRole("button", { name: "Show stops", exact: true }).click();
   const response = await (await done).json();
   expect(response.results.some((r: any) => r.intent === "ROUTE_STOPS")).toBe(
     true,

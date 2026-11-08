@@ -299,3 +299,43 @@ Original migrations 0001–0010 remain intact; incremental migrations 0011–001
 Verification: **1,566 full backend regression tests passed**, followed by **84 final SQLite/PostgreSQL data-management tests** (overlapping counts), **two maximum-size 10,000-row validation tests**, and **140 production browser tests**. Ruff, configured Mypy, ESLint, TypeScript and build passed. PostgreSQL cases actually ran on a local dedicated database. External application requests were blocked in the browser/backend integration servers. The running app also passed a real import → independent approval → passenger alias enquiry → rollback smoke.
 
 **PHASE 5A COMPLETE** within the documented local limits. No authoritative APSRTC timetable/fare/source files were supplied; onboarding them remains a deployment input. Legacy batches without snapshots cannot roll back; imports are synchronous and bounded at 10 MB/10,000 rows. Existing model approval gates remain unchanged. See [completion report](docs/PHASE_5A_REPORT.md), [requirement audit](docs/PHASE_5A_AUDIT.md), [data-management setup](docs/PHASE_5A_SETUP.md) and [live smoke evidence](docs/phase5a-live-smoke.json).
+
+
+## Phase 5B - local Bus Stand Operations Control Center
+
+Implemented `/admin/operations` and the public `/board`, validated dispatcher state transitions, station/operator-scoped staff roles, idempotent versioned events, confirmed/observed platform distinctions, revised ETA/delays, cancellation and independently approved reinstatement, reviewed disruptions/English announcements, append-only audit and reconnecting local WebSocket updates. Existing passenger NLP/enquiry and journey planning use the same operational projections. No clock-based actual movement, GPS feed, cloud broker or voice feature was introduced.
+
+Incremental migrations 0015-0016 extend existing tables. The live SQLite upgrade preserved all original values in 71 tables/1,150 rows with integrity and FK checks passing. Verification: **1,618 full backend tests passed**, followed by **54 final SQLite/PostgreSQL dispatcher tests** (overlapping), and **144 production browser tests**. Ruff, configured Mypy, frontend lint/TypeScript/build pass. Main-app labelled DEMO acceptance verifies delay/revised departure/platform, no false departure, recorded departure, NLP and actor/source/time audit; temporary capabilities were revoked.
+
+**PHASE 5B COMPLETE** within documented local limits. Official operations/data still require authorized local input; demo fixtures remain DEMO, GPS/physical bay occupancy remain unknown without observations, and multi-server scale is not certified. See [completion report](docs/PHASE_5B_REPORT.md), [requirement audit](docs/PHASE_5B_AUDIT.md), [operations setup](docs/PHASE_5B_SETUP.md) and [live acceptance](docs/phase5b-live-acceptance.json).
+
+
+## Selected-journey conversation upgrade
+
+The backend now persists actual selected journeys and exact boarding/alighting segments across turns. After choosing option 2, fare/amenity/stop/platform follow-ups use that selection, re-read current database records and distinguish missing data. Context corrections invalidate outdated selection. Owner-bound versioned sessions, safe retries, server restoration, backend suggestions and compact chat controls are implemented. See [implementation, contract, cleanup and verification](docs/CONVERSATION_UPGRADE.md) and the [original request](docs/CONVERSATION_UPGRADE_REQUEST.md). Existing database migrations and transport records are preserved; acceptance fixtures are explicitly DEMO.
+
+
+Conversation-upgrade verification: **1,736 backend tests passed** with PostgreSQL enabled; final memory tests **117 passed**, additional SQLite/PostgreSQL memory/concurrency tests **2 passed**; **148 full browser tests + 1 restore regression passed**. Ruff, Mypy, ESLint and production build passed. The eight-turn local acceptance and network-blocked offline smoke passed. See [actual results and limitations](docs/CONVERSATION_UPGRADE.md#executed-verification) and [machine-readable evidence](docs/conversation-upgrade-verification.json).
+
+
+## Phase 5C — offline conversation intelligence
+
+Implemented compositional enquiry plans, primary-bound secondary queries, validated journey comparisons, deeper stable references, arrival-deadline reasoning, corrections, summaries and focused DB category clarification. Passenger chat now includes expandable answer sections and comparison facts. Existing APIs, model approval gates, transport data and migrations remain intact; no voice or cloud runtime was added.
+
+Verification: **2,048 backend tests passed** (including **70 PostgreSQL cases**), **307 Phase 5C scenarios passed**, **153 browser tests passed**, and a final focused browser rerun passed all four tests. Ruff, Mypy, ESLint and production build passed. The exact ten-turn live acceptance and networking-blocked offline smoke passed. Median seeded DEMO chat send-to-render: **166 ms**. [Completion report, gap matrix, measured results and limitations](docs/PHASE_5C_REPORT.md); [verification JSON](docs/phase5c-verification.json).
+
+## Phase 5D — recovery, feedback and supervised NLP improvement
+
+Implemented targeted conversation repair, explicit uncertainty, bounded DB-backed no-result diagnosis, compact optional passenger feedback and an operator-scoped NLP Review Queue at `/admin/nlp-review`. Approved-only dataset export feeds an authorized offline SVM candidate workflow with leakage checks, validation thresholds, regression gates, separate manual approval/deployment and rollback. Actual usage/review metrics and question-mix drift require recorded evidence; no missing feedback or automated DEMO label counts as human-reviewed accuracy. Existing transport schema, migrations and APIs are preserved.
+
+Verification: **2,307 backend tests passed**, including **71 PostgreSQL cases**; the overlapping Phase 5D suite passed **259 tests**. **157 browser tests** and **4 final focused browser tests** passed. Ruff, configured Mypy (60 files), ESLint, TypeScript and production build passed. Main-app DEMO acceptance and the outbound-network-blocked conversation/feedback/review/export smoke passed. Median five-sample browser send-to-answer latency was **209 ms**; measured live feedback write was **27 ms**.
+
+**PHASE 5D COMPLETE within the documented local limits.** No production model was retrained or promoted; genuine human-reviewed full-taxonomy data and independent holdouts are still required to establish model improvement. Question retention defaults off (`RTC_FEEDBACK_RETAIN_TEXT=0`); enabling it still requires passenger opt-in. See the [requirement audit, operating instructions and limitations](docs/PHASE_5D_REPORT.md), [original request](docs/PHASE_5D_REQUEST.md) and [actual verification results](docs/phase5d-verification.json). No Phase 5E or speech work was started.
+
+## Phase 5E — local deployment and recovery
+
+Implemented explicit standalone SQLite / central PostgreSQL modes, production Windows/Linux launchers without automatic migration/downloads, process locking and graceful stop, service/task templates, pool recovery/timeouts, WAL, periodic session cleanup, authenticated health diagnostics, broader versioned local invalidation, verified backups/restores and private-data-free snapshots with guarded transactional reconciliation. Existing schema, migrations, weights and active model registry are preserved. Startup now requires explicit private configuration; use the [deployment instructions](docs/PHASE_5E_DEPLOYMENT.md), which supersede earlier automatic startup/seed examples.
+
+Verified: **2,317 backend tests**, including **75 PostgreSQL cases**, and **157 final production browser tests** passed. The overlapping final reliability/model suite passed **11 tests**. Ruff, configured Mypy, ESLint and production build passed. Real DB outage/recovery, API crash/manual restart, graceful stop, duplicate launch rejection, SQLite and PostgreSQL isolated restore, and live/socket-denied platform updates passed. Short final load runs reached 50 simulated kiosks with zero request errors; P95 was **4.04 s SQLite / 4.77 s PostgreSQL**, with earlier failed/limited trials retained in the report.
+
+**PHASE 5E INCOMPLETE:** OS-level network-isolation certification, installed-service reboot/automatic restart tests and physical multi-terminal LAN/TLS/firewall verification remain blocked or unexecuted on this nonadministrative Windows host without Linux. The approved English model also remains unavailable; deterministic fallback is explicit. See the [audit, results and remaining gates](docs/PHASE_5E_REPORT.md) and [verification JSON](docs/phase5e-verification.json). No Phase 6 or speech development was started.

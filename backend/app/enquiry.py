@@ -197,6 +197,7 @@ class Enquiry:
                 return {
                     "status": "known",
                     "bay": bay.code if bay else None,
+                    "kind": row.assignment_kind or "DISPATCHER_CONFIRMED",
                     "source_id": row.source_id,
                     "effective_at": utc(row.effective_at),
                     "dataset_source": row.dataset_source,

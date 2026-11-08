@@ -212,7 +212,7 @@ def test_15_dialogues_with_local_records(local_db, intent):
         assert r.results, r.model_dump()
         assert r.results[0]["status"] == "KNOWN", r.model_dump()
         assert r.results[0]["query"]["intent"] == intent
-        assert "Demo schedule/data:" in r.answer
+        assert "DEMO" in r.data_source
         assert (
             "does not support" not in r.answer and "Selected service." not in r.answer
         )

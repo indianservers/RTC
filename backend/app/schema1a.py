@@ -80,6 +80,7 @@ class AdminRole(Entity, Base):
 
 
 class AdminUserRole(Entity, Base):
+    station_id: Mapped[str | None] = mapped_column(ForeignKey("bus_stations.id"))
     __tablename__ = "admin_user_roles"
     user_id: Mapped[str] = mapped_column(ForeignKey("admin_users.id"), index=True)
     role_id: Mapped[str] = mapped_column(ForeignKey("admin_roles.id"))

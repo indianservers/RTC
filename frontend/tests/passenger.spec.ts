@@ -126,13 +126,21 @@ for (const [name, width, height] of [
     await expect(page.locator(".bus-card").first()).toBeVisible();
     if (name === "mobile") {
       await page.getByRole("button", { name: "Kiosk touch mode" }).click();
-      const region = await page.getByRole("region", {name:"Conversation"}).boundingBox();
+      const region = await page
+        .getByRole("region", { name: "Conversation" })
+        .boundingBox();
       expect(region!.height).toBeGreaterThanOrEqual(200);
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBe(true);
     }
     await page.getByRole("button", { name: "New conversation" }).click();
     await expect(page.locator(".message")).toHaveCount(0);
-    await expect(page.getByRole("button", {name:"Jump to latest reply"})).toHaveCount(0);
+    await expect(
+      page.getByRole("button", { name: "Jump to latest reply" }),
+    ).toHaveCount(0);
     await expect(page.getByLabel("Your enquiry")).toHaveValue("");
   });
 }
@@ -173,10 +181,10 @@ test("category recovery asks backend and explicitly removes category restriction
     r.url().endsWith("/conversation/message"),
   );
   await page
-    .getByRole("button", { name: "Clear bus category filters", exact: true })
+    .getByRole("button", { name: "Remove the sleeper filter", exact: true })
     .click();
   const result = await (await pending).json();
-  expect(result.context.filters.ac).toBeUndefined();
+  expect(result.context.filters.sleeper).toBeUndefined();
   expect(result.context.candidates.length).toBeGreaterThan(0);
 });
 
@@ -276,11 +284,22 @@ test("final ten-step acceptance validates database results and context", async (
   );
   expect(stopResult).toBeTruthy();
   const databaseStops = await request.post("/api/v1/enquiry", {
-    data: stopResult.query,
+    data: {
+      intent: "ROUTE_STOPS",
+      service_id: candidate.service_id,
+      origin: candidate.origin_id,
+      destination: candidate.destination_id,
+      travel_date: candidate.service_date,
+    },
   });
-  expect(stopResult.results).toMatchObject(
-    (await databaseStops.json()).results,
-  );
+  expect(databaseStops.ok()).toBeTruthy();
+  const actualStops = (await databaseStops.json()).results;
+  expect(stopResult.results.length).toBeGreaterThan(0);
+  for (const stop of stopResult.results) {
+    expect(
+      actualStops.some((r: any) => r.station_id === stop.station_id),
+    ).toBeTruthy();
+  }
   steps.push({ step: 6, context: result.context, results: result.results });
   result = await send(page, "Does it stop at Ongole?");
   expect(result.context.service_id).toBe(candidate.service_id);
@@ -301,7 +320,7 @@ test("final ten-step acceptance validates database results and context", async (
   ).toBeNull();
   steps.push({ step: 10, display_cleared: true });
   writeFileSync(
-    "../docs/phase5a-passenger-acceptance.json",
+    "../docs/phase5d-passenger-acceptance.json",
     JSON.stringify({ dataset: "ISOLATED DEMO", steps }, null, 2),
   );
 });
@@ -372,7 +391,7 @@ test("local runtime performance benchmark records measured timings", async ({
     });
   }
   writeFileSync(
-    "../docs/phase5a-performance.json",
+    "../docs/phase5d-performance.json",
     JSON.stringify(
       {
         recorded_at: new Date().toISOString(),

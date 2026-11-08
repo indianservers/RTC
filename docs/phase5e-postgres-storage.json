@@ -1,0 +1,15 @@
+{
+  "backup_and_isolated_restore": "PASS",
+  "source_and_restored_counts": [
+    {
+      "tables": 72,
+      "services": 100,
+      "schema": "0016"
+    },
+    {
+      "tables": 72,
+      "services": 100,
+      "schema": "0016"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "api_crash_simulated": true,
+  "restart": "MANUAL_LAUNCHER_RESTART; installed service auto-restart not tested",
+  "selected_journey_preserved": true,
+  "fare_follow_up": "The fare for your selected service is INR 101.00.",
+  "original_session_reused": true,
+  "duplicate_start_refused": true,
+  "graceful_shutdown_observed": true
+}

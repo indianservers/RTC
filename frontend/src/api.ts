@@ -11,6 +11,44 @@ export interface Station {
 }
 
 export interface Conversation {
+  feedback_policy?: {
+    enabled: boolean;
+    retain_text_enabled: boolean;
+    retention_days: number;
+  };
+  reliability?: {
+    confidence_state: string;
+    error_category: string | null;
+    failure_group: string | null;
+    diagnosis: Row[];
+  };
+  dialogue_act?: string;
+  query_plan?: {
+    primary_intent: string | null;
+    secondary_intents: string[];
+    shared_entities: Row;
+    dependencies: Row[];
+  };
+  answer_sections?: {
+    intent: string;
+    title: string;
+    text: string;
+    status: string;
+  }[];
+  clarification_choices?: { id: string; label: string; text: string }[];
+  source_metadata?: Row[];
+  message_id?: string;
+  response_text?: string;
+  selected_journey?: Row | null;
+  result_set?: Row[];
+  current_context?: Row;
+  follow_up_suggestions?: {
+    id: string;
+    label: string;
+    text: string;
+    context_action?: Row | null;
+  }[];
+  data_source?: string[];
   session_id: string;
 
   answer: string;
@@ -57,7 +95,10 @@ export async function api<T = Row>(
     const source = sessionStorage.getItem("rtc-admin-source");
     if (operator) {
       adminHeaders["X-Operator-ID"] = operator;
-      if (!options.method || options.method === "GET")
+      if (
+        (!options.method || options.method === "GET") &&
+        !new URLSearchParams(path.split("?")[1] || "").has("operator_id")
+      )
         path +=
           (path.includes("?") ? "&" : "?") +
           "operator_id=" +

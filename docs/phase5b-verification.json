@@ -1,0 +1,41 @@
+{
+  "phase5b-backend": {
+    "tests": "1618",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "251.768"
+  },
+  "phase5b-dispatcher": {
+    "tests": "54",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "63.430"
+  },
+  "browser": {
+    "startTime": "2026-11-08T11:52:56.972Z",
+    "duration": 150679.98299999998,
+    "expected": 144,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "live_acceptance": {
+    "delay_and_revised_departure": true,
+    "latest_platform": true,
+    "no_false_actual_departure": true,
+    "nlp_delay": true,
+    "actual_departure_visible": true,
+    "nlp_departure": true,
+    "every_event_has_actor_timestamp_source": true
+  },
+  "final_live_integrity": {
+    "head": "0016",
+    "integrity": "ok",
+    "foreign_key_errors": []
+  },
+  "post_build_dispatcher_browser_cases": 4,
+  "postgres_test_server_stopped": true,
+  "production_app": "http://127.0.0.1:8000"
+}

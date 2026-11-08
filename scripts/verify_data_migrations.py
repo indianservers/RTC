@@ -78,7 +78,7 @@ def verify(url):
             assert batch["workflow_state"] == "PUBLISHED" and batch["revision"] == 1
             assert (
                 connection.scalar(text("SELECT version_num FROM alembic_version"))
-                == "0014"
+                == "0016"
             )
             if engine.dialect.name == "sqlite":
                 assert connection.execute(text("PRAGMA foreign_key_check")).all() == []
@@ -86,7 +86,7 @@ def verify(url):
         assert any(c["name"] == "ck_fare_rule_effective_components" for c in checks)
         report = {
             "dialect": engine.dialect.name,
-            "head": "0014",
+            "head": "0016",
             "legacy_operator_preserved": dict(operator),
             "legacy_batch_preserved": dict(batch),
             "fare_rule_check_present": True,
@@ -102,7 +102,7 @@ def verify(url):
             os.environ["DATABASE_URL"] = old
 
 
-def run():
+def run(report="docs/phase5a-migration-verification.json"):
     reports = []
     with tempfile.TemporaryDirectory(prefix="rtc-migration-") as tmp:
         reports.append(verify("sqlite:///" + (Path(tmp) / "migration.db").as_posix()))
@@ -123,11 +123,15 @@ def run():
             with admin.begin() as connection:
                 connection.execute(DropSchema(schema, cascade=True))
             admin.dispose()
-    (ROOT / "docs/phase5a-migration-verification.json").write_text(
+    (ROOT / report).write_text(
         json.dumps(reports, indent=2, default=str), encoding="utf-8"
     )
     print(json.dumps(reports, indent=2, default=str))
 
 
 if __name__ == "__main__":
-    run()
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--report", default="docs/phase5a-migration-verification.json")
+    run(parser.parse_args().report)

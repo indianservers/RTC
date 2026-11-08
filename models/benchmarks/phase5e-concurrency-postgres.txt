@@ -1,0 +1,72 @@
+[
+  {
+    "concurrent_kiosks": 1,
+    "requests": 6,
+    "elapsed_seconds": 1.1050023999996483,
+    "p50_ms": 89.9758000014117,
+    "p95_ms": 162.19140000612242,
+    "p99_ms": 162.19140000612242,
+    "requests_per_second": 5.429852460050683,
+    "error_count": 0,
+    "error_statuses": [],
+    "error_rate": 0.0,
+    "process_cpu_percent": 36.764626031593174,
+    "peak_sampled_rss_bytes": 112812032
+  },
+  {
+    "concurrent_kiosks": 5,
+    "requests": 30,
+    "elapsed_seconds": 2.2386850000038976,
+    "p50_ms": 226.13920000003418,
+    "p95_ms": 410.4818999985582,
+    "p99_ms": 558.2197000039741,
+    "requests_per_second": 13.400724085768104,
+    "error_count": 0,
+    "error_statuses": [],
+    "error_rate": 0.0,
+    "process_cpu_percent": 78.86884487978104,
+    "peak_sampled_rss_bytes": 116940800
+  },
+  {
+    "concurrent_kiosks": 10,
+    "requests": 60,
+    "elapsed_seconds": 4.146272899997712,
+    "p50_ms": 459.3278999964241,
+    "p95_ms": 799.2316999952891,
+    "p99_ms": 990.3548000002047,
+    "requests_per_second": 14.470827523203578,
+    "error_count": 0,
+    "error_statuses": [],
+    "error_rate": 0.0,
+    "process_cpu_percent": 96.09533902127374,
+    "peak_sampled_rss_bytes": 121409536
+  },
+  {
+    "concurrent_kiosks": 25,
+    "requests": 150,
+    "elapsed_seconds": 10.056656300002942,
+    "p50_ms": 1150.6449000007706,
+    "p95_ms": 1970.454599999357,
+    "p99_ms": 3031.911299993226,
+    "requests_per_second": 14.91549432786682,
+    "error_count": 0,
+    "error_statuses": [],
+    "error_rate": 0.0,
+    "process_cpu_percent": 96.01849473564266,
+    "peak_sampled_rss_bytes": 131686400
+  },
+  {
+    "concurrent_kiosks": 50,
+    "requests": 300,
+    "elapsed_seconds": 17.45473520000087,
+    "p50_ms": 2093.3665999982622,
+    "p95_ms": 3826.5140000003157,
+    "p99_ms": 4412.248400003591,
+    "requests_per_second": 17.187313159582338,
+    "error_count": 0,
+    "error_statuses": [],
+    "error_rate": 0.0,
+    "process_cpu_percent": 103.30291346957301,
+    "peak_sampled_rss_bytes": 142180352
+  }
+]

@@ -1,0 +1,130 @@
+{
+  "phase": "5D",
+  "recorded_at": "2026-11-08T14:52:30.729762+00:00",
+  "status": "IMPLEMENTED_AND_VERIFIED_WITH_DOCUMENTED_LIMITS",
+  "backend": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "2307",
+    "time": "1361.163",
+    "timestamp": "2026-11-08T19:59:18.652708+05:30",
+    "hostname": "DESKTOP-B3SR465",
+    "postgres_cases": 71
+  },
+  "phase5d_tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "259",
+    "time": "161.083",
+    "timestamp": "2026-11-08T20:07:46.810050+05:30",
+    "hostname": "DESKTOP-B3SR465",
+    "postgres_cases": 1
+  },
+  "browser_full": {
+    "startTime": "2026-11-08T14:21:16.698Z",
+    "duration": 136372.613,
+    "expected": 157,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "browser_final_focused": {
+    "startTime": "2026-11-08T14:44:31.374Z",
+    "duration": 17718.025,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": {
+    "ruff": "PASS",
+    "mypy_60_files": "PASS (--ignore-missing-imports, existing project command)",
+    "eslint": "PASS",
+    "typescript_vite_build": "PASS"
+  },
+  "live_acceptance": {
+    "passed": true,
+    "label_provenance": "AUTOMATED_DEMO_ACCEPTANCE",
+    "model_promoted": false
+  },
+  "offline_acceptance": {
+    "passed": true,
+    "network": "ALL_SOCKET_EGRESS_AND_DNS_BLOCKED_BEFORE_BACKEND_IMPORT"
+  },
+  "performance": {
+    "live_turn_count": 10,
+    "repair_detection_ms": 0.009800001862458885,
+    "clarification_response_ms": 31.628600001567975,
+    "diagnostic_probe_ms": 117.33330000424758,
+    "feedback_write_ms": 27.25349999673199,
+    "response_min_ms": 31.42830000433605,
+    "response_max_ms": 245.25170000561047,
+    "browser_sample_count": 5,
+    "browser_send_to_visible_median_ms": 208.84010000000126
+  },
+  "production_training_executed": false,
+  "schema_changed_in_5d": false,
+  "remaining_deployment_inputs": [
+    "Real human-reviewed full-taxonomy corpus and independent holdouts before production candidate promotion"
+  ],
+  "limitations_report": "PHASE_5D_REPORT.md",
+  "commands": [
+    "python -m pytest -q --junitxml=docs/phase5d-backend.xml (RTC_TEST_POSTGRES_URL set to dedicated localhost:55435 test database)",
+    "python -m pytest backend/tests/test_phase5d.py backend/tests/test_phase5d_learning.py backend/tests/test_phase5d_scopes.py -q --junitxml=docs/phase5d-recovery.xml (same PostgreSQL environment)",
+    "python -m ruff check backend scripts/verify_phase5d_live.py",
+    "python -m mypy backend/app --ignore-missing-imports",
+    "npm run lint (frontend)",
+    "npm run build (frontend)",
+    "npx playwright test (frontend; full run)",
+    "npx playwright test tests/phase5d.spec.ts --reporter=line,json (frontend; final focused run)",
+    "python scripts/verify_phase5d_live.py --offline",
+    "python scripts/verify_phase5d_live.py (RTC_ADMIN_TOKEN set; loopback acceptance)"
+  ],
+  "final_main_app": {
+    "health": {
+      "data": {
+        "status": "DEGRADED",
+        "database": "READY",
+        "deterministic_fallback": "READY",
+        "statistical_model": "NOT_APPROVED",
+        "active_model_name": null,
+        "active_model_version": null,
+        "offline_certification": "OS_ISOLATION_UNVERIFIED"
+      }
+    },
+    "sqlite_integrity": "ok",
+    "foreign_key_violations": 0,
+    "migration": [
+      [
+        "0016"
+      ]
+    ],
+    "url": "http://127.0.0.1:8000",
+    "review_url": "http://127.0.0.1:8000/admin/nlp-review",
+    "browser_console_errors": 0,
+    "registry_git_diff": "UNCHANGED",
+    "feedback_text_policy": "ENABLED_FOR_OPT_IN_DEMO; repository default remains disabled",
+    "temporary_reviewer_access": "REVOKED",
+    "admin_quality_checks": {
+      "unauthenticated_reviews_status": 401,
+      "deployment_history_available": true,
+      "intent_accuracy": null,
+      "model_readiness": "DETERMINISTIC_FALLBACK"
+    }
+  },
+  "offline_training_lifecycle": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "3",
+    "time": "5.203",
+    "timestamp": "2026-11-08T20:30:26.689863+05:30",
+    "hostname": "DESKTOP-B3SR465",
+    "network": "socket connect/create_connection and DNS blocked in actual train/evaluate/deploy/rollback test"
+  }
+}

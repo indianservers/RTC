@@ -1,0 +1,25 @@
+[Unit]
+Description=RTC local enquiry
+After=network.target postgresql.service
+StartLimitIntervalSec=120
+StartLimitBurst=3
+[Service]
+Type=simple
+User=rtc
+Group=rtc
+WorkingDirectory=/opt/rtc
+EnvironmentFile=/etc/rtc/runtime.env
+ExecStart=/opt/rtc/.venv/bin/python scripts/serve_rtc.py
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=35
+KillSignal=SIGTERM
+NoNewPrivileges=true
+PrivateTmp=true
+MemoryMax=4G
+TasksMax=128
+LimitNOFILE=4096
+StandardOutput=journal
+StandardError=journal
+[Install]
+WantedBy=multi-user.target

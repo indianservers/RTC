@@ -17,6 +17,7 @@ def run(port=8020, strict=False):
         os.environ["DATABASE_URL"] = "sqlite:///" + path.as_posix()
         os.environ["RTC_ALLOW_DEMO_DIRECT_WRITES"] = "0" if strict else "1"
         os.environ["RTC_REQUESTS_PER_MINUTE"] = "5000"
+        os.environ["RTC_FEEDBACK_RETAIN_TEXT"] = "1"  # Isolated synthetic browser fixtures only.
         os.environ["RTC_ADMIN_TOKEN"] = "ui-test-only-token-never-for-deployment"
         os.environ["RTC_REQUEST_LOG"] = str(
             Path(__file__).resolve().parents[1]
@@ -158,16 +159,19 @@ def run(port=8020, strict=False):
                     Station(id="ui-central-b", code="UI-CENTRAL-B", name="Central"),
                 ]
             )
-        from app.operations import DataSource, Trip
+        from app.operations import DataSource, StationBay, Trip
         from app.records import DelayEvent
 
         with Session(engine) as s, s.begin():
             origin = s.scalar(select(Station).where(Station.code == "DEMO0"))
+            op = s.scalar(select(Operator).where(Operator.code == "DEMO"))
             s.add(
                 DataSource(
                     id="ui-expiry-source",
                     code="UI-EXPIRY",
                     name="DEMO verified-update fixture",
+                    operator_id=op.id,
+                    is_demo=True,
                 )
             )
             s.add(
@@ -177,6 +181,22 @@ def run(port=8020, strict=False):
                     service_date=(now + timedelta(hours=1)).date(),
                     status="scheduled",
                 )
+            )
+            s.add_all(
+                [
+                    StationBay(
+                        id="ui-dispatch-bay1",
+                        station_id=origin.id,
+                        code="DEMO-1",
+                        dataset_source="DEMO",
+                    ),
+                    StationBay(
+                        id="ui-dispatch-bay2",
+                        station_id=origin.id,
+                        code="DEMO-2",
+                        dataset_source="DEMO",
+                    ),
+                ]
             )
             s.flush()
             s.add(

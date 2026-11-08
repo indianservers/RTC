@@ -4,13 +4,15 @@ from .datetimes import UTCDateTime
 
 from datetime import UTC, date, datetime
 
-from sqlalchemy import CheckConstraint, Date, ForeignKey, UniqueConstraint
+from sqlalchemy import JSON, CheckConstraint, Date, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .domain import Base, Entity
 
 
 class Trip(Entity, Base):
+    operational_version: Mapped[int] = mapped_column(default=0, server_default="0")
+    operational_state: Mapped[dict | None] = mapped_column(JSON)
     vehicle_id: Mapped[str | None] = mapped_column(ForeignKey("vehicles.id"))
     planned_departure_at: Mapped[datetime | None] = mapped_column(
         UTCDateTime(timezone=True)
@@ -75,6 +77,7 @@ class StationBay(Entity, Base):
 
 
 class PlatformAssignment(Entity, OperationalRecord, Base):
+    assignment_kind: Mapped[str | None]
     __tablename__ = "platform_assignments"
     trip_id: Mapped[str] = mapped_column(ForeignKey("trips.id"), index=True)
     bay_id: Mapped[str] = mapped_column(ForeignKey("station_bays.id"))

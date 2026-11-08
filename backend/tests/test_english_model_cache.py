@@ -61,3 +61,5 @@ def test_shared_thread_safe_local_model_cache(tmp_path, monkeypatch):
         EnglishIntentModel(tmp_path).predict("next bus")["status"]
         == "CHECKSUM_MISMATCH"
     )
+    model.unlink()
+    assert EnglishIntentModel(tmp_path).predict("next bus")["status"] == "MISSING_MODEL"

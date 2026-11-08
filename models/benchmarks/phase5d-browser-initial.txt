@@ -1,0 +1,48 @@
+
+Running 4 tests using 1 worker
+
+(node:25580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 tests\phase5d.spec.ts:41:1 › recovery, exact fare, optional feedback, local review and approved export (45.3s)
+(node:43320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 tests\phase5d.spec.ts:100:1 › no-result diagnostic preserves fare ceiling and recovery is explicit (757ms)
+  ok 3 tests\phase5d.spec.ts:121:1 › uncertainty gives an actionable first-versus-next clarification (618ms)
+  ok 4 tests\phase5d.spec.ts:140:1 › admin deletion controls remove retained question and training eligibility (894ms)
+
+
+  1) tests\phase5d.spec.ts:41:1 › recovery, exact fare, optional feedback, local review and approved export 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByLabel('Review status', { exact: true })
+
+
+      74 |   await page
+      75 |     .getByLabel("Review status", { exact: true })
+    > 76 |     .selectOption("APPROVED_FOR_TRAINING");
+         |      ^
+      77 |   await page
+      78 |     .getByLabel("Corrected intent", { exact: true })
+      79 |     .fill("BUS_PLATFORM");
+        at C:\Indian Servers\RTC\frontend\tests\phase5d.spec.ts:76:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\phase5d-recovery-exact-far-edc30--review-and-approved-export\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\phase5d-recovery-exact-far-edc30--review-and-approved-export\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\phase5d-recovery-exact-far-edc30--review-and-approved-export\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\phase5d-recovery-exact-far-edc30--review-and-approved-export\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\phase5d.spec.ts:41:1 › recovery, exact fare, optional feedback, local review and approved export 
+  3 passed (56.6s)

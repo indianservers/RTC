@@ -5,7 +5,7 @@ from .datetimes import UTCDateTime
 from datetime import date, datetime
 from decimal import Decimal
 
-from sqlalchemy import JSON, CheckConstraint, ForeignKey, UniqueConstraint
+from sqlalchemy import JSON, CheckConstraint, ForeignKey, UniqueConstraint, event
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .domain import Base, Entity
@@ -58,6 +58,10 @@ class Location(Entity, OperationalRecord, Base):
 
 
 class Disruption(Entity, OperationalRecord, Base):
+    disruption_type: Mapped[str | None]
+    severity: Mapped[str | None]
+    details: Mapped[dict | None] = mapped_column(JSON)
+    approved_by: Mapped[str | None]
     __tablename__ = "service_disruptions"
     service_id: Mapped[str] = mapped_column(ForeignKey("services.id"))
     description: Mapped[str]
@@ -79,6 +83,12 @@ class QualityIssue(Entity, Base):
 
 
 class Audit(Entity, Base):
+    idempotency_key: Mapped[str | None] = mapped_column(unique=True)
+    station_id: Mapped[str | None] = mapped_column(
+        ForeignKey("bus_stations.id"), index=True
+    )
+    source_id: Mapped[str | None] = mapped_column(ForeignKey("data_sources.id"))
+    occurred_at: Mapped[datetime | None] = mapped_column(UTCDateTime(timezone=True))
     __tablename__ = "audit_logs"
     batch_id: Mapped[str | None] = mapped_column(
         ForeignKey("data_import_batches.id"), index=True
@@ -197,3 +207,12 @@ class BookingReference(Entity, Base):
     trip_id: Mapped[str] = mapped_column(ForeignKey("trips.id"))
     channel_id: Mapped[str] = mapped_column(ForeignKey("reservation_channels.id"))
     reference: Mapped[str]
+
+
+@event.listens_for(Audit, "before_update")
+@event.listens_for(Audit, "before_delete")
+def preserve_operational_history(mapper, connection, target):
+    if target.entity_type == "operations":
+        raise ValueError(
+            "Operational audit events are append-only; record a correction"
+        )

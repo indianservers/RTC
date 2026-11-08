@@ -1,0 +1,8 @@
+{
+  "head": "0016",
+  "all_existing_values_preserved": true,
+  "preserved_tables": 71,
+  "preserved_rows": 1150,
+  "integrity_check": "ok",
+  "foreign_key_errors": []
+}

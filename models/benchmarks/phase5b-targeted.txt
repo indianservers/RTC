@@ -1,0 +1,39 @@
+.s.sF
+================================== FAILURES ===================================
+___________ test_verified_delay_rechecks_connection_timing[sqlite] ____________
+
+ops = (<starlette.testclient.TestClient object at 0x00000150467DF380>, Engine(sqlite:///C%3A/Users/Sai Satish/AppData/Local/...9zvW4Ep9QE0POKaKCjq'}, 'station-a-only': {'Authorization': 'Bearer tZ-S5lfNyT6JFuhS-o4ep-76pT4R3GpMMHseCpHlB7wo-zYo'}})
+
+    def test_verified_delay_rechecks_connection_timing(ops):
+        from app.enquiry import Enquiry, JourneyQuery
+        _client, engine, day, _ = ops
+        query = JourneyQuery(origin="a", destination="b", at=datetime.combine(day, datetime.min.time(), ZoneInfo("Asia/Kolkata")))
+        with Session(engine) as s:
+            before = next(r for r in Enquiry(s).get_next_buses(query) if r["trip_id"]=="dispatch-trip")
+        submit(ops,"DELAYED",{"delay_minutes":45})
+        with Session(engine) as s:
+            after = next(r for r in Enquiry(s).get_next_buses(query) if r["trip_id"]=="dispatch-trip")
+>           assert (after["departure"]-before["departure"]).total_seconds()==2700
+E           AssertionError: assert 0.0 == 2700
+E            +  where 0.0 = <built-in method total_seconds of datetime.timedelta object at 0x0000015046A41080>()
+E            +    where <built-in method total_seconds of datetime.timedelta object at 0x0000015046A41080> = (datetime.datetime(2026, 11, 8, 23, 0, tzinfo=zoneinfo.ZoneInfo(key='Asia/Kolkata')) - datetime.datetime(2026, 11, 8, 23, 0, tzinfo=zoneinfo.ZoneInfo(key='Asia/Kolkata'))).total_seconds
+
+backend\tests\test_dispatcher.py:453: AssertionError
+----------------------------- Captured log setup ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T11:24:50.665240+00:00", "correlation_id": "7dd0eb9e96314bf791ac61307a2e22bc", "endpoint": "/api/v1/admin/data/users", "method": "POST", "status": 201, "duration_ms": 10.618, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T11:24:50.686240+00:00", "correlation_id": "8a164f3c3c06424d88ec4dcc857e5cd2", "endpoint": "/api/v1/admin/data/users", "method": "POST", "status": 201, "duration_ms": 10.054, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T11:24:50.697241+00:00", "correlation_id": "82c00b0b69594a249666792c065683b3", "endpoint": "/api/v1/admin/data/users", "method": "POST", "status": 201, "duration_ms": 8.705, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T11:24:50.706241+00:00", "correlation_id": "7d4381052ed345d880439ac5391bf25a", "endpoint": "/api/v1/admin/data/users", "method": "POST", "status": 201, "duration_ms": 6.788, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T11:24:50.715256+00:00", "correlation_id": "56159b3444174841b1e2a1f7bdc277e0", "endpoint": "/api/v1/admin/data/users", "method": "POST", "status": 201, "duration_ms": 7.003, "severity": "INFO", "category": "SUCCESS"}
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T11:24:50.756241+00:00", "correlation_id": "8aa0f76427a44a82a3460a826a6ee367", "endpoint": "/api/v1/operations/trips/{trip_id}/events", "method": "POST", "status": 200, "duration_ms": 20.322, "severity": "INFO", "category": "SUCCESS"}
+============================== warnings summary ===============================
+..\..\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend/tests/test_dispatcher.py::test_verified_delay_rechecks_connection_timing[sqlite]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 2 passed, 2 skipped, 40 deselected, 1 warning in 3.22s

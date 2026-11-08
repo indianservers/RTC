@@ -7,7 +7,7 @@ export default defineConfig({
   expect: { timeout: 12000 },
   reporter: [
     ["list"],
-    ["json", { outputFile: "../docs/phase5a-playwright.json" }],
+    ["json", { outputFile: "../docs/phase5d-playwright.json" }],
   ],
   use: {
     baseURL: "http://127.0.0.1:8020",

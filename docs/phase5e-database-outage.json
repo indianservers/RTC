@@ -1,0 +1,7 @@
+{
+  "unavailable_status": 503,
+  "recovered": {
+    "status": "DEGRADED",
+    "deterministic_enquiries": true
+  }
+}

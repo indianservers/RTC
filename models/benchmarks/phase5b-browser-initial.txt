@@ -1,0 +1,52 @@
+
+Running 3 tests using 1 worker
+
+(node:31648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 tests\operations.spec.ts:64:1 › dispatcher delay platform and actual departure reach passenger enquiries with full audit (2.6s)
+  x  2 tests\operations.spec.ts:143:1 › passenger board refreshes over WebSocket and reconnect refetches authoritative state (12.5s)
+(node:8972) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 tests\operations.spec.ts:201:1 › viewer cannot mutate and cancellations appear separately on the public board (1.0s)
+
+
+  1) tests\operations.spec.ts:143:1 › passenger board refreshes over WebSocket and reconnect refetches authoritative state 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByText('BOARDING', { exact: true })
+    Expected: visible
+    Timeout: 12000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByText('BOARDING', { exact: true }) with timeout 12000ms
+      - waiting for getByText('BOARDING', { exact: true })
+
+
+      196 |     page.getByText("Connected locally", { exact: true }),
+      197 |   ).toBeVisible();
+    > 198 |   await expect(page.getByText("BOARDING", { exact: true })).toBeVisible();
+          |                                                             ^
+      199 | });
+      200 |
+      201 | test("viewer cannot mutate and cancellations appear separately on the public board", async ({
+        at C:\Indian Servers\RTC\frontend\tests\operations.spec.ts:198:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\operations-passenger-board-f1019-fetches-authoritative-state\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\operations-passenger-board-f1019-fetches-authoritative-state\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\operations-passenger-board-f1019-fetches-authoritative-state\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\operations-passenger-board-f1019-fetches-authoritative-state\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests\operations.spec.ts:143:1 › passenger board refreshes over WebSocket and reconnect refetches authoritative state 
+  2 passed (23.7s)

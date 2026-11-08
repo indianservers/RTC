@@ -67,8 +67,16 @@ class Action(Input):
 
 class Identity(Input):
     username: str = Field(min_length=3, max_length=100)
-    role: Literal["EDITOR", "APPROVER"]
+    role: Literal[
+        "EDITOR",
+        "APPROVER",
+        "OPERATIONS_VIEWER",
+        "DISPATCHER",
+        "STATION_SUPERVISOR",
+        "OPERATOR_ADMIN",
+    ]
     operator_ids: list[str] = Field(default_factory=list, max_length=30)
+    station_ids: list[str] = Field(default_factory=list, max_length=100)
     global_scope: bool = False
 
 
@@ -154,9 +162,17 @@ def management_router(get_engine, authenticate):
                         "username": user.username,
                         "active": user.active,
                         "grants": [
-                            {"role": role, "operator_id": operator}
-                            for role, operator in s.execute(
-                                select(AdminRole.role_code, AdminUserRole.operator_id)
+                            {
+                                "role": role,
+                                "operator_id": operator,
+                                "station_id": station,
+                            }
+                            for role, operator, station in s.execute(
+                                select(
+                                    AdminRole.role_code,
+                                    AdminUserRole.operator_id,
+                                    AdminUserRole.station_id,
+                                )
                                 .join(
                                     AdminUserRole, AdminUserRole.role_id == AdminRole.id
                                 )
@@ -216,6 +232,24 @@ def management_router(get_engine, authenticate):
                 )
             if any(not s.get(Operator, o) for o in body.operator_ids):
                 raise HTTPException(422, "Unknown operator")
+            from .domain import Station
+
+            operations_role = body.role in {
+                "OPERATIONS_VIEWER",
+                "DISPATCHER",
+                "STATION_SUPERVISOR",
+                "OPERATOR_ADMIN",
+            }
+            if (
+                operations_role
+                and not body.station_ids
+                and body.role != "OPERATOR_ADMIN"
+            ):
+                raise HTTPException(
+                    422, "Station-scoped operations roles require station IDs"
+                )
+            if any(not s.get(Station, station) for station in body.station_ids):
+                raise HTTPException(422, "Unknown station")
             role = s.scalar(select(AdminRole).where(AdminRole.role_code == body.role))
             if not role:
                 role = AdminRole(
@@ -234,14 +268,20 @@ def management_router(get_engine, authenticate):
             s.add(user)
             s.flush()
             for op in {None} if body.global_scope else set(body.operator_ids):
-                s.add(
-                    AdminUserRole(
-                        user_id=user.id,
-                        role_id=role.id,
-                        operator_id=op,
-                        dataset_source="LOCAL_ADMIN",
+                for station in (
+                    set(body.station_ids)
+                    if operations_role and body.station_ids
+                    else {None}
+                ):
+                    s.add(
+                        AdminUserRole(
+                            user_id=user.id,
+                            role_id=role.id,
+                            operator_id=op,
+                            station_id=station,
+                            dataset_source="LOCAL_ADMIN",
+                        )
                     )
-                )
             s.add(
                 Audit(
                     actor=principal.username,

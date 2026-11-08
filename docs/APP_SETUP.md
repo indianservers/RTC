@@ -100,3 +100,8 @@ Planner recovery buttons state exactly which restriction changes. Reset search c
 Admin forms warn before discarding edits. API error reference IDs can be matched in `data/runtime/requests.jsonl` (bounded local rotating JSONL; no raw conversation body). `RTC_REQUEST_LOG` overrides that path. `RTC_REQUESTS_PER_MINUTE` overrides the default 300 per-minute, per-process mutation limit; deploy a suitable kiosk limit rather than copying the test server's stress-test value.
 
 Run `python scripts/verify_passenger_offline.py` from a Python environment containing the repository's scikit-learn/joblib dependencies (this machine: `.venv-english/Scripts/python.exe`). It verifies candidate technical loading with sockets blocked and never changes approval/active model selection. See PHASE_4C_REPORT.md and PHASE_4C_PERFORMANCE.md for current evidence and limits.
+
+
+## Phase 5B operations
+
+Open `/admin/operations` for dispatcher control and `/board` for the public local station board. Provision named staff and explicit station grants through Access & approvals. Sources, stations, bays and schedules still require Phase 5A publication. See PHASE_5B_SETUP.md for actions, review, source semantics, API/WebSocket operation and local PostgreSQL/offline test reproduction. PHASE_5B_REPORT.md records actual test results and deployment limits. No voice or external transport integration was added.

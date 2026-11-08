@@ -54,3 +54,30 @@ class SelectiveIntentSVM:
             decide(s, d, self.classes_, self.thresholds)
             for s, d in zip(scores, domain, strict=True)
         ]
+
+
+class ReviewedIntentSVM:
+    """Reviewed-feedback SVM using validation-selected margin and gap rejection."""
+
+    def __init__(self, pipeline, thresholds):
+        self.pipeline = pipeline
+        self.classes_ = pipeline.classes_
+        self.thresholds = thresholds
+
+    def decision_function(self, texts):
+        import numpy as np
+
+        scores = self.pipeline.decision_function(texts)
+        return np.column_stack((-scores, scores)) if scores.ndim == 1 else scores
+
+    def predict(self, texts):
+        return self.pipeline.predict(texts)
+
+    def predict_selective(self, texts):
+        result = []
+        for scores in self.decision_function(texts):
+            row = decide(scores, 1, self.classes_, {**self.thresholds, "domain": 0})
+            if row["status"] == "KNOWN" and row["intents"] == ["OUT_OF_SCOPE"]:
+                row.update(status="OUT_OF_SCOPE", intents=[])
+            result.append(row)
+        return result

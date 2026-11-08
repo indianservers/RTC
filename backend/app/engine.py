@@ -221,7 +221,7 @@ class RTCEnquiryEngine:
 
             status_engine = OperationalStatusEngine(self.session)
             rows = (
-                [status_engine.status(r.trip_id or "", at)]
+                [status_engine.status(r.trip_id or "", at, station_id=r.station or r.origin)]
                 if intent == "BUS_DELAY"
                 else status_engine.disruptions(r.service_id or "", at)
             )

@@ -6,7 +6,7 @@ from decimal import Decimal
 from copy import deepcopy
 from typing import ClassVar, Literal
 
-from pydantic import AwareDatetime, BaseModel, ConfigDict, Field
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validator
 
 
 class JourneyPreferences(BaseModel):
@@ -34,6 +34,11 @@ class ConversationState(BaseModel):
     candidates: list[dict] = Field(default_factory=list)
     journey_candidates: list[dict] = Field(default_factory=list)
     selected_itinerary: dict | None = None
+    selected_result: dict | None = None
+    selected_result_id: str | None = None
+    selected_journey_id: str | None = None
+    selected_trip_id: str | None = None
+    selected_segment: dict | None = None
     selected_leg: int | None = None
     journey_constraints: dict = Field(default_factory=dict)
     journey_ranking: str | None = None
@@ -55,6 +60,24 @@ class ConversationState(BaseModel):
 
 
 class ContextOperation(BaseModel):
+    @model_validator(mode="before")
+    @classmethod
+    def compatible_operations(cls, value):
+        if isinstance(value, dict):
+            value = dict(value)
+            value["op"] = {
+                "SET": "SET_SLOT",
+                "REPLACE": "REPLACE_SLOT",
+                "CLEAR": "CLEAR_SLOT",
+                "INHERIT": "INHERIT_SLOT",
+                "CONFIRM": "CONFIRM_SLOT",
+                "REJECT": "REJECT_SLOT",
+                "RESET": "RESET_CONTEXT",
+            }.get(value.get("op"), value.get("op"))
+            if value["op"] == "INHERIT_SLOT":
+                value.setdefault("source", "INHERITED")
+        return value
+
     op: Literal[
         "SET_SLOT",
         "REPLACE_SLOT",
@@ -63,6 +86,7 @@ class ContextOperation(BaseModel):
         "REJECT_SLOT",
         "RESET_CONTEXT",
         "SELECT_RESULT",
+        "INHERIT_SLOT",
         "REFINE_RESULTS",
         "SWITCH_INTENT",
     ]
@@ -90,6 +114,7 @@ class ContextUpdateEngine:
             "candidates",
         },
         "transfer_station": {"service_id", "trip_id", "candidates"},
+        "passengers": {"service_id", "trip_id", "candidates", "fare", "platform"},
         "travel_date": {"service_id", "trip_id", "fare", "platform", "candidates"},
         "category": {"service_id", "trip_id", "fare", "platform", "candidates"},
         "ac": {"service_id", "trip_id", "fare", "platform", "candidates"},
@@ -123,12 +148,56 @@ class ContextUpdateEngine:
             ):
                 raise ValueError("Select a currently listed service number.")
             chosen = values["candidates"][index]
+            previous_id = values.get("selected_result_id")
+            chosen_id = chosen.get("result_id") or chosen.get("journey_id")
+            if previous_id and previous_id != chosen_id:
+                values["selected_result_history"] = (
+                    values.get("selected_result_history", []) + [previous_id]
+                )[-10:]
+            for slot, key in (
+                ("origin", "origin_id"),
+                ("destination", "destination_id"),
+            ):
+                resolved = chosen.get(key, chosen.get(slot))
+                if resolved:
+                    values[slot] = resolved
+                    values.setdefault("slot_sources", {})[slot] = "CONFIRMED_SELECTION"
+            if not values.get("travel_date") and chosen.get("service_date"):
+                values["travel_date"] = str(chosen["service_date"])
+            values["selection_status"] = "USER_CONFIRMED"
+            values["selected_result"] = deepcopy(chosen)
+            values["selected_result_id"] = chosen.get(
+                "result_id", chosen.get("journey_id")
+            )
+            values["selected_journey_id"] = chosen.get("journey_id")
+            values["selected_trip_id"] = chosen.get("trip_id")
+            legs = chosen.get("legs", [])
+            values["selected_segment"] = {
+                "origin_id": chosen.get(
+                    "origin_id", chosen.get("origin", values.get("origin"))
+                ),
+                "destination_id": chosen.get(
+                    "destination_id",
+                    chosen.get("destination", values.get("destination")),
+                ),
+                "boarding_stop_id": chosen.get(
+                    "boarding_stop_id",
+                    legs[0].get("boarding_stop_id") if legs else None,
+                ),
+                "alighting_stop_id": chosen.get(
+                    "alighting_stop_id",
+                    legs[-1].get("alighting_stop_id") if legs else None,
+                ),
+                "service_date": chosen.get("service_date", values.get("travel_date")),
+            }
             if chosen.get("journey_id"):
                 values["selected_itinerary"] = chosen
                 values["selected_leg"] = None
                 values.pop("service_id", None)
                 values.pop("trip_id", None)
                 return values
+            values.pop("selected_itinerary", None)
+            values.pop("selected_leg", None)
             previous = values.get("service_id")
             if previous and previous != chosen["service_id"]:
                 values["selected_service_history"] = (
@@ -140,6 +209,28 @@ class ContextUpdateEngine:
             values["confirmed_slots"] = list(
                 set(values.get("confirmed_slots", [])) | {"service_id"}
             )
+            return values
+        if operation.op == "REFINE_RESULTS":
+            rows = operation.value
+            if not isinstance(rows, list):
+                raise ValueError("Result refinement requires a current result list")
+            values["candidates"] = rows
+            values["result_revision"] = values.get("revision", 0) + 1
+            retained = {r.get("result_id") or r.get("journey_id") for r in rows}
+            if values.get("selected_result_id") not in retained:
+                for key in (
+                    "selected_result",
+                    "selected_result_id",
+                    "selected_journey_id",
+                    "selected_trip_id",
+                    "selected_segment",
+                    "selected_itinerary",
+                    "selected_leg",
+                    "selection_status",
+                    "service_id",
+                    "trip_id",
+                ):
+                    values.pop(key, None)
             return values
         if operation.op == "SWITCH_INTENT":
             values["last_intent"] = operation.value
@@ -164,20 +255,38 @@ class ContextUpdateEngine:
             target.pop(operation.slot, None)
         elif operation.op == "CONFIRM_SLOT":
             candidates = values.get("inferred_candidates", {})
-            target[operation.slot] = candidates.pop(operation.slot, operation.value)
+            target[operation.slot] = candidates.pop(
+                operation.slot,
+                operation.value
+                if operation.value is not None
+                else target.get(operation.slot),
+            )
             values["confirmed_slots"] = list(
                 set(values.get("confirmed_slots", [])) | {operation.slot}
             )
         else:
-            target[operation.slot] = operation.value
+            target[operation.slot] = (
+                target.get(operation.slot)
+                if operation.op == "INHERIT_SLOT" and operation.value is None
+                else operation.value
+            )
         values.setdefault("slot_sources", {})[operation.slot] = operation.source
-        values.setdefault("slot_origins", {})[operation.slot] = operation.source
+        if operation.source != "INHERITED" or operation.slot not in values.get(
+            "slot_origins", {}
+        ):
+            values.setdefault("slot_origins", {})[operation.slot] = operation.source
         if previous != target.get(operation.slot):
             if (
                 operation.slot in self.dependencies
                 or operation.slot in self.filter_slots
             ):
                 for field in (
+                    "selected_result",
+                    "selected_result_id",
+                    "selected_journey_id",
+                    "selected_trip_id",
+                    "selected_segment",
+                    "selection_status",
                     "journey_candidates",
                     "selected_itinerary",
                     "selected_leg",

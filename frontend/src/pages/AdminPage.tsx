@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { api, post, errorText, type Row, type Conversation } from "../api";
+import { NlpReview } from "./NlpReview";
 import { ManagementOverview } from "./ManagementOverview";
 import { AccessManagement } from "./AccessManagement";
 import { FarePreview } from "./FarePreview";
@@ -19,6 +20,7 @@ import { AuditHistory } from "./AuditHistory";
 import { ManagementScope } from "./ManagementScope";
 import { RouteEditor } from "./RouteEditor";
 import { TimetableEditor } from "./TimetableEditor";
+import { OperationsCenter } from "./OperationsCenter";
 import { AdminTable } from "../components/AdminTable";
 import { DataQualityPage } from "./DataQualityPage";
 import { SystemStatus } from "./SystemStatus";
@@ -27,6 +29,7 @@ import { useSearchParams } from "react-router-dom";
 import { Badge, Button, Notice, PageTitle } from "../components/ui";
 const sections = [
   ["overview", "Overview"],
+  ["operations", "Operations Control Center"],
   ["operators", "RTC Operators"],
   ["stations", "Stations"],
   ["station-aliases", "Station aliases"],
@@ -60,6 +63,7 @@ const sections = [
   ["data-sources", "Data sources"],
   ["import-batches", "Import History"],
   ["diagnostics", "NLP Diagnostics"],
+  ["nlp-review", "NLP Review Queue"],
   ["operational-events", "Operational Events"],
   ["data-quality", "Data Quality"],
   ["models", "Model Status"],
@@ -175,7 +179,9 @@ export function AdminPage() {
             "concessions",
             "trip-fare-overrides",
           ].includes(section) && <FarePreview token={token} />}
-          {section === "overview" ? (
+          {section === "operations" ? (
+            <OperationsCenter token={token} role={meta.data.data.role} />
+          ) : section === "overview" ? (
             <ManagementOverview token={token} />
           ) : section === "imports" ? (
             <>
@@ -211,6 +217,8 @@ export function AdminPage() {
             ) : (
               <TimetableEditor token={token} />
             )
+          ) : section === "nlp-review" ? (
+            <NlpReview token={token} />
           ) : section === "diagnostics" ? (
             <Diagnostics token={token} />
           ) : section === "data-quality" ? (

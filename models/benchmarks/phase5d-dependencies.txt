@@ -1,0 +1,24 @@
+Collecting scikit-learn==1.9.1
+  Using cached scikit_learn-1.9.1-cp312-cp312-win_amd64.whl.metadata (9.3 kB)
+Collecting joblib==1.6.0
+  Using cached joblib-1.6.0-py3-none-any.whl.metadata (6.5 kB)
+Requirement already satisfied: numpy>=1.24.1 in c:\users\sai satish\appdata\local\programs\python\python312\lib\site-packages (from scikit-learn==1.9.1) (2.4.5)
+Collecting scipy>=1.10.0 (from scikit-learn==1.9.1)
+  Using cached scipy-1.18.1-cp312-cp312-win_amd64.whl.metadata (61 kB)
+Collecting narwhals>=2.0.1 (from scikit-learn==1.9.1)
+  Using cached narwhals-2.28.0-py3-none-any.whl.metadata (15 kB)
+Collecting threadpoolctl>=3.5.0 (from scikit-learn==1.9.1)
+  Using cached threadpoolctl-3.8.0-py3-none-any.whl.metadata (29 kB)
+Collecting cloudpickle>=3.0 (from joblib==1.6.0)
+  Using cached cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+Using cached scikit_learn-1.9.1-cp312-cp312-win_amd64.whl (8.3 MB)
+Using cached joblib-1.6.0-py3-none-any.whl (306 kB)
+Using cached cloudpickle-3.1.2-py3-none-any.whl (22 kB)
+Using cached narwhals-2.28.0-py3-none-any.whl (490 kB)
+Using cached scipy-1.18.1-cp312-cp312-win_amd64.whl (36.7 MB)
+Using cached threadpoolctl-3.8.0-py3-none-any.whl (32 kB)
+Installing collected packages: threadpoolctl, scipy, narwhals, cloudpickle, joblib, scikit-learn
+Successfully installed cloudpickle-3.1.2 joblib-1.6.0 narwhals-2.28.0 scikit-learn-1.9.1 scipy-1.18.1 threadpoolctl-3.8.0
+
+[notice] A new release of pip is available: 25.0.1 -> 26.3
+[notice] To update, run: python.exe -m pip install --upgrade pip

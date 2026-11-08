@@ -155,12 +155,35 @@ class Fare(Entity, Base):
 
 
 def database(url=None):
-    engine = create_engine(url or os.getenv("DATABASE_URL", "sqlite:///rtc.db"))
+    target = url or os.getenv("DATABASE_URL", "sqlite:///rtc.db")
+    from sqlalchemy.engine import make_url
+
+    parsed = make_url(target)
+    options = {"pool_pre_ping": True}
+    if parsed.get_backend_name() == "postgresql":
+        options.update(
+            pool_size=int(os.getenv("RTC_DB_POOL_SIZE", "10")),
+            max_overflow=int(os.getenv("RTC_DB_MAX_OVERFLOW", "10")),
+            pool_timeout=10,
+            pool_recycle=900,
+            connect_args={
+                "connect_timeout": 5,
+                "options": str(parsed.query.get("options", ""))
+                + " -c statement_timeout="
+                + os.getenv("RTC_DB_STATEMENT_TIMEOUT_MS", "15000"),
+            },
+        )
+    elif parsed.get_backend_name() == "sqlite":
+        options["connect_args"] = {"timeout": 15, "check_same_thread": False}
+    engine = create_engine(target, **options)
     if engine.dialect.name == "sqlite":
 
         @event.listens_for(engine, "connect")
         def fk(connection, _):
             connection.execute("PRAGMA foreign_keys=ON")
+            connection.execute("PRAGMA busy_timeout=15000")
+            connection.execute("PRAGMA journal_mode=WAL")
+            connection.execute("PRAGMA synchronous=NORMAL")
 
     return engine
 

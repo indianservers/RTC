@@ -19,6 +19,20 @@ class AmbiguousStation(ValueError):
         )
 
 
+class UnknownCategory(ValueError):
+    def __init__(self, requested, choices, filters=None):
+        self.requested = requested
+        self.choices = choices
+        self.filters = filters or {}
+        super().__init__(
+            "The category '"
+            + requested
+            + "' is not in the current database. Which recorded category would you like: "
+            + ", ".join(c["name"] for c in choices)
+            + "?"
+        )
+
+
 class RTCEntityExtractor:
     def __init__(self, session):
         self.session = session
@@ -102,7 +116,7 @@ class RTCEntityExtractor:
                 "Which destination station do you mean? Please use a station name or code from this database."
             )
         filters = {}
-        if re.search(r"\bnon[ -]?ac\b", text):
+        if re.search(r"\bnon[ -]?ac\b|\bnot ac\b", text):
             filters["ac"] = False
         elif re.search(r"\bac\b|ఏసీ", text):
             filters["ac"] = True
@@ -132,6 +146,36 @@ class RTCEntityExtractor:
                     )
                 else:
                     filters["category"] = alias.category_id
+        negative_category = re.fullmatch(r"not ac[, ]+([a-z][a-z -]*)[.!?]*", text)
+        if negative_category and "category" not in filters:
+            choices = [
+                {"id": r.id, "name": r.name}
+                for r in self.session.scalars(
+                    select(Category)
+                    .where(Category.active.is_(True))
+                    .order_by(Category.name)
+                )
+            ]
+            raise UnknownCategory(negative_category[1], choices, filters={"ac": False})
+        requested_category = re.fullmatch(
+            r"only ([a-z][a-z -]*?)(?: buses)?[.!?]*", text
+        )
+        if (
+            requested_category
+            and not filters
+            and not places
+            and requested_category[1]
+            not in {"electric", "wheelchair accessible", "accessible"}
+        ):
+            choices = [
+                {"id": r.id, "name": r.name}
+                for r in self.session.scalars(
+                    select(Category)
+                    .where(Category.active.is_(True))
+                    .order_by(Category.name)
+                )
+            ]
+            raise UnknownCategory(requested_category[1], choices)
         if re.search(r"\bwheelchair|accessible\b", text):
             filters["accessible"] = True
         if re.search(r"\belectric\b", text):
@@ -169,7 +213,15 @@ class RTCEntityExtractor:
                 )
             values["passengers"] = counts[0]
         service = re.search(r"\bservice\s+(?:number\s+)?([a-z0-9-]+)", text)
-        if service:
+        if service and service[1] not in {
+            "is",
+            "has",
+            "to",
+            "do",
+            "does",
+            "available",
+            "late",
+        }:
             values["service_number"] = service[1]
         from .constraints import constraints
 

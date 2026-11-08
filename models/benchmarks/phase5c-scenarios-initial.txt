@@ -1,0 +1,2167 @@
+........................................................................ [ 24%]
+........................................................................ [ 48%]
+........................................................................ [ 72%]
+................................................................FFFFFFFF [ 96%]
+
+================================== FAILURES ===================================
+___________________ test_300_multiturn_reasoning[expiry-0] ____________________
+
+chat = <starlette.testclient.TestClient object at 0x000001E9418C8C80>
+text_db = Engine(sqlite:///C%3A/Users/Sai Satish/AppData/Local/Temp/pytest-of-Sai Satish/pytest-1971/memory0/memory.db)
+family = 'expiry', variant = 0
+
+    @pytest.mark.parametrize("variant", range(20))
+    @pytest.mark.parametrize(
+        "family",
+        [
+            "fare",
+            "platform",
+            "attributes",
+            "compare",
+            "reference",
+            "correction",
+            "deadline",
+            "summary",
+            "scope",
+            "reset",
+            "composite",
+            "unknown",
+            "negation",
+            "sessions",
+            "expiry",
+        ],
+    )
+    def test_300_multiturn_reasoning(chat, text_db, family, variant):
+        day = (NOW + timedelta(days=variant % 3)).date().isoformat()
+        destination = "Nellore" if variant % 2 == 0 else "Tirupati"
+        dest_id = "DEMO4" if destination == "Nellore" else "DEMO2"
+        response = turn(chat, f"Next bus to {destination} on {day}?")
+        assert response["intents"] == ["NEXT_BUS"]
+        assert response["context"]["destination"] == dest_id
+        assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+        assert len(response["result_set"]) == 3
+        sid = response["session_id"]
+        first, second, third = response["result_set"]
+    
+        def ask(text, **extra):
+            nonlocal response
+            version = response["context"]["state_version"]
+            response = turn(chat, text, response, **extra)
+            assert response["session_id"] == sid
+            assert response["context"]["state_version"] == version + 1
+            return response
+    
+        if family == "fare":
+            ask("Second one")
+            ask("How much?")
+            assert response["intents"] == ["TICKET_FARE"]
+            query = response["results"][0]["query"]
+            assert query["segments"][0]["service_id"] == second["service_id"]
+            assert query["segments"][0]["destination"] == dest_id
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "platform":
+            ask("2")
+            ask("Which platform?")
+            assert response["results"][0]["query"]["service_id"] == second["service_id"]
+            assert response["results"][0]["results"][0] == {
+                "status": "unknown",
+                "bay": None,
+            }
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+        elif family == "attributes":
+            ask("Only AC")
+            assert response["context"]["filters"]["ac"] is True
+            ask("Only sleeper")
+            assert response["context"]["filters"]["sleeper"] is True
+            ask("1")
+            ask("Does it have AC?")
+            assert response["results"][0]["results"][0]["ac"] is True
+            assert response["results"][0]["results"][0]["sleeper"] is True
+        elif family == "compare":
+            ask("Second one")
+            ask("Compare with the first one")
+            comparison = response["results"][0]
+            assert response["dialogue_act"] == "COMPARISON"
+            assert comparison["query"]["result_ids"] == [
+                second["result_id"],
+                first["result_id"],
+            ]
+            assert [Decimal(r["fare"]) for r in comparison["results"]] == [
+                Decimal(second["fare"]),
+                Decimal(first["fare"]),
+            ]
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("Which one is cheaper?")
+            assert response["results"][0]["winners"] == [1]
+            assert response["results"][0]["results"][2]["fare"] is None
+        elif family == "reference":
+            ask("1")
+            ask("The next one")
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("The one before it")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The Express")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The other one")
+            assert response["requires_clarification"]
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+        elif family == "correction":
+            ask("2")
+            ask("No, Tirumala")
+            assert (
+                response["context"]["destination"] == "DEMO3"
+                and response["selected_journey"] is None
+            )
+            ask("Only AC")
+            ask("Under 900")
+            assert (
+                response["context"]["filters"]["ac"] is True
+                and Decimal(response["context"]["filters"]["max_fare"]) == 900
+            )
+            ask("Remove the fare limit")
+            assert response["context"]["filters"].get("max_fare") is None
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "deadline":
+            ask(f"I need to reach {destination} before 7 AM tomorrow")
+            assert response["context"]["filters"].get("arrival_before")
+            assert not response["context"]["filters"].get("before")
+            deadline = response["context"]["filters"]["arrival_before"]
+            ask("Only AC")
+            ask("Under 900")
+            assert response["context"]["filters"]["arrival_before"] == deadline
+            ask("Forget the earlier time")
+            assert not response["context"]["filters"].get("arrival_before")
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "summary":
+            ask("Only AC")
+            ask("Under 900")
+            before = response["context"].copy()
+            ask("Summarize my journey")
+            assert response["dialogue_act"] == "SUMMARY" and not response["results"]
+            assert response["context"]["filters"] == before["filters"]
+            assert response["context"]["destination"] == dest_id
+            assert destination in response["answer"] and "900" in response["answer"]
+            assert response["selected_journey"] is None
+        elif family == "scope":
+            ask("2")
+            chosen = response["context"]["selected_result_id"]
+            ask(
+                [
+                    "What's the weather?",
+                    "Who is the Prime Minister?",
+                    "Can you order food?",
+                    "Tell me a joke.",
+                ][variant % 4]
+            )
+            assert (
+                response["dialogue_act"] == "OUT_OF_SCOPE"
+                and response["state"] == "OUT_OF_SCOPE"
+            )
+            assert (
+                not response["results"]
+                and response["context"]["selected_result_id"] == chosen
+            )
+            ask("Fare?")
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "reset":
+            ask("2")
+            ask("Start over")
+            assert response["dialogue_act"] == "RESET_CONVERSATION"
+            assert (
+                not response["context"].get("destination")
+                and not response["selected_journey"]
+                and not response["result_set"]
+            )
+            ask("How much?")
+            assert response["requires_clarification"] and not response["results"]
+        elif family == "composite":
+            ask(f"Next bus to {destination}, fare and platform on {day}?")
+            assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+            assert set(response["query_plan"]["secondary_intents"]) == {
+                "TICKET_FARE",
+                "BUS_PLATFORM",
+            }
+            assert len(response["answer_sections"]) == 3
+            timings = next(r for r in response["results"] if r["intent"] == "NEXT_BUS")[
+                "results"
+            ]
+            fare = next(r for r in response["results"] if r["intent"] == "TICKET_FARE")
+            platform = next(r for r in response["results"] if r["intent"] == "BUS_PLATFORM")
+            assert [r["service_id"] for r in fare["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["service_id"] for r in platform["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["fare"] for r in fare["results"]] == [r["fare"] for r in timings]
+        elif family == "unknown":
+            ask("3")
+            ask("Fare?")
+            assert response["results"][0]["results"][0]["amount"] is None
+            ask("Which platform?")
+            assert response["results"][0]["results"][0]["bay"] is None
+            ask("Is it available?")
+            assert response["selected_journey"]["service_id"] == third["service_id"]
+            assert response["results"][0]["query"]["service_id"] == third["service_id"]
+        elif family == "negation":
+            ask("Only AC")
+            ask("Only AC and non AC")
+            assert (
+                response["requires_clarification"]
+                and response["context"]["filters"]["ac"] is True
+            )
+            ask("Not AC, Express")
+            assert response["context"]["filters"]["ac"] is False
+            assert response["context"]["filters"]["category"] == "express"
+            ask("Two passengers, not three")
+            assert response["context"]["passengers"] == 2
+        elif family == "sessions":
+            ask("2")
+            other = turn(chat, "Next bus to Hyderabad tomorrow?")
+            assert other["session_id"] != sid and other["context"]["destination"] == "DEMO6"
+            ask("Fare?")
+            assert (
+                response["context"]["destination"] == dest_id
+                and response["selected_journey"]["service_id"] == second["service_id"]
+            )
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        else:
+            ask("2")
+            with Session(text_db) as session, session.begin():
+                context = session.scalar(select(Context).where(Context.session_id == sid))
+                context.values = {
+                    **context.values,
+                    "expires_at": (NOW - timedelta(seconds=1)).isoformat(),
+                }
+            expired = chat.post("/api/v1/conversation/state", json={"session_id": sid})
+            assert expired.status_code == 410
+>           fresh = turn(chat, "How much?", response)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_phase5c.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001E9418C8C80>
+text = 'How much?'
+previous = {'source_metadata': [], 'dialogue_act': 'ENQUIRY', 'query_plan': {'primary_intent': None, 'secondary_intents': [], 'sh..., 'destination': 'DEMO4', 'travel_date': '2026-11-08', 'filters': {}}, 'dependencies': []}, 'answer_sections': [], ...}
+extra = {}
+
+    def turn(client, text, previous=None, **extra):
+        body = {"text": text, "language": "en", "station_context": "DEMO0", **extra}
+        if previous:
+            body["session_id"] = previous["session_id"]
+        response = client.post("/api/v1/conversation/message", json=body)
+        assert response.status_code == 200, response.text
+        data = response.json()
+        if previous:
+>           assert data["session_id"] == previous["session_id"]
+E           AssertionError: assert '5fa48065-3cb...-2849846c013e' == '1a0372ed-413...-0bd5423da3f9'
+E             
+E             - 1a0372ed-4139-4d6c-b7e9-0bd5423da3f9
+E             + 5fa48065-3cbb-431f-a87f-2849846c013e
+
+backend\tests\test_conversation_memory.py:168: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:14.767229+00:00", "correlation_id": "586e651b249d4c83aed29cd46f5f7810", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 35.445, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:14.839859+00:00", "correlation_id": "b51d5499c1794617890111f221b14839", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 69.466, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:14.848857+00:00", "correlation_id": "21d5cf48b2ad4d8084b8322ebb8ee807", "endpoint": "/api/v1/conversation/state", "method": "POST", "status": 410, "duration_ms": 2.01, "severity": "WARNING", "category": "REQUEST_REJECTED"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:14.869857+00:00", "correlation_id": "f8c3d405e48e4e9cb01d7e4be12436a5", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 19.295, "severity": "INFO", "category": "SUCCESS"}
+___________________ test_300_multiturn_reasoning[expiry-1] ____________________
+
+chat = <starlette.testclient.TestClient object at 0x000001E941D4F500>
+text_db = Engine(sqlite:///C%3A/Users/Sai Satish/AppData/Local/Temp/pytest-of-Sai Satish/pytest-1971/memory0/memory.db)
+family = 'expiry', variant = 1
+
+    @pytest.mark.parametrize("variant", range(20))
+    @pytest.mark.parametrize(
+        "family",
+        [
+            "fare",
+            "platform",
+            "attributes",
+            "compare",
+            "reference",
+            "correction",
+            "deadline",
+            "summary",
+            "scope",
+            "reset",
+            "composite",
+            "unknown",
+            "negation",
+            "sessions",
+            "expiry",
+        ],
+    )
+    def test_300_multiturn_reasoning(chat, text_db, family, variant):
+        day = (NOW + timedelta(days=variant % 3)).date().isoformat()
+        destination = "Nellore" if variant % 2 == 0 else "Tirupati"
+        dest_id = "DEMO4" if destination == "Nellore" else "DEMO2"
+        response = turn(chat, f"Next bus to {destination} on {day}?")
+        assert response["intents"] == ["NEXT_BUS"]
+        assert response["context"]["destination"] == dest_id
+        assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+        assert len(response["result_set"]) == 3
+        sid = response["session_id"]
+        first, second, third = response["result_set"]
+    
+        def ask(text, **extra):
+            nonlocal response
+            version = response["context"]["state_version"]
+            response = turn(chat, text, response, **extra)
+            assert response["session_id"] == sid
+            assert response["context"]["state_version"] == version + 1
+            return response
+    
+        if family == "fare":
+            ask("Second one")
+            ask("How much?")
+            assert response["intents"] == ["TICKET_FARE"]
+            query = response["results"][0]["query"]
+            assert query["segments"][0]["service_id"] == second["service_id"]
+            assert query["segments"][0]["destination"] == dest_id
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "platform":
+            ask("2")
+            ask("Which platform?")
+            assert response["results"][0]["query"]["service_id"] == second["service_id"]
+            assert response["results"][0]["results"][0] == {
+                "status": "unknown",
+                "bay": None,
+            }
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+        elif family == "attributes":
+            ask("Only AC")
+            assert response["context"]["filters"]["ac"] is True
+            ask("Only sleeper")
+            assert response["context"]["filters"]["sleeper"] is True
+            ask("1")
+            ask("Does it have AC?")
+            assert response["results"][0]["results"][0]["ac"] is True
+            assert response["results"][0]["results"][0]["sleeper"] is True
+        elif family == "compare":
+            ask("Second one")
+            ask("Compare with the first one")
+            comparison = response["results"][0]
+            assert response["dialogue_act"] == "COMPARISON"
+            assert comparison["query"]["result_ids"] == [
+                second["result_id"],
+                first["result_id"],
+            ]
+            assert [Decimal(r["fare"]) for r in comparison["results"]] == [
+                Decimal(second["fare"]),
+                Decimal(first["fare"]),
+            ]
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("Which one is cheaper?")
+            assert response["results"][0]["winners"] == [1]
+            assert response["results"][0]["results"][2]["fare"] is None
+        elif family == "reference":
+            ask("1")
+            ask("The next one")
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("The one before it")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The Express")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The other one")
+            assert response["requires_clarification"]
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+        elif family == "correction":
+            ask("2")
+            ask("No, Tirumala")
+            assert (
+                response["context"]["destination"] == "DEMO3"
+                and response["selected_journey"] is None
+            )
+            ask("Only AC")
+            ask("Under 900")
+            assert (
+                response["context"]["filters"]["ac"] is True
+                and Decimal(response["context"]["filters"]["max_fare"]) == 900
+            )
+            ask("Remove the fare limit")
+            assert response["context"]["filters"].get("max_fare") is None
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "deadline":
+            ask(f"I need to reach {destination} before 7 AM tomorrow")
+            assert response["context"]["filters"].get("arrival_before")
+            assert not response["context"]["filters"].get("before")
+            deadline = response["context"]["filters"]["arrival_before"]
+            ask("Only AC")
+            ask("Under 900")
+            assert response["context"]["filters"]["arrival_before"] == deadline
+            ask("Forget the earlier time")
+            assert not response["context"]["filters"].get("arrival_before")
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "summary":
+            ask("Only AC")
+            ask("Under 900")
+            before = response["context"].copy()
+            ask("Summarize my journey")
+            assert response["dialogue_act"] == "SUMMARY" and not response["results"]
+            assert response["context"]["filters"] == before["filters"]
+            assert response["context"]["destination"] == dest_id
+            assert destination in response["answer"] and "900" in response["answer"]
+            assert response["selected_journey"] is None
+        elif family == "scope":
+            ask("2")
+            chosen = response["context"]["selected_result_id"]
+            ask(
+                [
+                    "What's the weather?",
+                    "Who is the Prime Minister?",
+                    "Can you order food?",
+                    "Tell me a joke.",
+                ][variant % 4]
+            )
+            assert (
+                response["dialogue_act"] == "OUT_OF_SCOPE"
+                and response["state"] == "OUT_OF_SCOPE"
+            )
+            assert (
+                not response["results"]
+                and response["context"]["selected_result_id"] == chosen
+            )
+            ask("Fare?")
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "reset":
+            ask("2")
+            ask("Start over")
+            assert response["dialogue_act"] == "RESET_CONVERSATION"
+            assert (
+                not response["context"].get("destination")
+                and not response["selected_journey"]
+                and not response["result_set"]
+            )
+            ask("How much?")
+            assert response["requires_clarification"] and not response["results"]
+        elif family == "composite":
+            ask(f"Next bus to {destination}, fare and platform on {day}?")
+            assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+            assert set(response["query_plan"]["secondary_intents"]) == {
+                "TICKET_FARE",
+                "BUS_PLATFORM",
+            }
+            assert len(response["answer_sections"]) == 3
+            timings = next(r for r in response["results"] if r["intent"] == "NEXT_BUS")[
+                "results"
+            ]
+            fare = next(r for r in response["results"] if r["intent"] == "TICKET_FARE")
+            platform = next(r for r in response["results"] if r["intent"] == "BUS_PLATFORM")
+            assert [r["service_id"] for r in fare["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["service_id"] for r in platform["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["fare"] for r in fare["results"]] == [r["fare"] for r in timings]
+        elif family == "unknown":
+            ask("3")
+            ask("Fare?")
+            assert response["results"][0]["results"][0]["amount"] is None
+            ask("Which platform?")
+            assert response["results"][0]["results"][0]["bay"] is None
+            ask("Is it available?")
+            assert response["selected_journey"]["service_id"] == third["service_id"]
+            assert response["results"][0]["query"]["service_id"] == third["service_id"]
+        elif family == "negation":
+            ask("Only AC")
+            ask("Only AC and non AC")
+            assert (
+                response["requires_clarification"]
+                and response["context"]["filters"]["ac"] is True
+            )
+            ask("Not AC, Express")
+            assert response["context"]["filters"]["ac"] is False
+            assert response["context"]["filters"]["category"] == "express"
+            ask("Two passengers, not three")
+            assert response["context"]["passengers"] == 2
+        elif family == "sessions":
+            ask("2")
+            other = turn(chat, "Next bus to Hyderabad tomorrow?")
+            assert other["session_id"] != sid and other["context"]["destination"] == "DEMO6"
+            ask("Fare?")
+            assert (
+                response["context"]["destination"] == dest_id
+                and response["selected_journey"]["service_id"] == second["service_id"]
+            )
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        else:
+            ask("2")
+            with Session(text_db) as session, session.begin():
+                context = session.scalar(select(Context).where(Context.session_id == sid))
+                context.values = {
+                    **context.values,
+                    "expires_at": (NOW - timedelta(seconds=1)).isoformat(),
+                }
+            expired = chat.post("/api/v1/conversation/state", json={"session_id": sid})
+            assert expired.status_code == 410
+>           fresh = turn(chat, "How much?", response)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_phase5c.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001E941D4F500>
+text = 'How much?'
+previous = {'source_metadata': [], 'dialogue_act': 'ENQUIRY', 'query_plan': {'primary_intent': None, 'secondary_intents': [], 'sh..., 'destination': 'DEMO2', 'travel_date': '2026-11-09', 'filters': {}}, 'dependencies': []}, 'answer_sections': [], ...}
+extra = {}
+
+    def turn(client, text, previous=None, **extra):
+        body = {"text": text, "language": "en", "station_context": "DEMO0", **extra}
+        if previous:
+            body["session_id"] = previous["session_id"]
+        response = client.post("/api/v1/conversation/message", json=body)
+        assert response.status_code == 200, response.text
+        data = response.json()
+        if previous:
+>           assert data["session_id"] == previous["session_id"]
+E           AssertionError: assert 'ea968a87-78c...-2ba2b065d4ea' == '2eba1b1b-687...-3c69b236382a'
+E             
+E             - 2eba1b1b-687a-453a-b50c-3c69b236382a
+E             + ea968a87-78c6-427c-9999-2ba2b065d4ea
+
+backend\tests\test_conversation_memory.py:168: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.158324+00:00", "correlation_id": "f63592b19e624800b20259196be4d8e4", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 38.434, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.196321+00:00", "correlation_id": "65caa15654a94ec6bf8dfe9f42b4da29", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 35.199, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.203320+00:00", "correlation_id": "d6be28ce461e484baf8249565fa4924c", "endpoint": "/api/v1/conversation/state", "method": "POST", "status": 410, "duration_ms": 1.523, "severity": "WARNING", "category": "REQUEST_REJECTED"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.226323+00:00", "correlation_id": "a459667e576b4e2c93d5b2de3b8d7f8e", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 20.346, "severity": "INFO", "category": "SUCCESS"}
+___________________ test_300_multiturn_reasoning[expiry-2] ____________________
+
+chat = <starlette.testclient.TestClient object at 0x000001E941A82C00>
+text_db = Engine(sqlite:///C%3A/Users/Sai Satish/AppData/Local/Temp/pytest-of-Sai Satish/pytest-1971/memory0/memory.db)
+family = 'expiry', variant = 2
+
+    @pytest.mark.parametrize("variant", range(20))
+    @pytest.mark.parametrize(
+        "family",
+        [
+            "fare",
+            "platform",
+            "attributes",
+            "compare",
+            "reference",
+            "correction",
+            "deadline",
+            "summary",
+            "scope",
+            "reset",
+            "composite",
+            "unknown",
+            "negation",
+            "sessions",
+            "expiry",
+        ],
+    )
+    def test_300_multiturn_reasoning(chat, text_db, family, variant):
+        day = (NOW + timedelta(days=variant % 3)).date().isoformat()
+        destination = "Nellore" if variant % 2 == 0 else "Tirupati"
+        dest_id = "DEMO4" if destination == "Nellore" else "DEMO2"
+        response = turn(chat, f"Next bus to {destination} on {day}?")
+        assert response["intents"] == ["NEXT_BUS"]
+        assert response["context"]["destination"] == dest_id
+        assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+        assert len(response["result_set"]) == 3
+        sid = response["session_id"]
+        first, second, third = response["result_set"]
+    
+        def ask(text, **extra):
+            nonlocal response
+            version = response["context"]["state_version"]
+            response = turn(chat, text, response, **extra)
+            assert response["session_id"] == sid
+            assert response["context"]["state_version"] == version + 1
+            return response
+    
+        if family == "fare":
+            ask("Second one")
+            ask("How much?")
+            assert response["intents"] == ["TICKET_FARE"]
+            query = response["results"][0]["query"]
+            assert query["segments"][0]["service_id"] == second["service_id"]
+            assert query["segments"][0]["destination"] == dest_id
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "platform":
+            ask("2")
+            ask("Which platform?")
+            assert response["results"][0]["query"]["service_id"] == second["service_id"]
+            assert response["results"][0]["results"][0] == {
+                "status": "unknown",
+                "bay": None,
+            }
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+        elif family == "attributes":
+            ask("Only AC")
+            assert response["context"]["filters"]["ac"] is True
+            ask("Only sleeper")
+            assert response["context"]["filters"]["sleeper"] is True
+            ask("1")
+            ask("Does it have AC?")
+            assert response["results"][0]["results"][0]["ac"] is True
+            assert response["results"][0]["results"][0]["sleeper"] is True
+        elif family == "compare":
+            ask("Second one")
+            ask("Compare with the first one")
+            comparison = response["results"][0]
+            assert response["dialogue_act"] == "COMPARISON"
+            assert comparison["query"]["result_ids"] == [
+                second["result_id"],
+                first["result_id"],
+            ]
+            assert [Decimal(r["fare"]) for r in comparison["results"]] == [
+                Decimal(second["fare"]),
+                Decimal(first["fare"]),
+            ]
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("Which one is cheaper?")
+            assert response["results"][0]["winners"] == [1]
+            assert response["results"][0]["results"][2]["fare"] is None
+        elif family == "reference":
+            ask("1")
+            ask("The next one")
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("The one before it")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The Express")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The other one")
+            assert response["requires_clarification"]
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+        elif family == "correction":
+            ask("2")
+            ask("No, Tirumala")
+            assert (
+                response["context"]["destination"] == "DEMO3"
+                and response["selected_journey"] is None
+            )
+            ask("Only AC")
+            ask("Under 900")
+            assert (
+                response["context"]["filters"]["ac"] is True
+                and Decimal(response["context"]["filters"]["max_fare"]) == 900
+            )
+            ask("Remove the fare limit")
+            assert response["context"]["filters"].get("max_fare") is None
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "deadline":
+            ask(f"I need to reach {destination} before 7 AM tomorrow")
+            assert response["context"]["filters"].get("arrival_before")
+            assert not response["context"]["filters"].get("before")
+            deadline = response["context"]["filters"]["arrival_before"]
+            ask("Only AC")
+            ask("Under 900")
+            assert response["context"]["filters"]["arrival_before"] == deadline
+            ask("Forget the earlier time")
+            assert not response["context"]["filters"].get("arrival_before")
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "summary":
+            ask("Only AC")
+            ask("Under 900")
+            before = response["context"].copy()
+            ask("Summarize my journey")
+            assert response["dialogue_act"] == "SUMMARY" and not response["results"]
+            assert response["context"]["filters"] == before["filters"]
+            assert response["context"]["destination"] == dest_id
+            assert destination in response["answer"] and "900" in response["answer"]
+            assert response["selected_journey"] is None
+        elif family == "scope":
+            ask("2")
+            chosen = response["context"]["selected_result_id"]
+            ask(
+                [
+                    "What's the weather?",
+                    "Who is the Prime Minister?",
+                    "Can you order food?",
+                    "Tell me a joke.",
+                ][variant % 4]
+            )
+            assert (
+                response["dialogue_act"] == "OUT_OF_SCOPE"
+                and response["state"] == "OUT_OF_SCOPE"
+            )
+            assert (
+                not response["results"]
+                and response["context"]["selected_result_id"] == chosen
+            )
+            ask("Fare?")
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "reset":
+            ask("2")
+            ask("Start over")
+            assert response["dialogue_act"] == "RESET_CONVERSATION"
+            assert (
+                not response["context"].get("destination")
+                and not response["selected_journey"]
+                and not response["result_set"]
+            )
+            ask("How much?")
+            assert response["requires_clarification"] and not response["results"]
+        elif family == "composite":
+            ask(f"Next bus to {destination}, fare and platform on {day}?")
+            assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+            assert set(response["query_plan"]["secondary_intents"]) == {
+                "TICKET_FARE",
+                "BUS_PLATFORM",
+            }
+            assert len(response["answer_sections"]) == 3
+            timings = next(r for r in response["results"] if r["intent"] == "NEXT_BUS")[
+                "results"
+            ]
+            fare = next(r for r in response["results"] if r["intent"] == "TICKET_FARE")
+            platform = next(r for r in response["results"] if r["intent"] == "BUS_PLATFORM")
+            assert [r["service_id"] for r in fare["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["service_id"] for r in platform["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["fare"] for r in fare["results"]] == [r["fare"] for r in timings]
+        elif family == "unknown":
+            ask("3")
+            ask("Fare?")
+            assert response["results"][0]["results"][0]["amount"] is None
+            ask("Which platform?")
+            assert response["results"][0]["results"][0]["bay"] is None
+            ask("Is it available?")
+            assert response["selected_journey"]["service_id"] == third["service_id"]
+            assert response["results"][0]["query"]["service_id"] == third["service_id"]
+        elif family == "negation":
+            ask("Only AC")
+            ask("Only AC and non AC")
+            assert (
+                response["requires_clarification"]
+                and response["context"]["filters"]["ac"] is True
+            )
+            ask("Not AC, Express")
+            assert response["context"]["filters"]["ac"] is False
+            assert response["context"]["filters"]["category"] == "express"
+            ask("Two passengers, not three")
+            assert response["context"]["passengers"] == 2
+        elif family == "sessions":
+            ask("2")
+            other = turn(chat, "Next bus to Hyderabad tomorrow?")
+            assert other["session_id"] != sid and other["context"]["destination"] == "DEMO6"
+            ask("Fare?")
+            assert (
+                response["context"]["destination"] == dest_id
+                and response["selected_journey"]["service_id"] == second["service_id"]
+            )
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        else:
+            ask("2")
+            with Session(text_db) as session, session.begin():
+                context = session.scalar(select(Context).where(Context.session_id == sid))
+                context.values = {
+                    **context.values,
+                    "expires_at": (NOW - timedelta(seconds=1)).isoformat(),
+                }
+            expired = chat.post("/api/v1/conversation/state", json={"session_id": sid})
+            assert expired.status_code == 410
+>           fresh = turn(chat, "How much?", response)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_phase5c.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001E941A82C00>
+text = 'How much?'
+previous = {'source_metadata': [], 'dialogue_act': 'ENQUIRY', 'query_plan': {'primary_intent': None, 'secondary_intents': [], 'sh..., 'destination': 'DEMO4', 'travel_date': '2026-11-10', 'filters': {}}, 'dependencies': []}, 'answer_sections': [], ...}
+extra = {}
+
+    def turn(client, text, previous=None, **extra):
+        body = {"text": text, "language": "en", "station_context": "DEMO0", **extra}
+        if previous:
+            body["session_id"] = previous["session_id"]
+        response = client.post("/api/v1/conversation/message", json=body)
+        assert response.status_code == 200, response.text
+        data = response.json()
+        if previous:
+>           assert data["session_id"] == previous["session_id"]
+E           AssertionError: assert '2ace03e5-126...-4c2845774dc6' == '8e508cba-1a3...-9cf01d040ed4'
+E             
+E             - 8e508cba-1a33-449f-a70c-9cf01d040ed4
+E             + 2ace03e5-1269-4e60-9b6c-4c2845774dc6
+
+backend\tests\test_conversation_memory.py:168: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.285322+00:00", "correlation_id": "2f2071812d9d47f78fd3927dc438be6e", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 36.57, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.320322+00:00", "correlation_id": "a824adbe936a482a91c2cb3dfa8fed77", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 32.883, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.329320+00:00", "correlation_id": "09dc5af6d43a4ad28df612f465a37998", "endpoint": "/api/v1/conversation/state", "method": "POST", "status": 410, "duration_ms": 1.722, "severity": "WARNING", "category": "REQUEST_REJECTED"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.354327+00:00", "correlation_id": "39e60e456bc24fc8810ef1c0eefe02c6", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 22.795, "severity": "INFO", "category": "SUCCESS"}
+___________________ test_300_multiturn_reasoning[expiry-3] ____________________
+
+chat = <starlette.testclient.TestClient object at 0x000001E941A80FB0>
+text_db = Engine(sqlite:///C%3A/Users/Sai Satish/AppData/Local/Temp/pytest-of-Sai Satish/pytest-1971/memory0/memory.db)
+family = 'expiry', variant = 3
+
+    @pytest.mark.parametrize("variant", range(20))
+    @pytest.mark.parametrize(
+        "family",
+        [
+            "fare",
+            "platform",
+            "attributes",
+            "compare",
+            "reference",
+            "correction",
+            "deadline",
+            "summary",
+            "scope",
+            "reset",
+            "composite",
+            "unknown",
+            "negation",
+            "sessions",
+            "expiry",
+        ],
+    )
+    def test_300_multiturn_reasoning(chat, text_db, family, variant):
+        day = (NOW + timedelta(days=variant % 3)).date().isoformat()
+        destination = "Nellore" if variant % 2 == 0 else "Tirupati"
+        dest_id = "DEMO4" if destination == "Nellore" else "DEMO2"
+        response = turn(chat, f"Next bus to {destination} on {day}?")
+        assert response["intents"] == ["NEXT_BUS"]
+        assert response["context"]["destination"] == dest_id
+        assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+        assert len(response["result_set"]) == 3
+        sid = response["session_id"]
+        first, second, third = response["result_set"]
+    
+        def ask(text, **extra):
+            nonlocal response
+            version = response["context"]["state_version"]
+            response = turn(chat, text, response, **extra)
+            assert response["session_id"] == sid
+            assert response["context"]["state_version"] == version + 1
+            return response
+    
+        if family == "fare":
+            ask("Second one")
+            ask("How much?")
+            assert response["intents"] == ["TICKET_FARE"]
+            query = response["results"][0]["query"]
+            assert query["segments"][0]["service_id"] == second["service_id"]
+            assert query["segments"][0]["destination"] == dest_id
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "platform":
+            ask("2")
+            ask("Which platform?")
+            assert response["results"][0]["query"]["service_id"] == second["service_id"]
+            assert response["results"][0]["results"][0] == {
+                "status": "unknown",
+                "bay": None,
+            }
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+        elif family == "attributes":
+            ask("Only AC")
+            assert response["context"]["filters"]["ac"] is True
+            ask("Only sleeper")
+            assert response["context"]["filters"]["sleeper"] is True
+            ask("1")
+            ask("Does it have AC?")
+            assert response["results"][0]["results"][0]["ac"] is True
+            assert response["results"][0]["results"][0]["sleeper"] is True
+        elif family == "compare":
+            ask("Second one")
+            ask("Compare with the first one")
+            comparison = response["results"][0]
+            assert response["dialogue_act"] == "COMPARISON"
+            assert comparison["query"]["result_ids"] == [
+                second["result_id"],
+                first["result_id"],
+            ]
+            assert [Decimal(r["fare"]) for r in comparison["results"]] == [
+                Decimal(second["fare"]),
+                Decimal(first["fare"]),
+            ]
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("Which one is cheaper?")
+            assert response["results"][0]["winners"] == [1]
+            assert response["results"][0]["results"][2]["fare"] is None
+        elif family == "reference":
+            ask("1")
+            ask("The next one")
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("The one before it")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The Express")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The other one")
+            assert response["requires_clarification"]
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+        elif family == "correction":
+            ask("2")
+            ask("No, Tirumala")
+            assert (
+                response["context"]["destination"] == "DEMO3"
+                and response["selected_journey"] is None
+            )
+            ask("Only AC")
+            ask("Under 900")
+            assert (
+                response["context"]["filters"]["ac"] is True
+                and Decimal(response["context"]["filters"]["max_fare"]) == 900
+            )
+            ask("Remove the fare limit")
+            assert response["context"]["filters"].get("max_fare") is None
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "deadline":
+            ask(f"I need to reach {destination} before 7 AM tomorrow")
+            assert response["context"]["filters"].get("arrival_before")
+            assert not response["context"]["filters"].get("before")
+            deadline = response["context"]["filters"]["arrival_before"]
+            ask("Only AC")
+            ask("Under 900")
+            assert response["context"]["filters"]["arrival_before"] == deadline
+            ask("Forget the earlier time")
+            assert not response["context"]["filters"].get("arrival_before")
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "summary":
+            ask("Only AC")
+            ask("Under 900")
+            before = response["context"].copy()
+            ask("Summarize my journey")
+            assert response["dialogue_act"] == "SUMMARY" and not response["results"]
+            assert response["context"]["filters"] == before["filters"]
+            assert response["context"]["destination"] == dest_id
+            assert destination in response["answer"] and "900" in response["answer"]
+            assert response["selected_journey"] is None
+        elif family == "scope":
+            ask("2")
+            chosen = response["context"]["selected_result_id"]
+            ask(
+                [
+                    "What's the weather?",
+                    "Who is the Prime Minister?",
+                    "Can you order food?",
+                    "Tell me a joke.",
+                ][variant % 4]
+            )
+            assert (
+                response["dialogue_act"] == "OUT_OF_SCOPE"
+                and response["state"] == "OUT_OF_SCOPE"
+            )
+            assert (
+                not response["results"]
+                and response["context"]["selected_result_id"] == chosen
+            )
+            ask("Fare?")
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "reset":
+            ask("2")
+            ask("Start over")
+            assert response["dialogue_act"] == "RESET_CONVERSATION"
+            assert (
+                not response["context"].get("destination")
+                and not response["selected_journey"]
+                and not response["result_set"]
+            )
+            ask("How much?")
+            assert response["requires_clarification"] and not response["results"]
+        elif family == "composite":
+            ask(f"Next bus to {destination}, fare and platform on {day}?")
+            assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+            assert set(response["query_plan"]["secondary_intents"]) == {
+                "TICKET_FARE",
+                "BUS_PLATFORM",
+            }
+            assert len(response["answer_sections"]) == 3
+            timings = next(r for r in response["results"] if r["intent"] == "NEXT_BUS")[
+                "results"
+            ]
+            fare = next(r for r in response["results"] if r["intent"] == "TICKET_FARE")
+            platform = next(r for r in response["results"] if r["intent"] == "BUS_PLATFORM")
+            assert [r["service_id"] for r in fare["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["service_id"] for r in platform["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["fare"] for r in fare["results"]] == [r["fare"] for r in timings]
+        elif family == "unknown":
+            ask("3")
+            ask("Fare?")
+            assert response["results"][0]["results"][0]["amount"] is None
+            ask("Which platform?")
+            assert response["results"][0]["results"][0]["bay"] is None
+            ask("Is it available?")
+            assert response["selected_journey"]["service_id"] == third["service_id"]
+            assert response["results"][0]["query"]["service_id"] == third["service_id"]
+        elif family == "negation":
+            ask("Only AC")
+            ask("Only AC and non AC")
+            assert (
+                response["requires_clarification"]
+                and response["context"]["filters"]["ac"] is True
+            )
+            ask("Not AC, Express")
+            assert response["context"]["filters"]["ac"] is False
+            assert response["context"]["filters"]["category"] == "express"
+            ask("Two passengers, not three")
+            assert response["context"]["passengers"] == 2
+        elif family == "sessions":
+            ask("2")
+            other = turn(chat, "Next bus to Hyderabad tomorrow?")
+            assert other["session_id"] != sid and other["context"]["destination"] == "DEMO6"
+            ask("Fare?")
+            assert (
+                response["context"]["destination"] == dest_id
+                and response["selected_journey"]["service_id"] == second["service_id"]
+            )
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        else:
+            ask("2")
+            with Session(text_db) as session, session.begin():
+                context = session.scalar(select(Context).where(Context.session_id == sid))
+                context.values = {
+                    **context.values,
+                    "expires_at": (NOW - timedelta(seconds=1)).isoformat(),
+                }
+            expired = chat.post("/api/v1/conversation/state", json={"session_id": sid})
+            assert expired.status_code == 410
+>           fresh = turn(chat, "How much?", response)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_phase5c.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001E941A80FB0>
+text = 'How much?'
+previous = {'source_metadata': [], 'dialogue_act': 'ENQUIRY', 'query_plan': {'primary_intent': None, 'secondary_intents': [], 'sh..., 'destination': 'DEMO2', 'travel_date': '2026-11-08', 'filters': {}}, 'dependencies': []}, 'answer_sections': [], ...}
+extra = {}
+
+    def turn(client, text, previous=None, **extra):
+        body = {"text": text, "language": "en", "station_context": "DEMO0", **extra}
+        if previous:
+            body["session_id"] = previous["session_id"]
+        response = client.post("/api/v1/conversation/message", json=body)
+        assert response.status_code == 200, response.text
+        data = response.json()
+        if previous:
+>           assert data["session_id"] == previous["session_id"]
+E           AssertionError: assert 'dfca5304-657...-1919608c96f2' == '130a4f21-e57...-6b6b48c7a60c'
+E             
+E             - 130a4f21-e573-41f7-8768-6b6b48c7a60c
+E             + dfca5304-6572-41b1-a122-1919608c96f2
+
+backend\tests\test_conversation_memory.py:168: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.413028+00:00", "correlation_id": "2ba6a23c1e3942b191402db0c1decaf5", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 35.349, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.446025+00:00", "correlation_id": "101d2d5b3908469da8f205175893f33c", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 30.447, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.455026+00:00", "correlation_id": "be298c09a3754ed9a5a75cdb6a8bdeed", "endpoint": "/api/v1/conversation/state", "method": "POST", "status": 410, "duration_ms": 1.743, "severity": "WARNING", "category": "REQUEST_REJECTED"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.482027+00:00", "correlation_id": "7906e666e29b42a9a0823906a3798109", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 25.323, "severity": "INFO", "category": "SUCCESS"}
+___________________ test_300_multiturn_reasoning[expiry-4] ____________________
+
+chat = <starlette.testclient.TestClient object at 0x000001E941B5BDD0>
+text_db = Engine(sqlite:///C%3A/Users/Sai Satish/AppData/Local/Temp/pytest-of-Sai Satish/pytest-1971/memory0/memory.db)
+family = 'expiry', variant = 4
+
+    @pytest.mark.parametrize("variant", range(20))
+    @pytest.mark.parametrize(
+        "family",
+        [
+            "fare",
+            "platform",
+            "attributes",
+            "compare",
+            "reference",
+            "correction",
+            "deadline",
+            "summary",
+            "scope",
+            "reset",
+            "composite",
+            "unknown",
+            "negation",
+            "sessions",
+            "expiry",
+        ],
+    )
+    def test_300_multiturn_reasoning(chat, text_db, family, variant):
+        day = (NOW + timedelta(days=variant % 3)).date().isoformat()
+        destination = "Nellore" if variant % 2 == 0 else "Tirupati"
+        dest_id = "DEMO4" if destination == "Nellore" else "DEMO2"
+        response = turn(chat, f"Next bus to {destination} on {day}?")
+        assert response["intents"] == ["NEXT_BUS"]
+        assert response["context"]["destination"] == dest_id
+        assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+        assert len(response["result_set"]) == 3
+        sid = response["session_id"]
+        first, second, third = response["result_set"]
+    
+        def ask(text, **extra):
+            nonlocal response
+            version = response["context"]["state_version"]
+            response = turn(chat, text, response, **extra)
+            assert response["session_id"] == sid
+            assert response["context"]["state_version"] == version + 1
+            return response
+    
+        if family == "fare":
+            ask("Second one")
+            ask("How much?")
+            assert response["intents"] == ["TICKET_FARE"]
+            query = response["results"][0]["query"]
+            assert query["segments"][0]["service_id"] == second["service_id"]
+            assert query["segments"][0]["destination"] == dest_id
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "platform":
+            ask("2")
+            ask("Which platform?")
+            assert response["results"][0]["query"]["service_id"] == second["service_id"]
+            assert response["results"][0]["results"][0] == {
+                "status": "unknown",
+                "bay": None,
+            }
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+        elif family == "attributes":
+            ask("Only AC")
+            assert response["context"]["filters"]["ac"] is True
+            ask("Only sleeper")
+            assert response["context"]["filters"]["sleeper"] is True
+            ask("1")
+            ask("Does it have AC?")
+            assert response["results"][0]["results"][0]["ac"] is True
+            assert response["results"][0]["results"][0]["sleeper"] is True
+        elif family == "compare":
+            ask("Second one")
+            ask("Compare with the first one")
+            comparison = response["results"][0]
+            assert response["dialogue_act"] == "COMPARISON"
+            assert comparison["query"]["result_ids"] == [
+                second["result_id"],
+                first["result_id"],
+            ]
+            assert [Decimal(r["fare"]) for r in comparison["results"]] == [
+                Decimal(second["fare"]),
+                Decimal(first["fare"]),
+            ]
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("Which one is cheaper?")
+            assert response["results"][0]["winners"] == [1]
+            assert response["results"][0]["results"][2]["fare"] is None
+        elif family == "reference":
+            ask("1")
+            ask("The next one")
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("The one before it")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The Express")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The other one")
+            assert response["requires_clarification"]
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+        elif family == "correction":
+            ask("2")
+            ask("No, Tirumala")
+            assert (
+                response["context"]["destination"] == "DEMO3"
+                and response["selected_journey"] is None
+            )
+            ask("Only AC")
+            ask("Under 900")
+            assert (
+                response["context"]["filters"]["ac"] is True
+                and Decimal(response["context"]["filters"]["max_fare"]) == 900
+            )
+            ask("Remove the fare limit")
+            assert response["context"]["filters"].get("max_fare") is None
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "deadline":
+            ask(f"I need to reach {destination} before 7 AM tomorrow")
+            assert response["context"]["filters"].get("arrival_before")
+            assert not response["context"]["filters"].get("before")
+            deadline = response["context"]["filters"]["arrival_before"]
+            ask("Only AC")
+            ask("Under 900")
+            assert response["context"]["filters"]["arrival_before"] == deadline
+            ask("Forget the earlier time")
+            assert not response["context"]["filters"].get("arrival_before")
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "summary":
+            ask("Only AC")
+            ask("Under 900")
+            before = response["context"].copy()
+            ask("Summarize my journey")
+            assert response["dialogue_act"] == "SUMMARY" and not response["results"]
+            assert response["context"]["filters"] == before["filters"]
+            assert response["context"]["destination"] == dest_id
+            assert destination in response["answer"] and "900" in response["answer"]
+            assert response["selected_journey"] is None
+        elif family == "scope":
+            ask("2")
+            chosen = response["context"]["selected_result_id"]
+            ask(
+                [
+                    "What's the weather?",
+                    "Who is the Prime Minister?",
+                    "Can you order food?",
+                    "Tell me a joke.",
+                ][variant % 4]
+            )
+            assert (
+                response["dialogue_act"] == "OUT_OF_SCOPE"
+                and response["state"] == "OUT_OF_SCOPE"
+            )
+            assert (
+                not response["results"]
+                and response["context"]["selected_result_id"] == chosen
+            )
+            ask("Fare?")
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "reset":
+            ask("2")
+            ask("Start over")
+            assert response["dialogue_act"] == "RESET_CONVERSATION"
+            assert (
+                not response["context"].get("destination")
+                and not response["selected_journey"]
+                and not response["result_set"]
+            )
+            ask("How much?")
+            assert response["requires_clarification"] and not response["results"]
+        elif family == "composite":
+            ask(f"Next bus to {destination}, fare and platform on {day}?")
+            assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+            assert set(response["query_plan"]["secondary_intents"]) == {
+                "TICKET_FARE",
+                "BUS_PLATFORM",
+            }
+            assert len(response["answer_sections"]) == 3
+            timings = next(r for r in response["results"] if r["intent"] == "NEXT_BUS")[
+                "results"
+            ]
+            fare = next(r for r in response["results"] if r["intent"] == "TICKET_FARE")
+            platform = next(r for r in response["results"] if r["intent"] == "BUS_PLATFORM")
+            assert [r["service_id"] for r in fare["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["service_id"] for r in platform["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["fare"] for r in fare["results"]] == [r["fare"] for r in timings]
+        elif family == "unknown":
+            ask("3")
+            ask("Fare?")
+            assert response["results"][0]["results"][0]["amount"] is None
+            ask("Which platform?")
+            assert response["results"][0]["results"][0]["bay"] is None
+            ask("Is it available?")
+            assert response["selected_journey"]["service_id"] == third["service_id"]
+            assert response["results"][0]["query"]["service_id"] == third["service_id"]
+        elif family == "negation":
+            ask("Only AC")
+            ask("Only AC and non AC")
+            assert (
+                response["requires_clarification"]
+                and response["context"]["filters"]["ac"] is True
+            )
+            ask("Not AC, Express")
+            assert response["context"]["filters"]["ac"] is False
+            assert response["context"]["filters"]["category"] == "express"
+            ask("Two passengers, not three")
+            assert response["context"]["passengers"] == 2
+        elif family == "sessions":
+            ask("2")
+            other = turn(chat, "Next bus to Hyderabad tomorrow?")
+            assert other["session_id"] != sid and other["context"]["destination"] == "DEMO6"
+            ask("Fare?")
+            assert (
+                response["context"]["destination"] == dest_id
+                and response["selected_journey"]["service_id"] == second["service_id"]
+            )
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        else:
+            ask("2")
+            with Session(text_db) as session, session.begin():
+                context = session.scalar(select(Context).where(Context.session_id == sid))
+                context.values = {
+                    **context.values,
+                    "expires_at": (NOW - timedelta(seconds=1)).isoformat(),
+                }
+            expired = chat.post("/api/v1/conversation/state", json={"session_id": sid})
+            assert expired.status_code == 410
+>           fresh = turn(chat, "How much?", response)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_phase5c.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001E941B5BDD0>
+text = 'How much?'
+previous = {'source_metadata': [], 'dialogue_act': 'ENQUIRY', 'query_plan': {'primary_intent': None, 'secondary_intents': [], 'sh..., 'destination': 'DEMO4', 'travel_date': '2026-11-09', 'filters': {}}, 'dependencies': []}, 'answer_sections': [], ...}
+extra = {}
+
+    def turn(client, text, previous=None, **extra):
+        body = {"text": text, "language": "en", "station_context": "DEMO0", **extra}
+        if previous:
+            body["session_id"] = previous["session_id"]
+        response = client.post("/api/v1/conversation/message", json=body)
+        assert response.status_code == 200, response.text
+        data = response.json()
+        if previous:
+>           assert data["session_id"] == previous["session_id"]
+E           AssertionError: assert '73aee558-e72...-0e44d5d2dba4' == '568ab47e-783...-3b2c6c555b46'
+E             
+E             - 568ab47e-7835-4420-813d-3b2c6c555b46
+E             + 73aee558-e729-4787-8bd8-0e44d5d2dba4
+
+backend\tests\test_conversation_memory.py:168: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.550671+00:00", "correlation_id": "89721fe322574eeca8e7fb9223ff3d10", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 38.35, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.585669+00:00", "correlation_id": "f973924d130c49d3ac26c2470b428e1f", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 32.247, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.595669+00:00", "correlation_id": "aa2b91b4234d4c4bbdcf6a9811c048c4", "endpoint": "/api/v1/conversation/state", "method": "POST", "status": 410, "duration_ms": 2.011, "severity": "WARNING", "category": "REQUEST_REJECTED"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.618666+00:00", "correlation_id": "94c3e539178c4ce0a594b65cfd75afab", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 20.924, "severity": "INFO", "category": "SUCCESS"}
+___________________ test_300_multiturn_reasoning[expiry-5] ____________________
+
+chat = <starlette.testclient.TestClient object at 0x000001E941A4FFB0>
+text_db = Engine(sqlite:///C%3A/Users/Sai Satish/AppData/Local/Temp/pytest-of-Sai Satish/pytest-1971/memory0/memory.db)
+family = 'expiry', variant = 5
+
+    @pytest.mark.parametrize("variant", range(20))
+    @pytest.mark.parametrize(
+        "family",
+        [
+            "fare",
+            "platform",
+            "attributes",
+            "compare",
+            "reference",
+            "correction",
+            "deadline",
+            "summary",
+            "scope",
+            "reset",
+            "composite",
+            "unknown",
+            "negation",
+            "sessions",
+            "expiry",
+        ],
+    )
+    def test_300_multiturn_reasoning(chat, text_db, family, variant):
+        day = (NOW + timedelta(days=variant % 3)).date().isoformat()
+        destination = "Nellore" if variant % 2 == 0 else "Tirupati"
+        dest_id = "DEMO4" if destination == "Nellore" else "DEMO2"
+        response = turn(chat, f"Next bus to {destination} on {day}?")
+        assert response["intents"] == ["NEXT_BUS"]
+        assert response["context"]["destination"] == dest_id
+        assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+        assert len(response["result_set"]) == 3
+        sid = response["session_id"]
+        first, second, third = response["result_set"]
+    
+        def ask(text, **extra):
+            nonlocal response
+            version = response["context"]["state_version"]
+            response = turn(chat, text, response, **extra)
+            assert response["session_id"] == sid
+            assert response["context"]["state_version"] == version + 1
+            return response
+    
+        if family == "fare":
+            ask("Second one")
+            ask("How much?")
+            assert response["intents"] == ["TICKET_FARE"]
+            query = response["results"][0]["query"]
+            assert query["segments"][0]["service_id"] == second["service_id"]
+            assert query["segments"][0]["destination"] == dest_id
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "platform":
+            ask("2")
+            ask("Which platform?")
+            assert response["results"][0]["query"]["service_id"] == second["service_id"]
+            assert response["results"][0]["results"][0] == {
+                "status": "unknown",
+                "bay": None,
+            }
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+        elif family == "attributes":
+            ask("Only AC")
+            assert response["context"]["filters"]["ac"] is True
+            ask("Only sleeper")
+            assert response["context"]["filters"]["sleeper"] is True
+            ask("1")
+            ask("Does it have AC?")
+            assert response["results"][0]["results"][0]["ac"] is True
+            assert response["results"][0]["results"][0]["sleeper"] is True
+        elif family == "compare":
+            ask("Second one")
+            ask("Compare with the first one")
+            comparison = response["results"][0]
+            assert response["dialogue_act"] == "COMPARISON"
+            assert comparison["query"]["result_ids"] == [
+                second["result_id"],
+                first["result_id"],
+            ]
+            assert [Decimal(r["fare"]) for r in comparison["results"]] == [
+                Decimal(second["fare"]),
+                Decimal(first["fare"]),
+            ]
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("Which one is cheaper?")
+            assert response["results"][0]["winners"] == [1]
+            assert response["results"][0]["results"][2]["fare"] is None
+        elif family == "reference":
+            ask("1")
+            ask("The next one")
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("The one before it")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The Express")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The other one")
+            assert response["requires_clarification"]
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+        elif family == "correction":
+            ask("2")
+            ask("No, Tirumala")
+            assert (
+                response["context"]["destination"] == "DEMO3"
+                and response["selected_journey"] is None
+            )
+            ask("Only AC")
+            ask("Under 900")
+            assert (
+                response["context"]["filters"]["ac"] is True
+                and Decimal(response["context"]["filters"]["max_fare"]) == 900
+            )
+            ask("Remove the fare limit")
+            assert response["context"]["filters"].get("max_fare") is None
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "deadline":
+            ask(f"I need to reach {destination} before 7 AM tomorrow")
+            assert response["context"]["filters"].get("arrival_before")
+            assert not response["context"]["filters"].get("before")
+            deadline = response["context"]["filters"]["arrival_before"]
+            ask("Only AC")
+            ask("Under 900")
+            assert response["context"]["filters"]["arrival_before"] == deadline
+            ask("Forget the earlier time")
+            assert not response["context"]["filters"].get("arrival_before")
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "summary":
+            ask("Only AC")
+            ask("Under 900")
+            before = response["context"].copy()
+            ask("Summarize my journey")
+            assert response["dialogue_act"] == "SUMMARY" and not response["results"]
+            assert response["context"]["filters"] == before["filters"]
+            assert response["context"]["destination"] == dest_id
+            assert destination in response["answer"] and "900" in response["answer"]
+            assert response["selected_journey"] is None
+        elif family == "scope":
+            ask("2")
+            chosen = response["context"]["selected_result_id"]
+            ask(
+                [
+                    "What's the weather?",
+                    "Who is the Prime Minister?",
+                    "Can you order food?",
+                    "Tell me a joke.",
+                ][variant % 4]
+            )
+            assert (
+                response["dialogue_act"] == "OUT_OF_SCOPE"
+                and response["state"] == "OUT_OF_SCOPE"
+            )
+            assert (
+                not response["results"]
+                and response["context"]["selected_result_id"] == chosen
+            )
+            ask("Fare?")
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "reset":
+            ask("2")
+            ask("Start over")
+            assert response["dialogue_act"] == "RESET_CONVERSATION"
+            assert (
+                not response["context"].get("destination")
+                and not response["selected_journey"]
+                and not response["result_set"]
+            )
+            ask("How much?")
+            assert response["requires_clarification"] and not response["results"]
+        elif family == "composite":
+            ask(f"Next bus to {destination}, fare and platform on {day}?")
+            assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+            assert set(response["query_plan"]["secondary_intents"]) == {
+                "TICKET_FARE",
+                "BUS_PLATFORM",
+            }
+            assert len(response["answer_sections"]) == 3
+            timings = next(r for r in response["results"] if r["intent"] == "NEXT_BUS")[
+                "results"
+            ]
+            fare = next(r for r in response["results"] if r["intent"] == "TICKET_FARE")
+            platform = next(r for r in response["results"] if r["intent"] == "BUS_PLATFORM")
+            assert [r["service_id"] for r in fare["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["service_id"] for r in platform["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["fare"] for r in fare["results"]] == [r["fare"] for r in timings]
+        elif family == "unknown":
+            ask("3")
+            ask("Fare?")
+            assert response["results"][0]["results"][0]["amount"] is None
+            ask("Which platform?")
+            assert response["results"][0]["results"][0]["bay"] is None
+            ask("Is it available?")
+            assert response["selected_journey"]["service_id"] == third["service_id"]
+            assert response["results"][0]["query"]["service_id"] == third["service_id"]
+        elif family == "negation":
+            ask("Only AC")
+            ask("Only AC and non AC")
+            assert (
+                response["requires_clarification"]
+                and response["context"]["filters"]["ac"] is True
+            )
+            ask("Not AC, Express")
+            assert response["context"]["filters"]["ac"] is False
+            assert response["context"]["filters"]["category"] == "express"
+            ask("Two passengers, not three")
+            assert response["context"]["passengers"] == 2
+        elif family == "sessions":
+            ask("2")
+            other = turn(chat, "Next bus to Hyderabad tomorrow?")
+            assert other["session_id"] != sid and other["context"]["destination"] == "DEMO6"
+            ask("Fare?")
+            assert (
+                response["context"]["destination"] == dest_id
+                and response["selected_journey"]["service_id"] == second["service_id"]
+            )
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        else:
+            ask("2")
+            with Session(text_db) as session, session.begin():
+                context = session.scalar(select(Context).where(Context.session_id == sid))
+                context.values = {
+                    **context.values,
+                    "expires_at": (NOW - timedelta(seconds=1)).isoformat(),
+                }
+            expired = chat.post("/api/v1/conversation/state", json={"session_id": sid})
+            assert expired.status_code == 410
+>           fresh = turn(chat, "How much?", response)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_phase5c.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001E941A4FFB0>
+text = 'How much?'
+previous = {'source_metadata': [], 'dialogue_act': 'ENQUIRY', 'query_plan': {'primary_intent': None, 'secondary_intents': [], 'sh..., 'destination': 'DEMO2', 'travel_date': '2026-11-10', 'filters': {}}, 'dependencies': []}, 'answer_sections': [], ...}
+extra = {}
+
+    def turn(client, text, previous=None, **extra):
+        body = {"text": text, "language": "en", "station_context": "DEMO0", **extra}
+        if previous:
+            body["session_id"] = previous["session_id"]
+        response = client.post("/api/v1/conversation/message", json=body)
+        assert response.status_code == 200, response.text
+        data = response.json()
+        if previous:
+>           assert data["session_id"] == previous["session_id"]
+E           AssertionError: assert '3856293d-d1b...-f55f98de0637' == 'aaaa7f98-656...-1db2dce41b66'
+E             
+E             - aaaa7f98-656a-4eb1-a151-1db2dce41b66
+E             + 3856293d-d1b2-431a-a7d8-f55f98de0637
+
+backend\tests\test_conversation_memory.py:168: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.689668+00:00", "correlation_id": "4412afd964bb48e2a51034096a8dda37", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 39.788, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.724668+00:00", "correlation_id": "ebe6cc17848c476f9510da999a96a425", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 32.017, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.733673+00:00", "correlation_id": "b1c2f6fbd2ae4444a758a69625f6b879", "endpoint": "/api/v1/conversation/state", "method": "POST", "status": 410, "duration_ms": 1.677, "severity": "WARNING", "category": "REQUEST_REJECTED"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.757788+00:00", "correlation_id": "ee3963e133ae456cada1d341d8ab96de", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 21.735, "severity": "INFO", "category": "SUCCESS"}
+___________________ test_300_multiturn_reasoning[expiry-6] ____________________
+
+chat = <starlette.testclient.TestClient object at 0x000001E941B00650>
+text_db = Engine(sqlite:///C%3A/Users/Sai Satish/AppData/Local/Temp/pytest-of-Sai Satish/pytest-1971/memory0/memory.db)
+family = 'expiry', variant = 6
+
+    @pytest.mark.parametrize("variant", range(20))
+    @pytest.mark.parametrize(
+        "family",
+        [
+            "fare",
+            "platform",
+            "attributes",
+            "compare",
+            "reference",
+            "correction",
+            "deadline",
+            "summary",
+            "scope",
+            "reset",
+            "composite",
+            "unknown",
+            "negation",
+            "sessions",
+            "expiry",
+        ],
+    )
+    def test_300_multiturn_reasoning(chat, text_db, family, variant):
+        day = (NOW + timedelta(days=variant % 3)).date().isoformat()
+        destination = "Nellore" if variant % 2 == 0 else "Tirupati"
+        dest_id = "DEMO4" if destination == "Nellore" else "DEMO2"
+        response = turn(chat, f"Next bus to {destination} on {day}?")
+        assert response["intents"] == ["NEXT_BUS"]
+        assert response["context"]["destination"] == dest_id
+        assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+        assert len(response["result_set"]) == 3
+        sid = response["session_id"]
+        first, second, third = response["result_set"]
+    
+        def ask(text, **extra):
+            nonlocal response
+            version = response["context"]["state_version"]
+            response = turn(chat, text, response, **extra)
+            assert response["session_id"] == sid
+            assert response["context"]["state_version"] == version + 1
+            return response
+    
+        if family == "fare":
+            ask("Second one")
+            ask("How much?")
+            assert response["intents"] == ["TICKET_FARE"]
+            query = response["results"][0]["query"]
+            assert query["segments"][0]["service_id"] == second["service_id"]
+            assert query["segments"][0]["destination"] == dest_id
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "platform":
+            ask("2")
+            ask("Which platform?")
+            assert response["results"][0]["query"]["service_id"] == second["service_id"]
+            assert response["results"][0]["results"][0] == {
+                "status": "unknown",
+                "bay": None,
+            }
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+        elif family == "attributes":
+            ask("Only AC")
+            assert response["context"]["filters"]["ac"] is True
+            ask("Only sleeper")
+            assert response["context"]["filters"]["sleeper"] is True
+            ask("1")
+            ask("Does it have AC?")
+            assert response["results"][0]["results"][0]["ac"] is True
+            assert response["results"][0]["results"][0]["sleeper"] is True
+        elif family == "compare":
+            ask("Second one")
+            ask("Compare with the first one")
+            comparison = response["results"][0]
+            assert response["dialogue_act"] == "COMPARISON"
+            assert comparison["query"]["result_ids"] == [
+                second["result_id"],
+                first["result_id"],
+            ]
+            assert [Decimal(r["fare"]) for r in comparison["results"]] == [
+                Decimal(second["fare"]),
+                Decimal(first["fare"]),
+            ]
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("Which one is cheaper?")
+            assert response["results"][0]["winners"] == [1]
+            assert response["results"][0]["results"][2]["fare"] is None
+        elif family == "reference":
+            ask("1")
+            ask("The next one")
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("The one before it")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The Express")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The other one")
+            assert response["requires_clarification"]
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+        elif family == "correction":
+            ask("2")
+            ask("No, Tirumala")
+            assert (
+                response["context"]["destination"] == "DEMO3"
+                and response["selected_journey"] is None
+            )
+            ask("Only AC")
+            ask("Under 900")
+            assert (
+                response["context"]["filters"]["ac"] is True
+                and Decimal(response["context"]["filters"]["max_fare"]) == 900
+            )
+            ask("Remove the fare limit")
+            assert response["context"]["filters"].get("max_fare") is None
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "deadline":
+            ask(f"I need to reach {destination} before 7 AM tomorrow")
+            assert response["context"]["filters"].get("arrival_before")
+            assert not response["context"]["filters"].get("before")
+            deadline = response["context"]["filters"]["arrival_before"]
+            ask("Only AC")
+            ask("Under 900")
+            assert response["context"]["filters"]["arrival_before"] == deadline
+            ask("Forget the earlier time")
+            assert not response["context"]["filters"].get("arrival_before")
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "summary":
+            ask("Only AC")
+            ask("Under 900")
+            before = response["context"].copy()
+            ask("Summarize my journey")
+            assert response["dialogue_act"] == "SUMMARY" and not response["results"]
+            assert response["context"]["filters"] == before["filters"]
+            assert response["context"]["destination"] == dest_id
+            assert destination in response["answer"] and "900" in response["answer"]
+            assert response["selected_journey"] is None
+        elif family == "scope":
+            ask("2")
+            chosen = response["context"]["selected_result_id"]
+            ask(
+                [
+                    "What's the weather?",
+                    "Who is the Prime Minister?",
+                    "Can you order food?",
+                    "Tell me a joke.",
+                ][variant % 4]
+            )
+            assert (
+                response["dialogue_act"] == "OUT_OF_SCOPE"
+                and response["state"] == "OUT_OF_SCOPE"
+            )
+            assert (
+                not response["results"]
+                and response["context"]["selected_result_id"] == chosen
+            )
+            ask("Fare?")
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "reset":
+            ask("2")
+            ask("Start over")
+            assert response["dialogue_act"] == "RESET_CONVERSATION"
+            assert (
+                not response["context"].get("destination")
+                and not response["selected_journey"]
+                and not response["result_set"]
+            )
+            ask("How much?")
+            assert response["requires_clarification"] and not response["results"]
+        elif family == "composite":
+            ask(f"Next bus to {destination}, fare and platform on {day}?")
+            assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+            assert set(response["query_plan"]["secondary_intents"]) == {
+                "TICKET_FARE",
+                "BUS_PLATFORM",
+            }
+            assert len(response["answer_sections"]) == 3
+            timings = next(r for r in response["results"] if r["intent"] == "NEXT_BUS")[
+                "results"
+            ]
+            fare = next(r for r in response["results"] if r["intent"] == "TICKET_FARE")
+            platform = next(r for r in response["results"] if r["intent"] == "BUS_PLATFORM")
+            assert [r["service_id"] for r in fare["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["service_id"] for r in platform["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["fare"] for r in fare["results"]] == [r["fare"] for r in timings]
+        elif family == "unknown":
+            ask("3")
+            ask("Fare?")
+            assert response["results"][0]["results"][0]["amount"] is None
+            ask("Which platform?")
+            assert response["results"][0]["results"][0]["bay"] is None
+            ask("Is it available?")
+            assert response["selected_journey"]["service_id"] == third["service_id"]
+            assert response["results"][0]["query"]["service_id"] == third["service_id"]
+        elif family == "negation":
+            ask("Only AC")
+            ask("Only AC and non AC")
+            assert (
+                response["requires_clarification"]
+                and response["context"]["filters"]["ac"] is True
+            )
+            ask("Not AC, Express")
+            assert response["context"]["filters"]["ac"] is False
+            assert response["context"]["filters"]["category"] == "express"
+            ask("Two passengers, not three")
+            assert response["context"]["passengers"] == 2
+        elif family == "sessions":
+            ask("2")
+            other = turn(chat, "Next bus to Hyderabad tomorrow?")
+            assert other["session_id"] != sid and other["context"]["destination"] == "DEMO6"
+            ask("Fare?")
+            assert (
+                response["context"]["destination"] == dest_id
+                and response["selected_journey"]["service_id"] == second["service_id"]
+            )
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        else:
+            ask("2")
+            with Session(text_db) as session, session.begin():
+                context = session.scalar(select(Context).where(Context.session_id == sid))
+                context.values = {
+                    **context.values,
+                    "expires_at": (NOW - timedelta(seconds=1)).isoformat(),
+                }
+            expired = chat.post("/api/v1/conversation/state", json={"session_id": sid})
+            assert expired.status_code == 410
+>           fresh = turn(chat, "How much?", response)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_phase5c.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001E941B00650>
+text = 'How much?'
+previous = {'source_metadata': [], 'dialogue_act': 'ENQUIRY', 'query_plan': {'primary_intent': None, 'secondary_intents': [], 'sh..., 'destination': 'DEMO4', 'travel_date': '2026-11-08', 'filters': {}}, 'dependencies': []}, 'answer_sections': [], ...}
+extra = {}
+
+    def turn(client, text, previous=None, **extra):
+        body = {"text": text, "language": "en", "station_context": "DEMO0", **extra}
+        if previous:
+            body["session_id"] = previous["session_id"]
+        response = client.post("/api/v1/conversation/message", json=body)
+        assert response.status_code == 200, response.text
+        data = response.json()
+        if previous:
+>           assert data["session_id"] == previous["session_id"]
+E           AssertionError: assert 'bce78263-a29...-c4f7d4264e7f' == '6d89dcf6-e3c...-df7631a6ed84'
+E             
+E             - 6d89dcf6-e3c4-4c00-9d88-df7631a6ed84
+E             + bce78263-a29f-42d3-bed1-c4f7d4264e7f
+
+backend\tests\test_conversation_memory.py:168: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.815389+00:00", "correlation_id": "bc57ded7e71e4ec2857f0b271a54b42c", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 33.476, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.846387+00:00", "correlation_id": "1bde2104ba78440ea52234e9936d471b", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 29.008, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.853388+00:00", "correlation_id": "a95024c42917441492c39301ca563599", "endpoint": "/api/v1/conversation/state", "method": "POST", "status": 410, "duration_ms": 1.531, "severity": "WARNING", "category": "REQUEST_REJECTED"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.876392+00:00", "correlation_id": "03457a28ab034077b3b601cc1699cbee", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 20.802, "severity": "INFO", "category": "SUCCESS"}
+___________________ test_300_multiturn_reasoning[expiry-7] ____________________
+
+chat = <starlette.testclient.TestClient object at 0x000001E941B01FA0>
+text_db = Engine(sqlite:///C%3A/Users/Sai Satish/AppData/Local/Temp/pytest-of-Sai Satish/pytest-1971/memory0/memory.db)
+family = 'expiry', variant = 7
+
+    @pytest.mark.parametrize("variant", range(20))
+    @pytest.mark.parametrize(
+        "family",
+        [
+            "fare",
+            "platform",
+            "attributes",
+            "compare",
+            "reference",
+            "correction",
+            "deadline",
+            "summary",
+            "scope",
+            "reset",
+            "composite",
+            "unknown",
+            "negation",
+            "sessions",
+            "expiry",
+        ],
+    )
+    def test_300_multiturn_reasoning(chat, text_db, family, variant):
+        day = (NOW + timedelta(days=variant % 3)).date().isoformat()
+        destination = "Nellore" if variant % 2 == 0 else "Tirupati"
+        dest_id = "DEMO4" if destination == "Nellore" else "DEMO2"
+        response = turn(chat, f"Next bus to {destination} on {day}?")
+        assert response["intents"] == ["NEXT_BUS"]
+        assert response["context"]["destination"] == dest_id
+        assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+        assert len(response["result_set"]) == 3
+        sid = response["session_id"]
+        first, second, third = response["result_set"]
+    
+        def ask(text, **extra):
+            nonlocal response
+            version = response["context"]["state_version"]
+            response = turn(chat, text, response, **extra)
+            assert response["session_id"] == sid
+            assert response["context"]["state_version"] == version + 1
+            return response
+    
+        if family == "fare":
+            ask("Second one")
+            ask("How much?")
+            assert response["intents"] == ["TICKET_FARE"]
+            query = response["results"][0]["query"]
+            assert query["segments"][0]["service_id"] == second["service_id"]
+            assert query["segments"][0]["destination"] == dest_id
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "platform":
+            ask("2")
+            ask("Which platform?")
+            assert response["results"][0]["query"]["service_id"] == second["service_id"]
+            assert response["results"][0]["results"][0] == {
+                "status": "unknown",
+                "bay": None,
+            }
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+        elif family == "attributes":
+            ask("Only AC")
+            assert response["context"]["filters"]["ac"] is True
+            ask("Only sleeper")
+            assert response["context"]["filters"]["sleeper"] is True
+            ask("1")
+            ask("Does it have AC?")
+            assert response["results"][0]["results"][0]["ac"] is True
+            assert response["results"][0]["results"][0]["sleeper"] is True
+        elif family == "compare":
+            ask("Second one")
+            ask("Compare with the first one")
+            comparison = response["results"][0]
+            assert response["dialogue_act"] == "COMPARISON"
+            assert comparison["query"]["result_ids"] == [
+                second["result_id"],
+                first["result_id"],
+            ]
+            assert [Decimal(r["fare"]) for r in comparison["results"]] == [
+                Decimal(second["fare"]),
+                Decimal(first["fare"]),
+            ]
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("Which one is cheaper?")
+            assert response["results"][0]["winners"] == [1]
+            assert response["results"][0]["results"][2]["fare"] is None
+        elif family == "reference":
+            ask("1")
+            ask("The next one")
+            assert response["selected_journey"]["service_id"] == second["service_id"]
+            ask("The one before it")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The Express")
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+            ask("The other one")
+            assert response["requires_clarification"]
+            assert response["selected_journey"]["service_id"] == first["service_id"]
+        elif family == "correction":
+            ask("2")
+            ask("No, Tirumala")
+            assert (
+                response["context"]["destination"] == "DEMO3"
+                and response["selected_journey"] is None
+            )
+            ask("Only AC")
+            ask("Under 900")
+            assert (
+                response["context"]["filters"]["ac"] is True
+                and Decimal(response["context"]["filters"]["max_fare"]) == 900
+            )
+            ask("Remove the fare limit")
+            assert response["context"]["filters"].get("max_fare") is None
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "deadline":
+            ask(f"I need to reach {destination} before 7 AM tomorrow")
+            assert response["context"]["filters"].get("arrival_before")
+            assert not response["context"]["filters"].get("before")
+            deadline = response["context"]["filters"]["arrival_before"]
+            ask("Only AC")
+            ask("Under 900")
+            assert response["context"]["filters"]["arrival_before"] == deadline
+            ask("Forget the earlier time")
+            assert not response["context"]["filters"].get("arrival_before")
+            assert response["context"]["filters"]["ac"] is True
+        elif family == "summary":
+            ask("Only AC")
+            ask("Under 900")
+            before = response["context"].copy()
+            ask("Summarize my journey")
+            assert response["dialogue_act"] == "SUMMARY" and not response["results"]
+            assert response["context"]["filters"] == before["filters"]
+            assert response["context"]["destination"] == dest_id
+            assert destination in response["answer"] and "900" in response["answer"]
+            assert response["selected_journey"] is None
+        elif family == "scope":
+            ask("2")
+            chosen = response["context"]["selected_result_id"]
+            ask(
+                [
+                    "What's the weather?",
+                    "Who is the Prime Minister?",
+                    "Can you order food?",
+                    "Tell me a joke.",
+                ][variant % 4]
+            )
+            assert (
+                response["dialogue_act"] == "OUT_OF_SCOPE"
+                and response["state"] == "OUT_OF_SCOPE"
+            )
+            assert (
+                not response["results"]
+                and response["context"]["selected_result_id"] == chosen
+            )
+            ask("Fare?")
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        elif family == "reset":
+            ask("2")
+            ask("Start over")
+            assert response["dialogue_act"] == "RESET_CONVERSATION"
+            assert (
+                not response["context"].get("destination")
+                and not response["selected_journey"]
+                and not response["result_set"]
+            )
+            ask("How much?")
+            assert response["requires_clarification"] and not response["results"]
+        elif family == "composite":
+            ask(f"Next bus to {destination}, fare and platform on {day}?")
+            assert response["query_plan"]["primary_intent"] == "NEXT_BUS"
+            assert set(response["query_plan"]["secondary_intents"]) == {
+                "TICKET_FARE",
+                "BUS_PLATFORM",
+            }
+            assert len(response["answer_sections"]) == 3
+            timings = next(r for r in response["results"] if r["intent"] == "NEXT_BUS")[
+                "results"
+            ]
+            fare = next(r for r in response["results"] if r["intent"] == "TICKET_FARE")
+            platform = next(r for r in response["results"] if r["intent"] == "BUS_PLATFORM")
+            assert [r["service_id"] for r in fare["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["service_id"] for r in platform["results"]] == [
+                r["service_id"] for r in timings
+            ]
+            assert [r["fare"] for r in fare["results"]] == [r["fare"] for r in timings]
+        elif family == "unknown":
+            ask("3")
+            ask("Fare?")
+            assert response["results"][0]["results"][0]["amount"] is None
+            ask("Which platform?")
+            assert response["results"][0]["results"][0]["bay"] is None
+            ask("Is it available?")
+            assert response["selected_journey"]["service_id"] == third["service_id"]
+            assert response["results"][0]["query"]["service_id"] == third["service_id"]
+        elif family == "negation":
+            ask("Only AC")
+            ask("Only AC and non AC")
+            assert (
+                response["requires_clarification"]
+                and response["context"]["filters"]["ac"] is True
+            )
+            ask("Not AC, Express")
+            assert response["context"]["filters"]["ac"] is False
+            assert response["context"]["filters"]["category"] == "express"
+            ask("Two passengers, not three")
+            assert response["context"]["passengers"] == 2
+        elif family == "sessions":
+            ask("2")
+            other = turn(chat, "Next bus to Hyderabad tomorrow?")
+            assert other["session_id"] != sid and other["context"]["destination"] == "DEMO6"
+            ask("Fare?")
+            assert (
+                response["context"]["destination"] == dest_id
+                and response["selected_journey"]["service_id"] == second["service_id"]
+            )
+            assert Decimal(response["results"][0]["results"][0]["amount"]) == Decimal(
+                second["fare"]
+            )
+        else:
+            ask("2")
+            with Session(text_db) as session, session.begin():
+                context = session.scalar(select(Context).where(Context.session_id == sid))
+                context.values = {
+                    **context.values,
+                    "expires_at": (NOW - timedelta(seconds=1)).isoformat(),
+                }
+            expired = chat.post("/api/v1/conversation/state", json={"session_id": sid})
+            assert expired.status_code == 410
+>           fresh = turn(chat, "How much?", response)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_phase5c.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+client = <starlette.testclient.TestClient object at 0x000001E941B01FA0>
+text = 'How much?'
+previous = {'source_metadata': [], 'dialogue_act': 'ENQUIRY', 'query_plan': {'primary_intent': None, 'secondary_intents': [], 'sh..., 'destination': 'DEMO2', 'travel_date': '2026-11-09', 'filters': {}}, 'dependencies': []}, 'answer_sections': [], ...}
+extra = {}
+
+    def turn(client, text, previous=None, **extra):
+        body = {"text": text, "language": "en", "station_context": "DEMO0", **extra}
+        if previous:
+            body["session_id"] = previous["session_id"]
+        response = client.post("/api/v1/conversation/message", json=body)
+        assert response.status_code == 200, response.text
+        data = response.json()
+        if previous:
+>           assert data["session_id"] == previous["session_id"]
+E           AssertionError: assert '66ba8800-814...-e703b0f9015f' == '47cc4071-d8b...-2a8572e210d3'
+E             
+E             - 47cc4071-d8b7-47da-91f2-2a8572e210d3
+E             + 66ba8800-8144-4508-afce-e703b0f9015f
+
+backend\tests\test_conversation_memory.py:168: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.934391+00:00", "correlation_id": "a8f244546b914fa087382e20b3cac668", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 34.954, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.966414+00:00", "correlation_id": "e45ceb0a512b4017b26e3218c9ff407e", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 30.046, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.974415+00:00", "correlation_id": "daffb5b09d16462abc4cd3f9a2a40036", "endpoint": "/api/v1/conversation/state", "method": "POST", "status": 410, "duration_ms": 1.746, "severity": "WARNING", "category": "REQUEST_REJECTED"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T13:24:15.995412+00:00", "correlation_id": "df2b3789ef1a476aa767fd4ea9d268c6", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 18.944, "severity": "INFO", "category": "SUCCESS"}
+============================== warnings summary ===============================
+..\..\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend/tests/test_phase5c.py::test_300_multiturn_reasoning[expiry-0]
+FAILED backend/tests/test_phase5c.py::test_300_multiturn_reasoning[expiry-1]
+FAILED backend/tests/test_phase5c.py::test_300_multiturn_reasoning[expiry-2]
+FAILED backend/tests/test_phase5c.py::test_300_multiturn_reasoning[expiry-3]
+FAILED backend/tests/test_phase5c.py::test_300_multiturn_reasoning[expiry-4]
+FAILED backend/tests/test_phase5c.py::test_300_multiturn_reasoning[expiry-5]
+FAILED backend/tests/test_phase5c.py::test_300_multiturn_reasoning[expiry-6]
+FAILED backend/tests/test_phase5c.py::test_300_multiturn_reasoning[expiry-7]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 8 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+8 failed, 280 passed, 1 warning in 51.84s

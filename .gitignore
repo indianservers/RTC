@@ -38,7 +38,19 @@ frontend/playwright-report/
 .tools/postgres/
 
 .tools/phase5a-backup/
+.tools/phase5b-backup/
 
 # Local request diagnostics and test-server runtime logs
 data/runtime/
 frontend/data/runtime/
+
+.tools/conversation-backup/
+.tools/conversation-collection.txt
+
+.tools/phase5d-backup/
+.tools/phase5e-*/
+config/runtime.private.json
+data/backups/
+*.db-wal
+*.db-shm
+*.db-journal

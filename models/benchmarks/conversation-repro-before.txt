@@ -1,0 +1,40 @@
+F
+================================== FAILURES ===================================
+____________________ test_exact_selected_journey_then_fare ____________________
+
+chat = <starlette.testclient.TestClient object at 0x000002250CC8BCE0>
+
+    def test_exact_selected_journey_then_fare(chat):
+        first = turn(chat, "How can I reach Nellore?")
+        assert len(first["context"]["candidates"]) >= 2
+        selected = turn(chat, "2", first)
+        chosen = selected["context"]["selected_itinerary"]
+        assert chosen["total_fare"] is not None
+        fare = turn(chat, "What is the fare?", selected)
+        rows = [row for result in fare["results"] for row in result["results"]]
+>       assert rows and Decimal(str(rows[0].get("amount", rows[0].get("fare")))) == Decimal(chosen["total_fare"]), fare
+E       AssertionError: {'session_id': '07c7f394-edec-4f0d-bcea-9b776ce86075', 'language': 'en', 'intents': ['TICKET_FARE'], 'entities': {'filters': {}}, ...}
+E       assert ([{'service_id': 'nellore-express', 'trip_id': None, 'origin_id': 'DEMO0', 'destination_id': 'DEMO4', ...}, {'service_i...DEMO4', ...}, {'service_id': 'nellore-sleeper', 'trip_id': None, 'origin_id': 'DEMO0', 'destination_id': 'DEMO4', ...}] and Decimal('101.00') == Decimal('313.00'))
+E        +  where Decimal('101.00') = Decimal('101.00')
+E        +    where '101.00' = str('101.00')
+E        +      where '101.00' = <built-in method get of dict object at 0x000002250D393540>('amount', '101.00')
+E        +        where <built-in method get of dict object at 0x000002250D393540> = {'service_id': 'nellore-express', 'trip_id': None, 'origin_id': 'DEMO0', 'destination_id': 'DEMO4', ...}.get
+E        +        and   '101.00' = <built-in method get of dict object at 0x000002250D393540>('fare')
+E        +          where <built-in method get of dict object at 0x000002250D393540> = {'service_id': 'nellore-express', 'trip_id': None, 'origin_id': 'DEMO0', 'destination_id': 'DEMO4', ...}.get
+E        +  and   Decimal('313.00') = Decimal('313.00')
+
+backend\tests\test_conversation_memory.py:73: AssertionError
+------------------------------ Captured log call ------------------------------
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T12:05:53.701863+00:00", "correlation_id": "c06bf2d9a44d4bc0894ea8e838913d7c", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 524.983, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T12:05:54.125380+00:00", "correlation_id": "2a9fc9f79c4743e1b5197a4cfa0c58f4", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 417.74, "severity": "INFO", "category": "SUCCESS"}
+INFO     rtc.local.requests:diagnostics.py:55 {"timestamp": "2026-11-08T12:05:54.314378+00:00", "correlation_id": "ea2f5aa68c114e0b9acbc14391bb5857", "endpoint": "/api/v1/conversation/message", "method": "POST", "status": 200, "duration_ms": 176.366, "severity": "INFO", "category": "SUCCESS"}
+============================== warnings summary ===============================
+..\..\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend/tests/test_conversation_memory.py::test_exact_selected_journey_then_fare
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 1 warning in 11.39s

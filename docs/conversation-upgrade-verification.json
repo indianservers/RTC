@@ -1,0 +1,138 @@
+{
+  "status": "IMPLEMENTED_AND_VERIFIED",
+  "backend_full": {
+    "passed": 1736,
+    "skipped": 0,
+    "seconds": 992.253,
+    "postgres_parameterized_executed": 69
+  },
+  "conversation_memory_final": {
+    "passed": 117,
+    "includes_100_multiturn_scenarios": true
+  },
+  "cross_database_memory": {
+    "sqlite": true,
+    "postgresql": true,
+    "passed": 2
+  },
+  "browser_full": {
+    "startTime": "2026-11-08T13:09:56.402Z",
+    "duration": 305664.05100000004,
+    "expected": 148,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "browser_server_restore_extra": {
+    "passed": 1
+  },
+  "offline": {
+    "network": "ALL_SOCKET_EGRESS_AND_DNS_BLOCKED_BEFORE_BACKEND_IMPORT",
+    "database": "PRIVATE_SQLITE_SNAPSHOT",
+    "startup_and_migrations_ms": 8952.616400001716,
+    "turns": [
+      {
+        "question": "Next bus to Nellore?",
+        "duration_ms": 249.71519999962766,
+        "state": "ANSWERING",
+        "selected_service": "a9f5e740-2f94-4a8c-bf41-efc65980b35c",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "2",
+        "duration_ms": 58.56520000088494,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "What is the fare?",
+        "duration_ms": 63.05380000048899,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "Is it AC?",
+        "duration_ms": 104.95549999905052,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "Does it stop at Ongole?",
+        "duration_ms": 83.64319999964209,
+        "state": "ANSWERING",
+        "selected_service": "b8e8dad4-8915-455e-8c09-5e041ffae48f",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "What about tomorrow?",
+        "duration_ms": 127.60999999954947,
+        "state": "ANSWERING",
+        "selected_service": null,
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "Cheapest option?",
+        "duration_ms": 142.86879999781377,
+        "state": "ANSWERING",
+        "selected_service": "a9f5e740-2f94-4a8c-bf41-efc65980b35c",
+        "data_source": [
+          "DEMO"
+        ]
+      },
+      {
+        "question": "No, I meant Tirupati.",
+        "duration_ms": 44.3130999992718,
+        "state": "NO_RESULTS",
+        "selected_service": null,
+        "data_source": [
+          "DEMO"
+        ]
+      }
+    ],
+    "passed": true
+  },
+  "live_acceptance": {
+    "passed": true,
+    "turns": 8,
+    "fixture_reused": true,
+    "evidence": "conversation-upgrade-live.json"
+  },
+  "database_integrity": {
+    "integrity_check": "ok",
+    "foreign_key_violations": 0,
+    "alembic_revision": "0016"
+  },
+  "performance": {
+    "samples": 5,
+    "median_ms": {
+      "page_ready_ms": 179.4,
+      "chat_send_to_answer_visible_ms": 257.4,
+      "nlp_total_ms": 140.3,
+      "planner_http_ms": 209.3
+    },
+    "dataset": "ISOLATED DEMO SQLITE",
+    "limitations": "Local machine timings under concurrent test load; not production capacity claims"
+  },
+  "checks": {
+    "ruff": "PASS",
+    "mypy": "PASS (55 files)",
+    "eslint": "PASS",
+    "typescript_and_vite_build": "PASS"
+  },
+  "known_warning": "Existing Starlette TestClient httpx deprecation warning"
+}

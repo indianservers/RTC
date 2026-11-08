@@ -28,6 +28,11 @@ import { ServicePage } from "./pages/ServicePage";
 const AdminPage = lazy(() =>
   import("./pages/AdminPage").then((m) => ({ default: m.AdminPage })),
 );
+const OperationsBoard = lazy(() =>
+  import("./pages/OperationsCenter").then((m) => ({
+    default: m.OperationsCenter,
+  })),
+);
 interface Workspace {
   station?: Station;
   setStation: (s?: Station) => void;
@@ -88,7 +93,8 @@ export function App() {
     const candidate = selectedStation.data?.data?.candidates?.[0];
     if (candidate)
       setStation((previous) =>
-        previous && previous.id === candidate.id &&
+        previous &&
+        previous.id === candidate.id &&
         (previous.name !== candidate.name ||
           previous.code !== candidate.code ||
           previous.timezone !== candidate.timezone)
@@ -131,6 +137,7 @@ export function App() {
               ["/", "Smart enquiry", MessageSquareText],
               ["/search", "Find a bus", Search],
               ["/journeys", "Journey planner", Map],
+              ["/board", "Live station board", BusFront],
             ].map(([path, label, Icon]) => {
               const I = Icon as typeof Map;
               return (
@@ -233,6 +240,7 @@ export function App() {
                 <Route path="/journeys" element={<PlannerPage />} />
                 <Route path="/services/:id" element={<ServicePage />} />
                 <Route path="/admin/*" element={<AdminPage />} />
+                <Route path="/board" element={<OperationsBoard passenger />} />
                 <Route
                   path="*"
                   element={

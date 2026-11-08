@@ -1,0 +1,74 @@
+[
+  {
+    "capability": "Compositional parsing",
+    "observed_gap": "Local-pattern matches returned early and suppressed other enquiries; modifiers could be separate questions.",
+    "implemented": "Merged canonical intents, retained modifier suppression, explicit bounded plan.",
+    "evidence": "backend/app/nlp/text_support.py; test_phase5c.py composite/attributes"
+  },
+  {
+    "capability": "Dependent queries",
+    "observed_gap": "The primary search changed default service_id; projection could reduce fare scope, and platform queries were not bound per displayed trip.",
+    "implemented": "Secondary enquiries bind to primary results, exact service dates/segments; fare and arrival reuse fresh primary facts.",
+    "evidence": "backend/app/nlp/pipeline.py RTCQueryOrchestrator"
+  },
+  {
+    "capability": "Comparisons",
+    "observed_gap": "Fare/duration selectors existed but did not provide a common two-option comparison contract.",
+    "implemented": "Refresh exact compatible segments, compare known fares/times/AC, exclude unknown fare, show evidence and ties.",
+    "evidence": "backend/app/nlp/references.py compare_current"
+  },
+  {
+    "capability": "References",
+    "observed_gap": "Numeric/previous/cheapest supported; other, predecessor, named category/time and both/neither lacked focused handling.",
+    "implemented": "Unambiguous references feed the existing stable-ID selection path; ambiguous references request one focused choice.",
+    "evidence": "conversational_reference; test_phase5c.py reference/named_time"
+  },
+  {
+    "capability": "Deadlines",
+    "observed_gap": "TemporalParser only recognized arrival wording; reaching before could become departure-before.",
+    "implemented": "Reach/reaching deadlines map to arrival_before and persist through filter/transfer updates.",
+    "evidence": "backend/app/nlp/components.py; deadline/transfer tests"
+  },
+  {
+    "capability": "Corrections",
+    "observed_gap": "Earlier time removal and passenger changes did not fully invalidate dependent selection.",
+    "implemented": "Explicit time clearing, passenger dependencies, retained budgets/accessibility and pending category restrictions.",
+    "evidence": "pipeline.py; state.py; correction/negation tests"
+  },
+  {
+    "capability": "Unknown category",
+    "observed_gap": "Unrecognized Only Super Luxury could silently reuse the active search on the live DB.",
+    "implemented": "Database choices, pending restriction, selection invalidation and preservation across destination corrections.",
+    "evidence": "entities.py UnknownCategory; unknown_category test"
+  },
+  {
+    "capability": "Summary",
+    "observed_gap": "No deterministic active-state summary; summary wording could fall through.",
+    "implemented": "DB station/category names, confirmed selection, defaults, filters, passengers, pending restrictions and transfer preference.",
+    "evidence": "text_support.py conversation_summary; summary tests"
+  },
+  {
+    "capability": "Out of scope",
+    "observed_gap": "Generic clarification for weather/politics requests.",
+    "implemented": "Brief scope response, no transport tools, selection and constraints preserved.",
+    "evidence": "special_dialogue; scope tests"
+  },
+  {
+    "capability": "Natural replies",
+    "observed_gap": "Empty search used generic no-matching prose.",
+    "implemented": "Contextual empty-search explanation and next actions; known/unknown parts remain distinct.",
+    "evidence": "pipeline.py; answer sections"
+  },
+  {
+    "capability": "Passenger UI",
+    "observed_gap": "No structured detail display for composed answers or comparison facts.",
+    "implemented": "Expandable sections, comparison facts, real category clarification choices and backend chips; existing style retained.",
+    "evidence": "ConversationDetails.tsx; phase5c.spec.ts"
+  },
+  {
+    "capability": "Security/offline",
+    "observed_gap": "Existing capabilities, transactions, versions and expiry already implemented.",
+    "implemented": "Preserved and regression-tested; no new transport tables, migrations, model or endpoints.",
+    "evidence": "conversation tests; offline smoke"
+  }
+]

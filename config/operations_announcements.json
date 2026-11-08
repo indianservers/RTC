@@ -1,0 +1,10 @@
+{
+  "delayed": "Attention passengers: service {service_number} has a dispatcher-revised departure estimate of {estimated_time}.",
+  "platform": "Attention passengers: service {service_number} is assigned to platform {platform} by the dispatcher.",
+  "cancelled": "Attention passengers: service {service_number} is cancelled or suspended. Please contact the enquiry counter.",
+  "boarding": "Boarding has started for service {service_number}.",
+  "arrived": "Service {service_number} has a recorded arrival at this station.",
+  "departed": "Service {service_number} has a recorded departure from this station.",
+  "reinstated": "Service {service_number} has been reinstated after authorized review.",
+  "unknown": "Please check the enquiry counter for the current operational status of service {service_number}."
+}

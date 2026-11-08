@@ -68,6 +68,8 @@ class EnglishIntentModel:
                 labels = json.loads(label_path.read_text(encoding="utf-8"))
                 if list(loaded.classes_) != labels:
                     return {"status": "LABEL_MAP_MISMATCH", "intents": []}
+                if len(self._cache) >= 4:
+                    self._cache.pop(next(iter(self._cache)))
                 self._cache[key] = loaded
             self.model = self._cache[key]
             self.version = row["version"]

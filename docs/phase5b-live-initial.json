@@ -1,0 +1,115 @@
+{
+  "dataset": "DEMO",
+  "application": "http://127.0.0.1:8000",
+  "checks": {
+    "delay_and_revised_departure": true,
+    "latest_platform": true,
+    "no_false_actual_departure": true,
+    "nlp_delay": false,
+    "actual_departure_visible": true,
+    "nlp_departure": true,
+    "every_event_has_actor_timestamp_source": true
+  },
+  "service_number": "DEMO-5B-995553",
+  "service_id": "c4a07ae1-37c1-4c26-918f-593f844dc836",
+  "station": "Vijayawada",
+  "station_id": "60d1d124-e384-4f43-ad89-2645c5e9801a",
+  "source_id": "8d672380-7df8-4c6f-a89d-121ff7aca16a",
+  "master_batch_id": "ccb4e01d-a27f-417d-abac-a17ce823170d",
+  "trip_id": "999f537a-e4f4-40d7-af3c-24becbfabd2c",
+  "delay_nlp": {
+    "intents": [
+      "NEXT_BUS"
+    ],
+    "answer": "Where would you like to travel?"
+  },
+  "departure_nlp": {
+    "intents": [
+      "BUS_DEPARTED_STATUS"
+    ],
+    "answer": "Demo schedule/data: The bus was recorded as departed at 08 Nov 2026 at 5:08 PM."
+  },
+  "events": [
+    {
+      "id": "cdd80df2-92b0-42ff-842b-2f6421e1d6cf",
+      "operation": "PUBLISH_ANNOUNCEMENT",
+      "version": 7,
+      "actor": "demo-5b-station_supervisor-1954eae1",
+      "source_id": "8d672380-7df8-4c6f-a89d-121ff7aca16a",
+      "occurred_at": "2026-11-08T11:38:42.656678+00:00",
+      "recorded_at": "2026-11-08T11:38:42.659679+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "f0ee04e1-a786-497c-9c04-f6c098353293",
+      "operation": "ANNOUNCEMENT_REQUEST",
+      "version": 6,
+      "actor": "demo-5b-dispatcher-1954eae1",
+      "source_id": "8d672380-7df8-4c6f-a89d-121ff7aca16a",
+      "occurred_at": "2026-11-08T11:38:42.647681+00:00",
+      "recorded_at": "2026-11-08T11:38:42.650678+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "ed24e20d-6c94-4821-aae1-93e7978f2768",
+      "operation": "DEPARTED_FROM_STOP",
+      "version": 5,
+      "actor": "demo-5b-dispatcher-1954eae1",
+      "source_id": "8d672380-7df8-4c6f-a89d-121ff7aca16a",
+      "occurred_at": "2026-11-08T11:38:42.603550+00:00",
+      "recorded_at": "2026-11-08T11:38:42.607547+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "8ff8d356-ab83-408d-8e5e-962e8ab99f5f",
+      "operation": "BOARDING",
+      "version": 4,
+      "actor": "demo-5b-dispatcher-1954eae1",
+      "source_id": "8d672380-7df8-4c6f-a89d-121ff7aca16a",
+      "occurred_at": "2026-11-08T11:38:42.591536+00:00",
+      "recorded_at": "2026-11-08T11:38:42.595551+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "6d4889b2-5db3-4687-8955-efa9ba7ff9b2",
+      "operation": "PLATFORM",
+      "version": 3,
+      "actor": "demo-5b-dispatcher-1954eae1",
+      "source_id": "8d672380-7df8-4c6f-a89d-121ff7aca16a",
+      "occurred_at": "2026-11-08T11:38:42.512534+00:00",
+      "recorded_at": "2026-11-08T11:38:42.515535+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "63b8a13c-4fb5-4683-b0f6-59b8b7085a63",
+      "operation": "PLATFORM",
+      "version": 2,
+      "actor": "demo-5b-dispatcher-1954eae1",
+      "source_id": "8d672380-7df8-4c6f-a89d-121ff7aca16a",
+      "occurred_at": "2026-11-08T11:38:42.498534+00:00",
+      "recorded_at": "2026-11-08T11:38:42.502534+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "f36d12bd-2bd5-4fc2-982a-426939830221",
+      "operation": "DELAYED",
+      "version": 1,
+      "actor": "demo-5b-dispatcher-1954eae1",
+      "source_id": "8d672380-7df8-4c6f-a89d-121ff7aca16a",
+      "occurred_at": "2026-11-08T11:38:42.479534+00:00",
+      "recorded_at": "2026-11-08T11:38:42.485537+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "8bd93d08-c811-4f0c-845d-336e63c05523",
+      "operation": "OPEN_TRIP",
+      "version": null,
+      "actor": "demo-5b-dispatcher-1954eae1",
+      "source_id": "8d672380-7df8-4c6f-a89d-121ff7aca16a",
+      "occurred_at": "2026-11-08T11:38:42.474536+00:00",
+      "recorded_at": "2026-11-08T11:38:42.474536+00:00",
+      "dataset_source": "DEMO"
+    }
+  ],
+  "temporary_capabilities_revoked": true
+}

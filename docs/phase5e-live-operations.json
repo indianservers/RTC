@@ -1,0 +1,116 @@
+{
+  "dataset": "DEMO",
+  "application": "http://127.0.0.1:8000",
+  "checks": {
+    "delay_and_revised_departure": true,
+    "latest_platform": true,
+    "nlp_latest_platform": true,
+    "no_false_actual_departure": true,
+    "nlp_delay": true,
+    "actual_departure_visible": true,
+    "nlp_departure": true,
+    "every_event_has_actor_timestamp_source": true
+  },
+  "service_number": "DEMO-5B-89539",
+  "service_id": "a6e2ef67-f3f8-48e4-93bb-108138e6ad6a",
+  "station": "Vijayawada",
+  "station_id": "60d1d124-e384-4f43-ad89-2645c5e9801a",
+  "source_id": "b55f0fc5-4539-4e43-94be-bd304a4c7670",
+  "master_batch_id": "f2f61ae4-764d-40b0-8909-a6ca5ae8f0e3",
+  "trip_id": "b79ddce2-cf86-4ecf-9ece-a5567750ef14",
+  "delay_nlp": {
+    "intents": [
+      "BUS_DELAY"
+    ],
+    "answer": "The recorded delay is 15 minutes. Revised departure: 2026-11-08T16:52:00+00:00. Dispatcher-confirmed platform: DEMO-5B-2-df769103."
+  },
+  "departure_nlp": {
+    "intents": [
+      "BUS_DEPARTED_STATUS"
+    ],
+    "answer": "The bus was recorded as departed at 08 Nov 2026 at 9:07 PM."
+  },
+  "events": [
+    {
+      "id": "b3ab2d47-8e73-43f8-b8c0-c70353a54fd7",
+      "operation": "PUBLISH_ANNOUNCEMENT",
+      "version": 7,
+      "actor": "demo-5b-station_supervisor-df769103",
+      "source_id": "b55f0fc5-4539-4e43-94be-bd304a4c7670",
+      "occurred_at": "2026-11-08T15:37:26.315895+00:00",
+      "recorded_at": "2026-11-08T15:37:26.318921+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "2547394d-c47b-479e-a363-4bbaab6fdc7a",
+      "operation": "ANNOUNCEMENT_REQUEST",
+      "version": 6,
+      "actor": "demo-5b-dispatcher-df769103",
+      "source_id": "b55f0fc5-4539-4e43-94be-bd304a4c7670",
+      "occurred_at": "2026-11-08T15:37:26.308894+00:00",
+      "recorded_at": "2026-11-08T15:37:26.311895+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "d189c258-0054-4df3-8304-a94b2f81bf5d",
+      "operation": "DEPARTED_FROM_STOP",
+      "version": 5,
+      "actor": "demo-5b-dispatcher-df769103",
+      "source_id": "b55f0fc5-4539-4e43-94be-bd304a4c7670",
+      "occurred_at": "2026-11-08T15:37:26.263121+00:00",
+      "recorded_at": "2026-11-08T15:37:26.265883+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "ed2713c8-4141-4f04-8591-5e75ba3d25f8",
+      "operation": "BOARDING",
+      "version": 4,
+      "actor": "demo-5b-dispatcher-df769103",
+      "source_id": "b55f0fc5-4539-4e43-94be-bd304a4c7670",
+      "occurred_at": "2026-11-08T15:37:26.254764+00:00",
+      "recorded_at": "2026-11-08T15:37:26.257901+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "ec6cfb71-6e5d-4069-98e2-188fbeaf4d8b",
+      "operation": "PLATFORM",
+      "version": 3,
+      "actor": "demo-5b-dispatcher-df769103",
+      "source_id": "b55f0fc5-4539-4e43-94be-bd304a4c7670",
+      "occurred_at": "2026-11-08T15:37:26.146752+00:00",
+      "recorded_at": "2026-11-08T15:37:26.149752+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "67668cc6-53a6-4a3d-9dfd-20be1716ad0f",
+      "operation": "PLATFORM",
+      "version": 2,
+      "actor": "demo-5b-dispatcher-df769103",
+      "source_id": "b55f0fc5-4539-4e43-94be-bd304a4c7670",
+      "occurred_at": "2026-11-08T15:37:26.134753+00:00",
+      "recorded_at": "2026-11-08T15:37:26.137753+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "4b4dbdd6-6977-411f-bbe2-ea5070c41eea",
+      "operation": "DELAYED",
+      "version": 1,
+      "actor": "demo-5b-dispatcher-df769103",
+      "source_id": "b55f0fc5-4539-4e43-94be-bd304a4c7670",
+      "occurred_at": "2026-11-08T15:37:26.119754+00:00",
+      "recorded_at": "2026-11-08T15:37:26.124754+00:00",
+      "dataset_source": "DEMO"
+    },
+    {
+      "id": "c24006dc-ef49-41d6-92c3-ae0789a1a2a6",
+      "operation": "OPEN_TRIP",
+      "version": null,
+      "actor": "demo-5b-dispatcher-df769103",
+      "source_id": "b55f0fc5-4539-4e43-94be-bd304a4c7670",
+      "occurred_at": "2026-11-08T15:37:26.116751+00:00",
+      "recorded_at": "2026-11-08T15:37:26.116751+00:00",
+      "dataset_source": "DEMO"
+    }
+  ],
+  "temporary_capabilities_revoked": true
+}

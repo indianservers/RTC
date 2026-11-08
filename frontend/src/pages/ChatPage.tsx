@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { useWorkspace } from "../App";
+import { useOperationsStream } from "../hooks/useOperationsStream";
 
 import { api, post, errorText, type Conversation, type Row } from "../api";
 
@@ -19,6 +20,8 @@ import { StationPicker } from "../components/StationPicker";
 import { BusCard } from "../components/BusCard";
 
 import { JourneyCard } from "../components/JourneyCard";
+import { MessageFeedback } from "../components/MessageFeedback";
+import { ConversationDetails } from "../components/ConversationDetails";
 
 import { followUpActions } from "../enquiryActions";
 
@@ -53,6 +56,7 @@ function read<T>(key: string, fallback: T): T {
 export function ChatPage() {
   const { station, setStation, operator, setOperator, bootstrap } =
     useWorkspace();
+  const localConnection = useOperationsStream(station?.id || "");
 
   const [initial] = useState(() => {
     const raw = read<unknown>("rtc-messages", []);
@@ -89,6 +93,8 @@ export function ChatPage() {
 
       sessionStorage.removeItem("rtc-draft");
       sessionStorage.removeItem("rtc-pending");
+      sessionStorage.removeItem("rtc-pending-request");
+      sessionStorage.removeItem("rtc-state-version");
 
       sessionStorage.setItem("rtc-expired-notice", "true");
     }
@@ -116,6 +122,11 @@ export function ChatPage() {
   });
 
   const [messages, setMessages] = useState<Message[]>(initial.messages);
+  const [sessionMode, setSessionMode] = useState<"kiosk" | "personal">(() =>
+    sessionStorage.getItem("rtc-session-mode") === "personal"
+      ? "personal"
+      : "kiosk",
+  );
 
   const [sid, setSid] = useState<string | undefined>(initial.sid);
 
@@ -196,6 +207,16 @@ export function ChatPage() {
 
     onSuccess: (response, input) => {
       if (input.epoch !== epoch.current) return;
+      const version = Number(
+        response.context.state_version || response.context.revision || 0,
+      );
+      if (
+        input.body.session_id === response.session_id &&
+        version < Number(sessionStorage.getItem("rtc-state-version") || "0")
+      )
+        return;
+      sessionStorage.setItem("rtc-state-version", String(version));
+      sessionStorage.removeItem("rtc-pending-request");
 
       sessionStorage.removeItem("rtc-pending");
       lastOperator.current = input.operator;
@@ -205,11 +226,11 @@ export function ChatPage() {
       sessionStorage.setItem("rtc-session", response.session_id);
 
       const assistant: Message = {
-        id: crypto.randomUUID(),
+        id: response.message_id || crypto.randomUUID(),
 
         role: "assistant",
 
-        text: response.answer,
+        text: response.response_text || response.answer,
 
         at: new Date().toISOString(),
 
@@ -237,7 +258,12 @@ export function ChatPage() {
         setSessionNotice(
           "The previous server session expired. This enquiry started a new conversation.",
         );
-      } else setMessages((old) => [...old, assistant].slice(-40));
+      } else
+        setMessages((old) =>
+          old.some((message) => message.id === assistant.id)
+            ? old
+            : [...old, assistant].slice(-40),
+        );
 
       setExpiry(
         new Date(
@@ -246,7 +272,12 @@ export function ChatPage() {
               ? Date.parse(response.context.expires_at)
               : Infinity,
 
-            Date.now() + kioskIdleMinutes() * 60 * 1000,
+            Date.now() +
+              (response.context.session_mode === "personal"
+                ? 1440
+                : kioskIdleMinutes()) *
+                60 *
+                1000,
           ),
         ).toISOString(),
       );
@@ -297,6 +328,8 @@ export function ChatPage() {
 
       "rtc-draft",
       "rtc-pending",
+      "rtc-pending-request",
+      "rtc-state-version",
     ])
       sessionStorage.removeItem(key);
 
@@ -322,8 +355,6 @@ export function ChatPage() {
             owner_token: retired.owner,
 
             text: "reset",
-
-            language: "en",
           })
         : Promise.resolve({}),
 
@@ -374,7 +405,12 @@ export function ChatPage() {
       });
   }, [messages]);
 
-  async function send(message: string, retry = false) {
+  async function send(
+    message: string,
+    retry = false,
+    contextAction?: Row,
+    modeOverride?: "kiosk" | "personal",
+  ) {
     if (!message.trim() || mutation.isPending || reset.isPending) return;
 
     if (!station && !sid) {
@@ -397,7 +433,10 @@ export function ChatPage() {
     setAtBottom(true);
 
     setExpiry(
-      new Date(Date.now() + kioskIdleMinutes() * 60 * 1000).toISOString(),
+      new Date(
+        Date.now() +
+          (sessionMode === "personal" ? 1440 : kioskIdleMinutes()) * 60 * 1000,
+      ).toISOString(),
     );
 
     if (!retry)
@@ -417,22 +456,33 @@ export function ChatPage() {
 
     setText("");
 
+    const pending = read<Row | null>("rtc-pending-request", null);
+    const body =
+      retry && pending?.text === message
+        ? pending
+        : {
+            text: message,
+            session_id: sid,
+            owner_token: owner,
+            station_context: station?.id,
+            operator: operator !== lastOperator.current ? operator : undefined,
+            client_message_id: crypto.randomUUID(),
+            expected_state_version: sid
+              ? Number(
+                  sessionStorage.getItem("rtc-state-version") ||
+                    latest?.context.state_version ||
+                    latest?.context.revision ||
+                    "0",
+                )
+              : 0,
+            session_mode: modeOverride || sessionMode,
+            ...(contextAction ? { context_action: contextAction } : {}),
+          };
+    sessionStorage.setItem("rtc-pending-request", JSON.stringify(body));
     return await mutation
 
       .mutateAsync({
-        body: {
-          text: message,
-
-          session_id: sid,
-
-          owner_token: owner,
-
-          language: "en",
-
-          station_context: station?.id,
-
-          operator: operator !== lastOperator.current ? operator : undefined,
-        },
+        body,
 
         epoch: epoch.current,
 
@@ -445,8 +495,66 @@ export function ChatPage() {
   }
 
   const latest = [...messages].reverse().find((m) => m.response)?.response;
+  const restore = useMutation({
+    mutationFn: () =>
+      post("/conversation/state", { session_id: sid, owner_token: owner }),
+    onSuccess: (saved) => {
+      const snapshot: Conversation = {
+        ...(latest || {}),
+        session_id: saved.session_id,
+        message_id: saved.last_message_id,
+        context: saved.current_context,
+        current_context: saved.current_context,
+        answer:
+          saved.current_context.last_answer || "Your saved context is ready.",
+        state: "ANSWERING",
+        results: [],
+        warnings: [],
+        intents: saved.current_context.last_intents || [],
+        requires_clarification: false,
+        duration_ms: 0,
+        debug: {},
+        entities: {},
+        context_changes: [],
+        selected_journey: saved.selected_journey,
+        result_set: saved.result_set,
+        data_source: saved.data_source,
+        follow_up_suggestions: [],
+      };
+      const restored: Message[] = saved.history.map(
+        (message: Row, index: number) => ({
+          id:
+            index === saved.history.length - 1 && message.role === "assistant"
+              ? saved.last_message_id || message.id
+              : message.id,
+          role: message.role,
+          text: message.text,
+          at: "",
+          ...(index === saved.history.length - 1 && message.role === "assistant"
+            ? { response: snapshot }
+            : {}),
+        }),
+      );
+      setMessages(restored);
+      setFailure("");
+      setExpiry(saved.current_context.expires_at);
+      setSessionMode(
+        saved.current_context.session_mode === "personal"
+          ? "personal"
+          : "kiosk",
+      );
+      sessionStorage.setItem("rtc-state-version", String(saved.state_version));
+      sessionStorage.removeItem("rtc-pending-request");
+      sessionStorage.removeItem("rtc-pending");
+      setSessionNotice(
+        "Saved messages and context restored. New questions will recheck current database records.",
+      );
+    },
+  });
 
-  function renewIdle(minutes = kioskIdleMinutes()) {
+  function renewIdle(
+    minutes = sessionMode === "personal" ? 1440 : kioskIdleMinutes(),
+  ) {
     if (!messages.length) return;
     setExpiry(
       new Date(
@@ -480,7 +588,13 @@ export function ChatPage() {
         const key =
           r.journey_id || `${r.service_id}-${r.service_date}-${r.departure}`;
 
-        if ((!r.service_id && !r.journey_id) || seen.has(key)) return false;
+        if (
+          (r.journey_id
+            ? !Array.isArray(r.legs)
+            : !r.service_id || !r.departure) ||
+          seen.has(key)
+        )
+          return false;
 
         seen.add(key);
 
@@ -491,7 +605,7 @@ export function ChatPage() {
   }
 
   return (
-    <div className="chat-page">
+    <div className={`chat-page${messages.length ? " has-conversation" : ""}`}>
       <div className="chat-heading">
         <div>
           <span className="eyebrow">YOUR LOCAL TRAVEL ASSISTANT</span>
@@ -501,6 +615,7 @@ export function ChatPage() {
           </h1>
 
           <p>Clear answers. Real timetables. A smoother journey.</p>
+          <small role="status">Local data: {localConnection}. Ask again to refresh an earlier answer.</small>
         </div>
 
         <Button
@@ -515,25 +630,53 @@ export function ChatPage() {
         </Button>
       </div>
 
-      <label className="idle-setting">
-        Kiosk idle timeout
-        <select
-          aria-label="Kiosk idle timeout"
-          defaultValue={kioskIdleMinutes()}
-          onChange={(e) => {
-            sessionStorage.setItem("rtc-kiosk-idle", e.target.value);
+      <div className="privacy-controls">
+        <label className="idle-setting">
+          Privacy mode
+          <select
+            aria-label="Conversation privacy mode"
+            value={sessionMode}
+            disabled={mutation.isPending}
+            onChange={async (event) => {
+              const mode = event.target.value as "kiosk" | "personal";
+              if (
+                sid &&
+                !(await send(
+                  "Keep this conversation context",
+                  false,
+                  undefined,
+                  mode,
+                ))
+              )
+                return;
+              setSessionMode(mode);
+              sessionStorage.setItem("rtc-session-mode", mode);
+            }}
+          >
+            <option value="kiosk">Shared kiosk · idle expiry</option>
+            <option value="personal">Personal browser · up to 24 hours</option>
+          </select>
+        </label>
+        <label className="idle-setting">
+          Kiosk idle timeout
+          <select
+            aria-label="Kiosk idle timeout"
+            disabled={sessionMode === "personal"}
+            defaultValue={kioskIdleMinutes()}
+            onChange={(e) => {
+              sessionStorage.setItem("rtc-kiosk-idle", e.target.value);
 
-            renewIdle(Number(e.target.value));
-          }}
-        >
-          {[2, 5, 10, 15].map((minutes) => (
-            <option key={minutes} value={minutes}>
-              {minutes} minutes
-            </option>
-          ))}
-        </select>
-      </label>
-
+              renewIdle(Number(e.target.value));
+            }}
+          >
+            {[2, 5, 10, 15].map((minutes) => (
+              <option key={minutes} value={minutes}>
+                {minutes} minutes
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
       <div className="context-bar">
         <StationPicker
           label="Your current bus stand"
@@ -630,26 +773,73 @@ export function ChatPage() {
       {latest && (
         <div className="selected-context" aria-label="Active enquiry context">
           <div>
+            <strong>
+              {latest.context.origin_name ||
+                station?.name ||
+                "Choose boarding station"}{" "}
+              → {latest.context.destination_name || "Choose destination"}
+            </strong>
             <small>
               {focused
                 ? confirmed
                   ? "Selected service"
                   : "Service in focus"
-                : "Journey context"}
+                : latest.selected_journey
+                  ? "Selected journey"
+                  : "Journey context"}
             </small>
 
             <strong>
-              {focused
-                ? currentCandidate?.service_number || focused
-                : latest.context.selected_itinerary
-                  ? `Journey ${latest.context.selected_itinerary.journey_id.slice(0, 8)}`
-                  : "No service selected"}
+              {latest.context.selection_summary
+                ? `${latest.context.selection_summary.categories.join(" → ")} · ${latest.context.selection_summary.service_numbers.join(" → ")}`
+                : focused
+                  ? currentCandidate?.service_number || "Service in focus"
+                  : latest.context.selected_itinerary
+                    ? "Selected connecting journey"
+                    : "No service selected"}
             </strong>
 
             <span>
-              {latest.context.travel_date || "Date not selected"} ·{" "}
+              {latest.context.travel_date || "Date not selected"}{" "}
+              {latest.context.time_window || ""} ·{" "}
               {confirmed ? "User confirmed" : "Local enquiry context"}
             </span>
+            <div className="context-chips">
+              {Object.entries(latest.context.filters || {})
+                .filter(
+                  ([key, value]) =>
+                    ["ac", "sleeper", "category", "max_fare"].includes(key) &&
+                    value != null,
+                )
+                .map(([key, value]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    disabled={mutation.isPending}
+                    aria-label={`Remove ${key.replaceAll("_", " ")} filter`}
+                    onClick={() =>
+                      void send("Next bus", false, {
+                        op: "CLEAR_SLOT",
+                        slot: key,
+                      })
+                    }
+                  >
+                    {key === "ac"
+                      ? value
+                        ? "AC only"
+                        : "Non-AC"
+                      : key === "sleeper"
+                        ? value
+                          ? "Sleeper"
+                          : "Seater"
+                        : key === "max_fare"
+                          ? `Up to INR ${value}`
+                          : bootstrap?.categories.find((c) => c.id === value)
+                              ?.name || "Category selected"}{" "}
+                    ×
+                  </button>
+                ))}
+            </div>
           </div>
 
           <Button
@@ -759,17 +949,46 @@ export function ChatPage() {
               <div className="bubble">
                 <div className="message-label">
                   {message.role === "assistant" ? "RTC Smart Enquiry" : "You"}
+                  {message.response?.data_source?.some((source) =>
+                    ["DEMO", "SYNTHETIC"].includes(source),
+                  ) && <Badge tone="warning">DEMO</Badge>}
 
                   <time>
-                    {new Date(message.at).toLocaleTimeString("en-IN", {
-                      hour: "2-digit",
+                    {message.at
+                      ? new Date(message.at).toLocaleTimeString("en-IN", {
+                          hour: "2-digit",
 
-                      minute: "2-digit",
-                    })}
+                          minute: "2-digit",
+                        })
+                      : "Saved message"}
                   </time>
                 </div>
 
                 <p>{message.text}</p>
+                {message.response && (
+                  <>
+                    <ConversationDetails response={message.response} />
+                    <MessageFeedback
+                      response={message.response}
+                      owner={owner}
+                    />
+                  </>
+                )}
+                {message.response?.requires_clarification &&
+                  !!message.response.clarification_choices?.length && (
+                    <ContextualActions
+                      actions={message.response.clarification_choices.map(
+                        (choice) => ({
+                          label: choice.label,
+                          query: choice.text,
+                        }),
+                      )}
+                      onAction={(query) => void send(query)}
+                      disabled={
+                        mutation.isPending || message.response !== latest
+                      }
+                    />
+                  )}
               </div>
 
               {message.response &&
@@ -822,8 +1041,13 @@ export function ChatPage() {
                       );
 
                       const selectable =
-                        message.response === messages.at(-1)?.response &&
-                        candidateIndex >= 0;
+                        message.response?.context.result_revision ===
+                          latest?.context.result_revision &&
+                        candidateIndex >= 0 &&
+                        latest?.context.candidates?.[candidateIndex]
+                          ?.result_id ===
+                          message.response?.context.candidates?.[candidateIndex]
+                            ?.result_id;
 
                       return row.journey_id ? (
                         <JourneyCard
@@ -984,6 +1208,21 @@ export function ChatPage() {
               </Button>
             )}
           </Notice>
+          {sid && (
+            <Button
+              variant="secondary"
+              onClick={() => restore.mutate()}
+              disabled={restore.isPending}
+            >
+              Restore saved context
+            </Button>
+          )}
+          {restore.error && (
+            <Notice error>
+              {errorText(restore.error)} Start a new conversation if this
+              session expired.
+            </Notice>
+          )}
         </div>
       )}
 
@@ -994,7 +1233,15 @@ export function ChatPage() {
 
             disabled={mutation.isPending || reset.isPending}
 
-            onAction={(query) => void send(query)}
+            onAction={(query) => {
+              const suggestion = [...messages]
+                .reverse()
+                .find((m) => m.response)
+                ?.response?.follow_up_suggestions?.find(
+                  (item) => item.text === query,
+                );
+              void send(query, false, suggestion?.context_action ?? undefined);
+            }}
           />
         )}
 

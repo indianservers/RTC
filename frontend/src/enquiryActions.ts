@@ -3,6 +3,11 @@ import type { Conversation } from "./api";
 type Action = { label: string; query: string };
 
 export function followUpActions(response?: Conversation): Action[] {
+  if (response?.follow_up_suggestions)
+    return response.follow_up_suggestions.map((action) => ({
+      label: action.label,
+      query: action.text,
+    }));
   if (
     !response ||
     response.requires_clarification ||

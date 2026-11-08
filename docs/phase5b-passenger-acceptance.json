@@ -1,0 +1,1694 @@
+{
+  "dataset": "ISOLATED DEMO",
+  "steps": [
+    {
+      "step": 1,
+      "context": {
+        "slot_origins": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "SYSTEM_DEFAULT"
+        },
+        "slot_sources": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "SYSTEM_DEFAULT"
+        },
+        "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "current_station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "filters": {},
+        "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+        "confirmed_slots": [],
+        "travel_date": "2026-11-08",
+        "candidates": [
+          {
+            "service_id": "UI-DEMO-NELLORE",
+            "trip_id": "ui-expiry-trip",
+            "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "boarding_stop_id": "46cde1c7-e236-4253-82dc-97d8d51ddfeb",
+            "alighting_stop_id": "1c3c3747-5683-4d3b-82db-0bf24cea686a",
+            "service_number": "UI-DEMO-NELLORE",
+            "service_date": "2026-11-08",
+            "departure": "2026-11-08T18:22:00+05:30",
+            "arrival": "2026-11-08T21:22:00+05:30",
+            "arrival_kind": "scheduled",
+            "departure_kind": "scheduled",
+            "scheduled_departure": "2026-11-08T18:22:00+05:30",
+            "fare": "125.00",
+            "fare_source": "DEMO",
+            "fare_breakdown": {
+              "base_fare": "125.00",
+              "surcharge": null,
+              "discount": null,
+              "total": "125.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO",
+              "concession_eligibility": "NOT_EVALUATED"
+            },
+            "seat_availability": "unknown",
+            "dataset_source": "DEMO",
+            "fare_details": {
+              "total": "125.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO"
+            },
+            "category_name": "Demo electric",
+            "result_id": "001ab2201a15d8829b42"
+          },
+          {
+            "service_id": "UI-DEMO-NELLORE-CHEAP",
+            "trip_id": null,
+            "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+            "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+            "service_number": "UI-DEMO-NELLORE-CHEAP",
+            "service_date": "2026-11-08",
+            "departure": "2026-11-08T19:22:00+05:30",
+            "arrival": "2026-11-08T22:22:00+05:30",
+            "arrival_kind": "scheduled",
+            "departure_kind": "scheduled",
+            "scheduled_departure": "2026-11-08T19:22:00+05:30",
+            "fare": "95.00",
+            "fare_source": "DEMO",
+            "fare_breakdown": {
+              "base_fare": "95.00",
+              "surcharge": null,
+              "discount": null,
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO",
+              "concession_eligibility": "NOT_EVALUATED"
+            },
+            "seat_availability": "unknown",
+            "dataset_source": "DEMO",
+            "fare_details": {
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO"
+            },
+            "category_name": "Demo electric",
+            "result_id": "4e1153139eb611b06e2c"
+          },
+          {
+            "service_id": "UI-DEMO-NELLORE-UNKNOWN",
+            "trip_id": null,
+            "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "boarding_stop_id": "30250918-ac4b-43c0-bb3a-5b67a3c0d0ed",
+            "alighting_stop_id": "75b2ac78-b619-4364-8ba0-d572957cbe55",
+            "service_number": "UI-DEMO-NELLORE-UNKNOWN",
+            "service_date": "2026-11-08",
+            "departure": "2026-11-08T19:22:00+05:30",
+            "arrival": "2026-11-08T22:22:00+05:30",
+            "arrival_kind": "scheduled",
+            "departure_kind": "scheduled",
+            "scheduled_departure": "2026-11-08T19:22:00+05:30",
+            "fare": null,
+            "fare_source": null,
+            "fare_breakdown": {
+              "base_fare": null,
+              "surcharge": null,
+              "discount": null,
+              "total": null,
+              "currency": "INR",
+              "fare_status": "UNKNOWN",
+              "missing_component": "valid segment tariff"
+            },
+            "seat_availability": "unknown",
+            "dataset_source": "DEMO",
+            "fare_details": {
+              "total": null,
+              "currency": "INR",
+              "fare_status": "UNKNOWN",
+              "source": "DEMO"
+            },
+            "category_name": "Demo electric",
+            "result_id": "6a25b15da8a6613e0268"
+          }
+        ],
+        "result_revision": 1,
+        "selection_status": "SYSTEM_QUERY_DEFAULT",
+        "service_id": "UI-DEMO-NELLORE",
+        "selected_route_id": "UI-DEMO-NELLORE",
+        "trip_id": "ui-expiry-trip",
+        "last_intent": "NEXT_BUS",
+        "last_intents": [
+          "NEXT_BUS"
+        ],
+        "pending_clarification": null,
+        "last_system_question": null,
+        "session_id": "04b2b4ff-f9c4-4de7-84c6-f734ffa2cb74",
+        "revision": 1,
+        "last_activity_at": "2026-11-08T11:55:11.379140+00:00",
+        "expires_at": "2026-11-08T12:10:11.379140+00:00"
+      },
+      "results": [
+        {
+          "intent": "NEXT_BUS",
+          "status": "KNOWN",
+          "query": {
+            "intent": "NEXT_BUS",
+            "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "service_id": null,
+            "trip_id": null,
+            "service_number": null,
+            "via": null,
+            "travel_date": "2026-11-08",
+            "at": "2026-11-08T17:25:11.379140+05:30",
+            "filters": {
+              "ac": null,
+              "sleeper": null,
+              "electric": null,
+              "accessible": null,
+              "reservation": null,
+              "category": null,
+              "exclude_categories": [],
+              "operator": null,
+              "amenity": null,
+              "min_fare": null,
+              "max_fare": null,
+              "max_duration_minutes": null,
+              "after": null,
+              "before": null,
+              "arrival_after": null,
+              "arrival_before": null
+            },
+            "limit": 20,
+            "offset": 0,
+            "max_transfers": 2,
+            "minimum_transfer": 15,
+            "operating_day_start_minutes": 0,
+            "passengers": 1
+          },
+          "matched_stations": {
+            "origin": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "destination": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+                  "name": "Nellore",
+                  "code": "DEMO4",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "station": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            }
+          },
+          "results": [
+            {
+              "service_id": "UI-DEMO-NELLORE",
+              "trip_id": "ui-expiry-trip",
+              "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+              "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+              "boarding_stop_id": "46cde1c7-e236-4253-82dc-97d8d51ddfeb",
+              "alighting_stop_id": "1c3c3747-5683-4d3b-82db-0bf24cea686a",
+              "service_number": "UI-DEMO-NELLORE",
+              "service_date": "2026-11-08",
+              "departure": "2026-11-08T18:22:00+05:30",
+              "arrival": "2026-11-08T21:22:00+05:30",
+              "arrival_kind": "scheduled",
+              "departure_kind": "scheduled",
+              "scheduled_departure": "2026-11-08T18:22:00+05:30",
+              "fare": "125.00",
+              "fare_source": "DEMO",
+              "fare_breakdown": {
+                "base_fare": "125.00",
+                "surcharge": null,
+                "discount": null,
+                "total": "125.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO",
+                "concession_eligibility": "NOT_EVALUATED"
+              },
+              "seat_availability": "unknown",
+              "dataset_source": "DEMO",
+              "fare_details": {
+                "total": "125.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO"
+              },
+              "category_name": "Demo electric"
+            },
+            {
+              "service_id": "UI-DEMO-NELLORE-CHEAP",
+              "trip_id": null,
+              "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+              "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+              "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+              "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+              "service_number": "UI-DEMO-NELLORE-CHEAP",
+              "service_date": "2026-11-08",
+              "departure": "2026-11-08T19:22:00+05:30",
+              "arrival": "2026-11-08T22:22:00+05:30",
+              "arrival_kind": "scheduled",
+              "departure_kind": "scheduled",
+              "scheduled_departure": "2026-11-08T19:22:00+05:30",
+              "fare": "95.00",
+              "fare_source": "DEMO",
+              "fare_breakdown": {
+                "base_fare": "95.00",
+                "surcharge": null,
+                "discount": null,
+                "total": "95.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO",
+                "concession_eligibility": "NOT_EVALUATED"
+              },
+              "seat_availability": "unknown",
+              "dataset_source": "DEMO",
+              "fare_details": {
+                "total": "95.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO"
+              },
+              "category_name": "Demo electric"
+            },
+            {
+              "service_id": "UI-DEMO-NELLORE-UNKNOWN",
+              "trip_id": null,
+              "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+              "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+              "boarding_stop_id": "30250918-ac4b-43c0-bb3a-5b67a3c0d0ed",
+              "alighting_stop_id": "75b2ac78-b619-4364-8ba0-d572957cbe55",
+              "service_number": "UI-DEMO-NELLORE-UNKNOWN",
+              "service_date": "2026-11-08",
+              "departure": "2026-11-08T19:22:00+05:30",
+              "arrival": "2026-11-08T22:22:00+05:30",
+              "arrival_kind": "scheduled",
+              "departure_kind": "scheduled",
+              "scheduled_departure": "2026-11-08T19:22:00+05:30",
+              "fare": null,
+              "fare_source": null,
+              "fare_breakdown": {
+                "base_fare": null,
+                "surcharge": null,
+                "discount": null,
+                "total": null,
+                "currency": "INR",
+                "fare_status": "UNKNOWN",
+                "missing_component": "valid segment tariff"
+              },
+              "seat_availability": "unknown",
+              "dataset_source": "DEMO",
+              "fare_details": {
+                "total": null,
+                "currency": "INR",
+                "fare_status": "UNKNOWN",
+                "source": "DEMO"
+              },
+              "category_name": "Demo electric"
+            }
+          ],
+          "warnings": [],
+          "pagination": {
+            "offset": 0,
+            "limit": 20,
+            "total": 3
+          }
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "context": {
+        "slot_origins": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "SYSTEM_DEFAULT",
+          "ac": "EXPLICIT"
+        },
+        "slot_sources": {
+          "origin": "INHERITED",
+          "operator": "INHERITED",
+          "destination": "INHERITED",
+          "travel_date": "INHERITED",
+          "ac": "EXPLICIT"
+        },
+        "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "current_station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "filters": {
+          "ac": true
+        },
+        "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+        "confirmed_slots": [],
+        "travel_date": "2026-11-08",
+        "result_revision": 2,
+        "selection_status": "SYSTEM_QUERY_DEFAULT",
+        "selected_route_id": "UI-DEMO-NELLORE-CHEAP",
+        "last_intent": "AC_BUS_AVAILABILITY",
+        "last_intents": [
+          "AC_BUS_AVAILABILITY"
+        ],
+        "pending_clarification": null,
+        "last_system_question": null,
+        "session_id": "04b2b4ff-f9c4-4de7-84c6-f734ffa2cb74",
+        "revision": 2,
+        "last_activity_at": "2026-11-08T11:55:11.611585+00:00",
+        "expires_at": "2026-11-08T12:10:11.611585+00:00",
+        "candidates": [
+          {
+            "service_id": "UI-DEMO-NELLORE-CHEAP",
+            "trip_id": null,
+            "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+            "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+            "service_number": "UI-DEMO-NELLORE-CHEAP",
+            "service_date": "2026-11-08",
+            "departure": "2026-11-08T19:22:00+05:30",
+            "arrival": "2026-11-08T22:22:00+05:30",
+            "arrival_kind": "scheduled",
+            "departure_kind": "scheduled",
+            "scheduled_departure": "2026-11-08T19:22:00+05:30",
+            "fare": "95.00",
+            "fare_source": "DEMO",
+            "fare_breakdown": {
+              "base_fare": "95.00",
+              "surcharge": null,
+              "discount": null,
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO",
+              "concession_eligibility": "NOT_EVALUATED"
+            },
+            "seat_availability": "unknown",
+            "dataset_source": "DEMO",
+            "fare_details": {
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO"
+            },
+            "category_name": "Demo electric",
+            "result_id": "4e1153139eb611b06e2c"
+          }
+        ],
+        "service_id": "UI-DEMO-NELLORE-CHEAP"
+      },
+      "results": [
+        {
+          "intent": "AC_BUS_AVAILABILITY",
+          "status": "KNOWN",
+          "query": {
+            "intent": "AC_BUS_AVAILABILITY",
+            "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "service_id": null,
+            "trip_id": null,
+            "service_number": null,
+            "via": null,
+            "travel_date": "2026-11-08",
+            "at": "2026-11-08T17:25:11.611585+05:30",
+            "filters": {
+              "ac": true,
+              "sleeper": null,
+              "electric": null,
+              "accessible": null,
+              "reservation": null,
+              "category": null,
+              "exclude_categories": [],
+              "operator": null,
+              "amenity": null,
+              "min_fare": null,
+              "max_fare": null,
+              "max_duration_minutes": null,
+              "after": null,
+              "before": null,
+              "arrival_after": null,
+              "arrival_before": null
+            },
+            "limit": 20,
+            "offset": 0,
+            "max_transfers": 2,
+            "minimum_transfer": 15,
+            "operating_day_start_minutes": 0,
+            "passengers": 1
+          },
+          "matched_stations": {
+            "origin": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "destination": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+                  "name": "Nellore",
+                  "code": "DEMO4",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "station": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            }
+          },
+          "results": [
+            {
+              "service_id": "UI-DEMO-NELLORE-CHEAP",
+              "trip_id": null,
+              "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+              "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+              "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+              "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+              "service_number": "UI-DEMO-NELLORE-CHEAP",
+              "service_date": "2026-11-08",
+              "departure": "2026-11-08T19:22:00+05:30",
+              "arrival": "2026-11-08T22:22:00+05:30",
+              "arrival_kind": "scheduled",
+              "departure_kind": "scheduled",
+              "scheduled_departure": "2026-11-08T19:22:00+05:30",
+              "fare": "95.00",
+              "fare_source": "DEMO",
+              "fare_breakdown": {
+                "base_fare": "95.00",
+                "surcharge": null,
+                "discount": null,
+                "total": "95.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO",
+                "concession_eligibility": "NOT_EVALUATED"
+              },
+              "seat_availability": "unknown",
+              "dataset_source": "DEMO",
+              "fare_details": {
+                "total": "95.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO"
+              },
+              "category_name": "Demo electric"
+            }
+          ],
+          "warnings": [],
+          "pagination": {
+            "offset": 0,
+            "limit": 20,
+            "total": 1
+          }
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "context": {
+        "slot_origins": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "SYSTEM_DEFAULT",
+          "ac": "EXPLICIT"
+        },
+        "slot_sources": {
+          "origin": "INHERITED",
+          "operator": "INHERITED",
+          "destination": "INHERITED",
+          "travel_date": "INHERITED",
+          "ac": "INHERITED"
+        },
+        "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "current_station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "filters": {
+          "ac": true
+        },
+        "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+        "confirmed_slots": [],
+        "travel_date": "2026-11-08",
+        "result_revision": 3,
+        "selection_status": "SYSTEM_QUERY_DEFAULT",
+        "selected_route_id": "UI-DEMO-NELLORE-CHEAP",
+        "last_intent": "CHEAPEST_BUS",
+        "last_intents": [
+          "CHEAPEST_BUS"
+        ],
+        "pending_clarification": null,
+        "last_system_question": null,
+        "session_id": "04b2b4ff-f9c4-4de7-84c6-f734ffa2cb74",
+        "revision": 3,
+        "last_activity_at": "2026-11-08T11:55:11.784105+00:00",
+        "expires_at": "2026-11-08T12:10:11.784105+00:00",
+        "candidates": [
+          {
+            "service_id": "UI-DEMO-NELLORE-CHEAP",
+            "trip_id": null,
+            "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+            "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+            "service_number": "UI-DEMO-NELLORE-CHEAP",
+            "service_date": "2026-11-08",
+            "departure": "2026-11-08T19:22:00+05:30",
+            "arrival": "2026-11-08T22:22:00+05:30",
+            "arrival_kind": "scheduled",
+            "departure_kind": "scheduled",
+            "scheduled_departure": "2026-11-08T19:22:00+05:30",
+            "fare": "95.00",
+            "fare_source": "DEMO",
+            "fare_breakdown": {
+              "base_fare": "95.00",
+              "surcharge": null,
+              "discount": null,
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO",
+              "concession_eligibility": "NOT_EVALUATED"
+            },
+            "seat_availability": "unknown",
+            "dataset_source": "DEMO",
+            "fare_details": {
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO"
+            },
+            "category_name": "Demo electric",
+            "result_id": "4e1153139eb611b06e2c"
+          }
+        ],
+        "service_id": "UI-DEMO-NELLORE-CHEAP"
+      },
+      "results": [
+        {
+          "intent": "CHEAPEST_BUS",
+          "status": "KNOWN",
+          "query": {
+            "intent": "CHEAPEST_BUS",
+            "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "service_id": null,
+            "trip_id": null,
+            "service_number": null,
+            "via": null,
+            "travel_date": "2026-11-08",
+            "at": "2026-11-08T17:25:11.784105+05:30",
+            "filters": {
+              "ac": true,
+              "sleeper": null,
+              "electric": null,
+              "accessible": null,
+              "reservation": null,
+              "category": null,
+              "exclude_categories": [],
+              "operator": null,
+              "amenity": null,
+              "min_fare": null,
+              "max_fare": null,
+              "max_duration_minutes": null,
+              "after": null,
+              "before": null,
+              "arrival_after": null,
+              "arrival_before": null
+            },
+            "limit": 20,
+            "offset": 0,
+            "max_transfers": 2,
+            "minimum_transfer": 15,
+            "operating_day_start_minutes": 0,
+            "passengers": 1
+          },
+          "matched_stations": {
+            "origin": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "destination": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+                  "name": "Nellore",
+                  "code": "DEMO4",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "station": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            }
+          },
+          "results": [
+            {
+              "service_id": "UI-DEMO-NELLORE-CHEAP",
+              "trip_id": null,
+              "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+              "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+              "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+              "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+              "service_number": "UI-DEMO-NELLORE-CHEAP",
+              "service_date": "2026-11-08",
+              "departure": "2026-11-08T19:22:00+05:30",
+              "arrival": "2026-11-08T22:22:00+05:30",
+              "arrival_kind": "scheduled",
+              "departure_kind": "scheduled",
+              "scheduled_departure": "2026-11-08T19:22:00+05:30",
+              "fare": "95.00",
+              "fare_source": "DEMO",
+              "fare_breakdown": {
+                "base_fare": "95.00",
+                "surcharge": null,
+                "discount": null,
+                "total": "95.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO",
+                "concession_eligibility": "NOT_EVALUATED"
+              },
+              "seat_availability": "unknown",
+              "dataset_source": "DEMO",
+              "fare_details": {
+                "total": "95.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO"
+              },
+              "category_name": "Demo electric"
+            }
+          ],
+          "warnings": [],
+          "pagination": {
+            "offset": 0,
+            "limit": 20,
+            "total": 1
+          }
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "context": {
+        "slot_origins": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "EXPLICIT",
+          "ac": "EXPLICIT"
+        },
+        "slot_sources": {
+          "origin": "INHERITED",
+          "operator": "INHERITED",
+          "destination": "INHERITED",
+          "travel_date": "EXPLICIT",
+          "ac": "INHERITED"
+        },
+        "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "current_station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "filters": {
+          "ac": true
+        },
+        "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+        "confirmed_slots": [],
+        "travel_date": "2026-11-09",
+        "result_revision": 4,
+        "selection_status": "SYSTEM_QUERY_DEFAULT",
+        "selected_route_id": "UI-DEMO-NELLORE-CHEAP",
+        "last_intent": "CHEAPEST_BUS",
+        "last_intents": [
+          "CHEAPEST_BUS"
+        ],
+        "pending_clarification": null,
+        "last_system_question": null,
+        "session_id": "04b2b4ff-f9c4-4de7-84c6-f734ffa2cb74",
+        "revision": 4,
+        "last_activity_at": "2026-11-08T11:55:11.991159+00:00",
+        "expires_at": "2026-11-08T12:10:11.991159+00:00",
+        "candidates": [
+          {
+            "service_id": "UI-DEMO-NELLORE-CHEAP",
+            "trip_id": null,
+            "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+            "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+            "service_number": "UI-DEMO-NELLORE-CHEAP",
+            "service_date": "2026-11-09",
+            "departure": "2026-11-09T19:22:00+05:30",
+            "arrival": "2026-11-09T22:22:00+05:30",
+            "arrival_kind": "scheduled",
+            "departure_kind": "scheduled",
+            "scheduled_departure": "2026-11-09T19:22:00+05:30",
+            "fare": "95.00",
+            "fare_source": "DEMO",
+            "fare_breakdown": {
+              "base_fare": "95.00",
+              "surcharge": null,
+              "discount": null,
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO",
+              "concession_eligibility": "NOT_EVALUATED"
+            },
+            "seat_availability": "unknown",
+            "dataset_source": "DEMO",
+            "fare_details": {
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO"
+            },
+            "category_name": "Demo electric",
+            "result_id": "c208fd6c86c266178c52"
+          }
+        ],
+        "service_id": "UI-DEMO-NELLORE-CHEAP"
+      },
+      "results": [
+        {
+          "intent": "CHEAPEST_BUS",
+          "status": "KNOWN",
+          "query": {
+            "intent": "CHEAPEST_BUS",
+            "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "service_id": null,
+            "trip_id": null,
+            "service_number": null,
+            "via": null,
+            "travel_date": "2026-11-09",
+            "at": "2026-11-09T00:00:00+05:30",
+            "filters": {
+              "ac": true,
+              "sleeper": null,
+              "electric": null,
+              "accessible": null,
+              "reservation": null,
+              "category": null,
+              "exclude_categories": [],
+              "operator": null,
+              "amenity": null,
+              "min_fare": null,
+              "max_fare": null,
+              "max_duration_minutes": null,
+              "after": null,
+              "before": null,
+              "arrival_after": null,
+              "arrival_before": null
+            },
+            "limit": 20,
+            "offset": 0,
+            "max_transfers": 2,
+            "minimum_transfer": 15,
+            "operating_day_start_minutes": 0,
+            "passengers": 1
+          },
+          "matched_stations": {
+            "origin": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "destination": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+                  "name": "Nellore",
+                  "code": "DEMO4",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "station": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            }
+          },
+          "results": [
+            {
+              "service_id": "UI-DEMO-NELLORE-CHEAP",
+              "trip_id": null,
+              "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+              "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+              "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+              "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+              "service_number": "UI-DEMO-NELLORE-CHEAP",
+              "service_date": "2026-11-09",
+              "departure": "2026-11-09T19:22:00+05:30",
+              "arrival": "2026-11-09T22:22:00+05:30",
+              "arrival_kind": "scheduled",
+              "departure_kind": "scheduled",
+              "scheduled_departure": "2026-11-09T19:22:00+05:30",
+              "fare": "95.00",
+              "fare_source": "DEMO",
+              "fare_breakdown": {
+                "base_fare": "95.00",
+                "surcharge": null,
+                "discount": null,
+                "total": "95.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO",
+                "concession_eligibility": "NOT_EVALUATED"
+              },
+              "seat_availability": "unknown",
+              "dataset_source": "DEMO",
+              "fare_details": {
+                "total": "95.00",
+                "currency": "INR",
+                "fare_status": "KNOWN",
+                "source": "DEMO"
+              },
+              "category_name": "Demo electric"
+            }
+          ],
+          "warnings": [],
+          "pagination": {
+            "offset": 0,
+            "limit": 20,
+            "total": 1
+          }
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "context": {
+        "slot_origins": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "EXPLICIT",
+          "ac": "EXPLICIT"
+        },
+        "slot_sources": {
+          "origin": "INHERITED",
+          "operator": "INHERITED",
+          "destination": "INHERITED",
+          "travel_date": "INHERITED",
+          "ac": "INHERITED"
+        },
+        "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "current_station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "filters": {
+          "ac": true
+        },
+        "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+        "confirmed_slots": [
+          "service_id"
+        ],
+        "travel_date": "2026-11-09",
+        "result_revision": 4,
+        "selection_status": "USER_CONFIRMED",
+        "selected_route_id": "UI-DEMO-NELLORE-CHEAP",
+        "last_intent": "CHEAPEST_BUS",
+        "last_intents": [],
+        "pending_clarification": null,
+        "last_system_question": null,
+        "session_id": "04b2b4ff-f9c4-4de7-84c6-f734ffa2cb74",
+        "revision": 5,
+        "last_activity_at": "2026-11-08T11:55:12.218200+00:00",
+        "expires_at": "2026-11-08T12:10:12.218200+00:00",
+        "candidates": [
+          {
+            "service_id": "UI-DEMO-NELLORE-CHEAP",
+            "trip_id": null,
+            "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+            "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+            "service_number": "UI-DEMO-NELLORE-CHEAP",
+            "service_date": "2026-11-09",
+            "departure": "2026-11-09T19:22:00+05:30",
+            "arrival": "2026-11-09T22:22:00+05:30",
+            "arrival_kind": "scheduled",
+            "departure_kind": "scheduled",
+            "scheduled_departure": "2026-11-09T19:22:00+05:30",
+            "fare": "95.00",
+            "fare_source": "DEMO",
+            "fare_breakdown": {
+              "base_fare": "95.00",
+              "surcharge": null,
+              "discount": null,
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO",
+              "concession_eligibility": "NOT_EVALUATED"
+            },
+            "seat_availability": "unknown",
+            "dataset_source": "DEMO",
+            "fare_details": {
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO"
+            },
+            "category_name": "Demo electric",
+            "result_id": "c208fd6c86c266178c52"
+          }
+        ],
+        "service_id": "UI-DEMO-NELLORE-CHEAP"
+      },
+      "results": []
+    },
+    {
+      "step": 6,
+      "context": {
+        "slot_origins": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "EXPLICIT",
+          "ac": "EXPLICIT"
+        },
+        "slot_sources": {
+          "origin": "INHERITED",
+          "operator": "INHERITED",
+          "destination": "INHERITED",
+          "travel_date": "INHERITED",
+          "ac": "INHERITED"
+        },
+        "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "current_station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "filters": {
+          "ac": true
+        },
+        "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+        "confirmed_slots": [
+          "service_id"
+        ],
+        "travel_date": "2026-11-09",
+        "result_revision": 4,
+        "selection_status": "USER_CONFIRMED",
+        "selected_route_id": "UI-DEMO-NELLORE-CHEAP",
+        "last_intent": "ROUTE_STOPS",
+        "last_intents": [
+          "ROUTE_STOPS"
+        ],
+        "pending_clarification": null,
+        "last_system_question": null,
+        "session_id": "04b2b4ff-f9c4-4de7-84c6-f734ffa2cb74",
+        "revision": 6,
+        "last_activity_at": "2026-11-08T11:55:12.476528+00:00",
+        "expires_at": "2026-11-08T12:10:12.476528+00:00",
+        "candidates": [
+          {
+            "service_id": "UI-DEMO-NELLORE-CHEAP",
+            "trip_id": null,
+            "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+            "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+            "service_number": "UI-DEMO-NELLORE-CHEAP",
+            "service_date": "2026-11-09",
+            "departure": "2026-11-09T19:22:00+05:30",
+            "arrival": "2026-11-09T22:22:00+05:30",
+            "arrival_kind": "scheduled",
+            "departure_kind": "scheduled",
+            "scheduled_departure": "2026-11-09T19:22:00+05:30",
+            "fare": "95.00",
+            "fare_source": "DEMO",
+            "fare_breakdown": {
+              "base_fare": "95.00",
+              "surcharge": null,
+              "discount": null,
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO",
+              "concession_eligibility": "NOT_EVALUATED"
+            },
+            "seat_availability": "unknown",
+            "dataset_source": "DEMO",
+            "fare_details": {
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO"
+            },
+            "category_name": "Demo electric",
+            "result_id": "c208fd6c86c266178c52"
+          }
+        ],
+        "service_id": "UI-DEMO-NELLORE-CHEAP"
+      },
+      "results": [
+        {
+          "intent": "ROUTE_STOPS",
+          "status": "KNOWN",
+          "query": {
+            "intent": "ROUTE_STOPS",
+            "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "service_id": "UI-DEMO-NELLORE-CHEAP",
+            "trip_id": null,
+            "service_number": null,
+            "via": null,
+            "travel_date": "2026-11-09",
+            "at": "2026-11-09T00:00:00+05:30",
+            "filters": {
+              "ac": true,
+              "sleeper": null,
+              "electric": null,
+              "accessible": null,
+              "reservation": null,
+              "category": null,
+              "exclude_categories": [],
+              "operator": null,
+              "amenity": null,
+              "min_fare": null,
+              "max_fare": null,
+              "max_duration_minutes": null,
+              "after": null,
+              "before": null,
+              "arrival_after": null,
+              "arrival_before": null
+            },
+            "limit": 20,
+            "offset": 0,
+            "max_transfers": 2,
+            "minimum_transfer": 15,
+            "operating_day_start_minutes": 0,
+            "passengers": 1
+          },
+          "matched_stations": {
+            "origin": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "destination": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+                  "name": "Nellore",
+                  "code": "DEMO4",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "station": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            }
+          },
+          "results": [
+            {
+              "departure_offset_minutes": null,
+              "station_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+              "offset_minutes": 0,
+              "boarding": true,
+              "id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+              "active": true,
+              "arrival_offset_minutes": null,
+              "route_id": "UI-DEMO-NELLORE-CHEAP",
+              "sequence": 0,
+              "distance_km": 0,
+              "alighting": true,
+              "dataset_source": "DEMO",
+              "station_name": "Vijayawada"
+            },
+            {
+              "departure_offset_minutes": null,
+              "station_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+              "offset_minutes": 180,
+              "boarding": true,
+              "id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+              "active": true,
+              "arrival_offset_minutes": null,
+              "route_id": "UI-DEMO-NELLORE-CHEAP",
+              "sequence": 1,
+              "distance_km": 150,
+              "alighting": true,
+              "dataset_source": "DEMO",
+              "station_name": "Nellore"
+            }
+          ],
+          "warnings": [],
+          "pagination": {
+            "offset": 0,
+            "limit": 20,
+            "total": 2
+          }
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "context": {
+        "slot_origins": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "EXPLICIT",
+          "ac": "EXPLICIT",
+          "via": "EXPLICIT"
+        },
+        "slot_sources": {
+          "origin": "INHERITED",
+          "operator": "INHERITED",
+          "destination": "INHERITED",
+          "travel_date": "INHERITED",
+          "ac": "INHERITED",
+          "via": "EXPLICIT"
+        },
+        "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "current_station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "filters": {
+          "ac": true
+        },
+        "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+        "confirmed_slots": [
+          "service_id"
+        ],
+        "travel_date": "2026-11-09",
+        "result_revision": 4,
+        "selection_status": "USER_CONFIRMED",
+        "selected_route_id": "UI-DEMO-NELLORE-CHEAP",
+        "last_intent": "BUS_VIA_LOCATION",
+        "last_intents": [
+          "BUS_VIA_LOCATION"
+        ],
+        "pending_clarification": null,
+        "last_system_question": null,
+        "session_id": "04b2b4ff-f9c4-4de7-84c6-f734ffa2cb74",
+        "revision": 7,
+        "last_activity_at": "2026-11-08T11:55:12.681113+00:00",
+        "expires_at": "2026-11-08T12:10:12.681113+00:00",
+        "candidates": [
+          {
+            "service_id": "UI-DEMO-NELLORE-CHEAP",
+            "trip_id": null,
+            "origin_id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination_id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "boarding_stop_id": "a7dbffe8-d2cf-4210-9a58-6681a4960eb6",
+            "alighting_stop_id": "e44c5053-962b-4a5b-891d-1db0b2027cfa",
+            "service_number": "UI-DEMO-NELLORE-CHEAP",
+            "service_date": "2026-11-09",
+            "departure": "2026-11-09T19:22:00+05:30",
+            "arrival": "2026-11-09T22:22:00+05:30",
+            "arrival_kind": "scheduled",
+            "departure_kind": "scheduled",
+            "scheduled_departure": "2026-11-09T19:22:00+05:30",
+            "fare": "95.00",
+            "fare_source": "DEMO",
+            "fare_breakdown": {
+              "base_fare": "95.00",
+              "surcharge": null,
+              "discount": null,
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO",
+              "concession_eligibility": "NOT_EVALUATED"
+            },
+            "seat_availability": "unknown",
+            "dataset_source": "DEMO",
+            "fare_details": {
+              "total": "95.00",
+              "currency": "INR",
+              "fare_status": "KNOWN",
+              "source": "DEMO"
+            },
+            "category_name": "Demo electric",
+            "result_id": "c208fd6c86c266178c52"
+          }
+        ],
+        "service_id": "UI-DEMO-NELLORE-CHEAP",
+        "via": "d73e8176-b80c-4517-ad78-3b04155f71a6"
+      },
+      "results": [
+        {
+          "intent": "BUS_VIA_LOCATION",
+          "status": "UNKNOWN",
+          "query": {
+            "intent": "BUS_VIA_LOCATION",
+            "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+            "station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "service_id": "UI-DEMO-NELLORE-CHEAP",
+            "trip_id": null,
+            "service_number": null,
+            "via": "d73e8176-b80c-4517-ad78-3b04155f71a6",
+            "travel_date": "2026-11-09",
+            "at": "2026-11-09T00:00:00+05:30",
+            "filters": {
+              "ac": true,
+              "sleeper": null,
+              "electric": null,
+              "accessible": null,
+              "reservation": null,
+              "category": null,
+              "exclude_categories": [],
+              "operator": null,
+              "amenity": null,
+              "min_fare": null,
+              "max_fare": null,
+              "max_duration_minutes": null,
+              "after": null,
+              "before": null,
+              "arrival_after": null,
+              "arrival_before": null
+            },
+            "limit": 20,
+            "offset": 0,
+            "max_transfers": 2,
+            "minimum_transfer": 15,
+            "operating_day_start_minutes": 0,
+            "passengers": 1
+          },
+          "matched_stations": {
+            "origin": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "destination": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "3a2f880b-5e10-4af0-bf84-3a81b4c8f1a0",
+                  "name": "Nellore",
+                  "code": "DEMO4",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "station": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            }
+          },
+          "results": [],
+          "warnings": [],
+          "pagination": {
+            "offset": 0,
+            "limit": 20,
+            "total": 0
+          },
+          "dataset_source": "DEMO"
+        }
+      ]
+    },
+    {
+      "step": 8,
+      "context": {
+        "slot_origins": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "EXPLICIT",
+          "ac": "EXPLICIT",
+          "via": "EXPLICIT"
+        },
+        "slot_sources": {
+          "origin": "INHERITED",
+          "operator": "INHERITED",
+          "destination": "EXPLICIT",
+          "travel_date": "INHERITED",
+          "ac": "INHERITED",
+          "via": "INHERITED"
+        },
+        "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "current_station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "filters": {
+          "ac": true
+        },
+        "destination": "3069928e-a7bb-453a-9fc7-0a5a041c3969",
+        "confirmed_slots": [],
+        "travel_date": "2026-11-09",
+        "result_revision": 4,
+        "selection_status": "USER_CONFIRMED",
+        "last_intent": "BUS_VIA_LOCATION",
+        "last_intents": [
+          "BUS_VIA_LOCATION"
+        ],
+        "pending_clarification": null,
+        "last_system_question": null,
+        "session_id": "04b2b4ff-f9c4-4de7-84c6-f734ffa2cb74",
+        "revision": 8,
+        "last_activity_at": "2026-11-08T11:55:12.924681+00:00",
+        "expires_at": "2026-11-08T12:10:12.924681+00:00",
+        "via": "d73e8176-b80c-4517-ad78-3b04155f71a6"
+      },
+      "results": [
+        {
+          "intent": "BUS_VIA_LOCATION",
+          "status": "UNKNOWN",
+          "query": {
+            "intent": "BUS_VIA_LOCATION",
+            "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination": "3069928e-a7bb-453a-9fc7-0a5a041c3969",
+            "station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "service_id": null,
+            "trip_id": null,
+            "service_number": null,
+            "via": "d73e8176-b80c-4517-ad78-3b04155f71a6",
+            "travel_date": "2026-11-09",
+            "at": "2026-11-09T00:00:00+05:30",
+            "filters": {
+              "ac": true,
+              "sleeper": null,
+              "electric": null,
+              "accessible": null,
+              "reservation": null,
+              "category": null,
+              "exclude_categories": [],
+              "operator": null,
+              "amenity": null,
+              "min_fare": null,
+              "max_fare": null,
+              "max_duration_minutes": null,
+              "after": null,
+              "before": null,
+              "arrival_after": null,
+              "arrival_before": null
+            },
+            "limit": 20,
+            "offset": 0,
+            "max_transfers": 2,
+            "minimum_transfer": 15,
+            "operating_day_start_minutes": 0,
+            "passengers": 1
+          },
+          "matched_stations": {
+            "origin": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "destination": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "3069928e-a7bb-453a-9fc7-0a5a041c3969",
+                  "name": "Tirupati",
+                  "code": "DEMO2",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            },
+            "station": {
+              "status": "KNOWN",
+              "candidates": [
+                {
+                  "id": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+                  "name": "Vijayawada",
+                  "code": "DEMO0",
+                  "timezone": "Asia/Kolkata"
+                }
+              ],
+              "suggestions": []
+            }
+          },
+          "results": [],
+          "warnings": [],
+          "pagination": {
+            "offset": 0,
+            "limit": 20,
+            "total": 0
+          },
+          "dataset_source": "DEMO"
+        }
+      ]
+    },
+    {
+      "step": 9,
+      "context": {
+        "slot_origins": {
+          "origin": "SYSTEM_DEFAULT",
+          "operator": "EXPLICIT",
+          "destination": "EXPLICIT",
+          "travel_date": "EXPLICIT",
+          "ac": "EXPLICIT",
+          "via": "EXPLICIT"
+        },
+        "slot_sources": {
+          "origin": "INHERITED",
+          "operator": "INHERITED",
+          "destination": "INHERITED",
+          "travel_date": "INHERITED",
+          "ac": "INHERITED",
+          "via": "INHERITED"
+        },
+        "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "current_station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+        "filters": {
+          "ac": true
+        },
+        "destination": "3069928e-a7bb-453a-9fc7-0a5a041c3969",
+        "confirmed_slots": [],
+        "travel_date": "2026-11-09",
+        "result_revision": 4,
+        "selection_status": "USER_CONFIRMED",
+        "last_intent": "CONNECTING_BUSES",
+        "last_intents": [
+          "CONNECTING_BUSES"
+        ],
+        "pending_clarification": null,
+        "last_system_question": null,
+        "session_id": "04b2b4ff-f9c4-4de7-84c6-f734ffa2cb74",
+        "revision": 9,
+        "last_activity_at": "2026-11-08T11:55:13.099205+00:00",
+        "expires_at": "2026-11-08T12:10:13.099205+00:00",
+        "via": "d73e8176-b80c-4517-ad78-3b04155f71a6",
+        "journey_mode": true,
+        "journey_constraints": {
+          "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+          "destination": "3069928e-a7bb-453a-9fc7-0a5a041c3969",
+          "earliest_departure": "2026-11-09T00:00:00+05:30",
+          "transfer_station": null,
+          "latest_departure": null,
+          "arrival_deadline": null,
+          "horizon_hours": 48,
+          "max_transfers": 2,
+          "minimum_transfer_minutes": 15,
+          "maximum_wait_minutes": 180,
+          "maximum_total_wait_minutes": 360,
+          "filters": {
+            "ac": true,
+            "sleeper": null,
+            "electric": null,
+            "accessible": null,
+            "reservation": null,
+            "category": null,
+            "exclude_categories": [],
+            "operator": null,
+            "amenity": null,
+            "min_fare": null,
+            "max_fare": null,
+            "max_duration_minutes": null,
+            "after": null,
+            "before": null,
+            "arrival_after": null,
+            "arrival_before": null
+          },
+          "passengers": 1,
+          "require_verified_seats": false,
+          "ranking": "EARLIEST_ARRIVAL",
+          "preferred_category": null,
+          "max_expansions": 5000,
+          "max_services_per_segment": 1000,
+          "avoid_verified_disruptions": true,
+          "limit": 20,
+          "offset": 0,
+          "pareto_only": false
+        },
+        "journey_ranking": "EARLIEST_ARRIVAL",
+        "journey_candidates": [],
+        "candidates": []
+      },
+      "results": [
+        {
+          "intent": "CONNECTING_BUSES",
+          "status": "NO_RESULTS",
+          "query": {
+            "intent": "CONNECTING_BUSES",
+            "origin": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "destination": "3069928e-a7bb-453a-9fc7-0a5a041c3969",
+            "station": "c13a29c0-81a8-4a82-a817-a4bf16732949",
+            "service_id": null,
+            "trip_id": null,
+            "service_number": null,
+            "via": "d73e8176-b80c-4517-ad78-3b04155f71a6",
+            "travel_date": "2026-11-09",
+            "at": "2026-11-09T00:00:00+05:30",
+            "filters": {
+              "ac": true,
+              "sleeper": null,
+              "electric": null,
+              "accessible": null,
+              "reservation": null,
+              "category": null,
+              "exclude_categories": [],
+              "operator": null,
+              "amenity": null,
+              "min_fare": null,
+              "max_fare": null,
+              "max_duration_minutes": null,
+              "after": null,
+              "before": null,
+              "arrival_after": null,
+              "arrival_before": null
+            },
+            "limit": 20,
+            "offset": 0,
+            "max_transfers": 2,
+            "minimum_transfer": 15,
+            "operating_day_start_minutes": 0,
+            "passengers": 1
+          },
+          "results": [],
+          "warnings": [
+            "Scheduled or estimated journeys do not confirm GPS, seats or guaranteed connections.",
+            "Transfers require the same physical station; inter-stand travel is unsupported.",
+            "Concessions and through-ticket discounts are not evaluated.",
+            "Active verified service disruption records are conservatively excluded when avoid_verified_disruptions is enabled.",
+            "No eligible itinerary found within the horizon and resource bounds. Consider explicitly relaxing category, fare, time or transfer constraints."
+          ],
+          "executor": "JourneyPlanner.search",
+          "pagination": {
+            "offset": 0,
+            "limit": 20,
+            "eligible_count": 0,
+            "truncated": false
+          }
+        }
+      ]
+    },
+    {
+      "step": 10,
+      "display_cleared": true
+    }
+  ]
+}

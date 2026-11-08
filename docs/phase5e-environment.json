@@ -1,0 +1,6 @@
+{
+  "windows_is_administrator": false,
+  "linux_available": false,
+  "os_level_egress_block_tested": false,
+  "reason": "WSL is not installed; no Linux service host is available. Windows process-level networking tests are separate from OS firewall isolation."
+}

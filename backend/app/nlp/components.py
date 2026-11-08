@@ -86,7 +86,9 @@ class TemporalParser:
             else:
                 relation = (
                     "arrival_"
-                    if re.search(r"arriv(?:e|ing|al)", text[: match.start()])
+                    if re.search(
+                        r"arriv(?:e|ing|al)|reach(?:ing)?", text[: match.start()]
+                    )
                     else ""
                 ) + match[1]
                 filters[relation] = timestamp.isoformat()

@@ -1,0 +1,40 @@
+[
+  {
+    "dialect": "sqlite",
+    "head": "0016",
+    "legacy_operator_preserved": {
+      "id": "legacy-op",
+      "code": "LEGACY",
+      "name": "Legacy preserved operator",
+      "dataset_source": "DEMO",
+      "active": 1
+    },
+    "legacy_batch_preserved": {
+      "id": "legacy-batch",
+      "digest": "legacy-checksum",
+      "workflow_state": "PUBLISHED",
+      "validation_error_count": 0,
+      "revision": 1
+    },
+    "fare_rule_check_present": true
+  },
+  {
+    "dialect": "postgresql",
+    "head": "0016",
+    "legacy_operator_preserved": {
+      "id": "legacy-op",
+      "code": "LEGACY",
+      "name": "Legacy preserved operator",
+      "dataset_source": "DEMO",
+      "active": true
+    },
+    "legacy_batch_preserved": {
+      "id": "legacy-batch",
+      "digest": "legacy-checksum",
+      "workflow_state": "PUBLISHED",
+      "validation_error_count": 0,
+      "revision": 1
+    },
+    "fare_rule_check_present": true
+  }
+]

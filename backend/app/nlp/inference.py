@@ -2,9 +2,9 @@
 
 from datetime import datetime
 
-from sqlalchemy import select
+from sqlalchemy import delete, select
 
-from ..catalog import Context, Intent
+from ..catalog import Context, Intent, Message
 from .components import IntentClassifier, LanguageNormalizer
 from .content import NLPContentRepository
 from .entities import RTCEntityExtractor
@@ -105,6 +105,9 @@ class EnglishInferenceService:
             from .session_access import check_owner
 
             check_owner(context.values, owner_token)
+            self.session.execute(
+                delete(Message).where(Message.session_id == session_id)
+            )
             context.values = (
                 {"_owner_hash": context.values["_owner_hash"]}
                 if "_owner_hash" in context.values

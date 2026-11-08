@@ -104,7 +104,7 @@ def test_240_database_dialogues(text_db, route, pattern):
         assert query["destination"] == station_ids[f"DEMO{route + 1}"]
         first_row = first.results[0]["results"][0]
         assert first_row["service_number"] in first.answer
-        assert "Demo schedule/data:" in first.answer
+        assert "DEMO" in first.data_source
         assert "100.00" in first.answer
         sid = first.session_id
 
@@ -138,7 +138,10 @@ def test_240_database_dialogues(text_db, route, pattern):
             assert r.context["destination"] == station_ids[f"DEMO{(route + 3) % 21}"]
             assert r.results[0]["query"]["service_id"] is None
             assert not r.results[0]["results"]
-            assert "No matching information" in r.answer
+            assert (
+                r.reliability.error_category == "NO_MATCHING_SERVICE"
+                and r.reliability.diagnosis
+            )
         elif pattern == "non_ac":
             r = ask("Non AC only")
             assert r.results[0]["query"]["filters"]["ac"] is False
@@ -157,12 +160,12 @@ def test_240_database_dialogues(text_db, route, pattern):
             assert chosen["service_number"] in r.answer
             fare = ask("How much?")
             assert fare.results[0]["query"]["service_id"] == chosen["service_id"]
-            assert "fare INR 100.00" in fare.answer
+            assert "INR 100.00" in fare.answer
         elif pattern == "platform":
             r = ask("Is the platform still the same?")
             assert r.results[0]["query"]["service_id"] == first.context["service_id"]
             assert "The platform has not been confirmed." in r.answer
-            assert r.answer.startswith("Demo schedule/data:")
+            assert "DEMO" in r.data_source
         elif pattern == "seats":
             r = ask("Seats?")
             assert r.results[0]["query"]["service_id"] == first.context["service_id"]
@@ -209,7 +212,10 @@ def test_all_60_registry_routes(text_db, record):
 def test_targeted_clarifications(text_db, text):
     with Session(text_db) as session:
         r = RTCNLPEngine(session).process(NLPRequest(text=text, language="en"), NOW)
-        assert r.requires_clarification
+        if text == "cricket score please":
+            assert r.state == "OUT_OF_SCOPE" and not r.requires_clarification
+        else:
+            assert r.requires_clarification
         assert not r.results and r.answer
         assert not r.debug
 
@@ -256,7 +262,7 @@ def test_switch_station_and_out_of_scope(text_db):
             NLPRequest(text="weather please", session_id=r.session_id, language="en"),
             NOW,
         )
-        assert unrelated.requires_clarification and not unrelated.results
+        assert unrelated.state == "OUT_OF_SCOPE" and not unrelated.results
 
 
 def test_cross_midnight_actual_database(text_db):

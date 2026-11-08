@@ -1,0 +1,317 @@
+{
+  "phase": "5E",
+  "status": "PHASE 5E INCOMPLETE",
+  "recorded_at": "2026-11-08T15:38:29.016723+00:00",
+  "backend_full": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "2317",
+    "time": "467.694",
+    "timestamp": "2026-11-08T20:41:27.598591+05:30",
+    "hostname": "DESKTOP-B3SR465",
+    "postgres_cases": 75
+  },
+  "final_reliability_model_tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "11",
+    "time": "5.000",
+    "timestamp": "2026-11-08T21:07:30.446941+05:30",
+    "hostname": "DESKTOP-B3SR465",
+    "postgres_cases": 4
+  },
+  "browser_full_final": {
+    "startTime": "2026-11-08T15:21:35.762Z",
+    "duration": 135218.313,
+    "expected": 157,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": {
+    "ruff": "All checks passed!",
+    "mypy": "Success: no issues found in 61 source files",
+    "eslint": "> rtc-local-app@0.1.0 lint\n> eslint src"
+  },
+  "production_build": "PASS; phase5e-build.txt",
+  "deployment_modes": {
+    "standalone": "Managed SQLite process and production browser verified on loopback",
+    "central_lan": "Managed PostgreSQL process and production browser verified on loopback; physical LAN unverified"
+  },
+  "backups": {
+    "sqlite": {
+      "backup": ".tools\\phase5e-backups\\backup-20261108T150835-f6dda0af",
+      "restore": {
+        "restored": "C:\\Indian Servers\\RTC\\.tools\\phase5e-restore\\rtc.db",
+        "version": "f6dda0afc21241d9bac594b28404496e"
+      },
+      "snapshot": ".tools\\phase5e-snapshots\\snapshot-20261108T150836-0878e92d",
+      "snapshot_restore": {
+        "restored": "C:\\Indian Servers\\RTC\\.tools\\phase5e-restore\\snapshot.db",
+        "version": "0878e92d4f2047b2a77695f35da29151"
+      },
+      "integrity": "ok",
+      "foreign_key_violations": 0,
+      "private_snapshot_tables": "EMPTY"
+    },
+    "postgres": {
+      "backup_and_isolated_restore": "PASS",
+      "source_and_restored_counts": [
+        {
+          "tables": 72,
+          "services": 100,
+          "schema": "0016"
+        },
+        {
+          "tables": 72,
+          "services": 100,
+          "schema": "0016"
+        }
+      ]
+    }
+  },
+  "outage": {
+    "unavailable_status": 503,
+    "recovered": {
+      "status": "DEGRADED",
+      "deterministic_enquiries": true
+    }
+  },
+  "process_recovery": {
+    "api_crash_simulated": true,
+    "restart": "MANUAL_LAUNCHER_RESTART; installed service auto-restart not tested",
+    "selected_journey_preserved": true,
+    "fare_follow_up": "The fare for your selected service is INR 101.00.",
+    "original_session_reused": true,
+    "duplicate_start_refused": true,
+    "graceful_shutdown_observed": true
+  },
+  "acceptance": {
+    "live": {
+      "checks": {
+        "delay_and_revised_departure": true,
+        "latest_platform": true,
+        "nlp_latest_platform": true,
+        "no_false_actual_departure": true,
+        "nlp_delay": true,
+        "actual_departure_visible": true,
+        "nlp_departure": true,
+        "every_event_has_actor_timestamp_source": true
+      },
+      "temporary_capabilities_revoked": true,
+      "all_passed": true
+    },
+    "socket_denied": {
+      "checks": {
+        "delay_and_revised_departure": true,
+        "latest_platform": true,
+        "nlp_latest_platform": true,
+        "no_false_actual_departure": true,
+        "nlp_delay": true,
+        "actual_departure_visible": true,
+        "nlp_departure": true,
+        "every_event_has_actor_timestamp_source": true
+      },
+      "temporary_capabilities_revoked": true,
+      "all_passed": true
+    }
+  },
+  "benchmarks": {
+    "sqlite": {
+      "hardware": {
+        "os": "Windows-11-10.0.26200-SP0",
+        "processor": "Intel64 Family 6 Model 151 Stepping 5, GenuineIntel",
+        "logical_cpus": 12,
+        "physical_cpus": 6,
+        "ram_bytes": 34190524416
+      },
+      "runs": [
+        {
+          "concurrent_kiosks": 1,
+          "requests": 6,
+          "elapsed_seconds": 0.8266557999959332,
+          "p50_ms": 56.4107000027434,
+          "p95_ms": 77.59380000061356,
+          "p99_ms": 77.59380000061356,
+          "requests_per_second": 7.258159925847635,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 41.58320790850208,
+          "peak_sampled_rss_bytes": 129986560
+        },
+        {
+          "concurrent_kiosks": 5,
+          "requests": 30,
+          "elapsed_seconds": 2.4392735000001267,
+          "p50_ms": 78.44569999724627,
+          "p95_ms": 1392.4359000011464,
+          "p99_ms": 1500.6978000019444,
+          "requests_per_second": 12.298743867794425,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 74.94547044437228,
+          "peak_sampled_rss_bytes": 130072576
+        },
+        {
+          "concurrent_kiosks": 10,
+          "requests": 60,
+          "elapsed_seconds": 4.117219699997804,
+          "p50_ms": 64.58379999821773,
+          "p95_ms": 2148.334600002272,
+          "p99_ms": 3005.8477999991737,
+          "requests_per_second": 14.572941055351503,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 82.35229710966865,
+          "peak_sampled_rss_bytes": 131620864
+        },
+        {
+          "concurrent_kiosks": 25,
+          "requests": 150,
+          "elapsed_seconds": 9.989487000006193,
+          "p50_ms": 389.3220000027213,
+          "p95_ms": 6457.968900002015,
+          "p99_ms": 7708.312200004002,
+          "requests_per_second": 15.015786095913334,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 85.0894545435089,
+          "peak_sampled_rss_bytes": 133427200
+        },
+        {
+          "concurrent_kiosks": 50,
+          "requests": 300,
+          "elapsed_seconds": 17.416076500005147,
+          "p50_ms": 1604.4633999990765,
+          "p95_ms": 4038.5979999991832,
+          "p99_ms": 13830.024599999888,
+          "requests_per_second": 17.225464070504707,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 87.4730597330317,
+          "peak_sampled_rss_bytes": 134770688
+        }
+      ]
+    },
+    "postgres": {
+      "hardware": {
+        "os": "Windows-11-10.0.26200-SP0",
+        "processor": "Intel64 Family 6 Model 151 Stepping 5, GenuineIntel",
+        "logical_cpus": 12,
+        "physical_cpus": 6,
+        "ram_bytes": 34190524416
+      },
+      "runs": [
+        {
+          "concurrent_kiosks": 1,
+          "requests": 6,
+          "elapsed_seconds": 0.6597349000003305,
+          "p50_ms": 65.22080000286223,
+          "p95_ms": 140.8884999982547,
+          "p99_ms": 140.8884999982547,
+          "requests_per_second": 9.094562073337327,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 56.84101295835829,
+          "peak_sampled_rss_bytes": 116072448
+        },
+        {
+          "concurrent_kiosks": 5,
+          "requests": 30,
+          "elapsed_seconds": 2.510682000000088,
+          "p50_ms": 368.1905999983428,
+          "p95_ms": 470.0766999958432,
+          "p99_ms": 479.73389999970095,
+          "requests_per_second": 11.948944549727504,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 90.23942498492126,
+          "peak_sampled_rss_bytes": 121143296
+        },
+        {
+          "concurrent_kiosks": 10,
+          "requests": 60,
+          "elapsed_seconds": 5.0103651999961585,
+          "p50_ms": 739.6297000013874,
+          "p95_ms": 1062.584400002379,
+          "p99_ms": 1133.9082999984385,
+          "requests_per_second": 11.9751749832619,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 100.41683189089406,
+          "peak_sampled_rss_bytes": 126906368
+        },
+        {
+          "concurrent_kiosks": 25,
+          "requests": 150,
+          "elapsed_seconds": 11.716153200002736,
+          "p50_ms": 1607.7393000014126,
+          "p95_ms": 2772.9762000017217,
+          "p99_ms": 3173.4808000037447,
+          "requests_per_second": 12.80283702674398,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 101.2224302426946,
+          "peak_sampled_rss_bytes": 138506240
+        },
+        {
+          "concurrent_kiosks": 50,
+          "requests": 300,
+          "elapsed_seconds": 20.877066599998216,
+          "p50_ms": 2653.7516999960644,
+          "p95_ms": 4772.338399998262,
+          "p99_ms": 4893.045999997412,
+          "requests_per_second": 14.369834888586581,
+          "error_count": 0,
+          "error_statuses": [],
+          "error_rate": 0.0,
+          "process_cpu_percent": 98.11902884863025,
+          "peak_sampled_rss_bytes": 149647360
+        }
+      ]
+    }
+  },
+  "environment": {
+    "windows_is_administrator": false,
+    "linux_available": false,
+    "os_level_egress_block_tested": false,
+    "reason": "WSL is not installed; no Linux service host is available. Windows process-level networking tests are separate from OS firewall isolation."
+  },
+  "remaining_gates": [
+    "OS-level public network isolation acceptance",
+    "Installed service reboot/automatic restart tests",
+    "Physical multi-terminal LAN/TLS/firewall verification",
+    "Approved production English model unavailable; deterministic fallback remains active"
+  ],
+  "registry_changed": false,
+  "migrations_changed": false,
+  "phase6_started": false,
+  "final_database": {
+    "integrity": "ok",
+    "foreign_key_violations": 0,
+    "schema": "0016"
+  },
+  "final_health": {
+    "live": {
+      "status": "LIVE"
+    },
+    "ready": {
+      "status": "DEGRADED",
+      "deterministic_enquiries": true
+    },
+    "unauthorized_details_status": 401
+  }
+}

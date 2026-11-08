@@ -1,0 +1,15 @@
+{
+  "backup": ".tools\\phase5e-backups\\backup-20261108T150835-f6dda0af",
+  "restore": {
+    "restored": "C:\\Indian Servers\\RTC\\.tools\\phase5e-restore\\rtc.db",
+    "version": "f6dda0afc21241d9bac594b28404496e"
+  },
+  "snapshot": ".tools\\phase5e-snapshots\\snapshot-20261108T150836-0878e92d",
+  "snapshot_restore": {
+    "restored": "C:\\Indian Servers\\RTC\\.tools\\phase5e-restore\\snapshot.db",
+    "version": "0878e92d4f2047b2a77695f35da29151"
+  },
+  "integrity": "ok",
+  "foreign_key_violations": 0,
+  "private_snapshot_tables": "EMPTY"
+}

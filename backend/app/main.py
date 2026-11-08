@@ -453,9 +453,27 @@ def conversation_message(
 ):
     if request.debug:
         admin(authorization)
-    with Session(engine) as session, session.begin():
-        return EnglishInferenceService(session).process_conversation(
-            request, datetime.now(UTC)
+    from fastapi.responses import JSONResponse
+    from sqlalchemy.exc import SQLAlchemyError
+
+    try:
+        with Session(engine) as session, session.begin():
+            if session.get_bind().dialect.name == "sqlite":
+                session.connection().exec_driver_sql("BEGIN IMMEDIATE")
+            return EnglishInferenceService(session).process_conversation(
+                request, datetime.now(UTC)
+            )
+    except SQLAlchemyError:
+        return JSONResponse(
+            status_code=503,
+            content={
+                "error": {
+                    "code": "DATABASE_ERROR",
+                    "message": "The local database is temporarily unavailable. Retry this enquiry; your saved context has not been discarded.",
+                    "failure_group": "OPERATIONAL_ERROR",
+                    "retryable": True,
+                }
+            },
         )
 
 
@@ -466,6 +484,62 @@ def conversation_reset(request: NLPRequest):
             "data": EnglishInferenceService(session).reset_session(
                 request.session_id or "", request.owner_token
             )
+        }
+
+
+from .nlp.pipeline import ConversationRestoreRequest, ConversationStateResponse
+
+
+@app.post("/api/v1/conversation/state", response_model=ConversationStateResponse)
+def conversation_state(request: ConversationRestoreRequest):
+    from .catalog import Context, Message
+    from .nlp.session_access import check_owner, public_context
+
+    with Session(engine) as session:
+        context = session.scalar(
+            select(Context).where(Context.session_id == request.session_id)
+        )
+        if not context:
+            raise HTTPException(404, "Conversation is unavailable; start a new enquiry")
+        check_owner(context.values, request.owner_token)
+        if datetime.fromisoformat(
+            context.values.get("expires_at", "1970-01-01T00:00:00+00:00")
+        ) <= datetime.now(UTC):
+            raise HTTPException(
+                410, "Conversation expired; start a private new enquiry"
+            )
+        state = public_context(context.values)
+        messages = list(
+            session.scalars(
+                select(Message)
+                .where(
+                    Message.session_id == request.session_id,
+                    Message.role.in_(["user", "assistant"]),
+                )
+                .order_by(Message.sequence_number.desc(), Message.id.desc())
+                .limit(40)
+            )
+        )
+        return {
+            "last_message_id": context.values.get("_last_message_id"),
+            "data_source": __import__(
+                "app.nlp.text_support", fromlist=["sources"]
+            ).sources([], state),
+            "session_id": request.session_id,
+            "current_context": state,
+            "selected_journey": state.get("selected_itinerary")
+            or state.get("selected_result"),
+            "result_set": state.get("candidates", []),
+            "state_version": state.get("revision", 0),
+            "history": [
+                {
+                    "id": m.id,
+                    "role": m.role,
+                    "text": m.text,
+                    "sequence_number": m.sequence_number,
+                }
+                for m in reversed(messages)
+            ],
         }
 
 
@@ -669,7 +743,25 @@ from .data_api import management_router
 from .frontend_api import app_router
 
 app.include_router(management_router(lambda: engine, admin))
+from .operations_api import operations_router
+
+app.include_router(operations_router(lambda: engine, admin))
 app.include_router(app_router(lambda: engine, admin))
+
+from .nlp.review_api import review_router
+
+app.include_router(review_router(lambda: engine, admin))
+
+from .runtime import health_router, install_maintenance
+
+app.include_router(health_router(lambda: engine, admin))
+install_maintenance(app, lambda: engine)
+if os.getenv("RTC_TRUSTED_HOSTS"):
+    from starlette.middleware.trustedhost import TrustedHostMiddleware
+
+    app.add_middleware(
+        TrustedHostMiddleware, allowed_hosts=os.environ["RTC_TRUSTED_HOSTS"].split(",")
+    )
 
 # Serve compiled local assets in production; API errors must remain API errors.
 from fastapi.staticfiles import StaticFiles

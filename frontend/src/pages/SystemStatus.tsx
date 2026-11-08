@@ -11,6 +11,15 @@ export function SystemStatus({
   modelsOnly?: boolean;
 }) {
   const { bootstrap } = useWorkspace();
+  const runtime = useQuery({
+    queryKey: ["runtime-health", token],
+    queryFn: async ({ signal }) => {
+      const response = await fetch("/health/dependencies", {signal, headers: {Authorization: `Bearer ${token}`}});
+      if (!response.ok) throw new Error("Local dependency diagnostics unavailable");
+      return response.json();
+    },
+    refetchInterval: 15000,
+  });
   const health = useQuery({
     queryKey: ["health"],
     queryFn: ({ signal }) => api("/nlp/health", { signal }),
@@ -45,6 +54,7 @@ export function SystemStatus({
             void health.refetch();
             void models.refetch();
             void quality.refetch();
+            void runtime.refetch();
           }}
         >
           Refresh status
@@ -95,6 +105,10 @@ export function SystemStatus({
         <dd>Not recorded by the current database schema</dd>
       </dl>
       {models.error && <ErrorState message={models.error.message} />}
+      {!modelsOnly && <details>
+        <summary>Runtime, database, disk and recovery diagnostics</summary>
+        {runtime.error ? <Notice error>{runtime.error.message}</Notice> : <pre>{JSON.stringify(runtime.data?.data || {}, null, 2)}</pre>}
+      </details>}
       <div className="model-list">
         {models.data?.data.models?.map((m: Row) => (
           <article

@@ -1,0 +1,2 @@
+{"component": "startup", "mode": "lan", "model": "NOT_READY", "schema": "0016"}
+RTC startup refused (PermissionError). Check configuration, schema, dependencies and server lock.

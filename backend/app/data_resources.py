@@ -57,6 +57,8 @@ def extend(resources, base):
     for name, (model, schema, keys) in list(resources.items()):
         fields = {}
         for column in model.__table__.columns:
+            if column.name in {"operational_state", "operational_version"}:
+                continue  # Dispatcher projection is changed only through validated events.
             if column.name == "id" or column.name in schema.model_fields:
                 continue
             try:
