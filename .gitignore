@@ -28,6 +28,8 @@ node_modules/
 !.env.example
 
 frontend/dist/
+frontend/public/voices/*.onnx
+frontend/public/voices/*.download
 frontend/test-results/
 frontend/playwright-report/
 *.log

@@ -19,6 +19,7 @@ from ..domain import Category, Service, Station
 from ..engine import EnquiryRequest, RTCEnquiryEngine
 from ..operations import Trip
 from . import text_support
+from .telugu import localize_dialogue, normalize_enquiry, render_results as render_telugu_results
 from .components import IntentClassifier, LanguageNormalizer, TemporalParser
 from .content import NLPContentRepository
 from .english_model import EnglishIntentModel
@@ -596,6 +597,8 @@ class RTCResponseEngine:
         self.content = content
 
     def render(self, results, language):
+        if language == "te":
+            return render_telugu_results(results)
         if language == "en":
             return text_support.render(results)
         rows = next((r["results"] for r in results if r["results"]), [])
@@ -648,6 +651,7 @@ class RTCNLPEngine:
             if request.language == "auto"
             else request.language
         )
+        text = normalize_enquiry(text)
         identifier = request.session_id
         initial_identifier = None
         if request.client_message_id and not request.owner_token:
@@ -1895,6 +1899,8 @@ class RTCNLPEngine:
             answer = "Are you asking about bus timings, a fare, a platform or a route?"
         if repair_kind and not clarify:
             answer = "Okay, I've applied your correction. " + answer
+        if language == "te":
+            answer = localize_dialogue(answer, state, clarify, results)
         slots["last_question"] = request.text
         slots["last_answer"] = answer
         slots["pending_clarification"] = state if clarify else None

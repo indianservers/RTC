@@ -13,6 +13,8 @@ import {
   Clock3,
 } from "lucide-react";
 
+import { useVoiceEnquiry } from "../hooks/useVoiceEnquiry";
+
 import { useWorkspace } from "../App";
 import { useOperationsStream } from "../hooks/useOperationsStream";
 
@@ -57,6 +59,7 @@ function read<T>(key: string, fallback: T): T {
 }
 
 export function ChatPage() {
+  const voice = useVoiceEnquiry();
   const { station, setStation, operator, setOperator, bootstrap } =
     useWorkspace();
   const localConnection = useOperationsStream(station?.id || "");
@@ -286,6 +289,11 @@ export function ChatPage() {
       );
 
       setFailure("");
+      if (voice.readAloud)
+        void voice.speak(
+          response.response_text || response.answer,
+          input.body.language === "te" ? "te" : "en",
+        );
     },
 
     onError: (error, input) => {
@@ -294,6 +302,7 @@ export function ChatPage() {
   });
 
   function clearLocal(message = "") {
+    voice.cancel();
     epoch.current += 1;
 
     requestController.current?.abort();
@@ -422,6 +431,8 @@ export function ChatPage() {
       return;
     }
 
+    voice.cancel();
+    voice.prepareAudio();
     setFailure("");
 
     setSessionNotice("");
@@ -465,6 +476,7 @@ export function ChatPage() {
         ? pending
         : {
             text: message,
+            language: voice.language,
             session_id: sid,
             owner_token: owner,
             station_context: station?.id,
@@ -680,31 +692,124 @@ export function ChatPage() {
             </span>
           </div>
         </div>
-        <div className="voice-panel">
+        <div
+          className={`voice-panel ${voice.listening ? "is-listening" : ""} ${voice.speaking ? "is-speaking" : ""}`}
+        >
           <div className="sound-wave" aria-hidden="true">
             {Array.from({ length: 31 }, (_, i) => (
               <i key={i} style={{ height: `${8 + ((i * 17 + 11) % 37)}px` }} />
             ))}
           </div>
-          <p>Your next journey starts with a question</p>
+          <p>{voice.transcript || "Ask about your next journey"}</p>
           <button
             type="button"
             className="voice-start"
-            aria-label="Start an enquiry"
-            onClick={() => {
-              composer.current?.focus();
-              composer.current?.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-              });
-            }}
+            aria-label={
+              voice.listening ? "Stop listening" : "Start voice enquiry"
+            }
+            aria-pressed={voice.listening}
+            disabled={
+              mutation.isPending ||
+              reset.isPending ||
+              !voice.recognitionAvailable
+            }
+            onClick={() =>
+              voice.toggleListening((transcript) => {
+                setText(transcript);
+                void send(transcript);
+              })
+            }
           >
             <Mic size={32} />
           </button>
-          <strong>Let’s find your next bus</strong>
-          <small>Type your question below to get started</small>
+          <strong role="status">
+            {voice.listening
+              ? "Listening... you can speak now"
+              : voice.preparing
+                ? "Preparing Telugu audio..."
+                : voice.speaking
+                  ? "Speaking..."
+                  : mutation.isPending
+                    ? "Checking bus information..."
+                    : "Tap the microphone to ask"}
+          </strong>
+          <small>
+            {voice.recognitionAvailable
+              ? voice.language === "te"
+                ? "తెలుగులో అడగండి · ముగించడానికి మళ్లీ నొక్కండి"
+                : "English voice enquiries · Tap again to finish"
+              : "Voice input unavailable. Type your enquiry below."}
+          </small>
+          <small>
+            Browser speech recognition may use an online service. Telugu audio
+            powered by{" "}
+            <a
+              href="https://hemanth.github.io/ninada/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Ninada
+            </a>{" "}
+            and generated on this device.
+          </small>
         </div>
       </section>
+      <div className="voice-controls">
+        <label>
+          Enquiry language / భాష{" "}
+          <select
+            aria-label="Enquiry language"
+            value={voice.language}
+            disabled={mutation.isPending || reset.isPending}
+            onChange={(event) => {
+              voice.cancel();
+              voice.setLanguage(event.target.value as "en" | "te");
+            }}
+          >
+            <option value="te">తెలుగు</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={voice.readAloud}
+            disabled={!voice.speechAvailable}
+            onChange={(event) => {
+              voice.setReadAloud(event.target.checked);
+              if (!event.target.checked) voice.stopSpeaking();
+            }}
+          />{" "}
+          Read replies aloud
+        </label>
+        {voice.speaking || voice.preparing ? (
+          <button type="button" onClick={voice.stopSpeaking}>
+            Stop speaking
+          </button>
+        ) : (
+          <button
+            type="button"
+            disabled={
+              !latest ||
+              !voice.speechAvailable ||
+              voice.listening ||
+              mutation.isPending
+            }
+            onClick={() =>
+              void voice.speak(
+                latest?.response_text || latest?.answer || "",
+                /[\u0c00-\u0c7f]/.test(latest?.answer || "") ? "te" : "en",
+              )
+            }
+          >
+            Read reply
+          </button>
+        )}
+        {!voice.speechAvailable && (
+          <span>Audio playback unavailable in this browser.</span>
+        )}
+        {voice.voiceError && <span role="alert">{voice.voiceError}</span>}
+      </div>
       <div className="enquiry-workspace-label">
         <span>
           <MessageSquareText size={17} /> Passenger enquiry
@@ -799,7 +904,7 @@ export function ChatPage() {
           <BusFront size={18} />
 
           <span>
-            Ask in English
+            Ask in Telugu or English
             <br />
             <small>Timings, routes, fares & more</small>
           </span>

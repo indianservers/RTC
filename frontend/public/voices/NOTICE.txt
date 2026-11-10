@@ -1,0 +1,10 @@
+Ninada Telugu female mobile voice (te_female.onnx)
+Creator: Hemanth HM / gnumanth
+Source: https://huggingface.co/gnumanth/ninada/tree/25143ee2842dd7bd9e2955b94797d43590ca676e
+License: Creative Commons Attribution 4.0 International
+https://creativecommons.org/licenses/by/4.0/
+The model is redistributed without modifications. Ninada JavaScript code is MIT licensed.
+Project: https://github.com/hemanth/ninada
+
+The pinned model is downloaded by npm run dev and npm run build when missing.
+Speech synthesis runs on the passenger's device. Browser speech recognition is separate.
