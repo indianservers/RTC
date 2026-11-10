@@ -8,6 +8,9 @@ import {
   Plus,
   BusFront,
   Sparkles,
+  Mic,
+  MapPin,
+  Clock3,
 } from "lucide-react";
 
 import { useWorkspace } from "../App";
@@ -606,16 +609,32 @@ export function ChatPage() {
 
   return (
     <div className={`chat-page${messages.length ? " has-conversation" : ""}`}>
+      <header className="enquiry-masthead">
+        <a href="/" className="enquiry-brand">
+          <BusFront size={38} />
+          <span>
+            RTC <b>Smart Enquiry</b>
+            <small>PASSENGER INFORMATION SYSTEM</small>
+          </span>
+        </a>
+        <span className="enquiry-live">
+          <i /> Local bus information
+          <small>For every passenger. Every journey.</small>
+        </span>
+      </header>
       <div className="chat-heading">
         <div>
           <span className="eyebrow">YOUR LOCAL TRAVEL ASSISTANT</span>
 
           <h1>
-            Smart enquiry <span className="title-dot" />
+            RTC Smart <em>Enquiry</em>
           </h1>
 
-          <p>Clear answers. Real timetables. A smoother journey.</p>
-          <small role="status">Local data: {localConnection}. Ask again to refresh an earlier answer.</small>
+          <p>Your AI-powered local bus enquiry assistant</p>
+          <small role="status">
+            Local data: {localConnection}. Ask again to refresh an earlier
+            answer.
+          </small>
         </div>
 
         <Button
@@ -630,6 +649,68 @@ export function ChatPage() {
         </Button>
       </div>
 
+      <section className="assistant-stage" aria-label="Your RTC assistant">
+        <div className="assistant-intro">
+          <div className="rtc-robot" aria-hidden="true">
+            <div className="robot-antenna" />
+            <div className="robot-head">
+              <div className="robot-face">
+                <span>^</span>
+                <span>^</span>
+                <i />
+              </div>
+            </div>
+            <div className="robot-body">
+              <b>RTC</b>
+            </div>
+          </div>
+          <div className="assistant-greeting">
+            <span className="eyebrow">MEET YOUR TRAVEL COMPANION</span>
+            <h2>
+              Hello! I’m your
+              <br />
+              RTC Smart Assistant
+            </h2>
+            <p>
+              Ask me about buses, timings, fares, platforms and routes. How can
+              I help you today?
+            </p>
+            <span className="assistant-ready">
+              <i /> Ready to help you
+            </span>
+          </div>
+        </div>
+        <div className="voice-panel">
+          <div className="sound-wave" aria-hidden="true">
+            {Array.from({ length: 31 }, (_, i) => (
+              <i key={i} style={{ height: `${8 + ((i * 17 + 11) % 37)}px` }} />
+            ))}
+          </div>
+          <p>Your next journey starts with a question</p>
+          <button
+            type="button"
+            className="voice-start"
+            aria-label="Start an enquiry"
+            onClick={() => {
+              composer.current?.focus();
+              composer.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            }}
+          >
+            <Mic size={32} />
+          </button>
+          <strong>Let’s find your next bus</strong>
+          <small>Type your question below to get started</small>
+        </div>
+      </section>
+      <div className="enquiry-workspace-label">
+        <span>
+          <MessageSquareText size={17} /> Passenger enquiry
+        </span>
+        <small>Timings · Fares · Routes · Platforms</small>
+      </div>
       <div className="privacy-controls">
         <label className="idle-setting">
           Privacy mode
@@ -1226,6 +1307,17 @@ export function ChatPage() {
         </div>
       )}
 
+      <div className="enquiry-capabilities">
+        <span>
+          <Clock3 size={15} /> Departure timings
+        </span>
+        <span>
+          <MapPin size={15} /> Routes & platforms
+        </span>
+        <span>
+          <BusFront size={15} /> Bus services & fares
+        </span>
+      </div>
       <div className="composer-wrap">
         {messages.length > 0 && (
           <ContextualActions

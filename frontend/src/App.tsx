@@ -7,7 +7,7 @@ import {
   lazy,
   Suspense,
 } from "react";
-import { NavLink, Route, Routes, Link } from "react-router-dom";
+import { NavLink, Route, Routes, Link, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
   BusFront,
@@ -44,6 +44,7 @@ interface Workspace {
 const Context = createContext<Workspace | null>(null);
 export const useWorkspace = () => useContext(Context)!;
 export function App() {
+  const passengerHome = useLocation().pathname === "/";
   const [station, setStation] = useState<Station | undefined>(() => {
     try {
       return (
@@ -120,7 +121,9 @@ export function App() {
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
-      <div className={`app-shell ${kiosk ? "kiosk-mode" : ""}`}>
+      <div
+        className={`app-shell ${passengerHome ? "passenger-home" : ""} ${kiosk ? "kiosk-mode" : ""}`}
+      >
         <aside className={`sidebar ${menu ? "open" : ""}`}>
           <Link to="/" className="brand" onClick={() => setMenu(false)}>
             <span>
