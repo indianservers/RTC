@@ -1,0 +1,137 @@
+{
+  "recorded_at": "2026-11-08T17:01:09.623324+00:00",
+  "batch": "question100-v2",
+  "new_unique_questions": 100,
+  "total_unique_across_two_batches": 200,
+  "prior_question_exact_overlap": 0,
+  "prior_training_exact_overlap": 0,
+  "baseline_live_http_checks_passed": 15,
+  "previous_candidate_shadow_checks_passed": 50,
+  "trained_candidate_shadow_checks_passed": 52,
+  "training_specific_check_gain": 2,
+  "by_kind_before": {
+    "SINGLE": {
+      "total": 60,
+      "passed": 7
+    },
+    "CONTEXT": {
+      "total": 20,
+      "passed": 7
+    },
+    "MULTI": {
+      "total": 10,
+      "passed": 1
+    },
+    "OOS": {
+      "total": 10,
+      "passed": 0
+    }
+  },
+  "by_kind_after": {
+    "SINGLE": {
+      "total": 60,
+      "passed": 38
+    },
+    "CONTEXT": {
+      "total": 20,
+      "passed": 5
+    },
+    "MULTI": {
+      "total": 10,
+      "passed": 1
+    },
+    "OOS": {
+      "total": 10,
+      "passed": 8
+    }
+  },
+  "supporting_setup_requests_per_run": 181,
+  "classifier_examples_added": 70,
+  "structured_dialogue_multi_targets_added": 30,
+  "new_total_training_records": 2349,
+  "structured_state_transitions_learned_by_single_label_model": false,
+  "human_reviewed": false,
+  "independent_test_available": false,
+  "holdout_raw_in_scope_accuracy": {
+    "previous_svm": 0.9222222222222223,
+    "trained_svm": 0.9222222222222223,
+    "previous_cnn": 0.8444444444444444,
+    "trained_cnn": 0.8111111111111111
+  },
+  "cnn_calibration": null,
+  "remaining_failed_ids": [
+    "question100-v2-Q004",
+    "question100-v2-Q007",
+    "question100-v2-Q009",
+    "question100-v2-Q015",
+    "question100-v2-Q017",
+    "question100-v2-Q018",
+    "question100-v2-Q019",
+    "question100-v2-Q020",
+    "question100-v2-Q027",
+    "question100-v2-Q028",
+    "question100-v2-Q029",
+    "question100-v2-Q031",
+    "question100-v2-Q033",
+    "question100-v2-Q034",
+    "question100-v2-Q035",
+    "question100-v2-Q038",
+    "question100-v2-Q039",
+    "question100-v2-Q041",
+    "question100-v2-Q043",
+    "question100-v2-Q049",
+    "question100-v2-Q052",
+    "question100-v2-Q054",
+    "question100-v2-Q063",
+    "question100-v2-Q066",
+    "question100-v2-Q067",
+    "question100-v2-Q068",
+    "question100-v2-Q070",
+    "question100-v2-Q071",
+    "question100-v2-Q072",
+    "question100-v2-Q073",
+    "question100-v2-Q074",
+    "question100-v2-Q075",
+    "question100-v2-Q076",
+    "question100-v2-Q077",
+    "question100-v2-Q078",
+    "question100-v2-Q079",
+    "question100-v2-Q080",
+    "question100-v2-Q081",
+    "question100-v2-Q082",
+    "question100-v2-Q084",
+    "question100-v2-Q085",
+    "question100-v2-Q086",
+    "question100-v2-Q087",
+    "question100-v2-Q088",
+    "question100-v2-Q089",
+    "question100-v2-Q090",
+    "question100-v2-Q091",
+    "question100-v2-Q099"
+  ],
+  "ruff": "All checks passed!",
+  "mypy": "Success: no issues found in 3 source files",
+  "production_health": {
+    "data": {
+      "status": "DEGRADED",
+      "database": "READY",
+      "deterministic_fallback": "READY",
+      "statistical_model": "NOT_APPROVED",
+      "active_model_name": null,
+      "active_model_version": null,
+      "offline_certification": "OS_ISOLATION_UNVERIFIED"
+    }
+  },
+  "deployed": false,
+  "recommendation": "Keep production unchanged; do not promote from synthetic training-batch checks",
+  "tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "239",
+    "time": "66.384",
+    "timestamp": "2026-11-08T22:29:36.984755+05:30",
+    "hostname": "DESKTOP-B3SR465"
+  }
+}

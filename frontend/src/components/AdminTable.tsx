@@ -46,6 +46,7 @@ import { FilterBar } from "./FilterBar";
 
 import { Badge, Button, Notice } from "./ui";
 
+const fieldLabel = (key: string) => ({service_id: "Bus service", operator_id: "Operator", route_id: "Route", category_id: "Bus category", dataset_source: "Data label (for example DEMO or LOCAL)", valid_from: "Start date", valid_to: "End date", departure_minutes: "Departure time", weekdays: "Running days"}[key] || key.replaceAll("_", " ").replace(/ id$/, ""));
 export function AdminTable({
   resource,
 
@@ -63,6 +64,7 @@ export function AdminTable({
 
   readonly?: boolean;
 }) {
+  const [moreDetails, setMoreDetails] = useState(false);
   const [offset, setOffset] = useState(0);
   const [staged, setStaged] = useState("");
 
@@ -293,6 +295,7 @@ export function AdminTable({
   });
 
   function open(row?: Row) {
+    setMoreDetails(!!row);
     setCreating(!row);
 
     setEditing(row || {});
@@ -649,22 +652,49 @@ export function AdminTable({
                   </small>
                 </label>
               )}
+              <p>Fill in the required fields below. Optional information is available under More details.</p>
+              <button type="button" className="button" aria-expanded={moreDetails} onClick={() => setMoreDetails(!moreDetails)}>
+                {moreDetails ? "Hide optional fields" : "More details (optional fields)"}
+              </button>
               <div className="edit-grid">
                 {Object.entries(definition?.schema.properties || {}).map(
                   ([key, property]: [string, any]) => {
+                    if (!moreDetails && !definition?.schema.required?.includes(key) && !["weekdays", "departure_minutes"].includes(key)) return null;
                     const spec =
                       property.anyOf?.find((v: Row) => v.type !== "null") ||
                       property;
 
                     const type = spec.type;
 
+                    if (key === "weekdays") return (
+                      <fieldset key={key}><legend>Running days</legend>
+                        {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day, index) => (
+                          <label className="check-field" key={day}>
+                            <input type="checkbox" checked={String(values[key] || "").includes(String(index))} onChange={(e) => {
+                              const days = new Set(String(values[key] || "").split(""));
+                              if (e.target.checked) days.add(String(index)); else days.delete(String(index));
+                              setValues({...values, [key]: [...days].sort().join("")});
+                            }} />{day}
+                          </label>
+                        ))}
+                        <small>Tick each day this bus runs.</small>
+                      </fieldset>
+                    );
+                    if (key === "departure_minutes") return (
+                      <label className="field" key={key}>Departure time
+                        <input type="time" required={definition?.schema.required?.includes(key)} value={values[key] === "" || values[key] == null ? "" : `${String(Math.floor(Number(values[key]) / 60)).padStart(2, "0")}:${String(Number(values[key]) % 60).padStart(2, "0")}`} onChange={(e) => {
+                          const [hours, minutes] = e.target.value.split(":").map(Number);
+                          setValues({...values, [key]: e.target.value ? hours * 60 + minutes : ""});
+                        }} />
+                      </label>
+                    );
                     if (definition?.references?.[key]) {
                       const options =
                         references[definition.references[key]] || [];
 
                       return (
                         <label className="field" key={key}>
-                          {key.replaceAll("_", " ")}
+                          {fieldLabel(key)}
 
                           <select
                             required={definition?.schema.required?.includes(
@@ -706,9 +736,9 @@ export function AdminTable({
                     if (type === "object" || type === "array")
                       return (
                         <label className="field" key={key}>
-                          {key.replaceAll("_", " ")}
+                          {fieldLabel(key)}
                           <textarea
-                            aria-label={key.replaceAll("_", " ")}
+                            aria-label={fieldLabel(key)}
                             value={
                               typeof values[key] === "object"
                                 ? JSON.stringify(values[key], null, 2)
@@ -734,7 +764,7 @@ export function AdminTable({
                     )
                       return (
                         <label className="field" key={key}>
-                          {key.replaceAll("_", " ")}
+                          {fieldLabel(key)}
                           <select
                             value={
                               values[key] == null ? "" : String(values[key])
@@ -767,11 +797,11 @@ export function AdminTable({
                           }
                         />
 
-                        {key.replaceAll("_", " ")}
+                        {fieldLabel(key)}
                       </label>
                     ) : (
                       <label className="field" key={key}>
-                        {key.replaceAll("_", " ")}
+                        {fieldLabel(key)}
 
                         <input
                           required={definition?.schema.required?.includes(key)}

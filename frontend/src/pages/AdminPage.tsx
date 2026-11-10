@@ -27,6 +27,26 @@ import { SystemStatus } from "./SystemStatus";
 import { ConfirmDialog } from "../components/feedback";
 import { useSearchParams } from "react-router-dom";
 import { Badge, Button, Notice, PageTitle } from "../components/ui";
+const simpleSections = [
+  ["overview", "Start here"],
+  ["stations", "1. Bus stations"],
+  ["routes", "2. Routes"],
+  ["route-editor", "3. Stops on a route"],
+  ["schedules", "4. Bus services"],
+  ["calendars", "5. Running days"],
+  ["timetable-editor", "6. Arrival & departure times"],
+  ["fares", "7. Ticket fares"],
+  ["imports", "Review & publish / import"],
+];
+const guidance: Record<string, string> = {
+  stations: "Add the places where buses stop. Reuse an existing station when it is already listed.",
+  routes: "Add a route, then open Stops on a route to put its stations in travel order.",
+  "route-editor": "Choose a route and arrange its stops from the first station to the last.",
+  schedules: "Add a bus service: choose its operator, route, bus category and departure time.",
+  calendars: "Choose when a service runs: its start and end dates and the days of the week.",
+  "timetable-editor": "Choose an existing service, then enter the time at each stop.",
+  fares: "Add the ticket price between stations for a bus service.",
+};
 const sections = [
   ["overview", "Overview"],
   ["operations", "Operations Control Center"],
@@ -70,6 +90,7 @@ const sections = [
   ["status", "System Status"],
 ];
 export function AdminPage() {
+  const [advanced, setAdvanced] = useState(false);
   const [token, setToken] = useState("");
   const [draft, setDraft] = useState("");
   const client = useQueryClient();
@@ -136,8 +157,8 @@ export function AdminPage() {
     <div className="page-container admin-page">
       <PageTitle
         eyebrow="LOCAL CONTROL CENTRE"
-        title="Administration"
-        description="Manage local RTC records. Every change is validated by the backend."
+        title="Add & manage bus information"
+        description="Start with stations and routes, then add your bus services and timings."
         actions={
           <Button
             variant="secondary"
@@ -154,10 +175,17 @@ export function AdminPage() {
           </Button>
         }
       />
-      <ManagementScope token={token} meta={meta.data.data} />
+      <details className="panel">
+        <summary>Operator & data source settings</summary>
+        <ManagementScope token={token} meta={meta.data.data} />
+      </details>
+      {meta.data.data.publication_required && <Notice>Saved changes are drafts. Use Review & publish to validate them and obtain approval before passengers can see them.</Notice>}
+      <Button variant="secondary" onClick={() => setAdvanced(!advanced)}>
+        {advanced ? "Show simple menu" : "Show all administration tools"}
+      </Button>
       <div className="admin-layout">
         <nav className="admin-nav" aria-label="Administration sections">
-          {sections.map(([key, label]) => (
+          {(advanced ? sections : simpleSections).map(([key, label]) => (
             <NavLink
               end
               key={key}
@@ -170,8 +198,24 @@ export function AdminPage() {
         </nav>
         <section className="admin-content">
           <h2>
-            {sections.find((s) => s[0] === section)?.[1] || "Unknown section"}
+            {(advanced ? sections : simpleSections).find((s) => s[0] === section)?.[1] || sections.find((s) => s[0] === section)?.[1] || "Administration"}
           </h2>
+          {guidance[section] && <p>{guidance[section]} Use Add to enter a new record, or the pencil to change an existing one.</p>}
+          {section === "overview" && (
+            <section className="panel">
+              <h3>What would you like to add?</h3>
+              <p>For a new timetable, follow these steps in order. Skip anything already in your database.</p>
+              <div className="system-grid">
+                {simpleSections.slice(1, 8).map(([key, label]) => (
+                  <NavLink className="panel" key={key} to={`/admin/${key}`}>
+                    <strong>{label}</strong><p>{guidance[key]}</p>
+                  </NavLink>
+                ))}
+              </div>
+              <p>Need an operator or bus category first? Open all administration tools to add it.</p>
+              <details><summary>Database overview & setup tools</summary><ManagementOverview token={token} /></details>
+            </section>
+          )}
           {[
             "fares",
             "fare-tables",
@@ -182,7 +226,7 @@ export function AdminPage() {
           {section === "operations" ? (
             <OperationsCenter token={token} role={meta.data.data.role} />
           ) : section === "overview" ? (
-            <ManagementOverview token={token} />
+            null
           ) : section === "imports" ? (
             <>
               <ImportCenter

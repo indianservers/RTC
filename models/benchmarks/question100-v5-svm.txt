@@ -1,0 +1,28 @@
+{
+  "version": "question100-v5",
+  "model_type": "english_intent_svm",
+  "local_path": "models/english/nlp/question100-v5/svm.joblib",
+  "sha256": "f45cac057eae750bdf4ca584cc9f279ebb9b9a7d2426dba971b5c0f4e54dbada",
+  "label_map_path": "models/english/nlp/question100-v5/label_map.json",
+  "deployment_status": "CANDIDATE",
+  "approved": false,
+  "independent_evaluation": false,
+  "human_reviewed": false,
+  "preprocessing": "NFKC_CASEFOLD_COLLAPSE_WHITESPACE_REQUIRED",
+  "training_manifest_sha256": "af75669d98116e53b32f33790807e111f037c319509b3965632402d6351c2398",
+  "configuration": {
+    "C": 16,
+    "char_weight": 0.5,
+    "validation_macro_f1": 0.9046825396825395,
+    "validation_accuracy": 0.9055555555555556
+  },
+  "threshold_source": "validation",
+  "decision_threshold": -1,
+  "selective_thresholds": {
+    "domain": 0.5,
+    "margin": -1,
+    "gap": 0.6
+  },
+  "calibration_feasible": true,
+  "training_seconds": 8.255969699996058
+}

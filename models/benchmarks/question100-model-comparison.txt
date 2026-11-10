@@ -1,0 +1,101 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794156250.350033   15920 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794156256.371628   15920 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794156261.537212   15920 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+{
+  "previous_svm": {
+    "question100_training_check": {
+      "count": 70,
+      "raw_in_scope_accuracy": 1.0,
+      "accepted_id": 50,
+      "accepted_id_precision": 1.0,
+      "oos_false_acceptance": 0.0
+    },
+    "validation": {
+      "count": 240,
+      "raw_in_scope_accuracy": 0.9,
+      "accepted_id": 129,
+      "accepted_id_precision": 0.9844961240310077,
+      "oos_false_acceptance": 0.016666666666666666
+    },
+    "synthetic_holdout": {
+      "count": 240,
+      "raw_in_scope_accuracy": 0.9277777777777778,
+      "accepted_id": 131,
+      "accepted_id_precision": 0.9770992366412213,
+      "oos_false_acceptance": 0.0
+    }
+  },
+  "trained_svm": {
+    "question100_training_check": {
+      "count": 70,
+      "raw_in_scope_accuracy": 1.0,
+      "accepted_id": 54,
+      "accepted_id_precision": 1.0,
+      "oos_false_acceptance": 0.0
+    },
+    "validation": {
+      "count": 240,
+      "raw_in_scope_accuracy": 0.9,
+      "accepted_id": 146,
+      "accepted_id_precision": 0.952054794520548,
+      "oos_false_acceptance": 0.016666666666666666
+    },
+    "synthetic_holdout": {
+      "count": 240,
+      "raw_in_scope_accuracy": 0.9222222222222223,
+      "accepted_id": 144,
+      "accepted_id_precision": 0.9652777777777778,
+      "oos_false_acceptance": 0.0
+    }
+  },
+  "previous_cnn": {
+    "question100_training_check": {
+      "count": 70,
+      "raw_in_scope_accuracy": 0.9666666666666667,
+      "accepted_id": 0,
+      "accepted_id_precision": null,
+      "oos_false_acceptance": 0.0
+    },
+    "validation": {
+      "count": 240,
+      "raw_in_scope_accuracy": 0.9,
+      "accepted_id": 0,
+      "accepted_id_precision": null,
+      "oos_false_acceptance": 0.0
+    },
+    "synthetic_holdout": {
+      "count": 240,
+      "raw_in_scope_accuracy": 0.85,
+      "accepted_id": 0,
+      "accepted_id_precision": null,
+      "oos_false_acceptance": 0.0
+    }
+  },
+  "trained_cnn": {
+    "question100_training_check": {
+      "count": 70,
+      "raw_in_scope_accuracy": 1.0,
+      "accepted_id": 0,
+      "accepted_id_precision": null,
+      "oos_false_acceptance": 0.0
+    },
+    "validation": {
+      "count": 240,
+      "raw_in_scope_accuracy": 0.8666666666666667,
+      "accepted_id": 0,
+      "accepted_id_precision": null,
+      "oos_false_acceptance": 0.0
+    },
+    "synthetic_holdout": {
+      "count": 240,
+      "raw_in_scope_accuracy": 0.8444444444444444,
+      "accepted_id": 0,
+      "accepted_id_precision": null,
+      "oos_false_acceptance": 0.0
+    }
+  }
+}

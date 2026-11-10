@@ -1,0 +1,133 @@
+{
+  "recorded_at": "2026-11-08T17:50:33.499798+00:00",
+  "batch": "question100-v5",
+  "new_unique_questions": 100,
+  "total_unique_across_batches": 500,
+  "expectations_frozen_before_live_questions": true,
+  "live_checks_passed": 18,
+  "previous_candidate_shadow": 53,
+  "trained_candidate_shadow": 57,
+  "training_specific_gain": 4,
+  "before_by_kind": {
+    "SINGLE": {
+      "total": 60,
+      "passed": 10
+    },
+    "CONTEXT": {
+      "total": 20,
+      "passed": 6
+    },
+    "MULTI": {
+      "total": 10,
+      "passed": 2
+    },
+    "OOS": {
+      "total": 10,
+      "passed": 0
+    }
+  },
+  "after_by_kind": {
+    "SINGLE": {
+      "total": 60,
+      "passed": 42
+    },
+    "CONTEXT": {
+      "total": 20,
+      "passed": 5
+    },
+    "MULTI": {
+      "total": 10,
+      "passed": 2
+    },
+    "OOS": {
+      "total": 10,
+      "passed": 8
+    }
+  },
+  "setup_requests_per_run": 181,
+  "classifier_examples_added": 70,
+  "structured_dialogue_multi_targets_added": 30,
+  "total_classifier_training_records": 2559,
+  "all_100_learned_by_single_label_loss": false,
+  "human_reviewed": false,
+  "independent_test_available": false,
+  "heldout_hashes_unchanged": true,
+  "synthetic_holdout_raw_accuracy": {
+    "previous_svm": 0.9444444444444444,
+    "trained_svm": 0.9277777777777778,
+    "previous_cnn": 0.8722222222222222,
+    "trained_cnn": 0.8555555555555555
+  },
+  "cnn_calibration": null,
+  "remaining_failed_ids": [
+    "question100-v5-Q015",
+    "question100-v5-Q018",
+    "question100-v5-Q020",
+    "question100-v5-Q027",
+    "question100-v5-Q028",
+    "question100-v5-Q031",
+    "question100-v5-Q034",
+    "question100-v5-Q035",
+    "question100-v5-Q040",
+    "question100-v5-Q041",
+    "question100-v5-Q042",
+    "question100-v5-Q043",
+    "question100-v5-Q045",
+    "question100-v5-Q046",
+    "question100-v5-Q051",
+    "question100-v5-Q052",
+    "question100-v5-Q053",
+    "question100-v5-Q054",
+    "question100-v5-Q063",
+    "question100-v5-Q064",
+    "question100-v5-Q065",
+    "question100-v5-Q066",
+    "question100-v5-Q067",
+    "question100-v5-Q068",
+    "question100-v5-Q071",
+    "question100-v5-Q072",
+    "question100-v5-Q073",
+    "question100-v5-Q074",
+    "question100-v5-Q075",
+    "question100-v5-Q076",
+    "question100-v5-Q077",
+    "question100-v5-Q079",
+    "question100-v5-Q080",
+    "question100-v5-Q082",
+    "question100-v5-Q083",
+    "question100-v5-Q085",
+    "question100-v5-Q086",
+    "question100-v5-Q087",
+    "question100-v5-Q088",
+    "question100-v5-Q089",
+    "question100-v5-Q090",
+    "question100-v5-Q094",
+    "question100-v5-Q099"
+  ],
+  "tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "560",
+    "time": "4.046",
+    "timestamp": "2026-11-08T23:19:17.669675+05:30",
+    "hostname": "DESKTOP-B3SR465"
+  },
+  "ruff": "All checks passed!",
+  "mypy": "Success: no issues found in 4 source files",
+  "production_health": {
+    "data": {
+      "status": "DEGRADED",
+      "database": "READY",
+      "deterministic_fallback": "READY",
+      "statistical_model": "NOT_APPROVED",
+      "active_model_name": null,
+      "active_model_version": null,
+      "offline_certification": "OS_ISOLATION_UNVERIFIED"
+    }
+  },
+  "deployed": false,
+  "recommendation": "Retain production rules pending independent review, uncertainty and conversation release gates",
+  "evaluation_protocol": "Second-option test starts from first selection; selection retention must not ask for clarification"
+}

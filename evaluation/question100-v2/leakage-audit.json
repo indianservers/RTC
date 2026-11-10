@@ -1,0 +1,9 @@
+{
+  "cutoff": 0.85,
+  "new_training_count": 70,
+  "heldout_count": 480,
+  "near_overlaps": [],
+  "highest_similarity": 0.5264348212693101,
+  "prior_batch_and_training_exact_overlap": 0,
+  "source": "Novelty checked before asking; near-overlap checked before heldout evaluation"
+}

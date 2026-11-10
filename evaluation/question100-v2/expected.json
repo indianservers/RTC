@@ -1,0 +1,1112 @@
+[
+  {
+    "id": "question100-v2-Q001",
+    "question": "I'm travelling to Nellore tomorrow; what is the nearest departure still available?",
+    "kind": "SINGLE",
+    "expected": [
+      "NEXT_BUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q002",
+    "question": "Please identify the departure that starts tomorrow's entire Nellore service schedule.",
+    "kind": "SINGLE",
+    "expected": [
+      "FIRST_BUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q003",
+    "question": "Tomorrow, after which Nellore departure will there be no more buses that day?",
+    "kind": "SINGLE",
+    "expected": [
+      "LAST_BUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q004",
+    "question": "What scheduled choices connect my current Vijayawada stand with Nellore on the next day?",
+    "kind": "SINGLE",
+    "expected": [
+      "BUSES_BETWEEN"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q005",
+    "question": "Filter tomorrow's Nellore departures to those starting beyond 9:15 PM.",
+    "kind": "SINGLE",
+    "expected": [
+      "DEPARTURES_AFTER"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q006",
+    "question": "I want to leave for Nellore prior to 5:45 AM tomorrow; list those services.",
+    "kind": "SINGLE",
+    "expected": [
+      "DEPARTURES_BEFORE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q007",
+    "question": "Check for a Nellore departure tomorrow approximately at quarter past seven in the evening.",
+    "kind": "SINGLE",
+    "expected": [
+      "BUS_AT_TIME"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q008",
+    "question": "Read the timetable entry for when this chosen service reaches its destination stop.",
+    "kind": "SINGLE",
+    "expected": [
+      "ARRIVAL_TIME"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q009",
+    "question": "For the departure I've picked, what is the elapsed travelling time in hours?",
+    "kind": "SINGLE",
+    "expected": [
+      "JOURNEY_DURATION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q010",
+    "question": "Is the current date included in the operating calendar for buses serving Nellore?",
+    "kind": "SINGLE",
+    "expected": [
+      "BUSES_OPERATING_TODAY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q011",
+    "question": "Across a day, how closely spaced are the bus runs serving this corridor?",
+    "kind": "SINGLE",
+    "expected": [
+      "SERVICE_FREQUENCY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q012",
+    "question": "Does your local data include extra Nellore runs or changed timings for a festival day?",
+    "kind": "SINGLE",
+    "expected": [
+      "SPECIAL_DAY_SCHEDULE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q013",
+    "question": "What range of service classes is actually scheduled between my selected endpoints?",
+    "kind": "SINGLE",
+    "expected": [
+      "AVAILABLE_BUS_TYPES"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q014",
+    "question": "I'd prefer a cooled bus cabin; search air-conditioned departures for Nellore.",
+    "kind": "SINGLE",
+    "expected": [
+      "AC_BUS_AVAILABILITY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q015",
+    "question": "Remove every AC option from the Nellore list because I want an uncooled coach.",
+    "kind": "SINGLE",
+    "expected": [
+      "NON_AC_BUS_AVAILABILITY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q016",
+    "question": "Could I make the Nellore journey lying in a berth rather than sitting upright?",
+    "kind": "SINGLE",
+    "expected": [
+      "SLEEPER_AVAILABILITY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q017",
+    "question": "For my Nellore trip, find the coach type where the accommodation consists of seats.",
+    "kind": "SINGLE",
+    "expected": [
+      "SEATER_AVAILABILITY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q018",
+    "question": "Which listed runs to Nellore use battery propulsion instead of a combustion engine?",
+    "kind": "SINGLE",
+    "expected": [
+      "ELECTRIC_BUS_AVAILABILITY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q019",
+    "question": "Can you describe the onboard equipment and comforts attached to this particular vehicle?",
+    "kind": "SINGLE",
+    "expected": [
+      "BUS_AMENITIES"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q020",
+    "question": "What service features distinguish Demo sleeper from Demo electric in the database?",
+    "kind": "SINGLE",
+    "expected": [
+      "SERVICE_CATEGORY_COMPARISON"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q021",
+    "question": "Are wheelchair-friendly boarding arrangements offered by any service on this corridor?",
+    "kind": "SINGLE",
+    "expected": [
+      "ACCESSIBLE_BUS_AVAILABILITY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q022",
+    "question": "How many passenger places were built into the chosen coach's seating layout?",
+    "kind": "SINGLE",
+    "expected": [
+      "BUS_CAPACITY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q023",
+    "question": "I don't wish to interchange anywhere; is Nellore served all the way by one coach?",
+    "kind": "SINGLE",
+    "expected": [
+      "DIRECT_BUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q024",
+    "question": "Give the station-by-station stopping pattern followed by the bus I've selected.",
+    "kind": "SINGLE",
+    "expected": [
+      "ROUTE_STOPS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q025",
+    "question": "Will the selected coach travel by way of Ongole before it gets to Nellore?",
+    "kind": "SINGLE",
+    "expected": [
+      "BUS_VIA_LOCATION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q026",
+    "question": "Passing Ongole is not enough for me; is a stop there part of this trip's schedule?",
+    "kind": "SINGLE",
+    "expected": [
+      "INTERMEDIATE_STOP"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q027",
+    "question": "Please show where this route authorizes passengers to enter the bus for their journey.",
+    "kind": "SINGLE",
+    "expected": [
+      "BOARDING_POINT"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q028",
+    "question": "At what authorized dropping stops could a passenger leave this selected service?",
+    "kind": "SINGLE",
+    "expected": [
+      "ALIGHTING_POINT"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q029",
+    "question": "Plan a route to Tirumala by linking an initial coach to an onward bus after a change.",
+    "kind": "SINGLE",
+    "expected": [
+      "CONNECTING_BUSES"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q030",
+    "question": "If I avoid the itinerary currently shown, what other bus path could take me to Nellore?",
+    "kind": "SINGLE",
+    "expected": [
+      "ALTERNATIVE_ROUTES"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q031",
+    "question": "Between the chosen pickup and drop stops, what route length in kilometres is stored?",
+    "kind": "SINGLE",
+    "expected": [
+      "ROUTE_DISTANCE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q032",
+    "question": "Can any chain of available bus services get a passenger from this stand to Tirumala?",
+    "kind": "SINGLE",
+    "expected": [
+      "DESTINATION_REACHABILITY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q033",
+    "question": "For the bus I'm currently referring to, what amount of money buys one passenger ticket?",
+    "kind": "SINGLE",
+    "expected": [
+      "GET_FARE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q034",
+    "question": "Among the Nellore services with known prices, choose whichever costs the smallest amount.",
+    "kind": "SINGLE",
+    "expected": [
+      "CHEAPEST_BUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q035",
+    "question": "Please minimize travelling duration when selecting a Nellore bus from these results.",
+    "kind": "SINGLE",
+    "expected": [
+      "FASTEST_BUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q036",
+    "question": "For an identical origin and destination, contrast the ticket amounts on the listed coaches.",
+    "kind": "SINGLE",
+    "expected": [
+      "FARE_COMPARISON"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q037",
+    "question": "Has the local system recently recorded enough unused seats for a pair of passengers on my trip?",
+    "kind": "SINGLE",
+    "expected": [
+      "SEAT_AVAILABILITY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q038",
+    "question": "Before the day of travel, does the selected departure permit passengers to reserve seats?",
+    "kind": "SINGLE",
+    "expected": [
+      "RESERVATION_SUPPORTED"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q039",
+    "question": "Tell me the operator-approved methods for arranging and purchasing my bus ticket.",
+    "kind": "SINGLE",
+    "expected": [
+      "BOOKING_OPTIONS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q040",
+    "question": "If I already have a ticket reference, is its confirmation state available in an authorized local record?",
+    "kind": "SINGLE",
+    "expected": [
+      "BOOKING_STATUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q041",
+    "question": "Explain the passenger ticket-withdrawal rules, including any cancellation penalty that applies.",
+    "kind": "SINGLE",
+    "expected": [
+      "CANCELLATION_POLICY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q042",
+    "question": "What locally published conditions determine the ticket money returned to a passenger?",
+    "kind": "SINGLE",
+    "expected": [
+      "REFUND_POLICY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q043",
+    "question": "Would an eligible elderly passenger qualify for a concessional fare under this operator's rules?",
+    "kind": "SINGLE",
+    "expected": [
+      "CONCESSION_ENQUIRY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q044",
+    "question": "Before I bring a large suitcase, explain this operator's recorded baggage limits and surcharges.",
+    "kind": "SINGLE",
+    "expected": [
+      "LUGGAGE_RULES"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q045",
+    "question": "Where does the newest verified tracking observation place the selected coach at present?",
+    "kind": "SINGLE",
+    "expected": [
+      "LIVE_BUS_STATUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q046",
+    "question": "Is this trip behind its timetable, and how many late-running minutes are officially recorded?",
+    "kind": "SINGLE",
+    "expected": [
+      "BUS_DELAY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q047",
+    "question": "Has an authorized update withdrawn the particular trip that I selected from operation?",
+    "kind": "SINGLE",
+    "expected": [
+      "BUS_CANCELLATION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q048",
+    "question": "At this station, which numbered stand has been assigned and confirmed for my departure?",
+    "kind": "SINGLE",
+    "expected": [
+      "BUS_PLATFORM"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q049",
+    "question": "After taking operational updates into account, what is the freshest ETA for the incoming service?",
+    "kind": "SINGLE",
+    "expected": [
+      "ESTIMATED_ARRIVAL"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q050",
+    "question": "Please distinguish the scheduled leaving time from evidence that my selected coach actually left.",
+    "kind": "SINGLE",
+    "expected": [
+      "BUS_DEPARTED_STATUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q051",
+    "question": "Has anyone recorded that the incoming service has physically arrived at this bus station?",
+    "kind": "SINGLE",
+    "expected": [
+      "BUS_ARRIVED_STATUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q052",
+    "question": "Do current route notices report roadworks, interruptions or detours affecting this journey?",
+    "kind": "SINGLE",
+    "expected": [
+      "SERVICE_DISRUPTION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q053",
+    "question": "Is the bay now allocated to my coach different from the one originally announced?",
+    "kind": "SINGLE",
+    "expected": [
+      "PLATFORM_CHANGE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q054",
+    "question": "Which origin, destination and route are associated with bus service number 3521?",
+    "kind": "SINGLE",
+    "expected": [
+      "SERVICE_NUMBER_LOOKUP"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q055",
+    "question": "What public conveniences and waiting areas can passengers use at this bus terminal?",
+    "kind": "SINGLE",
+    "expected": [
+      "STATION_FACILITIES"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q056",
+    "question": "Please point me towards this terminal's passenger information and enquiry office.",
+    "kind": "SINGLE",
+    "expected": [
+      "STATION_HELPDESK"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q057",
+    "question": "My suitcase was accidentally left in a bus; which local process handles recovery of found belongings?",
+    "kind": "SINGLE",
+    "expected": [
+      "LOST_PROPERTY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q058",
+    "question": "How would I reach the office or telephone contact of the operator responsible for this coach?",
+    "kind": "SINGLE",
+    "expected": [
+      "OPERATOR_CONTACT"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q059",
+    "question": "Guide me on foot from inside the terminal towards the departure area at bay six.",
+    "kind": "SINGLE",
+    "expected": [
+      "STATION_NAVIGATION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q060",
+    "question": "I need to lodge a grievance about a bus staff member; which authorized channel should receive it?",
+    "kind": "SINGLE",
+    "expected": [
+      "COMPLAINT_GUIDANCE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q061",
+    "question": "And what would that selected ride cost me?",
+    "kind": "CONTEXT",
+    "expected": [
+      "GET_FARE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q062",
+    "question": "Which bay should I go to for the one I've chosen?",
+    "kind": "CONTEXT",
+    "expected": [
+      "BUS_PLATFORM"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q063",
+    "question": "Please retain that exact coach for the next question.",
+    "kind": "CONTEXT",
+    "expected": [
+      "PRESERVE_SELECTION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q064",
+    "question": "Use the second displayed departure as my choice.",
+    "kind": "CONTEXT",
+    "expected": [
+      "SELECT_SECOND"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q065",
+    "question": "Correction: the destination should be Tirumala for this journey.",
+    "kind": "CONTEXT",
+    "expected": [
+      "DEST_TIRUMALA"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q066",
+    "question": "Change where I'm going from Nellore to Tirupati, please.",
+    "kind": "CONTEXT",
+    "expected": [
+      "DEST_TIRUPATI"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q067",
+    "question": "I want this trip two days from today instead of tomorrow.",
+    "kind": "CONTEXT",
+    "expected": [
+      "DATE_PLUS_TWO"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q068",
+    "question": "Keep only buses fitted with air conditioning for this search.",
+    "kind": "CONTEXT",
+    "expected": [
+      "FILTER_AC"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q069",
+    "question": "Please exclude cooled coaches and use non-AC ones instead.",
+    "kind": "CONTEXT",
+    "expected": [
+      "FILTER_NON_AC"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q070",
+    "question": "Change the accommodation preference to a sleeping berth.",
+    "kind": "CONTEXT",
+    "expected": [
+      "FILTER_SLEEPER"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q071",
+    "question": "I can spend no more than INR 250 on the ticket.",
+    "kind": "CONTEXT",
+    "expected": [
+      "BUDGET_250"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q072",
+    "question": "Please make the passenger count two for this journey.",
+    "kind": "CONTEXT",
+    "expected": [
+      "PASSENGERS_TWO"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q073",
+    "question": "Clear the maximum fare I supplied earlier.",
+    "kind": "CONTEXT",
+    "expected": [
+      "REMOVE_BUDGET"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q074",
+    "question": "Look for a bus leaving after the departure I currently picked.",
+    "kind": "CONTEXT",
+    "expected": [
+      "LATER_DEPARTURES"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q075",
+    "question": "You've got my bus choice wrong; let me choose another.",
+    "kind": "CONTEXT",
+    "expected": [
+      "REJECT_SELECTION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q076",
+    "question": "Clear this conversation so I can begin a different journey.",
+    "kind": "CONTEXT",
+    "expected": [
+      "RESET"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q077",
+    "question": "Could you say the last reply once more without changing anything?",
+    "kind": "CONTEXT",
+    "expected": [
+      "REPEAT"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q078",
+    "question": "How many hours on board for that very same selection?",
+    "kind": "CONTEXT",
+    "expected": [
+      "JOURNEY_DURATION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q079",
+    "question": "Switch the pickup location for my ride to Ongole.",
+    "kind": "CONTEXT",
+    "expected": [
+      "ORIGIN_ONGOLE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q080",
+    "question": "Change my dropping destination from Nellore to Ongole.",
+    "kind": "CONTEXT",
+    "expected": [
+      "DEST_ONGOLE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q081",
+    "question": "Which Nellore bus comes next, and what ticket amount does that departure charge?",
+    "kind": "MULTI",
+    "expected": [
+      "NEXT_BUS",
+      "GET_FARE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q082",
+    "question": "Describe both the halt sequence and the onboard facilities of my chosen coach.",
+    "kind": "MULTI",
+    "expected": [
+      "ROUTE_STOPS",
+      "BUS_AMENITIES"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q083",
+    "question": "Tell me my bus's assigned platform together with any verified delay minutes.",
+    "kind": "MULTI",
+    "expected": [
+      "BUS_PLATFORM",
+      "BUS_DELAY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q084",
+    "question": "Find the opening Nellore departure and give the duration of that particular ride.",
+    "kind": "MULTI",
+    "expected": [
+      "FIRST_BUS",
+      "JOURNEY_DURATION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q085",
+    "question": "Set the ticket prices alongside each other and also tell me their journey durations.",
+    "kind": "MULTI",
+    "expected": [
+      "FARE_COMPARISON",
+      "JOURNEY_DURATION"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q086",
+    "question": "What time is the final Nellore departure, and which service class operates it?",
+    "kind": "MULTI",
+    "expected": [
+      "LAST_BUS",
+      "AVAILABLE_BUS_TYPES"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q087",
+    "question": "Check if this run has been cancelled and whether an actual departure was recorded.",
+    "kind": "MULTI",
+    "expected": [
+      "BUS_CANCELLATION",
+      "BUS_DEPARTED_STATUS"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q088",
+    "question": "Search for a no-change bus journey and provide its kilometre length.",
+    "kind": "MULTI",
+    "expected": [
+      "DIRECT_BUS",
+      "ROUTE_DISTANCE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q089",
+    "question": "Can two places be found on this departure, and does it accept advance reservations?",
+    "kind": "MULTI",
+    "expected": [
+      "SEAT_AVAILABILITY",
+      "RESERVATION_SUPPORTED"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q090",
+    "question": "I left luggage behind; give the recovery guidance and the responsible operator's contact details.",
+    "kind": "MULTI",
+    "expected": [
+      "OPERATOR_CONTACT",
+      "LOST_PROPERTY"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q091",
+    "question": "Who lifted the international hockey trophy last season?",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q092",
+    "question": "Calculate the compound interest on a five-year bank deposit for me.",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q093",
+    "question": "Describe the steps for baking a loaf of sourdough bread.",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q094",
+    "question": "Will heavy rainfall be likely around Nellore over the coming weekend?",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q095",
+    "question": "Write a short birthday poem for my younger sister.",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q096",
+    "question": "Which treatment should someone take for an ear infection?",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q097",
+    "question": "Help me choose a mobile phone with a good camera.",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q098",
+    "question": "Summarize the plot of a famous detective novel.",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q099",
+    "question": "How much is a kilogram of silver worth in today's market?",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  },
+  {
+    "id": "question100-v2-Q100",
+    "question": "Find the derivative of a polynomial using calculus rules.",
+    "kind": "OOS",
+    "expected": [
+      "OUT_OF_SCOPE"
+    ],
+    "human_reviewed": false,
+    "source": "AGENT_AUTHORED_FOR_USER_REQUEST",
+    "expectation_policy": "Labels/context specified before execution; facts must remain DB-grounded or explicitly unknown"
+  }
+]

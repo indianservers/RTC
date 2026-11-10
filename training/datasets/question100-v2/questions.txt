@@ -1,0 +1,100 @@
+NEXT_BUS|SINGLE|I'm travelling to Nellore tomorrow; what is the nearest departure still available?
+FIRST_BUS|SINGLE|Please identify the departure that starts tomorrow's entire Nellore service schedule.
+LAST_BUS|SINGLE|Tomorrow, after which Nellore departure will there be no more buses that day?
+BUSES_BETWEEN|SINGLE|What scheduled choices connect my current Vijayawada stand with Nellore on the next day?
+DEPARTURES_AFTER|SINGLE|Filter tomorrow's Nellore departures to those starting beyond 9:15 PM.
+DEPARTURES_BEFORE|SINGLE|I want to leave for Nellore prior to 5:45 AM tomorrow; list those services.
+BUS_AT_TIME|SINGLE|Check for a Nellore departure tomorrow approximately at quarter past seven in the evening.
+ARRIVAL_TIME|SINGLE|Read the timetable entry for when this chosen service reaches its destination stop.
+JOURNEY_DURATION|SINGLE|For the departure I've picked, what is the elapsed travelling time in hours?
+BUSES_OPERATING_TODAY|SINGLE|Is the current date included in the operating calendar for buses serving Nellore?
+SERVICE_FREQUENCY|SINGLE|Across a day, how closely spaced are the bus runs serving this corridor?
+SPECIAL_DAY_SCHEDULE|SINGLE|Does your local data include extra Nellore runs or changed timings for a festival day?
+AVAILABLE_BUS_TYPES|SINGLE|What range of service classes is actually scheduled between my selected endpoints?
+AC_BUS_AVAILABILITY|SINGLE|I'd prefer a cooled bus cabin; search air-conditioned departures for Nellore.
+NON_AC_BUS_AVAILABILITY|SINGLE|Remove every AC option from the Nellore list because I want an uncooled coach.
+SLEEPER_AVAILABILITY|SINGLE|Could I make the Nellore journey lying in a berth rather than sitting upright?
+SEATER_AVAILABILITY|SINGLE|For my Nellore trip, find the coach type where the accommodation consists of seats.
+ELECTRIC_BUS_AVAILABILITY|SINGLE|Which listed runs to Nellore use battery propulsion instead of a combustion engine?
+BUS_AMENITIES|SINGLE|Can you describe the onboard equipment and comforts attached to this particular vehicle?
+SERVICE_CATEGORY_COMPARISON|SINGLE|What service features distinguish {category2} from {category1} in the database?
+ACCESSIBLE_BUS_AVAILABILITY|SINGLE|Are wheelchair-friendly boarding arrangements offered by any service on this corridor?
+BUS_CAPACITY|SINGLE|How many passenger places were built into the chosen coach's seating layout?
+DIRECT_BUS|SINGLE|I don't wish to interchange anywhere; is Nellore served all the way by one coach?
+ROUTE_STOPS|SINGLE|Give the station-by-station stopping pattern followed by the bus I've selected.
+BUS_VIA_LOCATION|SINGLE|Will the selected coach travel by way of Ongole before it gets to Nellore?
+INTERMEDIATE_STOP|SINGLE|Passing Ongole is not enough for me; is a stop there part of this trip's schedule?
+BOARDING_POINT|SINGLE|Please show where this route authorizes passengers to enter the bus for their journey.
+ALIGHTING_POINT|SINGLE|At what authorized dropping stops could a passenger leave this selected service?
+CONNECTING_BUSES|SINGLE|Plan a route to Tirumala by linking an initial coach to an onward bus after a change.
+ALTERNATIVE_ROUTES|SINGLE|If I avoid the itinerary currently shown, what other bus path could take me to Nellore?
+ROUTE_DISTANCE|SINGLE|Between the chosen pickup and drop stops, what route length in kilometres is stored?
+DESTINATION_REACHABILITY|SINGLE|Can any chain of available bus services get a passenger from this stand to Tirumala?
+GET_FARE|SINGLE|For the bus I'm currently referring to, what amount of money buys one passenger ticket?
+CHEAPEST_BUS|SINGLE|Among the Nellore services with known prices, choose whichever costs the smallest amount.
+FASTEST_BUS|SINGLE|Please minimize travelling duration when selecting a Nellore bus from these results.
+FARE_COMPARISON|SINGLE|For an identical origin and destination, contrast the ticket amounts on the listed coaches.
+SEAT_AVAILABILITY|SINGLE|Has the local system recently recorded enough unused seats for a pair of passengers on my trip?
+RESERVATION_SUPPORTED|SINGLE|Before the day of travel, does the selected departure permit passengers to reserve seats?
+BOOKING_OPTIONS|SINGLE|Tell me the operator-approved methods for arranging and purchasing my bus ticket.
+BOOKING_STATUS|SINGLE|If I already have a ticket reference, is its confirmation state available in an authorized local record?
+CANCELLATION_POLICY|SINGLE|Explain the passenger ticket-withdrawal rules, including any cancellation penalty that applies.
+REFUND_POLICY|SINGLE|What locally published conditions determine the ticket money returned to a passenger?
+CONCESSION_ENQUIRY|SINGLE|Would an eligible elderly passenger qualify for a concessional fare under this operator's rules?
+LUGGAGE_RULES|SINGLE|Before I bring a large suitcase, explain this operator's recorded baggage limits and surcharges.
+LIVE_BUS_STATUS|SINGLE|Where does the newest verified tracking observation place the selected coach at present?
+BUS_DELAY|SINGLE|Is this trip behind its timetable, and how many late-running minutes are officially recorded?
+BUS_CANCELLATION|SINGLE|Has an authorized update withdrawn the particular trip that I selected from operation?
+BUS_PLATFORM|SINGLE|At this station, which numbered stand has been assigned and confirmed for my departure?
+ESTIMATED_ARRIVAL|SINGLE|After taking operational updates into account, what is the freshest ETA for the incoming service?
+BUS_DEPARTED_STATUS|SINGLE|Please distinguish the scheduled leaving time from evidence that my selected coach actually left.
+BUS_ARRIVED_STATUS|SINGLE|Has anyone recorded that the incoming service has physically arrived at this bus station?
+SERVICE_DISRUPTION|SINGLE|Do current route notices report roadworks, interruptions or detours affecting this journey?
+PLATFORM_CHANGE|SINGLE|Is the bay now allocated to my coach different from the one originally announced?
+SERVICE_NUMBER_LOOKUP|SINGLE|Which origin, destination and route are associated with bus service number 3521?
+STATION_FACILITIES|SINGLE|What public conveniences and waiting areas can passengers use at this bus terminal?
+STATION_HELPDESK|SINGLE|Please point me towards this terminal's passenger information and enquiry office.
+LOST_PROPERTY|SINGLE|My suitcase was accidentally left in a bus; which local process handles recovery of found belongings?
+OPERATOR_CONTACT|SINGLE|How would I reach the office or telephone contact of the operator responsible for this coach?
+STATION_NAVIGATION|SINGLE|Guide me on foot from inside the terminal towards the departure area at bay six.
+COMPLAINT_GUIDANCE|SINGLE|I need to lodge a grievance about a bus staff member; which authorized channel should receive it?
+GET_FARE|CONTEXT|And what would that selected ride cost me?
+BUS_PLATFORM|CONTEXT|Which bay should I go to for the one I've chosen?
+PRESERVE_SELECTION|CONTEXT|Please retain that exact coach for the next question.
+SELECT_SECOND|CONTEXT|Use the second displayed departure as my choice.
+DEST_TIRUMALA|CONTEXT|Correction: the destination should be Tirumala for this journey.
+DEST_TIRUPATI|CONTEXT|Change where I'm going from Nellore to Tirupati, please.
+DATE_PLUS_TWO|CONTEXT|I want this trip two days from today instead of tomorrow.
+FILTER_AC|CONTEXT|Keep only buses fitted with air conditioning for this search.
+FILTER_NON_AC|CONTEXT|Please exclude cooled coaches and use non-AC ones instead.
+FILTER_SLEEPER|CONTEXT|Change the accommodation preference to a sleeping berth.
+BUDGET_250|CONTEXT|I can spend no more than INR 250 on the ticket.
+PASSENGERS_TWO|CONTEXT|Please make the passenger count two for this journey.
+REMOVE_BUDGET|CONTEXT|Clear the maximum fare I supplied earlier.
+LATER_DEPARTURES|CONTEXT|Look for a bus leaving after the departure I currently picked.
+REJECT_SELECTION|CONTEXT|You've got my bus choice wrong; let me choose another.
+RESET|CONTEXT|Clear this conversation so I can begin a different journey.
+REPEAT|CONTEXT|Could you say the last reply once more without changing anything?
+JOURNEY_DURATION|CONTEXT|How many hours on board for that very same selection?
+ORIGIN_ONGOLE|CONTEXT|Switch the pickup location for my ride to Ongole.
+DEST_ONGOLE|CONTEXT|Change my dropping destination from Nellore to Ongole.
+NEXT_BUS,GET_FARE|MULTI|Which Nellore bus comes next, and what ticket amount does that departure charge?
+ROUTE_STOPS,BUS_AMENITIES|MULTI|Describe both the halt sequence and the onboard facilities of my chosen coach.
+BUS_PLATFORM,BUS_DELAY|MULTI|Tell me my bus's assigned platform together with any verified delay minutes.
+FIRST_BUS,JOURNEY_DURATION|MULTI|Find the opening Nellore departure and give the duration of that particular ride.
+FARE_COMPARISON,JOURNEY_DURATION|MULTI|Set the ticket prices alongside each other and also tell me their journey durations.
+LAST_BUS,AVAILABLE_BUS_TYPES|MULTI|What time is the final Nellore departure, and which service class operates it?
+BUS_CANCELLATION,BUS_DEPARTED_STATUS|MULTI|Check if this run has been cancelled and whether an actual departure was recorded.
+DIRECT_BUS,ROUTE_DISTANCE|MULTI|Search for a no-change bus journey and provide its kilometre length.
+SEAT_AVAILABILITY,RESERVATION_SUPPORTED|MULTI|Can two places be found on this departure, and does it accept advance reservations?
+OPERATOR_CONTACT,LOST_PROPERTY|MULTI|I left luggage behind; give the recovery guidance and the responsible operator's contact details.
+OUT_OF_SCOPE|OOS|Who lifted the international hockey trophy last season?
+OUT_OF_SCOPE|OOS|Calculate the compound interest on a five-year bank deposit for me.
+OUT_OF_SCOPE|OOS|Describe the steps for baking a loaf of sourdough bread.
+OUT_OF_SCOPE|OOS|Will heavy rainfall be likely around Nellore over the coming weekend?
+OUT_OF_SCOPE|OOS|Write a short birthday poem for my younger sister.
+OUT_OF_SCOPE|OOS|Which treatment should someone take for an ear infection?
+OUT_OF_SCOPE|OOS|Help me choose a mobile phone with a good camera.
+OUT_OF_SCOPE|OOS|Summarize the plot of a famous detective novel.
+OUT_OF_SCOPE|OOS|How much is a kilogram of silver worth in today's market?
+OUT_OF_SCOPE|OOS|Find the derivative of a polynomial using calculus rules.

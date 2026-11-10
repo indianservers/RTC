@@ -1,0 +1,27 @@
+{
+  "evaluated_questions": 100,
+  "unique_questions": 100,
+  "supporting_setup_requests": 181,
+  "passed": 22,
+  "by_kind": {
+    "SINGLE": {
+      "total": 60,
+      "passed": 12
+    },
+    "CONTEXT": {
+      "total": 20,
+      "passed": 8
+    },
+    "MULTI": {
+      "total": 10,
+      "passed": 2
+    },
+    "OOS": {
+      "total": 10,
+      "passed": 0
+    }
+  },
+  "mode": "ACTUAL_RUNNING_BOT_HTTP_LOOPBACK",
+  "production_model": "DETERMINISTIC_RULES",
+  "human_reviewed": false
+}

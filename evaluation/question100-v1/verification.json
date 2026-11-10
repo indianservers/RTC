@@ -1,0 +1,105 @@
+{
+  "recorded_at": "2026-11-08T16:50:15.738790+00:00",
+  "questions": 100,
+  "unique": 100,
+  "expected_before_asking": true,
+  "actual_live_http": {
+    "checks_passed": 28,
+    "supporting_setup_requests": 181,
+    "by_kind": {
+      "SINGLE": {
+        "total": 60,
+        "passed": 13
+      },
+      "CONTEXT": {
+        "total": 20,
+        "passed": 9
+      },
+      "MULTI": {
+        "total": 10,
+        "passed": 5
+      },
+      "OOS": {
+        "total": 10,
+        "passed": 1
+      }
+    }
+  },
+  "old_candidate_shadow": 62,
+  "trained_candidate_shadow": 64,
+  "training_specific_check_gain": 2,
+  "training_questions_used_for_classifier": 70,
+  "structured_context_and_multi_targets": 30,
+  "structured_transitions_learned_by_single_label_model": false,
+  "new_total_training_records": 2279,
+  "independent_human_reviewed_test_available": false,
+  "synthetic_holdout_raw_accuracy": {
+    "previous_svm": 0.9277777777777778,
+    "trained_svm": 0.9222222222222223,
+    "previous_cnn": 0.85,
+    "trained_cnn": 0.8444444444444444
+  },
+  "tests": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "132",
+    "time": "28.396",
+    "timestamp": "2026-11-08T22:18:01.044203+05:30",
+    "hostname": "DESKTOP-B3SR465"
+  },
+  "ruff": "All checks passed!",
+  "mypy": "Success: no issues found in 2 source files",
+  "production_health": {
+    "data": {
+      "status": "DEGRADED",
+      "database": "READY",
+      "deterministic_fallback": "READY",
+      "statistical_model": "NOT_APPROVED",
+      "active_model_name": null,
+      "active_model_version": null,
+      "offline_certification": "OS_ISOLATION_UNVERIFIED"
+    }
+  },
+  "deployed": false,
+  "remaining_failure_ids": [
+    "Q002",
+    "Q013",
+    "Q020",
+    "Q024",
+    "Q025",
+    "Q027",
+    "Q028",
+    "Q034",
+    "Q036",
+    "Q039",
+    "Q040",
+    "Q041",
+    "Q042",
+    "Q045",
+    "Q049",
+    "Q052",
+    "Q054",
+    "Q059",
+    "Q062",
+    "Q068",
+    "Q071",
+    "Q073",
+    "Q074",
+    "Q075",
+    "Q076",
+    "Q077",
+    "Q078",
+    "Q079",
+    "Q080",
+    "Q085",
+    "Q086",
+    "Q088",
+    "Q089",
+    "Q090",
+    "Q094",
+    "Q099"
+  ],
+  "recommendation": "Do not promote: holdout accuracy regressed slightly; unresolved dialogue/composition errors; no independent reviewed evidence"
+}

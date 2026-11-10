@@ -1,0 +1,213 @@
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794156951.913092   42068 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1794156970.799875   42068 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1794156976.494900   42068 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:tensorflow:From C:\Indian Servers\RTC\.venv-english\Lib\site-packages\keras\src\backend\common\global_state.py:82: The name tf.reset_default_graph is deprecated. Please use tf.compat.v1.reset_default_graph instead.
+
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+C:\Indian Servers\RTC\.venv-english\Lib\site-packages\keras\src\trainers\epoch_iterator.py:74: UserWarning: `shuffle=True` was passed, but will be ignored since the data `x` was provided as a tf.data.Dataset. The Dataset is expected to already be shuffled (via `.shuffle(buffer_size)`).
+  self.data_adapter = data_adapters.get_data_adapter(
+Epoch 1/60
+70/70 - 7s - 100ms/step - accuracy: 0.0240 - loss: 4.0876 - val_accuracy: 0.1056 - val_loss: 4.0545 - learning_rate: 0.0010
+Epoch 2/60
+70/70 - 1s - 15ms/step - accuracy: 0.2365 - loss: 3.9906 - val_accuracy: 0.2389 - val_loss: 3.9636 - learning_rate: 0.0010
+Epoch 3/60
+70/70 - 1s - 16ms/step - accuracy: 0.4134 - loss: 3.7691 - val_accuracy: 0.4167 - val_loss: 3.6674 - learning_rate: 0.0010
+Epoch 4/60
+70/70 - 1s - 15ms/step - accuracy: 0.5364 - loss: 3.1832 - val_accuracy: 0.5444 - val_loss: 2.9081 - learning_rate: 0.0010
+Epoch 5/60
+70/70 - 1s - 15ms/step - accuracy: 0.6897 - loss: 2.2216 - val_accuracy: 0.5944 - val_loss: 2.0605 - learning_rate: 0.0010
+Epoch 6/60
+70/70 - 1s - 20ms/step - accuracy: 0.7910 - loss: 1.3726 - val_accuracy: 0.6944 - val_loss: 1.4687 - learning_rate: 0.0010
+Epoch 7/60
+70/70 - 1s - 14ms/step - accuracy: 0.8738 - loss: 0.8420 - val_accuracy: 0.7167 - val_loss: 1.1094 - learning_rate: 0.0010
+Epoch 8/60
+70/70 - 1s - 17ms/step - accuracy: 0.9344 - loss: 0.5247 - val_accuracy: 0.7667 - val_loss: 0.9230 - learning_rate: 0.0010
+Epoch 9/60
+70/70 - 2s - 29ms/step - accuracy: 0.9435 - loss: 0.3859 - val_accuracy: 0.8056 - val_loss: 0.7975 - learning_rate: 0.0010
+Epoch 10/60
+70/70 - 1s - 7ms/step - accuracy: 0.9665 - loss: 0.2653 - val_accuracy: 0.8000 - val_loss: 0.7128 - learning_rate: 0.0010
+Epoch 11/60
+70/70 - 1s - 11ms/step - accuracy: 0.9751 - loss: 0.1985 - val_accuracy: 0.8111 - val_loss: 0.6650 - learning_rate: 0.0010
+Epoch 12/60
+70/70 - 1s - 10ms/step - accuracy: 0.9869 - loss: 0.1515 - val_accuracy: 0.8222 - val_loss: 0.6072 - learning_rate: 0.0010
+Epoch 13/60
+70/70 - 1s - 14ms/step - accuracy: 0.9914 - loss: 0.1162 - val_accuracy: 0.8278 - val_loss: 0.5787 - learning_rate: 0.0010
+Epoch 14/60
+70/70 - 1s - 9ms/step - accuracy: 0.9937 - loss: 0.0992 - val_accuracy: 0.8389 - val_loss: 0.5548 - learning_rate: 0.0010
+Epoch 15/60
+70/70 - 1s - 14ms/step - accuracy: 0.9941 - loss: 0.0836 - val_accuracy: 0.8278 - val_loss: 0.5511 - learning_rate: 0.0010
+Epoch 16/60
+70/70 - 1s - 7ms/step - accuracy: 0.9964 - loss: 0.0716 - val_accuracy: 0.8333 - val_loss: 0.5146 - learning_rate: 0.0010
+Epoch 17/60
+70/70 - 0s - 6ms/step - accuracy: 0.9986 - loss: 0.0576 - val_accuracy: 0.8444 - val_loss: 0.5137 - learning_rate: 0.0010
+Epoch 18/60
+70/70 - 1s - 13ms/step - accuracy: 0.9968 - loss: 0.0526 - val_accuracy: 0.8389 - val_loss: 0.4973 - learning_rate: 0.0010
+Epoch 19/60
+70/70 - 1s - 8ms/step - accuracy: 0.9982 - loss: 0.0471 - val_accuracy: 0.8500 - val_loss: 0.4852 - learning_rate: 0.0010
+Epoch 20/60
+70/70 - 0s - 7ms/step - accuracy: 0.9982 - loss: 0.0392 - val_accuracy: 0.8611 - val_loss: 0.4785 - learning_rate: 0.0010
+Epoch 21/60
+70/70 - 1s - 8ms/step - accuracy: 0.9995 - loss: 0.0367 - val_accuracy: 0.8500 - val_loss: 0.4575 - learning_rate: 0.0010
+Epoch 22/60
+70/70 - 1s - 9ms/step - accuracy: 0.9991 - loss: 0.0341 - val_accuracy: 0.8500 - val_loss: 0.4593 - learning_rate: 0.0010
+Epoch 23/60
+70/70 - 1s - 13ms/step - accuracy: 0.9995 - loss: 0.0314 - val_accuracy: 0.8500 - val_loss: 0.4562 - learning_rate: 0.0010
+Epoch 24/60
+70/70 - 1s - 10ms/step - accuracy: 0.9991 - loss: 0.0282 - val_accuracy: 0.8611 - val_loss: 0.4547 - learning_rate: 0.0010
+Epoch 25/60
+70/70 - 1s - 10ms/step - accuracy: 0.9995 - loss: 0.0273 - val_accuracy: 0.8444 - val_loss: 0.4601 - learning_rate: 0.0010
+Epoch 26/60
+70/70 - 1s - 16ms/step - accuracy: 0.9995 - loss: 0.0252 - val_accuracy: 0.8444 - val_loss: 0.4476 - learning_rate: 0.0010
+Epoch 27/60
+70/70 - 2s - 22ms/step - accuracy: 1.0000 - loss: 0.0247 - val_accuracy: 0.8611 - val_loss: 0.4408 - learning_rate: 0.0010
+Epoch 28/60
+70/70 - 1s - 19ms/step - accuracy: 1.0000 - loss: 0.0217 - val_accuracy: 0.8722 - val_loss: 0.4396 - learning_rate: 0.0010
+Epoch 29/60
+70/70 - 3s - 39ms/step - accuracy: 0.9995 - loss: 0.0233 - val_accuracy: 0.8389 - val_loss: 0.4344 - learning_rate: 0.0010
+Epoch 30/60
+70/70 - 1s - 8ms/step - accuracy: 0.9991 - loss: 0.0220 - val_accuracy: 0.8556 - val_loss: 0.4133 - learning_rate: 0.0010
+Epoch 31/60
+70/70 - 1s - 12ms/step - accuracy: 0.9991 - loss: 0.0211 - val_accuracy: 0.8611 - val_loss: 0.4076 - learning_rate: 0.0010
+Epoch 32/60
+70/70 - 1s - 9ms/step - accuracy: 0.9995 - loss: 0.0196 - val_accuracy: 0.8556 - val_loss: 0.3995 - learning_rate: 0.0010
+Epoch 33/60
+70/70 - 1s - 12ms/step - accuracy: 0.9995 - loss: 0.0181 - val_accuracy: 0.8500 - val_loss: 0.4002 - learning_rate: 0.0010
+Epoch 34/60
+70/70 - 1s - 10ms/step - accuracy: 1.0000 - loss: 0.0172 - val_accuracy: 0.8444 - val_loss: 0.4064 - learning_rate: 0.0010
+Epoch 35/60
+70/70 - 1s - 15ms/step - accuracy: 1.0000 - loss: 0.0165 - val_accuracy: 0.8611 - val_loss: 0.4033 - learning_rate: 0.0010
+Epoch 36/60
+70/70 - 2s - 22ms/step - accuracy: 1.0000 - loss: 0.0165 - val_accuracy: 0.8667 - val_loss: 0.4022 - learning_rate: 5.0000e-04
+Epoch 37/60
+70/70 - 1s - 10ms/step - accuracy: 1.0000 - loss: 0.0161 - val_accuracy: 0.8722 - val_loss: 0.3996 - learning_rate: 5.0000e-04
+Epoch 38/60
+70/70 - 1s - 8ms/step - accuracy: 1.0000 - loss: 0.0165 - val_accuracy: 0.8667 - val_loss: 0.3996 - learning_rate: 5.0000e-04
+Epoch 39/60
+70/70 - 1s - 9ms/step - accuracy: 1.0000 - loss: 0.0154 - val_accuracy: 0.8722 - val_loss: 0.4017 - learning_rate: 2.5000e-04
+Epoch 40/60
+70/70 - 0s - 7ms/step - accuracy: 1.0000 - loss: 0.0152 - val_accuracy: 0.8667 - val_loss: 0.3992 - learning_rate: 2.5000e-04
+Epoch 41/60
+70/70 - 0s - 6ms/step - accuracy: 1.0000 - loss: 0.0153 - val_accuracy: 0.8667 - val_loss: 0.4009 - learning_rate: 2.5000e-04
+Epoch 42/60
+70/70 - 0s - 6ms/step - accuracy: 0.9995 - loss: 0.0166 - val_accuracy: 0.8611 - val_loss: 0.4121 - learning_rate: 2.5000e-04
+Epoch 43/60
+70/70 - 0s - 6ms/step - accuracy: 1.0000 - loss: 0.0157 - val_accuracy: 0.8611 - val_loss: 0.4112 - learning_rate: 2.5000e-04
+Epoch 44/60
+70/70 - 0s - 6ms/step - accuracy: 0.9995 - loss: 0.0159 - val_accuracy: 0.8611 - val_loss: 0.4097 - learning_rate: 1.2500e-04
+Epoch 45/60
+70/70 - 0s - 7ms/step - accuracy: 1.0000 - loss: 0.0152 - val_accuracy: 0.8611 - val_loss: 0.4095 - learning_rate: 1.2500e-04
+Epoch 46/60
+70/70 - 1s - 11ms/step - accuracy: 1.0000 - loss: 0.0154 - val_accuracy: 0.8611 - val_loss: 0.4083 - learning_rate: 1.2500e-04
+Epoch 47/60
+70/70 - 0s - 6ms/step - accuracy: 1.0000 - loss: 0.0145 - val_accuracy: 0.8611 - val_loss: 0.4068 - learning_rate: 6.2500e-05
+Epoch 48/60
+70/70 - 1s - 8ms/step - accuracy: 1.0000 - loss: 0.0154 - val_accuracy: 0.8611 - val_loss: 0.4060 - learning_rate: 6.2500e-05
+C:\Indian Servers\RTC\.venv-english\Lib\site-packages\keras\src\trainers\epoch_iterator.py:74: UserWarning: `shuffle=True` was passed, but will be ignored since the data `x` was provided as a tf.data.Dataset. The Dataset is expected to already be shuffled (via `.shuffle(buffer_size)`).
+  self.data_adapter = data_adapters.get_data_adapter(
+Epoch 1/60
+70/70 - 5s - 67ms/step - accuracy: 0.0280 - loss: 4.0846 - val_accuracy: 0.1222 - val_loss: 4.0382 - learning_rate: 0.0010
+Epoch 2/60
+70/70 - 1s - 10ms/step - accuracy: 0.2438 - loss: 3.9345 - val_accuracy: 0.2722 - val_loss: 3.8795 - learning_rate: 0.0010
+Epoch 3/60
+70/70 - 1s - 13ms/step - accuracy: 0.4351 - loss: 3.5552 - val_accuracy: 0.4056 - val_loss: 3.3409 - learning_rate: 0.0010
+Epoch 4/60
+70/70 - 1s - 21ms/step - accuracy: 0.5645 - loss: 2.6544 - val_accuracy: 0.5944 - val_loss: 2.3522 - learning_rate: 0.0010
+Epoch 5/60
+70/70 - 1s - 18ms/step - accuracy: 0.7282 - loss: 1.6092 - val_accuracy: 0.6722 - val_loss: 1.5867 - learning_rate: 0.0010
+Epoch 6/60
+70/70 - 1s - 9ms/step - accuracy: 0.8553 - loss: 0.9169 - val_accuracy: 0.7722 - val_loss: 1.1115 - learning_rate: 0.0010
+Epoch 7/60
+70/70 - 1s - 12ms/step - accuracy: 0.9213 - loss: 0.5457 - val_accuracy: 0.7833 - val_loss: 0.8699 - learning_rate: 0.0010
+Epoch 8/60
+70/70 - 1s - 15ms/step - accuracy: 0.9534 - loss: 0.3560 - val_accuracy: 0.8111 - val_loss: 0.7178 - learning_rate: 0.0010
+Epoch 9/60
+70/70 - 1s - 10ms/step - accuracy: 0.9769 - loss: 0.2327 - val_accuracy: 0.8444 - val_loss: 0.6359 - learning_rate: 0.0010
+Epoch 10/60
+70/70 - 1s - 10ms/step - accuracy: 0.9842 - loss: 0.1641 - val_accuracy: 0.8722 - val_loss: 0.5696 - learning_rate: 0.0010
+Epoch 11/60
+70/70 - 2s - 29ms/step - accuracy: 0.9910 - loss: 0.1229 - val_accuracy: 0.8444 - val_loss: 0.5375 - learning_rate: 0.0010
+Epoch 12/60
+70/70 - 2s - 22ms/step - accuracy: 0.9955 - loss: 0.0926 - val_accuracy: 0.8611 - val_loss: 0.5103 - learning_rate: 0.0010
+Epoch 13/60
+70/70 - 3s - 44ms/step - accuracy: 0.9973 - loss: 0.0767 - val_accuracy: 0.8611 - val_loss: 0.4945 - learning_rate: 0.0010
+Epoch 14/60
+70/70 - 2s - 32ms/step - accuracy: 0.9977 - loss: 0.0631 - val_accuracy: 0.8611 - val_loss: 0.4735 - learning_rate: 0.0010
+Epoch 15/60
+70/70 - 3s - 44ms/step - accuracy: 0.9950 - loss: 0.0595 - val_accuracy: 0.8556 - val_loss: 0.4645 - learning_rate: 0.0010
+Epoch 16/60
+70/70 - 2s - 30ms/step - accuracy: 0.9968 - loss: 0.0488 - val_accuracy: 0.8833 - val_loss: 0.4363 - learning_rate: 0.0010
+Epoch 17/60
+70/70 - 1s - 9ms/step - accuracy: 0.9995 - loss: 0.0403 - val_accuracy: 0.8889 - val_loss: 0.4228 - learning_rate: 0.0010
+Epoch 18/60
+70/70 - 1s - 11ms/step - accuracy: 0.9991 - loss: 0.0380 - val_accuracy: 0.8889 - val_loss: 0.4265 - learning_rate: 0.0010
+Epoch 19/60
+70/70 - 1s - 17ms/step - accuracy: 0.9995 - loss: 0.0344 - val_accuracy: 0.8944 - val_loss: 0.4088 - learning_rate: 0.0010
+Epoch 20/60
+70/70 - 1s - 17ms/step - accuracy: 0.9995 - loss: 0.0306 - val_accuracy: 0.8778 - val_loss: 0.4040 - learning_rate: 0.0010
+Epoch 21/60
+70/70 - 1s - 14ms/step - accuracy: 0.9995 - loss: 0.0270 - val_accuracy: 0.8889 - val_loss: 0.4029 - learning_rate: 0.0010
+Epoch 22/60
+70/70 - 1s - 10ms/step - accuracy: 0.9991 - loss: 0.0276 - val_accuracy: 0.8722 - val_loss: 0.4049 - learning_rate: 0.0010
+Epoch 23/60
+70/70 - 1s - 15ms/step - accuracy: 0.9995 - loss: 0.0241 - val_accuracy: 0.8667 - val_loss: 0.3998 - learning_rate: 0.0010
+Epoch 24/60
+70/70 - 2s - 31ms/step - accuracy: 1.0000 - loss: 0.0230 - val_accuracy: 0.8722 - val_loss: 0.3861 - learning_rate: 0.0010
+Epoch 25/60
+70/70 - 2s - 23ms/step - accuracy: 0.9986 - loss: 0.0235 - val_accuracy: 0.8778 - val_loss: 0.4023 - learning_rate: 0.0010
+Epoch 26/60
+70/70 - 1s - 16ms/step - accuracy: 0.9995 - loss: 0.0224 - val_accuracy: 0.8556 - val_loss: 0.3913 - learning_rate: 0.0010
+Epoch 27/60
+70/70 - 1s - 11ms/step - accuracy: 1.0000 - loss: 0.0193 - val_accuracy: 0.8833 - val_loss: 0.3880 - learning_rate: 0.0010
+Epoch 28/60
+70/70 - 2s - 25ms/step - accuracy: 0.9991 - loss: 0.0196 - val_accuracy: 0.8778 - val_loss: 0.3800 - learning_rate: 5.0000e-04
+Epoch 29/60
+70/70 - 2s - 22ms/step - accuracy: 1.0000 - loss: 0.0196 - val_accuracy: 0.8778 - val_loss: 0.3875 - learning_rate: 5.0000e-04
+Epoch 30/60
+70/70 - 1s - 13ms/step - accuracy: 0.9995 - loss: 0.0189 - val_accuracy: 0.8833 - val_loss: 0.3859 - learning_rate: 5.0000e-04
+Epoch 31/60
+70/70 - 1s - 19ms/step - accuracy: 1.0000 - loss: 0.0176 - val_accuracy: 0.8778 - val_loss: 0.3913 - learning_rate: 5.0000e-04
+Epoch 32/60
+70/70 - 1s - 18ms/step - accuracy: 0.9995 - loss: 0.0175 - val_accuracy: 0.8722 - val_loss: 0.3893 - learning_rate: 2.5000e-04
+Epoch 33/60
+70/70 - 1s - 20ms/step - accuracy: 1.0000 - loss: 0.0165 - val_accuracy: 0.8778 - val_loss: 0.3861 - learning_rate: 2.5000e-04
+Epoch 34/60
+70/70 - 1s - 15ms/step - accuracy: 1.0000 - loss: 0.0175 - val_accuracy: 0.8778 - val_loss: 0.3856 - learning_rate: 2.5000e-04
+Epoch 35/60
+70/70 - 1s - 11ms/step - accuracy: 0.9995 - loss: 0.0173 - val_accuracy: 0.8722 - val_loss: 0.3848 - learning_rate: 1.2500e-04
+Epoch 36/60
+70/70 - 1s - 9ms/step - accuracy: 1.0000 - loss: 0.0163 - val_accuracy: 0.8778 - val_loss: 0.3835 - learning_rate: 1.2500e-04
+{
+  "version": "question100-v2",
+  "model_type": "english_intent_textcnn",
+  "local_path": "models/english/nlp/question100-v2/textcnn.keras",
+  "sha256": "0368b42e964f46b9eb4000637aac60fb93ef7870a775447d785d6a1546402ce5",
+  "label_map_path": "models/english/nlp/question100-v2/label_map.json",
+  "deployment_status": "CANDIDATE",
+  "approved": false,
+  "independent_evaluation": false,
+  "human_reviewed": false,
+  "preprocessing": "NFKC_CASEFOLD_COLLAPSE_WHITESPACE_REQUIRED",
+  "configuration": {
+    "embedding": 96,
+    "filters_per_kernel": 96,
+    "dropout": 0.4,
+    "sequence_length": 16,
+    "vocabulary_size": 1400,
+    "kernels": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "learning_rate": 0.001,
+    "class_weights": "None; actual per-intent counts differ by <=1"
+  },
+  "validation_macro_f1": 0.8781349206349205,
+  "training_seconds": 99.82129949999944,
+  "training_manifest_sha256": "0da475371233ea379bbbcac51a7b911b7a6932272c76a0ff2a8c1d657737eda6",
+  "threshold_source": "validation_pending_comparison",
+  "test_access": "No challenge questions opened during fitting/selection"
+}

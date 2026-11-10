@@ -1,0 +1,29 @@
+C:\Users\Sai Satish\AppData\Local\Programs\Python\Python312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+{
+  "evaluated_questions": 100,
+  "unique_questions": 100,
+  "supporting_setup_requests": 181,
+  "passed": 48,
+  "by_kind": {
+    "SINGLE": {
+      "total": 60,
+      "passed": 33
+    },
+    "CONTEXT": {
+      "total": 20,
+      "passed": 5
+    },
+    "MULTI": {
+      "total": 10,
+      "passed": 2
+    },
+    "OOS": {
+      "total": 10,
+      "passed": 8
+    }
+  },
+  "mode": "PRIVATE_DB_OFFLINE_SHADOW_CANDIDATE_NOT_PRODUCTION",
+  "candidate_fallback_calls": 54,
+  "evaluation_role": "Training-batch behavioral check; shared deterministic rules can still dominate"
+}

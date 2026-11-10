@@ -1,0 +1,1222 @@
+[
+  {
+    "id": "Q001",
+    "question": "Could you pick the next Nellore departure that I can catch tomorrow?",
+    "expected_behavior": [
+      "Find the earliest eligible departures after the passenger's requested threshold, including later operating dates."
+    ],
+    "expected_labels_or_actions": [
+      "NEXT_BUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q002",
+    "question": "At what hour does tomorrow's Nellore timetable begin its daily runs?",
+    "expected_behavior": [
+      "Find the earliest departure within one explicitly selected operating day, independent of the current time."
+    ],
+    "expected_labels_or_actions": [
+      "FIRST_BUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q003",
+    "question": "Which Nellore departure brings tomorrow's service day to a close?",
+    "expected_behavior": [
+      "Find the final eligible departure inside the chosen calendar or operator-defined operating-day bounds."
+    ],
+    "expected_labels_or_actions": [
+      "LAST_BUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q004",
+    "question": "Give me the full choice of buses linking Vijayawada with Nellore tomorrow.",
+    "expected_behavior": [
+      "List scheduled services permitting boarding at the origin and later alighting at the destination."
+    ],
+    "expected_labels_or_actions": [
+      "BUSES_BETWEEN"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q005",
+    "question": "I can leave only after 8 PM tomorrow; which Nellore buses fit?",
+    "expected_behavior": [
+      "Find eligible departures following an explicitly supplied lower time bound."
+    ],
+    "expected_labels_or_actions": [
+      "DEPARTURES_AFTER"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q006",
+    "question": "Which Nellore services tomorrow depart earlier than seven in the morning?",
+    "expected_behavior": [
+      "Find eligible departures preceding an explicitly supplied upper time bound."
+    ],
+    "expected_labels_or_actions": [
+      "DEPARTURES_BEFORE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q007",
+    "question": "Is a Nellore coach scheduled near half past eight tomorrow evening?",
+    "expected_behavior": [
+      "Find departures within a documented tolerance window around a specified clock time."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_AT_TIME"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q008",
+    "question": "At what timetabled hour will the coach I chose get into Nellore?",
+    "expected_behavior": [
+      "Retrieve the scheduled arrival time for the selected service and stop, labelling any operational override separately."
+    ],
+    "expected_labels_or_actions": [
+      "ARRIVAL_TIME"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q009",
+    "question": "How many travel minutes does my chosen bus take to reach Nellore?",
+    "expected_behavior": [
+      "Calculate travel duration between the passenger's valid boarding and alighting stops."
+    ],
+    "expected_labels_or_actions": [
+      "JOURNEY_DURATION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q010",
+    "question": "Does the local calendar show Nellore buses in operation on today's date?",
+    "expected_behavior": [
+      "Check which services operate on the station-local current date using calendars and exceptions."
+    ],
+    "expected_labels_or_actions": [
+      "BUSES_OPERATING_TODAY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q011",
+    "question": "What intervals separate scheduled departures on the Nellore corridor?",
+    "expected_behavior": [
+      "Describe scheduled departure counts or intervals on a segment within a specified period, without assuming regular headways."
+    ],
+    "expected_labels_or_actions": [
+      "SERVICE_FREQUENCY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q012",
+    "question": "Has any additional festival timetable for Nellore been published locally?",
+    "expected_behavior": [
+      "Retrieve date-specific extra or changed schedules for a specified holiday, festival or special operating date."
+    ],
+    "expected_labels_or_actions": [
+      "SPECIAL_DAY_SCHEDULE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q013",
+    "question": "Which kinds of coach can a traveller choose on the Nellore route?",
+    "expected_behavior": [
+      "List the service classifications represented by eligible departures on the requested segment."
+    ],
+    "expected_labels_or_actions": [
+      "AVAILABLE_BUS_TYPES"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q014",
+    "question": "Please restrict my Nellore options to vehicles with cabin air conditioning.",
+    "expected_behavior": [
+      "Find services whose assigned vehicle or configuration explicitly supports air conditioning."
+    ],
+    "expected_labels_or_actions": [
+      "AC_BUS_AVAILABILITY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q015",
+    "question": "For Nellore, discard air-conditioned coaches and retain only non-AC services.",
+    "expected_behavior": [
+      "Find services explicitly known to be non-air-conditioned, excluding unknown configurations."
+    ],
+    "expected_labels_or_actions": [
+      "NON_AC_BUS_AVAILABILITY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q016",
+    "question": "I would like a sleeping berth on the trip to Nellore; are sleeper coaches listed?",
+    "expected_behavior": [
+      "Find services with verified sleeping berths, independently of branded category and seat inventory."
+    ],
+    "expected_labels_or_actions": [
+      "SLEEPER_AVAILABILITY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q017",
+    "question": "Please look for Nellore buses offering seated accommodation instead of berths.",
+    "expected_behavior": [
+      "Find services with verified seater accommodation rather than inferring layout from category branding."
+    ],
+    "expected_labels_or_actions": [
+      "SEATER_AVAILABILITY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q018",
+    "question": "Are any Nellore departures operated using battery-electric vehicles?",
+    "expected_behavior": [
+      "Find services with an explicitly assigned electric vehicle or configuration."
+    ],
+    "expected_labels_or_actions": [
+      "ELECTRIC_BUS_AVAILABILITY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q019",
+    "question": "What passenger comforts are recorded for the exact coach I picked?",
+    "expected_behavior": [
+      "Report verified amenities of the selected assigned vehicle, retaining unknown feature states."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_AMENITIES"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q020",
+    "question": "Explain how Demo electric and Demo sleeper differ as service categories.",
+    "expected_behavior": [
+      "Explain recorded differences between two or more service categories without guaranteeing vehicle amenities."
+    ],
+    "expected_labels_or_actions": [
+      "SERVICE_CATEGORY_COMPARISON"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q021",
+    "question": "Can you find a Nellore service that accommodates wheelchair boarding?",
+    "expected_behavior": [
+      "Find departures meeting explicitly recorded accessibility requirements."
+    ],
+    "expected_labels_or_actions": [
+      "ACCESSIBLE_BUS_AVAILABILITY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q022",
+    "question": "What is the installed passenger seating capacity of the vehicle I selected?",
+    "expected_behavior": [
+      "Report physical seat and berth capacity of the assigned configuration, not vacant inventory."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_CAPACITY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q023",
+    "question": "Can a single bus carry me from Vijayawada to Nellore without changing coaches?",
+    "expected_behavior": [
+      "Find a single service allowing the requested journey without a vehicle change."
+    ],
+    "expected_labels_or_actions": [
+      "DIRECT_BUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q024",
+    "question": "Read out the calling points of my selected bus in their proper order.",
+    "expected_behavior": [
+      "Retrieve the ordered scheduled stopping pattern of the selected route variant or service."
+    ],
+    "expected_labels_or_actions": [
+      "ROUTE_STOPS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q025",
+    "question": "Does my selected route take the path through Ongole on the way?",
+    "expected_behavior": [
+      "Check or search for a route passing through a requested via point without asserting a passenger halt."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_VIA_LOCATION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q026",
+    "question": "Is an actual passenger halt at Ongole included for this service?",
+    "expected_behavior": [
+      "Confirm whether a selected service actually calls at a specific intermediate station and allows the relevant passenger action."
+    ],
+    "expected_labels_or_actions": [
+      "INTERMEDIATE_STOP"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q027",
+    "question": "At which recorded stops am I permitted to join the selected coach?",
+    "expected_behavior": [
+      "Identify locations at which passengers may board the selected service or destination-bound journey."
+    ],
+    "expected_labels_or_actions": [
+      "BOARDING_POINT"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q028",
+    "question": "Which recorded stops permit me to end my ride on this service?",
+    "expected_behavior": [
+      "Identify permitted drop-off locations or validate a requested alighting station on a selected service."
+    ],
+    "expected_labels_or_actions": [
+      "ALIGHTING_POINT"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q029",
+    "question": "Work out a bus connection to Tirumala with a transfer at an intermediate station.",
+    "expected_behavior": [
+      "Find feasible time-ordered multi-leg journeys respecting transfer windows and stop permissions."
+    ],
+    "expected_labels_or_actions": [
+      "CONNECTING_BUSES"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q030",
+    "question": "Could you suggest a different bus itinerary to Nellore besides the one displayed?",
+    "expected_behavior": [
+      "Find different feasible paths or transfer patterns for the same journey, relative to an optional selected route."
+    ],
+    "expected_labels_or_actions": [
+      "ALTERNATIVE_ROUTES"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q031",
+    "question": "What kilometre distance is recorded for my selected boarding-to-alighting segment?",
+    "expected_behavior": [
+      "Retrieve sourced cumulative or segment distance along the applicable route variant."
+    ],
+    "expected_labels_or_actions": [
+      "ROUTE_DISTANCE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q032",
+    "question": "Is Tirumala reachable at all through the bus network starting here?",
+    "expected_behavior": [
+      "Determine whether any feasible direct or connecting bus itinerary reaches the requested destination in the search period."
+    ],
+    "expected_labels_or_actions": [
+      "DESTINATION_REACHABILITY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q033",
+    "question": "Quote the recorded passenger ticket charge for the exact departure I selected.",
+    "expected_behavior": [
+      "Retrieve an applicable date-effective fare for the actual boarding and alighting segment and selected service or category."
+    ],
+    "expected_labels_or_actions": [
+      "GET_FARE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q034",
+    "question": "Put the Nellore services in budget order and pick the minimum known fare.",
+    "expected_behavior": [
+      "Rank eligible services by known applicable segment fare; missing prices are never zero."
+    ],
+    "expected_labels_or_actions": [
+      "CHEAPEST_BUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q035",
+    "question": "Find the Nellore coach with the least scheduled time spent travelling.",
+    "expected_behavior": [
+      "Rank eligible services by elapsed journey duration for the same requested segment."
+    ],
+    "expected_labels_or_actions": [
+      "FASTEST_BUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q036",
+    "question": "How much would each of these Nellore coach options charge for the same trip?",
+    "expected_behavior": [
+      "Compare applicable prices for multiple services or categories on the same boarding segment and travel date."
+    ],
+    "expected_labels_or_actions": [
+      "FARE_COMPARISON"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q037",
+    "question": "Is there a recent local record showing two vacant places on my chosen trip?",
+    "expected_behavior": [
+      "Report fresh segment-specific inventory for a dated trip and requested seat count, distinguishing unknown and stale states."
+    ],
+    "expected_labels_or_actions": [
+      "SEAT_AVAILABILITY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q038",
+    "question": "Is advance seat reservation supported for the particular service I selected?",
+    "expected_behavior": [
+      "Report whether reservations are supported for the selected service, separately from current seat availability."
+    ],
+    "expected_labels_or_actions": [
+      "RESERVATION_SUPPORTED"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q039",
+    "question": "Which authorized channel should I use to purchase a ticket for this operator?",
+    "expected_behavior": [
+      "Describe locally recorded approved ticket booking channels and instructions without executing a purchase."
+    ],
+    "expected_labels_or_actions": [
+      "BOOKING_OPTIONS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q040",
+    "question": "Can this offline system verify whether an existing reservation is confirmed?",
+    "expected_behavior": [
+      "Read status of an existing booking only when an authorized local record is available; otherwise report unsupported or unavailable."
+    ],
+    "expected_labels_or_actions": [
+      "BOOKING_STATUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q041",
+    "question": "What ticket-cancellation conditions and deductions does this operator publish?",
+    "expected_behavior": [
+      "Explain locally stored passenger ticket cancellation terms, independently of operational trip cancellation."
+    ],
+    "expected_labels_or_actions": [
+      "CANCELLATION_POLICY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q042",
+    "question": "Under the recorded refund rules, what happens to the money paid for a cancelled ticket?",
+    "expected_behavior": [
+      "Explain applicable recorded refund rules or a supported calculation; never infer a refund without required policy data."
+    ],
+    "expected_labels_or_actions": [
+      "REFUND_POLICY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q043",
+    "question": "What eligibility conditions apply to a senior traveller seeking a reduced ticket rate?",
+    "expected_behavior": [
+      "Explain date-effective concession schemes and explicit eligibility requirements without assuming passenger qualification."
+    ],
+    "expected_labels_or_actions": [
+      "CONCESSION_ENQUIRY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q044",
+    "question": "What baggage allowance and excess-luggage charges are recorded for this operator?",
+    "expected_behavior": [
+      "Describe recorded baggage allowances, restrictions and applicable published luggage charges."
+    ],
+    "expected_labels_or_actions": [
+      "LUGGAGE_RULES"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q045",
+    "question": "Do you have a fresh verified position for the bus I chose, rather than its planned route?",
+    "expected_behavior": [
+      "Report the freshest authoritative operational state or location, distinguishing scheduled-only, stale and unknown data."
+    ],
+    "expected_labels_or_actions": [
+      "LIVE_BUS_STATUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q046",
+    "question": "What current verified lateness is recorded against my selected trip?",
+    "expected_behavior": [
+      "Report a verified delay duration or recorded reason for the selected dated trip and affected stop."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_DELAY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q047",
+    "question": "Does the latest local operational information mark my particular departure as cancelled?",
+    "expected_behavior": [
+      "Confirm operational cancellation of a specific service occurrence, not a passenger's ticket cancellation request."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_CANCELLATION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q048",
+    "question": "Which departure bay is confirmed for the exact trip I selected at this stand?",
+    "expected_behavior": [
+      "Report the currently valid confirmed station bay assignment for a specific dated trip."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_PLATFORM"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q049",
+    "question": "What revised arrival estimate is available from recent operational observations?",
+    "expected_behavior": [
+      "Report a fresh verified operational arrival estimate; a scheduled arrival alone does not satisfy this intent."
+    ],
+    "expected_labels_or_actions": [
+      "ESTIMATED_ARRIVAL"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q050",
+    "question": "Has staff actually observed this bus leaving, as opposed to its departure time passing?",
+    "expected_behavior": [
+      "Confirm departure only from an authoritative actual-departure event at the specified stop."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_DEPARTED_STATUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q051",
+    "question": "Is there a verified observation that this incoming coach has reached the stand?",
+    "expected_behavior": [
+      "Confirm arrival only from an authoritative actual-arrival event at the specified stop."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_ARRIVED_STATUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q052",
+    "question": "Are any published closures or diversions currently affecting services on this route?",
+    "expected_behavior": [
+      "Report verified diversions, suspensions or other incidents effective for the requested service or period."
+    ],
+    "expected_labels_or_actions": [
+      "SERVICE_DISRUPTION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q053",
+    "question": "Has the dispatcher replaced this service's earlier bay assignment with a different one?",
+    "expected_behavior": [
+      "Confirm a platform reassignment by examining assignment history for the same trip and station."
+    ],
+    "expected_labels_or_actions": [
+      "PLATFORM_CHANGE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q054",
+    "question": "Look up the route and destination belonging to service identifier 3521.",
+    "expected_behavior": [
+      "Resolve a service identifier within operator and validity scope, requesting clarification if multiple records match."
+    ],
+    "expected_labels_or_actions": [
+      "SERVICE_NUMBER_LOOKUP"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q055",
+    "question": "Which waiting, drinking-water and washroom facilities are recorded for this terminal?",
+    "expected_behavior": [
+      "Report locally recorded passenger facilities and their verification or availability state at a station."
+    ],
+    "expected_labels_or_actions": [
+      "STATION_FACILITIES"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q056",
+    "question": "Where can I locate the staffed passenger enquiry counter in this bus stand?",
+    "expected_behavior": [
+      "Provide a recorded station enquiry/helpdesk contact, location or opening information."
+    ],
+    "expected_labels_or_actions": [
+      "STATION_HELPDESK"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q057",
+    "question": "I have left a bag inside a coach; what local lost-property procedure should I follow?",
+    "expected_behavior": [
+      "Provide the locally recorded lost-property reporting contact or procedure without claiming an item was found."
+    ],
+    "expected_labels_or_actions": [
+      "LOST_PROPERTY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q058",
+    "question": "What telephone or office contact is recorded for the depot operating my service?",
+    "expected_behavior": [
+      "Provide published local operator or depot contact information relevant to the passenger's service."
+    ],
+    "expected_labels_or_actions": [
+      "OPERATOR_CONTACT"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q059",
+    "question": "Which way should I walk inside this terminal to get to platform six?",
+    "expected_behavior": [
+      "Provide recorded within-station directions or zone information without inventing an indoor route."
+    ],
+    "expected_labels_or_actions": [
+      "STATION_NAVIGATION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q060",
+    "question": "Where should a passenger submit a formal complaint about conductor behaviour?",
+    "expected_behavior": [
+      "Explain the locally recorded complaint or grievance channel and reporting instructions."
+    ],
+    "expected_labels_or_actions": [
+      "COMPLAINT_GUIDANCE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q061",
+    "question": "What's the price for that option?",
+    "expected_behavior": [
+      "Retrieve an applicable date-effective fare for the actual boarding and alighting segment and selected service or category."
+    ],
+    "expected_labels_or_actions": [
+      "GET_FARE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q062",
+    "question": "And the bay for that one?",
+    "expected_behavior": [
+      "Report the currently valid confirmed station bay assignment for a specific dated trip."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_PLATFORM"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q063",
+    "question": "Keep the bus I picked.",
+    "expected_behavior": [
+      "Acknowledge and retain the current selected journey."
+    ],
+    "expected_labels_or_actions": [
+      "PRESERVE_SELECTION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q064",
+    "question": "The number two choice, please.",
+    "expected_behavior": [
+      "Select the second result using the current result list."
+    ],
+    "expected_labels_or_actions": [
+      "SELECT_SECOND"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q065",
+    "question": "Actually, make the destination Tirumala.",
+    "expected_behavior": [
+      "Change destination to Tirumala and invalidate dependent selection."
+    ],
+    "expected_labels_or_actions": [
+      "DEST_TIRUMALA"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q066",
+    "question": "Not Nellore; Tirupati instead.",
+    "expected_behavior": [
+      "Change destination to Tirupati and invalidate dependent selection."
+    ],
+    "expected_labels_or_actions": [
+      "DEST_TIRUPATI"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q067",
+    "question": "Move this journey to the day after tomorrow.",
+    "expected_behavior": [
+      "Change travel date to the day after tomorrow."
+    ],
+    "expected_labels_or_actions": [
+      "DATE_PLUS_TWO"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q068",
+    "question": "Only show air-conditioned departures now.",
+    "expected_behavior": [
+      "Search only AC services without silently retaining an incompatible trip."
+    ],
+    "expected_labels_or_actions": [
+      "FILTER_AC"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q069",
+    "question": "I meant a bus without AC.",
+    "expected_behavior": [
+      "Search only non-AC services."
+    ],
+    "expected_labels_or_actions": [
+      "FILTER_NON_AC"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q070",
+    "question": "Let me lie down; sleeper options only.",
+    "expected_behavior": [
+      "Search sleeper services."
+    ],
+    "expected_labels_or_actions": [
+      "FILTER_SLEEPER"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q071",
+    "question": "Set my spending limit to 250 rupees.",
+    "expected_behavior": [
+      "Apply maximum fare 250 to a fresh search."
+    ],
+    "expected_labels_or_actions": [
+      "BUDGET_250"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q072",
+    "question": "Two people are travelling.",
+    "expected_behavior": [
+      "Set two passengers and revalidate the current journey."
+    ],
+    "expected_labels_or_actions": [
+      "PASSENGERS_TWO"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q073",
+    "question": "Remove the budget restriction.",
+    "expected_behavior": [
+      "Remove the previously supplied fare cap."
+    ],
+    "expected_labels_or_actions": [
+      "REMOVE_BUDGET"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q074",
+    "question": "Show later departures instead.",
+    "expected_behavior": [
+      "Search departures later than the current selection."
+    ],
+    "expected_labels_or_actions": [
+      "LATER_DEPARTURES"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q075",
+    "question": "That is not the coach I wanted.",
+    "expected_behavior": [
+      "Reject the selected bus and ask which option is intended."
+    ],
+    "expected_labels_or_actions": [
+      "REJECT_SELECTION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q076",
+    "question": "Forget the current journey and start over.",
+    "expected_behavior": [
+      "Clear prior journey and pending clarification."
+    ],
+    "expected_labels_or_actions": [
+      "RESET"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q077",
+    "question": "Please repeat your previous answer.",
+    "expected_behavior": [
+      "Repeat the previous assistant answer without changing the journey."
+    ],
+    "expected_labels_or_actions": [
+      "REPEAT"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q078",
+    "question": "Tell me the travel time for that same coach.",
+    "expected_behavior": [
+      "Calculate travel duration between the passenger's valid boarding and alighting stops."
+    ],
+    "expected_labels_or_actions": [
+      "JOURNEY_DURATION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q079",
+    "question": "Can we board at Ongole instead?",
+    "expected_behavior": [
+      "Change boarding station to Ongole and invalidate dependent selection."
+    ],
+    "expected_labels_or_actions": [
+      "ORIGIN_ONGOLE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q080",
+    "question": "Could we get off at Ongole rather than Nellore?",
+    "expected_behavior": [
+      "Change destination to Ongole and invalidate dependent selection."
+    ],
+    "expected_labels_or_actions": [
+      "DEST_ONGOLE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q081",
+    "question": "Find the next Nellore service, and tell me its fare.",
+    "expected_behavior": [
+      "Find the earliest eligible departures after the passenger's requested threshold, including later operating dates.",
+      "Retrieve an applicable date-effective fare for the actual boarding and alighting segment and selected service or category."
+    ],
+    "expected_labels_or_actions": [
+      "NEXT_BUS",
+      "GET_FARE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q082",
+    "question": "For the selected coach, list the stops and onboard amenities.",
+    "expected_behavior": [
+      "Retrieve the ordered scheduled stopping pattern of the selected route variant or service.",
+      "Report verified amenities of the selected assigned vehicle, retaining unknown feature states."
+    ],
+    "expected_labels_or_actions": [
+      "ROUTE_STOPS",
+      "BUS_AMENITIES"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q083",
+    "question": "Which platform is my bus using, and is it delayed?",
+    "expected_behavior": [
+      "Report the currently valid confirmed station bay assignment for a specific dated trip.",
+      "Report a verified delay duration or recorded reason for the selected dated trip and affected stop."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_PLATFORM",
+      "BUS_DELAY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q084",
+    "question": "Show the first Nellore departure and its journey duration.",
+    "expected_behavior": [
+      "Find the earliest departure within one explicitly selected operating day, independent of the current time.",
+      "Calculate travel duration between the passenger's valid boarding and alighting stops."
+    ],
+    "expected_labels_or_actions": [
+      "FIRST_BUS",
+      "JOURNEY_DURATION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q085",
+    "question": "Compare the fares and travel times for these buses.",
+    "expected_behavior": [
+      "Compare applicable prices for multiple services or categories on the same boarding segment and travel date.",
+      "Calculate travel duration between the passenger's valid boarding and alighting stops."
+    ],
+    "expected_labels_or_actions": [
+      "FARE_COMPARISON",
+      "JOURNEY_DURATION"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q086",
+    "question": "When does the last bus leave, and what category is it?",
+    "expected_behavior": [
+      "Find the final eligible departure inside the chosen calendar or operator-defined operating-day bounds.",
+      "List the service classifications represented by eligible departures on the requested segment."
+    ],
+    "expected_labels_or_actions": [
+      "LAST_BUS",
+      "AVAILABLE_BUS_TYPES"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q087",
+    "question": "Is my selected bus cancelled, or has it already departed?",
+    "expected_behavior": [
+      "Confirm operational cancellation of a specific service occurrence, not a passenger's ticket cancellation request.",
+      "Confirm departure only from an authoritative actual-departure event at the specified stop."
+    ],
+    "expected_labels_or_actions": [
+      "BUS_CANCELLATION",
+      "BUS_DEPARTED_STATUS"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q088",
+    "question": "Find a direct bus and show its route distance.",
+    "expected_behavior": [
+      "Find a single service allowing the requested journey without a vehicle change.",
+      "Retrieve sourced cumulative or segment distance along the applicable route variant."
+    ],
+    "expected_labels_or_actions": [
+      "DIRECT_BUS",
+      "ROUTE_DISTANCE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q089",
+    "question": "Check whether there are seats and whether reservations are supported.",
+    "expected_behavior": [
+      "Report fresh segment-specific inventory for a dated trip and requested seat count, distinguishing unknown and stale states.",
+      "Report whether reservations are supported for the selected service, separately from current seat availability."
+    ],
+    "expected_labels_or_actions": [
+      "SEAT_AVAILABILITY",
+      "RESERVATION_SUPPORTED"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q090",
+    "question": "Give me the operator contact and lost-property guidance.",
+    "expected_behavior": [
+      "Provide published local operator or depot contact information relevant to the passenger's service.",
+      "Provide the locally recorded lost-property reporting contact or procedure without claiming an item was found."
+    ],
+    "expected_labels_or_actions": [
+      "OPERATOR_CONTACT",
+      "LOST_PROPERTY"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q091",
+    "question": "Who won the badminton world championship most recently?",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q092",
+    "question": "Could you work out the monthly repayment on my home loan?",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q093",
+    "question": "Give me a recipe for a vegetable omelette.",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q094",
+    "question": "Is there a chance of thunderstorms in Nellore next week?",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q095",
+    "question": "Translate this Spanish paragraph into French for me.",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q096",
+    "question": "Which antibiotic should I use for a persistent sore throat?",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q097",
+    "question": "Recommend a gaming laptop for video editing.",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q098",
+    "question": "Tell me a funny story about a talking parrot.",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q099",
+    "question": "What is the current gold price per gram?",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  },
+  {
+    "id": "Q100",
+    "question": "Explain how to solve a quadratic equation by completing the square.",
+    "expected_behavior": [
+      "Decline unrelated questions without answering them as RTC facts."
+    ],
+    "expected_labels_or_actions": [
+      "OUT_OF_SCOPE"
+    ],
+    "facts_policy": "Use current local DB; explicit unknown/stale/unsupported when unavailable; never invent fare, platform, tracking, seats or booking status",
+    "human_reviewed": false
+  }
+]
